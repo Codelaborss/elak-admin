@@ -12,7 +12,7 @@ use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Config;
-use App\Models\Voucher;
+use App\Models\VoucherType;
 
 class VoucherTypeController extends Controller
 {
@@ -21,7 +21,7 @@ class VoucherTypeController extends Controller
         {
             $search = $request->input('search');
 
-            $Vouchers = Voucher::query()
+            $Vouchers = VoucherType::query()
                 ->when($search, function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")
                     ->orWhere('desc', 'like', "%{$search}%");
@@ -39,10 +39,11 @@ class VoucherTypeController extends Controller
             'name' => 'required|max:100',
             'client_message' => 'required',
              'logo_image' => 'required',
+             'type' => 'required',
         ]);
-
-        $Voucher = new Voucher();
+        $Voucher = new VoucherType();
         $Voucher->name = $request->name;
+       $Voucher->management_id = !empty($request->type)  ? implode(',', $request->type) : null;
         $Voucher->desc = $request->client_message;
         $Voucher->status = "active";
 
@@ -69,9 +70,9 @@ class VoucherTypeController extends Controller
 
     public function edit($id)
     {
-        $Voucher = Voucher::where('id', $id)->first();
-
-        return view('admin-views.voucher_type.edit', compact('Voucher'));
+        $Voucher = VoucherType::where('id', $id)->first();
+        $selectedTypes = explode(',', $Voucher->management_id);
+        return view('admin-views.voucher_type.edit', compact('Voucher','selectedTypes'));
     }
 
 
@@ -80,11 +81,13 @@ class VoucherTypeController extends Controller
          $request->validate([
             'name' => 'required|max:100',
             'client_message' => 'required',
+            'type' => 'required',
         ]);
 
-        $Voucher = Voucher::findOrFail($id);
+        $Voucher = VoucherType::findOrFail($id);
 
         $Voucher->name = $request->name;
+        $Voucher->management_id = !empty($request->type)  ? implode(',', $request->type) : null;
         $Voucher->desc = $request->client_message;
 
             //  Logo Upload
@@ -113,7 +116,7 @@ class VoucherTypeController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $Voucher = Voucher::findOrFail($id);
+        $Voucher = VoucherType::findOrFail($id);
           //  Delete Logo
         if ($Voucher->logo && file_exists(public_path($Voucher->logo))) {
             unlink(public_path($Voucher->logo));
@@ -126,7 +129,7 @@ class VoucherTypeController extends Controller
 
     public function status( $id)
     {
-        $Voucher = Voucher::findOrFail($id);
+        $Voucher = VoucherType::findOrFail($id);
         // dd($Voucher);
         // agar active hai to inactive karo, warna active karo
         $Voucher->status = $Voucher->status === 'active' ? 'inactive' : 'active';

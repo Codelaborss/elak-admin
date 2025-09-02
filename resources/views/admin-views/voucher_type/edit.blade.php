@@ -119,6 +119,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                   <div class="col-12 col-md-6">
+                                    <div class="lang_form" id="default-form">
+                                        <div class="form-group">
+                                            <label class="input-label" for="type">Module Types</label>
+                                            <select
+                                                name="type[]"
+                                                id="type"
+                                                class="form-control select2"
+                                                multiple="multiple"
+                                                data-placeholder="-- Select Types --"
+                                            >
+                                                @foreach (\App\Models\Module::all() as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        @if(collect(old('type', $selectedTypes ?? []))->contains($item->id)) selected @endif>
+                                                        {{ $item->module_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
                                     <div class="col-12 ">
                                         <div class="lang_form" id="default-form">
                                             <div class="form-group">
@@ -144,8 +166,9 @@
 @endsection
 
 @push('script_2')
-<script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+ <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
 
 <script>
@@ -159,5 +182,6 @@
         });
     });
 </script>
+
 
 @endpush

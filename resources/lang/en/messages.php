@@ -8204,4 +8204,6 @@ Smartly or Earn. ',
   'Restaurant management' => 'Restaurant management',
   'Voucher Type' => 'Voucher Type',
   'Voucher Addon' => 'Voucher Addon',
+  '(Default)' => '(Default)',
+  'Voucher Name' => 'Voucher Name',
 );

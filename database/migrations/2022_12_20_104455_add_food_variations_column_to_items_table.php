@@ -15,6 +15,7 @@ class AddFoodVariationsColumnToItemsTable extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->text('food_variations')->nullable();
+            $table->text('voucher_type')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddFoodVariationsColumnToItemsTable extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->dropColumn('food_variations');
+            $table->dropColumn('voucher_type');
         });
     }
 }

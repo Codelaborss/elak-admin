@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name")->nullable();
             $table->string("logo")->nullable();
             $table->string("desc")->nullable();
+            $table->string("management_id")->nullable();
             $table->string("status")->nullable();
             $table->timestamps();
         });
