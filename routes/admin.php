@@ -220,68 +220,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         });
        // Voucher Type
 
-            // Voucher item
-        Route::group(['prefix' => 'VoucherItem', 'as' => 'VoucherItem.'], function () {
-            Route::get('add-new', 'VoucherItemController@index')->name('add-new');
-            Route::get('list', 'VoucherItemController@list')->name('list');
-            Route::post('store', 'VoucherItemController@store')->name('store');
-            Route::get('edit/{id}', 'VoucherItemController@edit')->name('edit');
-            Route::post('update/{id}', 'VoucherItemController@update')->name('update');
-            Route::delete('delete/{id}', 'VoucherItemController@delete')->name('delete');
-            Route::post('status/{id}', 'VoucherItemController@status')->name('status');
-        });
-
-
-            Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
-            Route::get('add-new', 'VoucherItemController@index')->name('add-new');
-            Route::post('variant-combination', 'VoucherItemController@variant_combination')->name('variant-combination');
-            Route::post('store', 'VoucherItemController@store')->name('store');
-            Route::get('edit/{id}', 'VoucherItemController@edit')->name('edit');
-            Route::post('update/{id}', 'VoucherItemController@update')->name('update');
-            Route::get('list', 'VoucherItemController@list')->name('list');
-            Route::delete('delete/{id}', 'VoucherItemController@delete')->name('delete');
-            Route::get('status/{id}/{status}', 'VoucherItemController@status')->name('status');
-            Route::get('review-status/{id}/{status}', 'VoucherItemController@reviews_status')->name('reviews.status');
-            Route::post('search', 'VoucherItemController@search')->name('search');
-            Route::post('store/{store_id}/search', 'VoucherItemController@search_store')->name('store-search');
-            Route::get('reviews', 'VoucherItemController@review_list')->name('reviews');
-            // Route::post('reviews/search', 'VoucherItemController@review_search')->name('reviews.search');
-            Route::get('remove-image', 'VoucherItemController@remove_image')->name('remove-image');
-            Route::get('view/{id}', 'VoucherItemController@view')->name('view');
-            Route::get('store-item-export', 'VoucherItemController@store_item_export')->name('store-item-export');
-            Route::get('reviews-export', 'VoucherItemController@reviews_export')->name('reviews_export');
-            Route::get('item-wise-reviews-export', 'VoucherItemController@item_wise_reviews_export')->name('item_wise_reviews_export');
-
-            Route::get('new/item/list', 'VoucherItemController@approval_list')->name('approval_list');
-            Route::get('approved', 'VoucherItemController@approved')->name('approved');
-            Route::get('product_denied', 'VoucherItemController@deny')->name('deny');
-            Route::get('requested/item/view/{id}', 'VoucherItemController@requested_item_view')->name('requested_item_view');
-            Route::get('product-gallery', 'VoucherItemController@product_gallery')->name('product_gallery');
-
-            //ajax request
-            Route::get('get-categories', 'VoucherItemController@get_categories')->name('get-categories');
-            Route::get('get-items', 'VoucherItemController@get_items')->name('getitems');
-            Route::get('get-items-flashsale', 'VoucherItemController@get_items_flashsale')->name('getitems-flashsale');
-            Route::post('food-variation-generate', 'VoucherItemController@food_variation_generator')->name('food-variation-generate');
-            Route::post('variation-generate', 'VoucherItemController@variation_generator')->name('variation-generate');
-
-
-            Route::get('export', 'VoucherItemController@export')->name('export');
-
-            //Mainul
-            Route::get('get-variations', 'VoucherItemController@get_variations')->name('get-variations');
-            Route::get('get-stock', 'VoucherItemController@get_stock')->name('get_stock');
-            Route::post('stock-update', 'VoucherItemController@stock_update')->name('stock-update');
-
-            //Import and export
-            Route::get('bulk-import', 'VoucherItemController@bulk_import_index')->name('bulk-import');
-            Route::post('bulk-import', 'VoucherItemController@bulk_import_data');
-            Route::get('bulk-export', 'VoucherItemController@bulk_export_index')->name('bulk-export-index');
-            Route::post('bulk-export', 'VoucherItemController@bulk_export_data')->name('bulk-export');
-        });
-
-       // Voucher item
-
           // App Mobile
         Route::group(['prefix' => 'app', 'as' => 'app.'], function () {
             Route::get('add-new', 'AppController@index')->name('add-new');
