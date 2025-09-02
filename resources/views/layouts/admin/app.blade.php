@@ -35,6 +35,41 @@ $countryCode= strtolower($country?$country->value:'auto');
 
     <script src="{{asset('public/assets/admin/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js')}}"></script>
     <link rel="stylesheet" href="{{asset('public/assets/admin/css/toastr.css')}}">
+
+      <style>
+        .section-card {
+            background-color: #F8FAFC;
+            border-left: 5px solid #10B981;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .voucher-card, .voucher-card_2 {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .voucher-card:hover, .voucher-card_2:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .voucher-card.selected, .voucher-card_2.selected {
+            border: 2px solid #10B981 !important;
+            background-color: #f0fdf4 !important;
+        }
+        .form-select, .form-control {
+            border: 1px solid #d1d5db;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .form-select:focus, .form-control:focus {
+            border-color: #10B981;
+            box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+        }
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            transition: border-color 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #10B981;
+        }
+    </style>
 </head>
 
 <body class="footer-offset">
