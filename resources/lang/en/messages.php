@@ -8202,4 +8202,6 @@ Smartly or Earn. ',
   'add new Partner' => 'Add new Partner',
   'New Partner' => 'New Partner',
   'Restaurant management' => 'Restaurant management',
+  'Voucher Type' => 'Voucher Type',
+  'Voucher Addon' => 'Voucher Addon',
 );

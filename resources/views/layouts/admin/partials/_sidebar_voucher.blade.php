@@ -556,15 +556,21 @@
                         </li>
                     @endif
                     <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('messages.units') }}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('Voucher Addon') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Food Addon') }}
+                                {{ translate('Voucher Addon') }}
                             </span>
                         </a>
                     </li>
-
-
+                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.VoucherType.add-new') }}" title="{{ translate('Voucher Type') }}">
+                            <i class="tio-ruler nav-icon"></i>
+                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
+                                {{ translate('Voucher Type') }}
+                            </span>
+                        </a>
+                    </li>
                         @if (\App\CentralLogics\Helpers::module_permission_check('item'))
                 <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/item*') ? 'active' : '' }}">
                     <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Voucher Setup') }}">
