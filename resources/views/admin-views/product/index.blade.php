@@ -52,44 +52,63 @@
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
 
             <!-- Step 1: Select Voucher Type -->
+
+
             <div class="section-card rounded p-4 mb-4">
                 <h2 class="fw-semibold h5 mb-4">🎯 Step 1: Select Voucher Type</h2>
                 <div class="row g-3">
+                @php $i = 1; @endphp
+                @foreach (\App\Models\VoucherType::orderBy('name')->get() as $voucherType)
                     <div class="col-md-4">
                         <div class="voucher-card border rounded p-4 text-center h-100"
-                             onclick="section_one('1')"
-                             data-value="Delivery">
+                            onclick="section_one('{{ $i }}' , '{{ $voucherType->id }}')"
+                            data-value="{{ $voucherType->name }}">
+                            <div class="display-4 mb-2">
+                                <img src="{{ asset($voucherType->logo) }}" alt="{{ $voucherType->name }}" style="width: 40px;" />
+                            </div>
+
+                            <h6 class="fw-semibold">{{ $voucherType->name }}</h6>
+                            <small class="text-muted">{{ $voucherType->desc }}</small>
+                        </div>
+                    </div>
+                    @php $i++; @endphp
+                @endforeach
+
+                    {{-- <div class="col-md-4">
+                        <div class="voucher-card border rounded p-4 text-center h-100"
+                            onclick="section_one('1')"
+                            data-value="Delivery">
                             <div class="display-4 mb-2">🚚</div>
                             <h6 class="fw-semibold">Delivery/Pickup</h6>
                             <small class="text-muted">E-commerce style vouchers with cart functionality</small>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="voucher-card border rounded p-4 text-center h-100"
-                             onclick="section_one('2')"
-                             data-value="Store">
-                            <div class="display-4 mb-2">🏪</div>
-                            <h6 class="fw-semibold">In-Store</h6>
-                            <small class="text-muted">Instant purchase with QR/Barcode redemption</small>
-                        </div>
+                    <div class="voucher-card border rounded p-4 text-center h-100"
+                        onclick="section_one('2')"
+                        data-value="Store">
+                        <div class="display-4 mb-2">🏪</div>
+                        <h6 class="fw-semibold">In-Store</h6>
+                        <small class="text-muted">Instant purchase with QR/Barcode redemption</small>
+                    </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="voucher-card border rounded p-4 text-center h-100"
-                             onclick="section_one('3')"
-                             data-value="Discount">
-                            <div class="display-4 mb-2">💵</div>
-                            <h6 class="fw-semibold">Flat Discount</h6>
-                            <small class="text-muted">Percentage-based discount on bill amount</small>
-                        </div>
+                    <div class="voucher-card border rounded p-4 text-center h-100"
+                        onclick="section_one('3')"
+                        data-value="Discount">
+                        <div class="display-4 mb-2">💵</div>
+                        <h6 class="fw-semibold">Flat Discount</h6>
+                        <small class="text-muted">Percentage-based discount on bill amount</small>
                     </div>
+                    </div> --}}
                 </div>
             </div>
 
             <!-- Step 2: Select Management Type -->
             <div class="section-card rounded p-4 mb-4" id="management_selection">
                 <h2 class="fw-semibold h5 mb-4">⚙️ Step 2: Select Management Type</h2>
-                <div class="row g-3">
-                    <div class="col-md-3">
+                <div class="row g-3" id="append_all_data">
+                    {{-- <div class="col-md-3">
                         <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('4')">
                             <div class="display-4 mb-2">🛒</div>
                             <h6 class="fw-semibold">Shop</h6>
@@ -116,17 +135,17 @@
                             <h6 class="fw-semibold">Food</h6>
                             <small class="text-muted">Restaurant and food delivery</small>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
-       <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
+        <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
             @csrf
             @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
 
-            <!-- Basic Information -->
+            <!-- Basic Information  same-->
             <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info">
                 <h3 class="h5 fw-semibold mb-4">📝 Basic Information</h3>
 
@@ -232,9 +251,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <!--  Store & Category Info -->
+            <!--  Store & Category Info same -->
             <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_store_category">
                 <h3 class="h5 fw-semibold mb-4">🏪 Store & Category Info</h3>
 
@@ -280,6 +297,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             <!-- Discount Settings -->
             <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_settings">
                 <h3 class="h5 fw-semibold mb-4">💰 Discount Configuration</h3>
@@ -913,7 +933,12 @@
                     </div>
                 </div>
             </div>
-            <!-- Price Information -->
+
+
+
+
+
+            <!-- Price Information  same-->
             <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="price_info">
                 <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
 
@@ -980,7 +1005,7 @@
                 </div>
 
             </div>
-            <!-- Voucher Behavior Settings -->
+            <!-- Voucher Behavior Settings same-->
             <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="voucher_behavior">
                 <h3 class="h5 fw-semibold mb-4">⚙️ Voucher Behavior Settings</h3>
 
@@ -1239,7 +1264,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Usage Terms & Conditions -->
+            <!-- Usage Terms & Conditions same-->
             <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="usage_terms">
                 <h3 class="h5 fw-semibold mb-4">📋 Usage Terms & Conditions</h3>
                 <div class="row g-2 mb-4">
@@ -1328,7 +1353,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Attributes -->
+            <!-- Attributes same-->
             <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="attributes">
                 <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('attribute') }}</h3>
 
@@ -1372,7 +1397,7 @@
 
             </div>
             </div>
-            <!-- Tags -->
+            <!-- Tags same-->
             <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="tags">
                 <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('tags') }}</h3>
                 <div class="col-md-12">
@@ -1396,26 +1421,7 @@
 
         </form>
         </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      </div>
 
 
     <div class="modal" id="food-modal">
@@ -1450,13 +1456,13 @@
 
 
 @push('script_2')
+{{-- dashboard code --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
     <script>
         "use strict";
-
-
         $(document).on('change', '#discount_type', function () {
          let data =  document.getElementById("discount_type");
          if(data.value === 'amount'){
@@ -1465,9 +1471,7 @@
             else{
              $('#symble').text("(%)");
          }
-     });
-
-
+         });
         $(document).ready(function() {
             $("#add_new_option_button").click(function(e) {
                 $('#empty-variation').hide();
@@ -1521,8 +1525,8 @@
                 </label>
             </div>
         </div>
-    </div>
-    <div class="col-xl-4 col-lg-6">
+        </div>
+        <div class="col-xl-4 col-lg-6">
         <div class="row g-2">
             <div class="col-6">
                 <label for="">{{ translate('Min') }}</label>
@@ -2022,14 +2026,11 @@
     </script>
 
 
-{{-- dashboard code --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const managementSelection = document.querySelectorAll('#management_selection');
             const voucherCards = document.querySelectorAll('.voucher-card');
             const voucherCards2 = document.querySelectorAll('.voucher-card_2');
-
             // Get all elements by ID
             const basic_info = document.getElementById('basic_info');
             const discount_store_category = document.getElementById('discount_store_category');
@@ -2045,19 +2046,22 @@
             const attributes = document.getElementById('attributes');
             const tags = document.getElementById('tags');
 
-            // Function to toggle visibility based on selection
-            function section_one(value_one) {
-                document.getElementById('hidden_value').value = value_one;
-
+            function section_one(loopIndex, primaryId) {
+                // اگر hidden input میں primary id رکھنی ہے:
+                document.getElementById('hidden_value').value = loopIndex;
                 managementSelection.forEach(el => {
-                    if (value_one === "1" || value_one === "2") {
+                    if (loopIndex === "1" || loopIndex === "2") {
+                        submit_voucher_type(loopIndex,primaryId); // اب اصل primary id pass کر رہے ہیں
                         el.classList.remove('d-none');
                         // Hide discount-specific sections
                         [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, tags].forEach(el => {
                             if (el) el.classList.add('d-none');
                         });
-                    } else if (value_one === "3") {
+
+                    } else if (loopIndex === "3") {
+                        submit_voucher_type(loopIndex,primaryId);
                         el.classList.add('d-none');
+
                         // Show discount-specific sections
                         [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, tags].forEach(el => {
                             if (el) el.classList.remove('d-none');
@@ -2065,143 +2069,151 @@
                     }
                 });
             }
-
             function section_second(value_two) {
                 const hidden_value = document.getElementById('hidden_value').value;
+                // Convert to strings for proper comparison
+                const hiddenVal = String(hidden_value);
+                const valueTwo = String(value_two);
+                // Get all elements
+                const basic_info = document.getElementById('basic_info');
+                const discount_store_category = document.getElementById('discount_store_category');
+                const discount_settings = document.getElementById('discount_settings');
+                const store_category = document.getElementById('store_category');
+                const shop_fields = document.getElementById('shop_fields');
+                const pharmacy_fields = document.getElementById('pharmacy_fields');
+                const grocery_fields = document.getElementById('grocery_fields');
+                const food_fields = document.getElementById('food_fields');
+                const price_info = document.getElementById('price_info');
+                const voucher_behavior = document.getElementById('voucher_behavior');
+                const usage_terms = document.getElementById('usage_terms');
+                const attributes = document.getElementById('attributes');
+                const tags = document.getElementById('tags');
 
-                switch (hidden_value) {
-                    case "1":
-                        switch (value_two) {
-                            case "4":
-                                // Shop + Delivery logic
-                                [basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+                // Helper function to show elements
+                function showElements(elements) {
+                    elements.forEach(el => {
+                        if (el) el.classList.remove('d-none');
+                    });
+                }
+
+                // Helper function to hide elements
+                function hideElements(elements) {
+                    elements.forEach(el => {
+                        if (el) el.classList.add('d-none');
+                    });
+                }
+
+                // Main logic based on voucher type and management type
+                switch (hiddenVal) {
+                    case "1": // Delivery/Pickup
+                        switch (valueTwo) {
+                            case "4": // Shop + Delivery
+                                showElements([basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields, food_fields]);
                                 showShopFields();
                                 break;
-                            case "5":
-                                // Pharmacy + Delivery logic
-                                [basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+
+                            case "5": // Pharmacy + Delivery
+                                showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
                                 showPharmacyFields();
                                 break;
-                            case "6":
-                                // Grocery + Delivery logic
-                                [basic_info, store_category, shop_fields, pharmacy_fields, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, food_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+
+                            case "6": // Grocery + Delivery
+                                showElements([basic_info, store_category, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
                                 showGroceryFields();
                                 break;
-                            case "7":
-                                // Food + Delivery logic
-                                [basic_info, store_category, pharmacy_fields, grocery_fields, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, shop_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+
+                            case "7": // Food + Delivery
+                                showElements([basic_info, store_category, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
                                 showFoodFields();
                                 break;
                         }
                         break;
 
-                    case "2":
-                        switch (value_two) {
-                            case "4":
-                                // Shop + In-Store logic
-                                [basic_info, store_category, shop_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+                    case "2": // In-Store
+                        switch (valueTwo) {
+                            case "4": // Shop + In-Store
+                                showElements([basic_info, store_category, shop_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
                                 showShopFields();
                                 break;
-                            case "5":
-                                // Pharmacy + In-Store logic
-                                [basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+
+                            case "5": // Pharmacy + In-Store
+                                showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
                                 showPharmacyFields();
                                 break;
-                            case "6":
-                                // Grocery + In-Store logic
-                                [basic_info, store_category, pharmacy_fields, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, shop_fields, food_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+
+                            case "6": // Grocery + In-Store
+                                showElements([basic_info, store_category, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
                                 showGroceryFields();
                                 break;
-                            case "7":
-                                // Food + In-Store logic
-                                [basic_info, store_category, pharmacy_fields, grocery_fields, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                    if (el) el.classList.remove('d-none');
-                                });
-                                [discount_store_category, discount_settings, shop_fields].forEach(el => {
-                                    if (el) el.classList.add('d-none');
-                                });
+
+                            case "7": // Food + In-Store
+                                showElements([basic_info, store_category, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
                                 showFoodFields();
                                 break;
                         }
                         break;
 
-                    case "3":
-                        if (value_two === "4") {
-                            // Discount logic
-                            [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                                if (el) el.classList.remove('d-none');
-                            });
-                            [pharmacy_fields, shop_fields, grocery_fields, food_fields, price_info].forEach(el => {
-                                if (el) el.classList.add('d-none');
-                            });
+                    case "3": // Flat Discount
+                        if (valueTwo === "4") {
+                            showElements([basic_info, discount_store_category, discount_settings, voucher_behavior, usage_terms, tags]);
+                            hideElements([store_category, shop_fields, pharmacy_fields, grocery_fields, food_fields, price_info, attributes]);
                         }
                         break;
                 }
             }
-
+            // Helper functions for showing specific field types
             function showShopFields() {
-                document.getElementById('shop-category-fields').classList.remove('d-none');
-                document.getElementById('pharmacy-category-fields').classList.add('d-none');
-                document.getElementById('grocery-category-fields').classList.add('d-none');
-                document.getElementById('food-category-fields').classList.add('d-none');
-            }
+                const shopFields = document.getElementById('shop-category-fields');
+                const pharmacyFields = document.getElementById('pharmacy-category-fields');
+                const groceryFields = document.getElementById('grocery-category-fields');
+                const foodFields = document.getElementById('food-category-fields');
 
+                if (shopFields) shopFields.classList.remove('d-none');
+                if (pharmacyFields) pharmacyFields.classList.add('d-none');
+                if (groceryFields) groceryFields.classList.add('d-none');
+                if (foodFields) foodFields.classList.add('d-none');
+            }
             function showPharmacyFields() {
-                document.getElementById('pharmacy-category-fields').classList.remove('d-none');
-                document.getElementById('shop-category-fields').classList.add('d-none');
-                document.getElementById('grocery-category-fields').classList.add('d-none');
-                document.getElementById('food-category-fields').classList.add('d-none');
-            }
+                const shopFields = document.getElementById('shop-category-fields');
+                const pharmacyFields = document.getElementById('pharmacy-category-fields');
+                const groceryFields = document.getElementById('grocery-category-fields');
+                const foodFields = document.getElementById('food-category-fields');
 
+                if (pharmacyFields) pharmacyFields.classList.remove('d-none');
+                if (shopFields) shopFields.classList.add('d-none');
+                if (groceryFields) groceryFields.classList.add('d-none');
+                if (foodFields) foodFields.classList.add('d-none');
+            }
             function showGroceryFields() {
-                document.getElementById('grocery-category-fields').classList.remove('d-none');
-                document.getElementById('shop-category-fields').classList.add('d-none');
-                document.getElementById('pharmacy-category-fields').classList.add('d-none');
-                document.getElementById('food-category-fields').classList.add('d-none');
-            }
+                const shopFields = document.getElementById('shop-category-fields');
+                const pharmacyFields = document.getElementById('pharmacy-category-fields');
+                const groceryFields = document.getElementById('grocery-category-fields');
+                const foodFields = document.getElementById('food-category-fields');
 
+                if (groceryFields) groceryFields.classList.remove('d-none');
+                if (shopFields) shopFields.classList.add('d-none');
+                if (pharmacyFields) pharmacyFields.classList.add('d-none');
+                if (foodFields) foodFields.classList.add('d-none');
+            }
             function showFoodFields() {
-                document.getElementById('food-category-fields').classList.remove('d-none');
-                document.getElementById('shop-category-fields').classList.add('d-none');
-                document.getElementById('pharmacy-category-fields').classList.add('d-none');
-                document.getElementById('grocery-category-fields').classList.add('d-none');
-            }
+                const shopFields = document.getElementById('shop-category-fields');
+                const pharmacyFields = document.getElementById('pharmacy-category-fields');
+                const groceryFields = document.getElementById('grocery-category-fields');
+                const foodFields = document.getElementById('food-category-fields');
 
+                if (foodFields) foodFields.classList.remove('d-none');
+                if (shopFields) shopFields.classList.add('d-none');
+                if (pharmacyFields) pharmacyFields.classList.add('d-none');
+                if (groceryFields) groceryFields.classList.add('d-none');
+            }
             // Highlight selected voucher-card
             voucherCards.forEach(card => {
                 card.addEventListener('click', function () {
@@ -2209,167 +2221,215 @@
                     this.classList.add('selected');
                 });
             });
-
             // Highlight selected management voucher-card
-            voucherCards2.forEach(card => {
-                card.addEventListener('click', function () {
-                    voucherCards2.forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-            });
-
+            // voucherCards2.forEach(card => {
+            //     card.addEventListener('click', function () {
+            //         voucherCards2.forEach(c => c.classList.remove('selected'));
+            //         this.classList.add('selected');
+            //     });
+            // });
             // Make functions globally accessible
             window.section_one = section_one;
             window.section_second = section_second;
         });
     </script>
 
+    <script>
+        function submit_voucher_type(loopIndex,id) {
+            var loopIndex = loopIndex;
+            var primary_vouchertype_id = id;
+
+            console.log("Sending ID:", primary_vouchertype_id);
+
+            $.ajax({
+                url: "{{ route('admin.item.voucherType.store') }}", // <-- اپنے route کے حساب سے بدلیں
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}", // Laravel CSRF protection کیلئے ضروری
+                    voucher_type_id: primary_vouchertype_id,
+                    loopIndex: loopIndex
+                },
+                success: function(response) {
+                    console.log("Success:", response);
+                    // empty previous content
+                    $("#append_all_data").empty();
+                    // starting index (4 se start karna hai)
+                    let index = 4;
+                    // loop through modules
+                    response.all_ids.forEach(function(module) {
+                        let card = `
+                            <div class="col-md-3">
+                                <div class="voucher-card_2 border rounded p-4 text-center h-100"
+                                    onclick="section_second(${index})">
+                                     <div class="display-4 mb-2">
+                                        <img src="${module.thumbnail}" alt="${module.module_name}" style="width:40px; height:auto;" />
+                                    </div>
+
+                                    <h6 class="fw-semibold">${module.module_name}</h6>
+                                    <small class="text-muted">${module.description ?? ''}</small>
+                                </div>
+                            </div>
+
+                        `;
+                        $("#append_all_data").append(card);
+
+                        index++; // next card ke liye +1
+                    });
+                },
+
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    alert("Something went wrong!");
+                }
+            });
+        }
 
 
+        $(document).on('click', '.voucher-card_2', function () {
+            $('.voucher-card_2').removeClass('selected');
+            $(this).addClass('selected');
+        });
 
+    </script>
 
  <script>
-$(document).ready(function () {
-    // -------------------- Segment Select2 --------------------
-    $('.segment-select').select2({
-        placeholder: "-- Select Segment --",
-        allowClear: true,
-        width: '100%',
-        dropdownAutoWidth: true,
-        minimumResultsForSearch: 3,
-        templateResult: formatOption,
-        templateSelection: formatSelection
-    });
+    $(document).ready(function () {
+        // -------------------- Segment Select2 --------------------
+        $('.segment-select').select2({
+            placeholder: "-- Select Segment --",
+            allowClear: true,
+            width: '100%',
+            dropdownAutoWidth: true,
+            minimumResultsForSearch: 3,
+            templateResult: formatOption,
+            templateSelection: formatSelection
+        });
 
-    // -------------------- Client Select2 --------------------
-    $('.Clients-select').select2({
-        placeholder: "-- Select Clients --",
-        allowClear: true,
-        width: '100%',
-        dropdownAutoWidth: true,
-        minimumResultsForSearch: 3,
-        templateResult: formatOption,
-        templateSelection: formatSelection
-    });
+        // -------------------- Client Select2 --------------------
+        $('.Clients-select').select2({
+            placeholder: "-- Select Clients --",
+            allowClear: true,
+            width: '100%',
+            dropdownAutoWidth: true,
+            minimumResultsForSearch: 3,
+            templateResult: formatOption,
+            templateSelection: formatSelection
+        });
 
-    // -------------------- Option Formatter --------------------
-    function formatOption(option) {
-        if (!option.id) return option.text;
+        // -------------------- Option Formatter --------------------
+        function formatOption(option) {
+            if (!option.id) return option.text;
 
-        const parts = option.text.split(' / ');
-        if (parts.length === 2) {
-            const name = parts[0];
-            const type = parts[1];
-            const typeClass = type === 'free' ? 'success' : type === 'paid' ? 'primary' : 'warning';
+            const parts = option.text.split(' / ');
+            if (parts.length === 2) {
+                const name = parts[0];
+                const type = parts[1];
+                const typeClass = type === 'free' ? 'success' : type === 'paid' ? 'primary' : 'warning';
 
-            return $(
-                '<div class="d-flex justify-content-between align-items-center">' +
-                    '<span>' + name + '</span>' +
-                    '<span class="badge bg-' + typeClass + '">' + type + '</span>' +
-                '</div>'
-            );
-        }
-        return option.text;
-    }
-
-    function formatSelection(option) {
-        return option.text || option.placeholder;
-    }
-
-    // -------------------- Client Change => Load Segments --------------------
-    $('.Clients-select').on('change', function () {
-        let clientId = $(this).val();
-        if (!clientId) return;
-        // alert(clientId);
-        let url = "{{ route('admin.client-side.getSegments', ':id') }}".replace(':id', clientId);
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function (res) {
-                // Clear and refill segment dropdown
-                $('#segment_type').empty().append('<option></option>');
-
-                $.each(res, function (index, item) {
-                    $('#segment_type').append(
-                        '<option value="' + item.id + '">' + item.name + ' / ' + item.type + '</option>'
-                    );
-                });
-
-                // Refresh Select2
-                $('#segment_type').trigger('change');
-            },
-            error: function () {
-                alert("Error loading segments!");
+                return $(
+                    '<div class="d-flex justify-content-between align-items-center">' +
+                        '<span>' + name + '</span>' +
+                        '<span class="badge bg-' + typeClass + '">' + type + '</span>' +
+                    '</div>'
+                );
             }
+            return option.text;
+        }
+
+        function formatSelection(option) {
+            return option.text || option.placeholder;
+        }
+
+        // -------------------- Client Change => Load Segments --------------------
+        $('.Clients-select').on('change', function () {
+            let clientId = $(this).val();
+            if (!clientId) return;
+            // alert(clientId);
+            let url = "{{ route('admin.client-side.getSegments', ':id') }}".replace(':id', clientId);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (res) {
+                    // Clear and refill segment dropdown
+                    $('#segment_type').empty().append('<option></option>');
+
+                    $.each(res, function (index, item) {
+                        $('#segment_type').append(
+                            '<option value="' + item.id + '">' + item.name + ' / ' + item.type + '</option>'
+                        );
+                    });
+
+                    // Refresh Select2
+                    $('#segment_type').trigger('change');
+                },
+                error: function () {
+                    alert("Error loading segments!");
+                }
+            });
+        });
+
+        // -------------------- Segment Select Validation --------------------
+        $('.segment-select').on('select2:select', function (e) {
+            const data = e.params.data;
+            $('#selectedValue').removeClass('alert-info alert-warning')
+                .addClass('alert-success')
+                .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
+            $(this).addClass('is-valid');
+        });
+
+        $('.segment-select').on('select2:clear', function () {
+            $('#selectedValue').removeClass('alert-success')
+                .addClass('alert-info')
+                .html('No segment selected yet');
+            $(this).removeClass('is-valid');
+        });
+
+        // -------------------- Clients Select Validation --------------------
+        $('.Clients-select').on('select2:select', function (e) {
+            const data = e.params.data;
+            $('#selectedValue').removeClass('alert-info alert-warning')
+                .addClass('alert-success')
+                .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
+            $(this).addClass('is-valid');
+        });
+
+        $('.Clients-select').on('select2:clear', function () {
+            $('#selectedValue').removeClass('alert-success')
+                .addClass('alert-info')
+                .html('No Clients selected yet');
+            $(this).removeClass('is-valid');
+        });
+
+        // -------------------- Submit Demo --------------------
+        $('#submitBtn').on('click', function () {
+            const selectedClients = $('.Clients-select').val();
+            const selectedSegment = $('.segment-select').val();
+            const clientName = $('#client_name').val();
+
+            if (!selectedClients) {
+                alert('Please select a Client first!');
+                return;
+            }
+
+            if (!selectedSegment) {
+                alert('Please select a Segment first!');
+                return;
+            }
+
+            if (!clientName) {
+                alert('Please enter client name!');
+                return;
+            }
+
+            alert(
+                'Client saved successfully!\n' +
+                'Client: ' + $('.Clients-select option:selected').text() +
+                '\nSegment: ' + $('.segment-select option:selected').text() +
+                '\nName: ' + clientName
+            );
         });
     });
-
-    // -------------------- Segment Select Validation --------------------
-    $('.segment-select').on('select2:select', function (e) {
-        const data = e.params.data;
-        $('#selectedValue').removeClass('alert-info alert-warning')
-            .addClass('alert-success')
-            .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
-        $(this).addClass('is-valid');
-    });
-
-    $('.segment-select').on('select2:clear', function () {
-        $('#selectedValue').removeClass('alert-success')
-            .addClass('alert-info')
-            .html('No segment selected yet');
-        $(this).removeClass('is-valid');
-    });
-
-    // -------------------- Clients Select Validation --------------------
-    $('.Clients-select').on('select2:select', function (e) {
-        const data = e.params.data;
-        $('#selectedValue').removeClass('alert-info alert-warning')
-            .addClass('alert-success')
-            .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
-        $(this).addClass('is-valid');
-    });
-
-    $('.Clients-select').on('select2:clear', function () {
-        $('#selectedValue').removeClass('alert-success')
-            .addClass('alert-info')
-            .html('No Clients selected yet');
-        $(this).removeClass('is-valid');
-    });
-
-    // -------------------- Submit Demo --------------------
-    $('#submitBtn').on('click', function () {
-        const selectedClients = $('.Clients-select').val();
-        const selectedSegment = $('.segment-select').val();
-        const clientName = $('#client_name').val();
-
-        if (!selectedClients) {
-            alert('Please select a Client first!');
-            return;
-        }
-
-        if (!selectedSegment) {
-            alert('Please select a Segment first!');
-            return;
-        }
-
-        if (!clientName) {
-            alert('Please enter client name!');
-            return;
-        }
-
-        alert(
-            'Client saved successfully!\n' +
-            'Client: ' + $('.Clients-select option:selected').text() +
-            '\nSegment: ' + $('.segment-select option:selected').text() +
-            '\nName: ' + clientName
-        );
-    });
-});
 </script>
-
-
-
-
 
 @endpush

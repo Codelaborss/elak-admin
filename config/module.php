@@ -2,7 +2,7 @@
 
 return [
     'module_type'=>[
-        'grocery', 'food', 'pharmacy', 'ecommerce','parcel','rental' ,'voucher'
+        'grocery', 'food', 'pharmacy', 'ecommerce','parcel','rental' ,'voucher'  ,'shop'
     ],
 
     'grocery'=>[
@@ -160,6 +160,31 @@ return [
         'is_rental'=>true,
     ],
      'voucher'=>[
+        'order_status'=>['accepted'=>false],
+        'order_place_to_schedule_interval'=>false,
+        'add_on'=>false,
+        'stock'=>false,
+        'veg_non_veg'=>false,
+        'unit'=>false,
+        'order_attachment'=>false,
+        'always_open'=>false,
+        'all_zone_service'=>false,
+        'item_available_time'=>false,
+        'show_restaurant_text'=>false,
+        'is_parcel'=>false,
+        'organic'=>false,
+        'cutlery'=>false,
+        'common_condition'=>false,
+        'nutrition'=>false,
+        'allergy'=>false,
+        'basic'=>false,
+        'halal'=>false,
+        'brand'=>false,
+        'generic_name'=>false,
+        'description'=>'',
+        'is_rental'=>true,
+    ],
+     'shop'=>[
         'order_status'=>['accepted'=>false],
         'order_place_to_schedule_interval'=>false,
         'add_on'=>false,

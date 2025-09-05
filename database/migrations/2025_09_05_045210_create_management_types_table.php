@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('voucher_types', function (Blueprint $table) {
+        Schema::create('management_types', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
             $table->string("logo")->nullable();
-            $table->string("desc")->nullable();
-            $table->string("management_id")->nullable();
-            $table->string("status")->nullable();
+            $table->string("des")->nullable();
+            $table->string("status")->default("active");
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('voucher_types');
+        Schema::dropIfExists('management_types');
     }
 };

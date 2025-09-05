@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',"Types Voucher Edit")
+@section('title',"Management Type Edit")
 
 @push('css_or_js')
 
@@ -75,14 +75,14 @@
                     <img src="{{asset('public/assets/admin/img/edit.png')}}" class="w--26" alt="">
                 </span>
                 <span>
-                   Edit Types Voucher Edit
+                   Edit Management Type Edit
                 </span>
             </h1>
         </div>
         <!-- End Page Header -->
         <div class="card">
             <div class="card-body">
-                <form action="{{route('admin.VoucherType.update',[$Voucher['id']])}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('admin.ManagementType.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
                     @csrf
                     @php($language=\App\Models\BusinessSetting::where('key','language')->first())
                         @php($language = $language->value ?? null)
@@ -95,7 +95,7 @@
                                                 <label class="input-label"
                                                     for="name">  Name
                                                 </label>
-                                                <input type="text" name="name" value="{{$Voucher->name}}" id="name" class="form-control"  placeholder="Enter Client Name">
+                                                <input type="text" name="name" value="{{$ManagementType->name}}" id="name" class="form-control"  placeholder="Enter Client Name">
                                             </div>
                                             <input type="hidden" name="lang[]" value="default">
                                         </div>
@@ -108,9 +108,9 @@
                                             <input type="file" name="logo_image" id="logo_image" class="form-control">
 
                                             {{-- Agar client ka logo already hai to niche show kare --}}
-                                            @if(!empty($Voucher->logo))
+                                            @if(!empty($ManagementType->logo))
                                                 <div class="mt-2">
-                                                    <img src="{{ asset($Voucher->logo) }}"
+                                                    <img src="{{ asset($ManagementType->logo) }}"
                                                         alt="Client Logo"
                                                         class="img-thumbnail"
                                                         style="max-width: 120px; height:auto;">
@@ -118,36 +118,15 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                   <div class="col-12 col-md-6">
-                                    <div class="lang_form" id="default-form">
-                                        <div class="form-group">
-                                            <label class="input-label" for="type">Management Types</label>
-                                            <select
-                                                name="type[]"
-                                                id="type"
-                                                class="form-control select2"
-                                                multiple="multiple"
-                                                data-placeholder="-- Select Types --"
-                                             >
-                                                @foreach (\App\Models\ManagementType::all() as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        @if(collect(old('type', $selectedTypes ?? []))->contains($item->id)) selected @endif>
-                                                        {{ $item->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                   </div>
 
-                                        </div>
-                                    </div>
-                                </div>
                                     <div class="col-12 ">
                                         <div class="lang_form" id="default-form">
                                             <div class="form-group">
                                                 <label class="input-label" for="client_message" style="font-size:18px; font-weight:600;">
                                                     Description
                                                 </label>
-                                                <textarea name="client_message" id="client_message" class="form-control"  placeholder="Enter Client Message" rows="5">{{$Voucher->desc}}</textarea>
+                                                <textarea name="client_message" id="client_message" class="form-control"  placeholder="Enter Client Message" rows="5">{{$ManagementType->des}}</textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -8206,4 +8206,8 @@ Smartly or Earn. ',
   'Voucher Addon' => 'Voucher Addon',
   '(Default)' => '(Default)',
   'Voucher Name' => 'Voucher Name',
+  'shop' => 'Shop',
+  'Management Type' => 'Management Type',
+  'The logo image field is required.' => 'The logo image field is required.',
+  'The client message field is required.' => 'The client message field is required.',
 );

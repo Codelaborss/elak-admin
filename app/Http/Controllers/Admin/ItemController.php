@@ -16,6 +16,7 @@ use App\Scopes\StoreScope;
 use App\Models\GenericName;
 use App\Models\TempProduct;
 use App\Models\Translation;
+use App\Models\VoucherType;
 use Illuminate\Support\Str;
 use App\Models\ItemCampaign;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ use App\CentralLogics\ProductLogic;
 use App\Models\PharmacyItemDetails;
 use App\Http\Controllers\Controller;
 use App\Models\EcommerceItemDetails;
+use App\Models\Module;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,6 +42,38 @@ use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
+
+    public function get_voucher_type(Request $request)
+    {
+            $voucherTypeId = $request->voucher_type_id;
+            $voucherType = VoucherType::find($voucherTypeId);
+            // convert "2,10,11,12" into array [2, 10, 11, 12]
+            $managementIds = explode(",", $voucherType->management_id);
+            // $all_module = Module::whereIn("id", $managementIds)->get();
+          $all_module = Module::whereIn("id", $managementIds)->get()->map(function($item) {
+            return [
+                'id' => $item->id,
+                'module_name' => $item->module_name,
+                'desc' => $item->desc,
+               'thumbnail' => $item->thumbnail
+                    ? asset('storage/module/' . $item->thumbnail)   // ✅ e.g. /storage/module/shop.png
+                    : asset('storage/module/default.png'),
+            ];
+        });
+
+          return response()->json([
+            'success' => true,
+            'message' => 'VoucherType ID received',
+            'all_ids' => $all_module
+        ]);
+
+
+
+
+    }
+
+
+
     public function index(Request $request)
     {
         $categories = Category::where(['position' => 0])->get();

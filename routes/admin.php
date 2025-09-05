@@ -69,6 +69,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
         Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
             Route::get('add-new', 'ItemController@index')->name('add-new');
+            Route::post('get-data', 'ItemController@get_voucher_type')->name('voucherType.store');
             Route::post('variant-combination', 'ItemController@variant_combination')->name('variant-combination');
             Route::post('store', 'ItemController@store')->name('store');
             Route::get('edit/{id}', 'ItemController@edit')->name('edit');
@@ -219,6 +220,33 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('status/{id}', 'VoucherTypeController@status')->name('status');
         });
        // Voucher Type
+
+
+             // Management Types
+        Route::group(['prefix' => 'ManagementType', 'as' => 'ManagementType.'], function () {
+            Route::get('add-new', 'ManagementTypeController@index')->name('add-new');
+            Route::get('list', 'ManagementTypeController@list')->name('list');
+            Route::post('store', 'ManagementTypeController@store')->name('store');
+            Route::get('edit/{id}', 'ManagementTypeController@edit')->name('edit');
+            Route::post('update/{id}', 'ManagementTypeController@update')->name('update');
+            Route::delete('delete/{id}', 'ManagementTypeController@delete')->name('delete');
+            Route::post('status/{id}', 'ManagementTypeController@status')->name('status');
+        });
+       // Management Types
+
+             // Management Types
+        Route::group(['prefix' => 'UsageTerm', 'as' => 'UsageTerm.'], function () {
+            Route::get('add-new', 'UsageTermController@index')->name('add-new');
+            Route::get('list', 'UsageTermController@list')->name('list');
+            Route::post('store', 'UsageTermController@store')->name('store');
+            Route::get('edit/{id}', 'UsageTermController@edit')->name('edit');
+            Route::post('update/{id}', 'UsageTermController@update')->name('update');
+            Route::delete('delete/{id}', 'UsageTermController@delete')->name('delete');
+            Route::post('status/{id}', 'UsageTermController@status')->name('status');
+        });
+       // Management Types
+
+
 
           // App Mobile
         Route::group(['prefix' => 'app', 'as' => 'app.'], function () {

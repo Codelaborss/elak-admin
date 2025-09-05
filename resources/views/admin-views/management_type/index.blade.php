@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',"VoucherType List")
+@section('title',"ManagementType List")
 
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                     <img src="{{asset('public/assets/admin/img/condition.png')}}" class="w--26" alt="">
                 </span>
                 <span>
-                   Add Types Voucher
+                   Add Management Type
                 </span>
             </h1>
         </div>
@@ -83,7 +83,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{route('admin.VoucherType.store')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('admin.ManagementType.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             @if ($language)
                                     <div class="row">
@@ -107,28 +107,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            <div class="col-12 ">
-                                       <label class="input-label" for="module_type">Management Types</label>
-                                        <div class="lang_form" id="default-form">
-                                            <div class="form-group">
-                                                <select
-                                                    name="type[]"
-                                                    id="type"
-                                                    class="form-control select2"
-                                                    multiple="multiple"
-                                                    data-placeholder="-- Select Types --"
-                                                >
-                                                 @foreach (\App\Models\ManagementType::all() as $item)
-                                                       <option value="{{ $item->id }}"
-                                                            @if(collect(old('type', []))->contains($item->id)) selected @endif>
-                                                                {{ $item->name }}
-                                                        </option>
-                                                 @endforeach
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
                                         <div class="col-12 ">
                                             <div class="lang_form" id="default-form">
                                                 <div class="form-group">
@@ -154,14 +132,14 @@
                     <div class="card-header py-2 border-0">
                         <div class="search--button-wrapper">
                             <h5 class="card-title">
-                                Types Voucher<span class="badge badge-soft-dark ml-2" id="itemCount"></span>
+                                Management Types<span class="badge badge-soft-dark ml-2" id="itemCount"></span>
                             </h5>
                             <form  class="search-form">
                                 <!-- Search -->
 
                                 <div class="input-group input--group">
                                     <input id="datatableSearch_" value="{{ request()?->search ?? null }}" type="search" name="search" class="form-control"
-                                            placeholder="Ex: Voucher Name" aria-label="Search" >
+                                            placeholder="Ex: Name" aria-label="Search" >
                                     <button type="submit" class="btn btn--secondary"><i class="tio-search"></i></button>
                                 </div>
                                 <!-- End Search -->
@@ -185,7 +163,6 @@
                             <tr class="text-center">
                                 <th class="border-0">{{translate('sl')}}</th>
                                 <th class="border-0">Name</th>
-                                <th class="border-0">Management Type</th>
                                 <th class="border-0">Logo</th>
                                 <th class="border-0">Status</th>
                                 <th class="border-0">Action</th>
@@ -194,75 +171,67 @@
                             </thead>
 
                             <tbody id="set-rows">
-                         @foreach($Vouchers as $key => $Voucher)
+                         @foreach($ManagementType as $key => $Management)
                             <tr>
                                 {{-- Serial No --}}
                                 <td class="text-center">
                                     <span class="mr-3">
-                                        {{ $Vouchers->firstItem() + $key }}
+                                        {{ $ManagementType->firstItem() + $key }}
                                     </span>
                                 </td>
-
 
                                 {{-- Client Name --}}
                                 <td class="text-center">
-                                    <span title="{{ $Voucher->name }}" class="font-size-sm text-body mr-3">
-                                        {{ Str::limit($Voucher->name, 20, '...') }}
+                                    <span title="{{ $Management->name }}" class="font-size-sm text-body mr-3">
+                                        {{ Str::limit($Management->name, 20, '...') }}
                                     </span>
-                                </td>
-                                     {{-- Client Name --}}
-                                <td class="text-center">
-                                    @foreach (\App\Models\ManagementType::whereIn("id", explode(',', $Voucher->management_id))->get() as $item)
-                                        <span title="{{ $item->name }}" class="font-size-sm text-body mr-3">
-                                            {{ $item->name }}
-                                        </span>
-                                        <br>
-                                    @endforeach
                                 </td>
 
                                 {{-- Client Created At --}}
                                 <td class="text-center">
                                     <div class="d-inline-block" style="width:50px; height:50px; cursor:pointer;">
-                                        <img src="{{ asset($Voucher->logo) }}"
+                                        <img src="{{ asset($Management->logo) }}"
                                             class="img-fluid rounded open-image-modal"
                                             alt="Client Logo"
                                             style="width:100%; height:100%; object-fit:cover;">
                                     </div>
                                 </td>
+
                                     {{-- Status Toggle (Active/Inactive) --}}
-                                <td class="text-center">
-                                    <label class="toggle-switch toggle-switch-sm" for="status-{{ $Voucher->id }}">
+                                      <td class="text-center">
+                                    <label class="toggle-switch toggle-switch-sm" for="status-{{ $Management->id }}">
                                         <input type="checkbox" class="toggle-switch-input dynamic-checkbox"
-                                            {{ $Voucher->status == 'active' ? 'checked' : '' }}
-                                            data-id="status-{{ $Voucher->id }}"
+                                            {{ $Management->status == 'active' ? 'checked' : '' }}
+                                            data-id="status-{{ $Management->id }}"
                                             data-type="status"
-                                            id="status-{{ $Voucher->id }}">
+                                            id="status-{{ $Management->id }}">
                                         <span class="toggle-switch-label mx-auto">
                                             <span class="toggle-switch-indicator"></span>
                                         </span>
                                     </label>
-                                    <form action="{{ route('admin.VoucherType.status', [$Voucher->id]) }}"
-                                        method="post" id="status-{{ $Voucher->id }}_form">
+                                    <form action="{{ route('admin.ManagementType.status', [$Management->id]) }}"
+                                        method="post" id="status-{{ $Management->id }}_form">
                                         @csrf
                                     </form>
                                 </td>
+
                                 {{-- Action Buttons --}}
                                 <td>
                                     <div class="btn--container justify-content-center">
                                         <a class="btn action-btn btn--primary btn-outline-primary"
-                                        href="{{ route('admin.VoucherType.edit', [$Voucher->id]) }}"
+                                        href="{{ route('admin.ManagementType.edit', [$Management->id]) }}"
                                         title="Edit">
                                         <i class="tio-edit"></i>
                                         </a>
                                         <a class="btn action-btn btn--danger btn-outline-danger form-alert"
                                         href="javascript:"
-                                        data-id="client-{{ $Voucher->id }}"
+                                        data-id="client-{{ $Management->id }}"
                                         data-message="Want to delete this client ?"
                                         title="Delete">
                                         <i class="tio-delete-outlined"></i>
                                         </a>
-                                        <form action="{{ route('admin.VoucherType.delete', [$Voucher->id]) }}"
-                                            method="post" id="client-{{ $Voucher->id }}">
+                                        <form action="{{ route('admin.ManagementType.delete', [$Management->id]) }}"
+                                            method="post" id="client-{{ $Management->id }}">
                                             @csrf @method('delete')
                                         </form>
                                     </div>
@@ -273,13 +242,13 @@
                             </tbody>
                         </table>
                     </div>
-                    @if(count($Vouchers) !== 0)
+                    @if(count($ManagementType) !== 0)
                     <hr>
                     @endif
                     <div class="page-area">
-                        {!! $Vouchers->links() !!}
+                        {!! $ManagementType->links() !!}
                     </div>
-                    @if(count($Vouchers) === 0)
+                    @if(count($ManagementType) === 0)
                     <div class="empty--data">
                         <img src="{{asset('/public/assets/admin/svg/illustrations/sorry.svg')}}" alt="public">
                         <h5>

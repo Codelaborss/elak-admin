@@ -571,6 +571,14 @@
                             </span>
                         </a>
                     </li>
+                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.ManagementType.add-new') }}" title="{{ translate('Management Type') }}">
+                            <i class="tio-ruler nav-icon"></i>
+                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
+                                {{ translate('Management Type') }}
+                            </span>
+                        </a>
+                    </li>
                         @if (\App\CentralLogics\Helpers::module_permission_check('item'))
                 <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/item*') ? 'active' : '' }}">
                     <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Voucher Setup') }}">
@@ -733,7 +741,7 @@
                 </li>
 
                  <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.client-side.add-new') }}" title="">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.UsageTerm.add-new') }}" title="">
                          <span class="tio-calendar-note nav-icon"></span>
                         <span class="text-truncate"> Usage Terms</span>
                     </a>
