@@ -118,6 +118,7 @@ $countryCode= strtolower($country?$country->value:'auto');
     <!-- Content -->
 @yield('content')
 <!-- End Content -->
+</main>
 
     <!-- Footer -->
 @include('layouts.admin.partials._footer')

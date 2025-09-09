@@ -256,63 +256,444 @@
             color: #856404;
         }
     </style>
-    <style>
-        /* Dropdown options - selected option ka background highlight */
-        .select2-results__option[aria-selected="true"] {
-            background-color: #005555 !important; /* Bootstrap primary */
-            color: #fff !important;
+<style>
+        .menu-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
         }
 
-        /* Hover effect on options */
-        .select2-results__option--highlighted[aria-selected] {
-            background-color: #005555 !important;
-            color: #fff !important;
+        .menu-item:hover {
+            background: rgba(255,255,255,0.1);
+            padding-left: 25px;
         }
 
-        /* Selected tags (neeche input me show hone wale items) */
-        .select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice {
-            background-color: #005555;   /* blue tag */
-            border: none;
-            color: #fff;
-            padding: 4px 10px;
-            margin: 3px 4px 0 0;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            display: inline-flex;
+        .menu-item.active {
+            background: rgba(255,255,255,0.2);
+            padding-left: 25px;
+            border-right: 3px solid #fff;
+        }
+
+        .menu-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c5f5f;
+        }
+
+        .page-header h1 {
+            color: #2c5f5f;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2c5f5f;
+        }
+
+        .section-title {
+            color: #2c5f5f;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
             align-items: center;
         }
 
-        /* Tag ke andar remove (x) button */
-        .select2-container--bootstrap4 .select2-selection__choice__remove {
-            margin-right: 6px;
-            font-weight: bold;
-            cursor: pointer;
+        .section-title .icon {
+            margin-right: 10px;
+            font-size: 24px;
         }
 
-        /* Input field height thoda sa neat */
-        .select2-container--bootstrap4 .select2-selection--multiple {
-            min-height: 46px;
-            border: 1px solid #ced4da;
-            border-radius: .5rem;
-            padding: 4px;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        /* Dropdown ka max height with scroll */
-        .select2-results__options {
-            max-height: 220px !important;
-            overflow-y: auto !important;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        /* Dropdown search bar */
-        .select2-search--dropdown .select2-search__field {
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            padding: 6px 10px;
-            width: 100% !important;
+        .form-row-triple {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
+            border-color: #2c5f5f;
+            box-shadow: 0 0 0 3px rgba(44, 95, 95, 0.1);
         }
-    </style>
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Checkbox Groups */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #2c5f5f;
+            background: #f0f8f8;
+        }
+
+        .checkbox-item.selected {
+            border-color: #2c5f5f;
+            background: #e8f4f4;
+        }
+
+        .checkbox-item input {
+            width: auto;
+            margin-right: 8px;
+            transform: scale(1.2);
+            accent-color: #2c5f5f;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        /* Time Range Inputs */
+        .time-range {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .time-separator {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Special Input Styles */
+        .number-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .number-input-group input {
+            flex: 1;
+        }
+
+        .number-input-group .unit {
+            color: #666;
+            font-weight: 600;
+            min-width: 60px;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            margin: 10px 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 30px;
+            transition: 0.4s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #2c5f5f;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        /* Buttons */
+        /* .btn {
+            background: #2c5f5f;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1a4040;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(44, 95, 95, 0.3);
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        } */
+
+        /* Action Bar */
+        .action-bar {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 25px 0;
+            border-top: 3px solid #e9ecef;
+            margin-top: 40px;
+        }
+
+        /* Conditions List */
+        .conditions-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .condition-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .condition-card:hover {
+            border-color: #2c5f5f;
+            box-shadow: 0 4px 20px rgba(44, 95, 95, 0.1);
+        }
+
+        .condition-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .condition-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c5f5f;
+            margin-bottom: 5px;
+        }
+
+        .condition-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .condition-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 13px;
+        }
+
+        .condition-detail-item {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .condition-detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .detail-value {
+            color: #2c5f5f;
+            font-weight: 600;
+        }
+
+        .condition-actions {
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        /* Preview Styles */
+        .preview-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .preview-title {
+            color: #2c5f5f;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .preview-terms {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .preview-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .preview-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .preview-section h4 {
+            color: #2c5f5f;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .preview-section ul {
+            margin-left: 20px;
+        }
+
+        .preview-section li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-triple {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+</style>
 
     <div class="content container-fluid">
         <!-- Page Header -->
@@ -331,123 +712,400 @@
             <div class="card-body">
                 <form action="{{route('admin.UsageTerm.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @php($language=\App\Models\BusinessSetting::where('key','language')->first())
-                        @php($language = $language->value ?? null)
-                        @php($defaultLang = str_replace('_', '-', app()->getLocale()))
+                    @php($language = \App\Models\BusinessSetting::where('key','language')->first())
+                    @php($language = $language->value ?? null)
+                    @php($defaultLang = str_replace('_', '-', app()->getLocale()))
                         @if ($language)
 
                             <div>
                                 <!-- CREATE SECTION -->
-                                <div id="create-section" class="content-section active">
-                                    <div class="content-header">
-                                        <p>Create informational notes or conditional rules for your vouchers</p>
-                                    </div>
-                                    <input type="hidden" name="term_type" id="term_type"   />
-                                    <!-- Step 1: Select Term Type -->
-                                    <div class="step-title">Step 1: Select Term Type</div>
-                                    <div class="term-type-selection">
-                                        <div class="term-type-card informational" id="informational" onclick="selectTermType('informational')">
-                                            <h3>📝 Informational Notes</h3>
-                                            <p>Display messages to customers</p>
-                                            <small style="color: #888;">Example: "Valid for dine-in only"</small>
+                                  <div id="create" class="section active">
+                                    <!-- Basic Information -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">📝</span>Basic Information
                                         </div>
-                                        <div class="term-type-card conditional" id="conditional" onclick="selectTermType('conditional')">
-                                            <h3>⚙️ Conditional Rules</h3>
-                                            <p>Control when vouchers are available</p>
-                                            <small style="color: #888;">Example: "Weekdays only"</small>
+
+                                        <div class="form-group">
+                                            <label for="conditionTitle">Condition Title</label>
+                                            <input type="text" id="conditionTitle" name="baseinfor_condition_title" value="{{ $ManagementType->baseinfor_condition_title}}" placeholder="e.g., Weekend Premium Hours">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="conditionDescription">Detailed Description</label>
+                                            <textarea id="conditionDescription" name="baseinfor_description" placeholder="Explain exactly when and how this condition applies, what it restricts, and what customers should know">{{ $ManagementType->baseinfor_description}}</textarea>
                                         </div>
                                     </div>
 
-                                    <!-- Step 2: Basic Info (Hidden initially) -->
-                                    <div id="basic-info-step" class="form-step">
-                                        <div class="step-title">Step 2: Basic Information</div>
-
-                                        <div class="form-group">
-                                            <label for="term-title">Term Title</label>
-                                            <input type="text" id="term-title" name="term_title" value="{{ $ManagementType->term_title }}"  placeholder="Enter a title for this term">
+                                    <!-- Time & Days Configuration -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">📅</span>Time & Days Configuration
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="term-description">Description</label>
-                                            <textarea id="term-description" name="desc" placeholder="Describe what this term does">{{ $ManagementType->term_dec }}</textarea>
-                                        </div>
+                                            <label>Available Days</label>
+                                            <div class="checkbox-grid" id="daysCheckboxes">
+                                               {{-- @php
+                                                    // Decode JSON from DB into array
+                                                    $selectedDays = is_array($ManagementType->timeandday_config_days)
+                                                        ? $ManagementType->timeandday_config_days
+                                                        : json_decode($ManagementType->timeandday_config_days, true);
 
-                                        <div class="form-group">
-                                            <label for="voucher-types">Applicable Voucher Types</label>
-                                            <select id="voucher-types" name="voucher_type[]" multiple style="height: 100px;">
-                                                @foreach (\App\Models\VoucherType::get() as $item)
-                                                      <option value="{{ $item->id }}" >{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <small>Hold Ctrl/Cmd to select multiple</small>
-                                        </div>
-                                    </div>
+                                                    $days = [
+                                                        'monday', 'tuesday', 'wednesday',
+                                                        'thursday', 'friday', 'saturday', 'sunday'
+                                                    ];
+                                                @endphp
 
-                                    <!-- Step 3: Informational Content (Hidden initially) -->
-                                    <div id="informational-step" class="form-step">
-                                        <div class="step-title">Step 3: Informational Content</div>
-
-                                        <div class="form-group">
-                                            <label for="customer-message">Customer Message</label>
-                                            <textarea id="customer-message" name="mesage" placeholder="Enter the message customers will see" style="min-height: 100px;">{{ $ManagementType->customer_message }}</textarea>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="display-when">When to Display</label>
-                                            <select id="display-when" name="when_to_display">
-                                                <option value="always" {{ $ManagementType->display_title == "always" ? "selected":""}}>Always Show</option>
-                                                <option value="purchase" {{ $ManagementType->display_title == "purchase" ? "selected":""}}>During Purchase Only</option>
-                                                <option value="redemption" {{ $ManagementType->display_title == "redemption" ? "selected":""}}>During Redemption Only</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 3: Conditional Rules (Hidden initially) -->
-                                    <div id="conditional-step" class="form-step">
-                                        <div class="step-title">Step 3: Conditional Rules</div>
-
-
-                                        <div class="form-group">
-                                            <label>Available Days (leave unchecked for all days)</label>
-                                            <div class="checkbox-group">
-
-                                               @foreach (['monday','tuesday','wednesday','thursday','friday','saturday','sunday'] as $day)
+                                                @foreach($days as $day)
                                                     <div class="checkbox-item">
                                                         <input type="checkbox"
                                                             id="day-{{ $day }}"
-                                                            name="days[]"
+                                                            name="timeandday_config_days[]"
                                                             value="{{ $day }}"
-                                                            {{ in_array($day, json_decode($ManagementType->days, true) ?? []) ? 'checked' : '' }}>
+                                                            {{ in_array($day, $selectedDays ?? []) ? 'checked' : '' }}>
                                                         <label for="day-{{ $day }}">{{ ucfirst($day) }}</label>
                                                     </div>
-                                                @endforeach
+                                                @endforeach --}}
 
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="min-purchase">Minimum Purchase Amount (optional)</label>
-                                            <input type="number" id="min-purchase" name="min_purchase_amount" value="{{ $ManagementType->min_purchase_account }}" placeholder="0.00" step="0.01" min="0">
+                                            <label>Time Range</label>
+                                            <div class="time-range">
+                                                <input type="time" id="timeStart" value="{{ $ManagementType->timeandday_config_time_range_from}}"  name="timeandday_config_time_range_from" placeholder="Start time">
+                                                <div class="time-separator">to</div>
+                                                <input type="time" id="timeEnd" value="{{ $ManagementType->timeandday_config_time_range_to}}" name="timeandday_config_time_range_to" placeholder="End time">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="dateStart">Valid From Date</label>
+                                                <input type="date" name="timeandday_config_valid_from_date" value="{{ $ManagementType->timeandday_config_valid_from_date}}" id="dateStart">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dateEnd">Valid Until Date</label>
+                                                <input type="date" name="timeandday_config_valid_until_date" value="{{ $ManagementType->timeandday_config_valid_until_date}}" id="dateEnd">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Holidays & Occasions -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">🎄</span>Holidays & Occasions
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="restriction-action">What happens when condition is not met?</label>
-                                            <select id="restriction-action" name="condition_is_not_met">
-                                                <option value="hide"  {{ $ManagementType->condition_is_not_met == "hide" ? "selected":""}}>Hide voucher completely</option>
-                                                <option value="warning"  {{ $ManagementType->condition_is_not_met == "warning" ? "selected":""}}>Show warning message</option>
-                                                <option value="block"  {{ $ManagementType->condition_is_not_met == "block" ? "selected":""}}>Block redemption</option>
-                                            </select>
+                                            <label>Holiday Restrictions</label>
+                                            <div class="checkbox-grid">
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="exclude-national" name="holiday_occasions_holiday_restrictions[]" value="national-holidays">
+                                                    <label for="exclude-national">Exclude National Holidays</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="exclude-religious" name="holiday_occasions_holiday_restrictions[]" value="religious-holidays">
+                                                    <label for="exclude-religious">Exclude Religious Holidays</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="exclude-ramadan" name="holiday_occasions_holiday_restrictions[]" value="ramadan">
+                                                    <label for="exclude-ramadan">Exclude Ramadan</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="exclude-christmas" name="holiday_occasions_holiday_restrictions[]" value="christmas">
+                                                    <label for="exclude-christmas">Exclude Christmas Period</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="exclude-newyear" name="holiday_occasions_holiday_restrictions[]" value="newyear">
+                                                    <label for="exclude-newyear">Exclude New Year</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="exclude-eid" name="holiday_occasions_holiday_restrictions[]" value="eid">
+                                                    <label for="exclude-eid">Exclude Eid Holidays</label>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="form-group">
-                                            <label for="restriction-message">Message when condition not met</label>
-                                            <textarea id="restriction-message" name="condition_not_met" placeholder="Enter message to show to customer">{{$ManagementType->message_when_condition_not_meet}}</textarea>
+                                            <label for="customHolidays">Custom Blackout Dates</label>
+                                            <textarea id="customHolidays" value="{{ $ManagementType->holiday_occasions_customer_blackout_dates}}" name="holiday_occasions_customer_blackout_dates" placeholder="Enter specific dates to exclude (e.g., 2025-12-24, 2025-12-25, Company Anniversary dates, etc.)"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Special Occasions</label>
+                                            <div class="checkbox-grid">
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="valentines" name="holiday_occasions_special_occasions[]" value="valentines">
+                                                    <label for="valentines">Valentine's Day</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="mothers-day" name="holiday_occasions_special_occasions[]" value="mothers-day">
+                                                    <label for="mothers-day">Mother's Day</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="fathers-day" name="holiday_occasions_special_occasions[]" value="fathers-day">
+                                                    <label for="fathers-day">Father's Day</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="graduation" name="holiday_occasions_special_occasions[]" value="graduation">
+                                                    <label for="graduation">Graduation Season</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="back-to-school" name="holiday_occasions_special_occasions[]" value="back-to-school">
+                                                    <label for="back-to-school">Back to School</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="black-friday" name="holiday_occasions_special_occasions[]" value="black-friday">
+                                                    <label for="black-friday">Black Friday</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- Usage & Limits -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">📊</span>Usage & Limits
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="usageLimit">Usage Limit per User</label>
+                                                <div class="number-input-group">
+                                                    <input type="number" id="usageLimit" value="{{ $ManagementType->usage_limits_limit_per_user}}"  name="usage_limits_limit_per_user" min="1" placeholder="1">
+                                                    <span class="unit">times</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="usagePeriod">Usage Period</label>
+                                                <select id="usagePeriod" name="usage_limits_period">
+                                                    <option value="total" {{ $ManagementType->usage_limits_period == "total" ? "selected":"" }}>Total (lifetime)</option>
+                                                    <option value="daily" {{ $ManagementType->usage_limits_period == "daily" ? "selected":"" }}>Per Day</option>
+                                                    <option value="weekly" {{ $ManagementType->usage_limits_period == "weekly" ? "selected":"" }}>Per Week</option>
+                                                    <option value="monthly" {{ $ManagementType->usage_limits_period == "monthly" ? "selected":"" }}>Per Month</option>
+                                                    <option value="yearly" {{ $ManagementType->usage_limits_period == "yearly" ? "selected":"" }}>Per Year</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="minPurchase">Minimum Purchase Amount</label>
+                                                <div class="number-input-group">
+                                                    <input type="number" id="minPurchase" value="{{ $ManagementType->usage_limits_min_purch_account}}"  name="usage_limits_min_purch_account" min="0" step="0.01" placeholder="0.00">
+                                                    <span class="unit">USD</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="maxDiscount">Maximum Discount Amount</label>
+                                                <div class="number-input-group">
+                                                    <input type="number" id="maxDiscount" value="{{ $ManagementType->usage_limits_max_discount_amount}}"  name="usage_limits_max_discount_amount" min="0" step="0.01" placeholder="No limit">
+                                                    <span class="unit">USD</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="advanceBooking">Advance Booking Required</label>
+                                                <div class="number-input-group">
+                                                    <input type="number" id="advanceBooking" value="{{ $ManagementType->usage_limits_advance_booking_required}}"  name="usage_limits_advance_booking_required" min="0" placeholder="0">
+                                                    <span class="unit">hours</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="groupSize">Group Size Requirement</label>
+                                                <select id="groupSize" name="usage_limits_group_size_required">
+                                                    <option value="">No requirement</option>
+                                                    <option value="2+" {{ $ManagementType->usage_limits_group_size_required == "2+" ? "selected":"" }}>Minimum 2 people</option>
+                                                    <option value="4+" {{ $ManagementType->usage_limits_group_size_required == "4+" ? "selected":"" }}>Minimum 4 people</option>
+                                                    <option value="6+" {{ $ManagementType->usage_limits_group_size_required == "6+" ? "selected":"" }}>Minimum 6 people</option>
+                                                    <option value="8+" {{ $ManagementType->usage_limits_group_size_required == "8+" ? "selected":"" }}>Minimum 8 people</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Location & Availability -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">🏪</span>Location & Availability
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Venue Types</label>
+                                            <div class="checkbox-grid">
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="venue-instore"  name="location_availability_venue_types[]" value="in-store">
+                                                    <label for="venue-instore">In-Store Only</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="venue-online" name="location_availability_venue_types[]" value="online">
+                                                    <label for="venue-online">Online Only</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="venue-delivery" name="location_availability_venue_types[]" value="delivery">
+                                                    <label for="venue-delivery">Delivery Available</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="venue-pickup" name="location_availability_venue_types[]" value="pickup">
+                                                    <label for="venue-pickup">Pickup Available</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="venue-dinein" name="location_availability_venue_types[]" value="dine-in">
+                                                    <label for="venue-dinein">Dine-in Only</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="venue-takeaway" name="location_availability_venue_types[]" value="takeaway">
+                                                    <label for="venue-takeaway">Takeaway Available</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="specificBranches">Specific Branches/Locations</label>
+                                            <textarea id="specificBranches" name="location_availability_specific_branch" placeholder="List specific branch names, addresses, or location IDs where this condition applies">{{ $ManagementType->location_availability_specific_branch}}</textarea>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="cityRestriction">City/Region Restriction</label>
+                                                <input type="text" id="cityRestriction" value="{{ $ManagementType->location_availability_city}}" name="location_availability_city" placeholder="e.g., Downtown area only, Nablus region">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="deliveryRadius">Delivery Radius (if applicable)</label>
+                                                <div class="number-input-group">
+                                                    <input type="number" id="deliveryRadius" value="{{ $ManagementType->location_availability_delivery_radius}}" name="location_availability_delivery_radius" min="0" placeholder="No limit">
+                                                    <span class="unit">km</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer & Membership -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">👥</span>Customer & Membership
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="customerType">Customer Type Requirement</label>
+                                                <select id="customerType" name="customer_membership_customer_type">
+                                                    <option value="">All Customers</option>
+                                                    <option value="new"  {{ $ManagementType->customer_membership_customer_type == "new" ? "selected":"" }}>New Customers Only</option>
+                                                    <option value="returning"  {{ $ManagementType->customer_membership_customer_type == "returning" ? "selected":"" }}>Returning Customers Only</option>
+                                                    <option value="vip"  {{ $ManagementType->customer_membership_customer_type == "vip" ? "selected":"" }}>VIP Customers Only</option>
+                                                    <option value="member"  {{ $ManagementType->customer_membership_customer_type == "member" ? "selected":"" }}>Members Only</option>
+                                                    <option value="premium"  {{ $ManagementType->customer_membership_customer_type == "premium" ? "selected":"" }}>Premium Members Only</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ageRestriction">Age Restriction</label>
+                                                <select id="ageRestriction" name="customer_membership_age_restriction">
+                                                    <option value="">No Age Restriction</option>
+                                                    <option value="18+" {{ $ManagementType->customer_membership_age_restriction == "18+" ? "selected":"" }}>18+ Only</option>
+                                                    <option value="21+" {{ $ManagementType->customer_membership_age_restriction == "21+" ? "selected":"" }}>21+ Only</option>
+                                                    <option value="senior" {{ $ManagementType->customer_membership_age_restriction == "senior" ? "selected":"" }}>Senior Citizens (65+)</option>
+                                                    <option value="student" {{ $ManagementType->customer_membership_age_restriction == "student" ? "selected":"" }}>Students Only</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="membershipDuration">Minimum Membership Duration</label>
+                                            <select id="membershipDuration" name="customer_membership_min_membership_radius">
+                                                <option value="">No requirement</option>
+                                                <option value="1month" {{ $ManagementType->customer_membership_min_membership_radius == "1month" ? "selected":"" }}>1 Month</option>
+                                                <option value="3months" {{ $ManagementType->customer_membership_min_membership_radius == "3months" ? "selected":"" }}>3 Months</option>
+                                                <option value="6months" {{ $ManagementType->customer_membership_min_membership_radius == "6months" ? "selected":"" }}>6 Months</option>
+                                                <option value="1year" {{ $ManagementType->customer_membership_min_membership_radius == "1year" ? "selected":"" }}>1 Year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Restrictions & Policies -->
+                                    <div class="form-section">
+                                        <div class="section-title">
+                                            <span class="icon">🚫</span>Restrictions & Policies
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Restriction Types</label>
+                                            <div class="checkbox-grid">
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="non-refundable" name="restriction_polices_restriction_type[]" value="non-refundable">
+                                                    <label for="non-refundable">Non-refundable</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="non-transferable" name="restriction_polices_restriction_type[]" value="non-transferable">
+                                                    <label for="non-transferable">Non-transferable</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="no-cash-value"  name="restriction_polices_restriction_type[]"value="no-cash-value">
+                                                    <label for="no-cash-value">No cash value</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="no-combination" name="restriction_polices_restriction_type[]" value="no-combination">
+                                                    <label for="no-combination">Cannot combine with other offers</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="prior-reservation" name="restriction_polices_restriction_type[]" value="prior-reservation">
+                                                    <label for="prior-reservation">Prior reservation required</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="id-required" name="restriction_polices_restriction_type[]" value="id-required">
+                                                    <label for="id-required">ID verification required</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="cancellationPolicy">Cancellation Policy</label>
+                                            <select id="cancellationPolicy" name="restriction_polices_cancellation_policy">
+                                                <option value="">No cancellation allowed</option>
+                                                <option value="24hours" {{ $ManagementType->restriction_polices_cancellation_policy == "24hours" ? "selected":"" }}>24 hours advance notice</option>
+                                                <option value="48hours" {{ $ManagementType->restriction_polices_cancellation_policy == "48hours" ? "selected":"" }}>48 hours advance notice</option>
+                                                <option value="1week" {{ $ManagementType->restriction_polices_cancellation_policy == "1week" ? "selected":"" }}>1 week advance notice</option>
+                                                <option value="flexible" {{ $ManagementType->restriction_polices_cancellation_policy == "flexible" ? "selected":"" }}>Flexible cancellation</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="excludedItems">Excluded Products/Services</label>
+                                            <textarea id="excludedItems"  name="restriction_polices_excluded_product" placeholder="List specific products, services, or categories that this voucher cannot be used for">{{ $ManagementType->restriction_polices_excluded_product}}</textarea>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="surchargeAmount">Surcharge Amount</label>
+                                                <div class="number-input-group">
+                                                    <input type="number" id="surchargeAmount"  value="{{ $ManagementType->restriction_polices_surchange_account}}"  name="restriction_polices_surchange_account" min="0" step="0.01" placeholder="0.00">
+                                                    <span class="unit">USD</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="surchargeCondition">Surcharge Applies When</label>
+                                                <input type="text" id="surchargeCondition"  value="{{ $ManagementType->restriction_polices_surchange_apple}}"  name="restriction_polices_surchange_apple" placeholder="e.g., During peak hours, Premium seating">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Bar -->
+                                    {{-- <div class="action-bar">
+                                        <button class="btn btn-success" onclick="createDeepCondition()">💾 Create Condition</button>
+                                        <button class="btn btn-secondary" onclick="previewCondition()">👁️ Preview</button>
+                                        <button class="btn" onclick="resetConditionForm()">🔄 Reset Form</button>
+                                    </div> --}}
 
                                 </div>
 
                             </div>
-                             @endif
+                        @endif
+
                     <div class="btn--container justify-content-end mt-5">
                         <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
                         <button type="submit" class="btn btn--primary">{{translate('messages.update')}}</button>
@@ -468,286 +1126,512 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
 
-<script>
-// Global variables
-let selectedTermType = '';
-let usageTermsData = [
-    {
-        id: 1,
-        title: 'Weekdays Only',
-        type: 'conditional',
-        description: 'Voucher only available Monday-Friday',
-        voucherTypes: ['in-store'],
-        status: 'active',
-        conditions: {
-            days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
-            action: 'hide',
-            message: 'This voucher is only available on weekdays'
+  <script>
+        // Deep data storage with comprehensive condition structure
+        let deepConditions = [
+            {
+                id: 1,
+                title: 'Weekend Premium Experience',
+                description: 'Premium weekend dining with advance booking requirement and group minimum',
+                config: {
+                    days: ['saturday', 'sunday'],
+                    timeStart: '18:00',
+                    timeEnd: '23:00',
+                    dateStart: '2025-01-01',
+                    dateEnd: '2025-12-31',
+                    holidays: {
+                        excludeNational: true,
+                        excludeRamadan: true,
+                        occasions: ['valentines']
+                    },
+                    usage: {
+                        limit: 2,
+                        period: 'monthly',
+                        minPurchase: 150.00,
+                        advanceBooking: 24,
+                        groupSize: '4+'
+                    },
+                    location: {
+                        venues: ['dine-in'],
+                        branches: 'Downtown location only',
+                        cityRestriction: 'Nablus city center'
+                    },
+                    customer: {
+                        type: 'member',
+                        ageRestriction: '21+',
+                        membershipDuration: '3months'
+                    },
+                    restrictions: {
+                        policies: ['non-refundable', 'prior-reservation', 'id-required'],
+                        cancellationPolicy: '48hours',
+                        excludedItems: 'Alcohol, special occasion cakes',
+                        surchargeAmount: 15.00,
+                        surchargeCondition: 'Window seating or private room'
+                    }
+                },
+                createdDate: '2025-01-15',
+                status: 'active'
+            },
+            {
+                id: 2,
+                title: 'Lunch Hour Special',
+                description: 'Weekday lunch hour promotion for quick dining',
+                config: {
+                    days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
+                    timeStart: '11:30',
+                    timeEnd: '14:00',
+                    usage: {
+                        limit: 1,
+                        period: 'daily',
+                        minPurchase: 25.00
+                    },
+                    location: {
+                        venues: ['dine-in', 'takeaway']
+                    },
+                    restrictions: {
+                        policies: ['no-combination']
+                    }
+                },
+                createdDate: '2025-01-14',
+                status: 'active'
+            }
+        ];
+
+        let voucherAssignments = {
+            'in-store': [1, 2],
+            'online': [2],
+            'service': [1],
+            'gift': [1]
+        };
+
+        let nextConditionId = 3;
+
+        // Navigation - Fixed function name
+        function switchSection(sectionName, clickedElement) {
+            console.log('Switching to section:', sectionName);
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.getElementById(sectionName).classList.add('active');
+
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
+
+            if (sectionName === 'manage') {
+                loadConditionsGrid();
+            }
         }
-    },
-    {
-        id: 2,
-        title: 'Dine-in Only Notice',
-        type: 'informational',
-        description: 'Notice about dine-in restriction',
-        voucherTypes: ['in-store'],
-        status: 'active',
-        content: {
-            message: 'Valid for dine-in only, not for takeaway',
-            displayWhen: 'always'
-        }
-    }
-];
 
-// Basic navigation
-function showSection(sectionName) {
-    console.log('Switching to section:', sectionName);
-
-    // Hide all sections
-    document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-    });
-
-    // Remove active class from menu items
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.classList.remove('active');
-    });
-
-    // Show selected section
-    document.getElementById(sectionName + '-section').classList.add('active');
-
-    // Add active class to clicked menu item
-    event.target.classList.add('active');
-
-    // Load data if it's the list section
-    if (sectionName === 'list') {
-        loadTermsList();
-    }
-}
-
-// Term type selection
-function selectTermType(type) {
-    console.log('Selected term type:', type);
-    selectedTermType = type;
-
-    // Update card selection
-    document.querySelectorAll('.term-type-card').forEach(card => {
-        card.classList.remove('selected');
-    });
-    event.target.classList.add('selected');
-
-    // Show basic info step
-    document.getElementById('basic-info-step').classList.add('show');
-
-    // Show appropriate content step
-    if (type === 'informational') {
-        document.getElementById('informational-step').classList.add('show');
-          document.getElementById('informational').classList.add('selected');
-        document.getElementById('conditional-step').classList.remove('show');
-        document.getElementById('term_type').value = 'informational';
-    } else {
-        document.getElementById('conditional-step').classList.add('show');
-          document.getElementById('conditional').classList.add('selected');
-        document.getElementById('informational-step').classList.remove('show');
-        document.getElementById('term_type').value = 'conditional';
-    }
-
-
-
-
-
-    // Show action buttons
-    document.getElementById('action-buttons').classList.add('show');
-}
-
-
-// Blade / PHP variable ko JavaScript me sahi tarike se embed karna
-var table_valeu = "{{ $ManagementType->term_type }}";
-   document.getElementById('basic-info-step').classList.add('show');
-if (table_valeu === "informational") {
-    document.getElementById('informational-step').classList.add('show');
-    document.getElementById('informational').classList.add('selected');
-    document.getElementById('conditional-step').classList.remove('show');
-    document.getElementById('term_type').value = 'informational';
-} else {
-    document.getElementById('conditional-step').classList.add('show');
-    document.getElementById('conditional').classList.add('selected');
-    document.getElementById('informational-step').classList.remove('show');
-    document.getElementById('term_type').value = 'conditional';
-}
-
-
-// Preview function
-function previewTerm() {
-    const title = document.getElementById('term-title').value;
-    const description = document.getElementById('term-description').value;
-
-    if (!title) {
-        alert('Please enter a term title');
-        return;
-    }
-
-    if (!selectedTermType) {
-        alert('Please select a term type first');
-        return;
-    }
-
-    let previewMessage = `Preview of "${title}":\n\n`;
-    previewMessage += `Type: ${selectedTermType}\n`;
-    previewMessage += `Description: ${description}\n\n`;
-
-    if (selectedTermType === 'informational') {
-        const customerMessage = document.getElementById('customer-message').value;
-        const displayWhen = document.getElementById('display-when').value;
-        previewMessage += `Customer will see: "${customerMessage}"\n`;
-        previewMessage += `Display: ${displayWhen}`;
-    } else {
-        // Get selected days
-        const selectedDays = [];
-        document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
-            selectedDays.push(cb.value);
+        // Enhanced checkbox interaction
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'checkbox') {
+                const checkboxItem = e.target.closest('.checkbox-item');
+                if (checkboxItem) {
+                    if (e.target.checked) {
+                        checkboxItem.classList.add('selected');
+                    } else {
+                        checkboxItem.classList.remove('selected');
+                    }
+                }
+            }
         });
 
-        const minPurchase = document.getElementById('min-purchase').value;
-        const restrictionMessage = document.getElementById('restriction-message').value;
+        // Create deep condition
+        function createDeepCondition() {
+            console.log('Creating deep condition...');
 
-        if (selectedDays.length > 0) {
-            previewMessage += `Available days: ${selectedDays.join(', ')}\n`;
-        }
-        if (minPurchase) {
-            previewMessage += `Minimum purchase: $${minPurchase}\n`;
-        }
-        if (restrictionMessage) {
-            previewMessage += `Restriction message: "${restrictionMessage}"`;
-        }
-    }
+            const title = document.getElementById('conditionTitle').value.trim();
+            const description = document.getElementById('conditionDescription').value.trim();
 
-    alert(previewMessage);
-}
+            if (!title || !description) {
+                alert('Please enter both title and description');
+                return;
+            }
 
-// Save function
-function saveTerm() {
-    const title = document.getElementById('term-title').value;
-    const description = document.getElementById('term-description').value;
+            // Collect all form data
+            const config = {
+                // Days and time
+                days: Array.from(document.querySelectorAll('#daysCheckboxes input:checked')).map(cb => cb.value),
+                timeStart: document.getElementById('timeStart').value,
+                timeEnd: document.getElementById('timeEnd').value,
+                dateStart: document.getElementById('dateStart').value,
+                dateEnd: document.getElementById('dateEnd').value,
 
-    if (!title) {
-        alert('Please enter a term title');
-        return;
-    }
+                // Holidays
+                holidays: {
+                    excludeNational: document.getElementById('exclude-national').checked,
+                    excludeReligious: document.getElementById('exclude-religious').checked,
+                    excludeRamadan: document.getElementById('exclude-ramadan').checked,
+                    excludeChristmas: document.getElementById('exclude-christmas').checked,
+                    excludeNewYear: document.getElementById('exclude-newyear').checked,
+                    excludeEid: document.getElementById('exclude-eid').checked,
+                    customHolidays: document.getElementById('customHolidays').value,
+                    occasions: Array.from(document.querySelectorAll('[id^="valentines"], [id^="mothers-day"], [id^="fathers-day"], [id^="graduation"], [id^="back-to-school"], [id^="black-friday"]')).filter(cb => cb.checked).map(cb => cb.value)
+                },
 
-    if (!selectedTermType) {
-        alert('Please select a term type first');
-        return;
-    }
+                // Usage and limits
+                usage: {
+                    limit: parseInt(document.getElementById('usageLimit').value) || null,
+                    period: document.getElementById('usagePeriod').value,
+                    minPurchase: parseFloat(document.getElementById('minPurchase').value) || 0,
+                    maxDiscount: parseFloat(document.getElementById('maxDiscount').value) || null,
+                    advanceBooking: parseInt(document.getElementById('advanceBooking').value) || 0,
+                    groupSize: document.getElementById('groupSize').value
+                },
 
-    // Create new term object
-    const newTerm = {
-        id: usageTermsData.length + 1,
-        title: title,
-        type: selectedTermType,
-        description: description,
-        voucherTypes: Array.from(document.getElementById('voucher-types').selectedOptions).map(opt => opt.value),
-        status: 'active'
-    };
+                // Location
+                location: {
+                    venues: Array.from(document.querySelectorAll('[id^="venue-"]')).filter(cb => cb.checked).map(cb => cb.value),
+                    branches: document.getElementById('specificBranches').value,
+                    cityRestriction: document.getElementById('cityRestriction').value,
+                    deliveryRadius: parseInt(document.getElementById('deliveryRadius').value) || null
+                },
 
-    // Add type-specific data
-    if (selectedTermType === 'informational') {
-        newTerm.content = {
-            message: document.getElementById('customer-message').value,
-            displayWhen: document.getElementById('display-when').value
-        };
-    } else {
-        const selectedDays = [];
-        document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
-            selectedDays.push(cb.value);
-        });
+                // Customer
+                customer: {
+                    type: document.getElementById('customerType').value,
+                    ageRestriction: document.getElementById('ageRestriction').value,
+                    membershipDuration: document.getElementById('membershipDuration').value
+                },
 
-        newTerm.conditions = {
-            days: selectedDays,
-            minPurchase: parseFloat(document.getElementById('min-purchase').value) || 0,
-            action: document.getElementById('restriction-action').value,
-            message: document.getElementById('restriction-message').value
-        };
-    }
-
-    // Add to data array
-    usageTermsData.push(newTerm);
-
-    alert('Usage term saved successfully!');
-
-    // Reset form
-    resetForm();
-}
-
-// Reset form
-function resetForm() {
-    // Clear all inputs
-    document.querySelectorAll('input, textarea, select').forEach(input => {
-        if (input.type === 'checkbox') {
-            input.checked = false;
-        } else {
-            input.value = '';
-        }
-    });
-
-    // Hide all form steps
-    document.querySelectorAll('.form-step').forEach(step => {
-        step.classList.remove('show');
-    });
-
-    // Remove selection from cards
-    document.querySelectorAll('.term-type-card').forEach(card => {
-        card.classList.remove('selected');
-    });
-
-    selectedTermType = '';
-}
-
-// Load terms list
-function loadTermsList() {
-    console.log('Loading terms list...');
-    const tbody = document.getElementById('terms-list');
-    tbody.innerHTML = '';
-
-    usageTermsData.forEach(term => {
-        const row = document.createElement('tr');
-
-        const voucherTypeNames = term.voucherTypes.map(type => {
-            const names = {
-                'in-store': 'In-Store',
-                'online': 'Online',
-                'service': 'Service',
-                'gift': 'Gift'
+                // Restrictions
+                restrictions: {
+                    policies: Array.from(document.querySelectorAll('[id^="non-"], [id^="no-"], [id^="prior-"], [id^="id-"]')).filter(cb => cb.checked).map(cb => cb.value),
+                    cancellationPolicy: document.getElementById('cancellationPolicy').value,
+                    excludedItems: document.getElementById('excludedItems').value,
+                    surchargeAmount: parseFloat(document.getElementById('surchargeAmount').value) || 0,
+                    surchargeCondition: document.getElementById('surchargeCondition').value
+                }
             };
-            return names[type] || type;
+
+            const newCondition = {
+                id: nextConditionId++,
+                title: title,
+                description: description,
+                config: config,
+                createdDate: new Date().toISOString().split('T')[0],
+                status: 'active'
+            };
+
+            deepConditions.push(newCondition);
+
+            alert('🎉 Deep condition created successfully!\n\nYou can now assign it to voucher types.');
+
+            resetConditionForm();
+        }
+
+        // Preview condition
+        function previewCondition() {
+            const title = document.getElementById('conditionTitle').value.trim();
+            const description = document.getElementById('conditionDescription').value.trim();
+
+            if (!title) {
+                alert('Please enter a condition title first');
+                return;
+            }
+
+            let preview = `📋 CONDITION PREVIEW\n`;
+            preview += `═══════════════════\n\n`;
+            preview += `🏷️ Title: ${title}\n`;
+            preview += `📝 Description: ${description}\n\n`;
+
+            // Days
+            const selectedDays = Array.from(document.querySelectorAll('#daysCheckboxes input:checked')).map(cb => cb.value);
+            if (selectedDays.length > 0) {
+                preview += `📅 Available Days: ${selectedDays.join(', ')}\n`;
+            }
+
+            // Time
+            const timeStart = document.getElementById('timeStart').value;
+            const timeEnd = document.getElementById('timeEnd').value;
+            if (timeStart && timeEnd) {
+                preview += `⏰ Time: ${timeStart} - ${timeEnd}\n`;
+            }
+
+            // Usage limit
+            const usageLimit = document.getElementById('usageLimit').value;
+            if (usageLimit) {
+                preview += `🎯 Usage Limit: ${usageLimit} times per ${document.getElementById('usagePeriod').value}\n`;
+            }
+
+            // Min purchase
+            const minPurchase = document.getElementById('minPurchase').value;
+            if (minPurchase) {
+                preview += `💰 Minimum Purchase: ${minPurchase}\n`;
+            }
+
+            // Venues
+            const selectedVenues = Array.from(document.querySelectorAll('[id^="venue-"]')).filter(cb => cb.checked).map(cb => cb.value);
+            if (selectedVenues.length > 0) {
+                preview += `🏪 Venues: ${selectedVenues.join(', ')}\n`;
+            }
+
+            // Customer type
+            const customerType = document.getElementById('customerType').value;
+            if (customerType) {
+                preview += `👥 Customer Type: ${customerType}\n`;
+            }
+
+            preview += `\n✨ This is how your condition will work!`;
+
+            alert(preview);
+        }
+
+        // Reset form
+        function resetConditionForm() {
+            document.querySelectorAll('input, textarea, select').forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+
+            document.querySelectorAll('.checkbox-item.selected').forEach(item => {
+                item.classList.remove('selected');
+            });
+        }
+
+        // Load conditions grid
+        function loadConditionsGrid() {
+            const grid = document.getElementById('conditionsGrid');
+            grid.innerHTML = '';
+
+            deepConditions.forEach(condition => {
+                const conditionCard = document.createElement('div');
+                conditionCard.className = 'condition-card';
+
+                // Build summary of key features
+                let keyFeatures = [];
+                if (condition.config.days && condition.config.days.length > 0) {
+                    keyFeatures.push(`Days: ${condition.config.days.join(', ')}`);
+                }
+                if (condition.config.timeStart && condition.config.timeEnd) {
+                    keyFeatures.push(`Time: ${condition.config.timeStart}-${condition.config.timeEnd}`);
+                }
+                if (condition.config.usage && condition.config.usage.limit) {
+                    keyFeatures.push(`Limit: ${condition.config.usage.limit}/${condition.config.usage.period}`);
+                }
+                if (condition.config.usage && condition.config.usage.minPurchase) {
+                    keyFeatures.push(`Min: ${condition.config.usage.minPurchase}`);
+                }
+
+                conditionCard.innerHTML = `
+                    <div class="condition-header">
+                        <div>
+                            <div class="condition-title">${condition.title}</div>
+                            <div class="condition-description">${condition.description}</div>
+                        </div>
+                    </div>
+
+                    <div class="condition-details">
+                        ${keyFeatures.map(feature => `
+                            <div class="condition-detail-item">
+                                <span class="detail-label">${feature.split(':')[0]}:</span>
+                                <span class="detail-value">${feature.split(':')[1]}</span>
+                            </div>
+                        `).join('')}
+                        <div class="condition-detail-item">
+                            <span class="detail-label">Created:</span>
+                            <span class="detail-value">${condition.createdDate}</span>
+                        </div>
+                        <div class="condition-detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" style="color: #28a745;">●  ${condition.status}</span>
+                        </div>
+                    </div>
+
+                    <div class="condition-actions">
+                        <button class="btn" onclick="editCondition(${condition.id})">✏️ Edit</button>
+                        <button class="btn btn-danger" onclick="deleteCondition(${condition.id})">🗑️ Delete</button>
+                    </div>
+                `;
+
+                grid.appendChild(conditionCard);
+            });
+        }
+
+        // Edit condition (placeholder)
+        function editCondition(id) {
+            alert(`Edit condition ${id} - Feature coming soon!`);
+        }
+
+        // Delete condition
+        function deleteCondition(id) {
+            if (confirm('Are you sure you want to delete this condition?')) {
+                deepConditions = deepConditions.filter(c => c.id !== id);
+                loadConditionsGrid();
+                alert('Condition deleted successfully!');
+            }
+        }
+
+        // Load voucher assignments
+        function loadVoucherAssignments() {
+            const voucherType = document.getElementById('voucherTypeSelect').value;
+            if (!voucherType) {
+                document.getElementById('assignmentContainer').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('assignmentContainer').style.display = 'block';
+            const grid = document.getElementById('assignmentGrid');
+            grid.innerHTML = '';
+
+            const assignedIds = voucherAssignments[voucherType] || [];
+
+            deepConditions.forEach(condition => {
+                const isAssigned = assignedIds.includes(condition.id);
+
+                const conditionCard = document.createElement('div');
+                conditionCard.className = `condition-card ${isAssigned ? 'selected' : ''}`;
+                conditionCard.style.cursor = 'pointer';
+                conditionCard.onclick = () => toggleAssignment(condition.id, voucherType, conditionCard);
+
+                conditionCard.innerHTML = `
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <input type="checkbox" ${isAssigned ? 'checked' : ''} style="margin-right: 15px; transform: scale(1.5);" onclick="event.stopPropagation();">
+                        <div>
+                            <div class="condition-title">${condition.title}</div>
+                            <div class="condition-description">${condition.description}</div>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(conditionCard);
+            });
+        }
+
+        // Toggle assignment
+        function toggleAssignment(conditionId, voucherType, cardElement) {
+            const checkbox = cardElement.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                cardElement.classList.add('selected');
+            } else {
+                cardElement.classList.remove('selected');
+            }
+        }
+
+        // Save voucher assignments
+        function saveVoucherAssignments() {
+            const voucherType = document.getElementById('voucherTypeSelect').value;
+            const checkboxes = document.querySelectorAll('#assignmentGrid input[type="checkbox"]:checked');
+
+            const selectedIds = [];
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    selectedIds.push(deepConditions[index].id);
+                }
+            });
+
+            voucherAssignments[voucherType] = selectedIds;
+            alert(`✅ Assignments saved for ${voucherType} voucher!\n${selectedIds.length} conditions assigned.`);
+        }
+
+        // Reset assignments
+        function resetAssignments() {
+            const voucherType = document.getElementById('voucherTypeSelect').value;
+            if (voucherType && confirm('Reset all assignments for this voucher type?')) {
+                voucherAssignments[voucherType] = [];
+                loadVoucherAssignments();
+            }
+        }
+
+        // Generate customer preview
+        function generateCustomerPreview() {
+            const voucherType = document.getElementById('previewVoucherSelect').value;
+            const container = document.getElementById('customerPreview');
+
+            if (!voucherType) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const assignedIds = voucherAssignments[voucherType] || [];
+            const assignedConditions = deepConditions.filter(c => assignedIds.includes(c.id));
+
+            if (assignedConditions.length === 0) {
+                container.innerHTML = `
+                    <div class="preview-container">
+                        <div class="preview-title">No conditions assigned</div>
+                        <p style="text-align: center; color: #666;">Go to "Assign to Vouchers" to add conditions to this voucher type.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let previewHtml = `
+                <div class="preview-container">
+                    <div class="preview-title">📋 Usage Terms & Conditions</div>
+                    <div class="preview-terms">
+                        <h3 style="color: #2c5f5f; margin-bottom: 20px; text-align: center;">
+                            ${voucherType.charAt(0).toUpperCase() + voucherType.slice(1)} Voucher Terms
+                        </h3>
+            `;
+
+            assignedConditions.forEach(condition => {
+                previewHtml += `<div class="preview-section">`;
+                previewHtml += `<h4>🎯 ${condition.title}</h4>`;
+                previewHtml += `<ul>`;
+
+                // Add relevant terms based on condition config
+                if (condition.config.days && condition.config.days.length > 0) {
+                    previewHtml += `<li>Available on: ${condition.config.days.join(', ')}</li>`;
+                }
+
+                if (condition.config.timeStart && condition.config.timeEnd) {
+                    previewHtml += `<li>Time: ${condition.config.timeStart} - ${condition.config.timeEnd}</li>`;
+                }
+
+                if (condition.config.usage && condition.config.usage.limit) {
+                    previewHtml += `<li>Usage limit: ${condition.config.usage.limit} times per ${condition.config.usage.period}</li>`;
+                }
+
+                if (condition.config.usage && condition.config.usage.minPurchase) {
+                    previewHtml += `<li>Minimum purchase: ${condition.config.usage.minPurchase}</li>`;
+                }
+
+                if (condition.config.location && condition.config.location.venues) {
+                    previewHtml += `<li>Available for: ${condition.config.location.venues.join(', ')}</li>`;
+                }
+
+                if (condition.config.customer && condition.config.customer.type) {
+                    previewHtml += `<li>Customer requirement: ${condition.config.customer.type}</li>`;
+                }
+
+                if (condition.config.restrictions && condition.config.restrictions.policies) {
+                    condition.config.restrictions.policies.forEach(policy => {
+                        const policyText = policy.replace('-', ' ').replace('_', ' ');
+                        previewHtml += `<li>${policyText}</li>`;
+                    });
+                }
+
+                previewHtml += `</ul>`;
+                previewHtml += `</div>`;
+            });
+
+            previewHtml += `
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = previewHtml;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Deep Conditions Manager initialized');
+            loadConditionsGrid();
         });
-
-        row.innerHTML = `
-            <td>${term.title}</td>
-            <td><span class="status-badge type-${term.type}">${term.type}</span></td>
-            <td>${voucherTypeNames.join(', ')}</td>
-            <td><span class="status-badge status-${term.status}">${term.status}</span></td>
-            <td>
-                <button class="btn btn-primary" onclick="editTerm(${term.id})">Edit</button>
-            </td>
-        `;
-
-        tbody.appendChild(row);
-    });
-}
-
-// Edit term (placeholder)
-function editTerm(id) {
-    alert(`Editing term with ID: ${id}`);
-}
-
-// Initialize page
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Page loaded, initializing...');
-    loadTermsList();
-});
-</script>
-
+    </script>
 
 
 <script>

@@ -25,9 +25,9 @@ class UsageTermController extends Controller
 
             $UsageTermManagement = UsageTermManagement::query()
                 ->when($search, function ($q) use ($search) {
-                    $q->where('term_title', 'like', "%{$search}%");
+                    $q->where('baseinfor_condition_title', 'like', "%{$search}%");
                 })
-                ->orderBy('term_title', 'asc')
+                ->orderBy('baseinfor_condition_title', 'asc')
                 ->paginate(config('default_pagination'));
             return view('admin-views.usage_term.index', compact('UsageTermManagement'));
         }
@@ -38,71 +38,56 @@ class UsageTermController extends Controller
 
             $ManagementType = UsageTermManagement::query()
                 ->when($search, function ($q) use ($search) {
-                    $q->where('term_title', 'like', "%{$search}%");
+                    $q->where('baseinfor_condition_title', 'like', "%{$search}%");
                 })
-                ->orderBy('term_title', 'asc')
+                ->orderBy('baseinfor_condition_title', 'asc')
                 ->paginate(config('default_pagination'));
             return view('admin-views.usage_term.add', compact('ManagementType'));
         }
 
 
-        public function store(Request $request)
+       public function store(Request $request)
     {
-        $termType = $request->term_type;
+        $validated = $request->validate([
+            "baseinfor_condition_title" => "nullable|string",
+            "baseinfor_description" => "nullable|string",
+            "timeandday_config_days" => "nullable|array",
+            "timeandday_config_time_range_from" => "nullable|string",
+            "timeandday_config_time_range_to" => "nullable|string",
+            "timeandday_config_valid_from_date" => "nullable|string",
+            "timeandday_config_valid_until_date" => "nullable|string",
+            "holiday_occasions_holiday_restrictions" => "nullable|array",
+            "holiday_occasions_customer_blackout_dates" => "nullable|string",
+            "holiday_occasions_special_occasions" => "nullable|array",
+            "usage_limits_limit_per_user" => "nullable|string",
+            "usage_limits_period" => "nullable|string",
+            "usage_limits_min_purch_account" => "nullable|string",
+            "usage_limits_max_discount_amount" => "nullable|string",
+            "usage_limits_advance_booking_required" => "nullable|string",
+            "usage_limits_group_size_required" => "nullable|string",
+            "location_availability_venue_types" => "nullable|array",
+            "location_availability_specific_branch" => "nullable|string",
+            "location_availability_city" => "nullable|string",
+            "location_availability_delivery_radius" => "nullable|string",
+            "customer_membership_customer_type" => "nullable|string",
+            "customer_membership_age_restriction" => "nullable|string",
+            "customer_membership_min_membership_radius" => "nullable|string",
+            "restriction_polices_restriction_type" => "nullable|array",
+            "restriction_polices_cancellation_policy" => "nullable|string",
+            "restriction_polices_excluded_product" => "nullable|string",
+            "restriction_polices_surchange_account" => "nullable|string",
+            "restriction_polices_surchange_apple" => "nullable|string",
+            "status" => "nullable|string",
+        ]);
 
+        // Insert record
+         UsageTermManagement::create($validated);
 
-        if ($termType == "informational") {
-            // Validation
-            $request->validate([
-                'term_type' => 'required|max:100',
-                'term_title' => 'required',
-                'voucher_type' => 'required',
-                'desc' => 'required',
-                'mesage' => 'required',
-                'when_to_display' => 'required',
-            ]);
-
-            $ManagementType = new UsageTermManagement();
-            $ManagementType->term_type = $request->term_type;
-            $ManagementType->term_title = $request->term_title;
-            $ManagementType->voucher_type = json_encode($request->voucher_type);
-            $ManagementType->term_dec = $request->desc;
-            $ManagementType->customer_message = $request->mesage;
-            $ManagementType->display_title = $request->when_to_display;
-            $ManagementType->status = "active";
-            $ManagementType->save();
-
-            Toastr::success('Usages Term and Condition added successfully');
+          Toastr::success('Usages Term and Condition Created successfully');
             return back();
-
-        } else {
-            // Validation
-            $request->validate([
-                'term_type' => 'required|max:100',
-                'term_title' => 'required',
-                'desc' => 'required',
-                'days' => 'required',
-                'min_purchase_amount' => 'required',
-                'condition_is_not_met' => 'required',
-                'condition_not_met' => 'required',
-            ]);
-
-            $ManagementType = new UsageTermManagement();
-            $ManagementType->term_type = $request->term_type;
-            $ManagementType->term_title = $request->term_title;
-            $ManagementType->voucher_type = json_encode($request->voucher_type); //
-            $ManagementType->term_dec = $request->desc;
-            $ManagementType->days = json_encode($request->days); //
-            $ManagementType->min_purchase_account = $request->min_purchase_amount;
-            $ManagementType->condition_is_not_met = $request->condition_is_not_met;
-            $ManagementType->message_when_condition_not_meet = $request->condition_not_met;
-            $ManagementType->status = "active";
-            $ManagementType->save();
-
-            Toastr::success('Usages Term and Condition added successfully');
-            return back();
-        }
     }
+
+
 
 
     public function edit($id)
@@ -113,59 +98,43 @@ class UsageTermController extends Controller
 
     public function update(Request $request, $id)
     {
-        $termType = $request->term_type;
-
-        if ($termType == "informational") {
-            //  Validation
-            $request->validate([
-                'term_type' => 'required|max:100',
-                'term_title' => 'required',
-                'voucher_type' => 'required',
-                'desc' => 'required',
-                'mesage' => 'required',
-                'when_to_display' => 'required',
+           $validated = $request->validate([
+                "baseinfor_condition_title" => "nullable|string",
+                "baseinfor_description" => "nullable|string",
+                "timeandday_config_days" => "nullable|array",
+                "timeandday_config_time_range_from" => "nullable|string",
+                "timeandday_config_time_range_to" => "nullable|string",
+                "timeandday_config_valid_from_date" => "nullable|string",
+                "timeandday_config_valid_until_date" => "nullable|string",
+                "holiday_occasions_holiday_restrictions" => "nullable|array",
+                "holiday_occasions_customer_blackout_dates" => "nullable|string",
+                "holiday_occasions_special_occasions" => "nullable|array",
+                "usage_limits_limit_per_user" => "nullable|string",
+                "usage_limits_period" => "nullable|string",
+                "usage_limits_min_purch_account" => "nullable|string",
+                "usage_limits_max_discount_amount" => "nullable|string",
+                "usage_limits_advance_booking_required" => "nullable|string",
+                "usage_limits_group_size_required" => "nullable|string",
+                "location_availability_venue_types" => "nullable|array",
+                "location_availability_specific_branch" => "nullable|string",
+                "location_availability_city" => "nullable|string",
+                "location_availability_delivery_radius" => "nullable|string",
+                "customer_membership_customer_type" => "nullable|string",
+                "customer_membership_age_restriction" => "nullable|string",
+                "customer_membership_min_membership_radius" => "nullable|string",
+                "restriction_polices_restriction_type" => "nullable|array",
+                "restriction_polices_cancellation_policy" => "nullable|string",
+                "restriction_polices_excluded_product" => "nullable|string",
+                "restriction_polices_surchange_account" => "nullable|string",
+                "restriction_polices_surchange_apple" => "nullable|string",
+                "status" => "nullable|string",
             ]);
-
             //  Record find and update
-            $ManagementType = UsageTermManagement::findOrFail($id);
-            $ManagementType->term_type = $request->term_type;
-            $ManagementType->term_title = $request->term_title;
-            $ManagementType->voucher_type = json_encode($request->voucher_type);
-            $ManagementType->term_dec = $request->desc;
-            $ManagementType->customer_message = $request->mesage;
-            $ManagementType->display_title = $request->when_to_display;
-            $ManagementType->save();
-
+             UsageTermManagement::update($validated);
             Toastr::success('Usages Term and Condition updated successfully');
             return back();
 
-        } else {
-            //  Validation
-            $request->validate([
-                'term_type' => 'required|max:100',
-                'term_title' => 'required',
-                'desc' => 'required',
-                'days' => 'required',
-                'min_purchase_amount' => 'required',
-                'condition_is_not_met' => 'required',
-                'condition_not_met' => 'required',
-            ]);
 
-            //  Record find and update
-            $ManagementType = UsageTermManagement::findOrFail($id);
-            $ManagementType->term_type = $request->term_type;
-            $ManagementType->term_title = $request->term_title;
-            $ManagementType->voucher_type = json_encode($request->voucher_type); //
-            $ManagementType->term_dec = $request->desc;
-            $ManagementType->days = json_encode($request->days); //
-            $ManagementType->min_purchase_account = $request->min_purchase_amount;
-            $ManagementType->condition_is_not_met = $request->condition_is_not_met;
-            $ManagementType->message_when_condition_not_meet = $request->condition_not_met;
-            $ManagementType->save();
-
-            Toastr::success('Usages Term and Condition updated successfully');
-            return back();
-        }
     }
 
 
