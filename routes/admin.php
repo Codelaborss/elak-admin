@@ -246,6 +246,18 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         });
        // Management Types
 
+             // Management Types
+        Route::group(['prefix' => 'workmanagement', 'as' => 'workmanagement.'], function () {
+            Route::get('add-new', 'workmanagementController@index')->name('add-new');
+            Route::get('list', 'workmanagementController@list')->name('list');
+            Route::post('store', 'workmanagementController@store')->name('store');
+            Route::get('edit/{id}', 'workmanagementController@edit')->name('edit');
+            Route::post('update/{id}', 'workmanagementController@update')->name('update');
+            Route::delete('delete/{id}', 'workmanagementController@delete')->name('delete');
+            Route::post('status/{id}', 'workmanagementController@status')->name('status');
+        });
+       // Management Types
+
 
 
           // App Mobile

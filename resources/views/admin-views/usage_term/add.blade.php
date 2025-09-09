@@ -320,8 +320,7 @@
                 <span class="page-header-icon">
                     <img src="{{asset('public/assets/admin/img/condition.png')}}" class="w--26" alt="">
                 </span>
-                <span>
-                   Add Types Voucher
+                <span> Add  New Usage Term
                 </span>
             </h1>
         </div>
@@ -333,74 +332,17 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{route('admin.VoucherType.store')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('admin.UsageTerm.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             @if ($language)
-                                    {{-- <div class="row">
-                                        <div class="col-6 ">
-                                            <div class="lang_form" id="default-form">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="name">  Name
-                                                    </label>
-                                                    <input type="text" name="name" id="name" class="form-control"  placeholder="Enter Client Name">
-                                                </div>
-                                                <input type="hidden" name="lang[]" value="default">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 ">
-                                            <div class="lang_form" id="default-form">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="logo_image">Logo </label>
-                                                    <input type="file" name="logo_image" id="logo_image" class="form-control" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                            <div class="col-12 ">
-                                       <label class="input-label" for="module_type">Management Types</label>
-                                        <div class="lang_form" id="default-form">
-                                            <div class="form-group">
-                                                <select
-                                                    name="type[]"
-                                                    id="type"
-                                                    class="form-control select2"
-                                                    multiple="multiple"
-                                                    data-placeholder="-- Select Types --"
-                                                >
-                                                 @foreach (\App\Models\ManagementType::all() as $item)
-                                                       <option value="{{ $item->id }}"
-                                                            @if(collect(old('type', []))->contains($item->id)) selected @endif>
-                                                                {{ $item->name }}
-                                                        </option>
-                                                 @endforeach
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div class="col-12 ">
-                                            <div class="lang_form" id="default-form">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="client_message" style="font-size:18px; font-weight:600;">
-                                                        Description
-                                                    </label>
-                                                    <textarea name="client_message" id="client_message" class="form-control"  placeholder="Enter  Message" rows="5"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                   </div> --}}
-
 
                             <div>
                                 <!-- CREATE SECTION -->
                                 <div id="create-section" class="content-section active">
                                     <div class="content-header">
-                                        <h1>Create New Usage Term</h1>
                                         <p>Create informational notes or conditional rules for your vouchers</p>
                                     </div>
-
+                                    <input type="hidden" name="term_type" id="term_type"   />
                                     <!-- Step 1: Select Term Type -->
                                     <div class="step-title">Step 1: Select Term Type</div>
                                     <div class="term-type-selection">
@@ -422,21 +364,21 @@
 
                                         <div class="form-group">
                                             <label for="term-title">Term Title</label>
-                                            <input type="text" id="term-title" placeholder="Enter a title for this term">
+                                            <input type="text" id="term-title" name="term_title"   placeholder="Enter a title for this term">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="term-description">Description</label>
-                                            <textarea id="term-description" placeholder="Describe what this term does"></textarea>
+                                            <textarea id="term-description" name="desc" placeholder="Describe what this term does"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="voucher-types">Applicable Voucher Types</label>
-                                            <select id="voucher-types" multiple style="height: 100px;">
-                                                <option value="in-store">In-Store Voucher</option>
-                                                <option value="online">Online Voucher</option>
-                                                <option value="service">Service Voucher</option>
-                                                <option value="gift">Gift Voucher</option>
+                                            <select id="voucher-types" name="voucher_type[]" multiple style="height: 100px;">
+                                                @foreach (\App\Models\VoucherType::get() as $item)
+
+                                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                @endforeach
                                             </select>
                                             <small>Hold Ctrl/Cmd to select multiple</small>
                                         </div>
@@ -448,12 +390,12 @@
 
                                         <div class="form-group">
                                             <label for="customer-message">Customer Message</label>
-                                            <textarea id="customer-message" placeholder="Enter the message customers will see" style="min-height: 100px;"></textarea>
+                                            <textarea id="customer-message" name="mesage" placeholder="Enter the message customers will see" style="min-height: 100px;"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="display-when">When to Display</label>
-                                            <select id="display-when">
+                                            <select id="display-when" name="when_to_display">
                                                 <option value="always">Always Show</option>
                                                 <option value="purchase">During Purchase Only</option>
                                                 <option value="redemption">During Redemption Only</option>
@@ -469,31 +411,31 @@
                                             <label>Available Days (leave unchecked for all days)</label>
                                             <div class="checkbox-group">
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-monday" value="monday">
+                                                    <input type="checkbox" id="day-monday" name="days[]" value="monday">
                                                     <label for="day-monday">Monday</label>
                                                 </div>
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-tuesday" value="tuesday">
+                                                    <input type="checkbox" id="day-tuesday" name="days[]" value="tuesday">
                                                     <label for="day-tuesday">Tuesday</label>
                                                 </div>
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-wednesday" value="wednesday">
+                                                    <input type="checkbox" id="day-wednesday" name="days[]" value="wednesday">
                                                     <label for="day-wednesday">Wednesday</label>
                                                 </div>
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-thursday" value="thursday">
+                                                    <input type="checkbox" id="day-thursday" name="days[]" value="thursday">
                                                     <label for="day-thursday">Thursday</label>
                                                 </div>
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-friday" value="friday">
+                                                    <input type="checkbox" id="day-friday" name="days[]" value="friday">
                                                     <label for="day-friday">Friday</label>
                                                 </div>
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-saturday" value="saturday">
+                                                    <input type="checkbox" id="day-saturday" name="days[]" value="saturday">
                                                     <label for="day-saturday">Saturday</label>
                                                 </div>
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="day-sunday" value="sunday">
+                                                    <input type="checkbox" id="day-sunday" name="days[]" value="sunday">
                                                     <label for="day-sunday">Sunday</label>
                                                 </div>
                                             </div>
@@ -501,12 +443,12 @@
 
                                         <div class="form-group">
                                             <label for="min-purchase">Minimum Purchase Amount (optional)</label>
-                                            <input type="number" id="min-purchase" placeholder="0.00" step="0.01" min="0">
+                                            <input type="number" id="min-purchase" name="min_purchase_amount" placeholder="0.00" step="0.01" min="0">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="restriction-action">What happens when condition is not met?</label>
-                                            <select id="restriction-action">
+                                            <select id="restriction-action" name="condition_is_not_met">
                                                 <option value="hide">Hide voucher completely</option>
                                                 <option value="warning">Show warning message</option>
                                                 <option value="block">Block redemption</option>
@@ -515,7 +457,7 @@
 
                                         <div class="form-group">
                                             <label for="restriction-message">Message when condition not met</label>
-                                            <textarea id="restriction-message" placeholder="Enter message to show to customer"></textarea>
+                                            <textarea id="restriction-message" name="condition_not_met" placeholder="Enter message to show to customer"></textarea>
                                         </div>
                                     </div>
 
@@ -532,28 +474,6 @@
 
                                 </div>
 
-                                <!-- LIST SECTION -->
-                                <div id="list-section" class="content-section">
-                                    <div class="content-header">
-                                        <h1>All Usage Terms</h1>
-                                        <p>Manage your existing usage terms</p>
-                                    </div>
-
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Title</th>
-                                                <th>Type</th>
-                                                <th>Voucher Types</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="terms-list">
-                                            <!-- Will be populated by JavaScript -->
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                              @endif
                         </form>
@@ -652,9 +572,11 @@ function selectTermType(type) {
     if (type === 'informational') {
         document.getElementById('informational-step').classList.add('show');
         document.getElementById('conditional-step').classList.remove('show');
+        document.getElementById('term_type').value = 'informational';
     } else {
         document.getElementById('conditional-step').classList.add('show');
         document.getElementById('informational-step').classList.remove('show');
+        document.getElementById('term_type').value = 'conditional';
     }
 
     // Show action buttons

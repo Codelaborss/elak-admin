@@ -329,7 +329,7 @@
         <!-- End Page Header -->
         <div class="card">
             <div class="card-body">
-                <form action="{{route('admin.UsageTerm.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('admin.workmanagement.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
                     @csrf
                     @php($language=\App\Models\BusinessSetting::where('key','language')->first())
                         @php($language = $language->value ?? null)

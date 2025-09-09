@@ -126,12 +126,12 @@
                             </thead>
 
                             <tbody id="set-rows">
-                            @foreach($UsageTermManagement as $key => $UsageTerm)
+                            @foreach($WorkManagement as $key => $UsageTerm)
                                 <tr>
                                     {{-- Serial No --}}
                                     <td class="text-center">
                                         <span class="mr-3">
-                                            {{ $UsageTermManagement->firstItem() + $key }}
+                                            {{ $WorkManagement->firstItem() + $key }}
                                         </span>
                                     </td>
 
@@ -199,13 +199,13 @@
                             </tbody>
                         </table>
                     </div>
-                    @if(count($UsageTermManagement) !== 0)
+                    @if(count($WorkManagement) !== 0)
                     <hr>
                     @endif
                     <div class="page-area">
-                        {!! $UsageTermManagement->links() !!}
+                        {!! $WorkManagement->links() !!}
                     </div>
-                    @if(count($UsageTermManagement) === 0)
+                    @if(count($WorkManagement) === 0)
                     <div class="empty--data">
                         <img src="{{asset('/public/assets/admin/svg/illustrations/sorry.svg')}}" alt="public">
                         <h5>

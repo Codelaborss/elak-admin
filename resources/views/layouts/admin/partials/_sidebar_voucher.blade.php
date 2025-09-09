@@ -729,21 +729,34 @@
                 </li>
 
                  <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.client-side.add-new') }}" title="">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.workmanagement.add-new') }}" title="">
                          <span class="tio-calendar-note nav-icon"></span>
-                        <span class="text-truncate"> How it Works</span>
+                        <span class="text-truncate"> Create How It Works Guide</span>
                     </a>
                 </li>
+                 <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.workmanagement.list') }}" title="">
+                         <span class="tio-calendar-note nav-icon"></span>
+                        <span class="text-truncate"> List How It Works Guides</span>
+                    </a>
+                </li>
+
                     {{-- HOW IT WORKS MANAGEMENT --}}
                  <li class="nav-item">
-                    <small class="nav-subtitle" title="">HOW IT WORKS MANAGEMENT</small>
+                    <small class="nav-subtitle" title="">USAGE TERMS MANAGEMENT</small>
                     <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                 </li>
 
                  <li class="navbar-vertical-aside-has-menu ">
                     <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.UsageTerm.add-new') }}" title="">
                          <span class="tio-calendar-note nav-icon"></span>
-                        <span class="text-truncate"> Usage Terms</span>
+                        <span class="text-truncate"> Create New Usage Term</span>
+                    </a>
+                </li>
+                 <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.UsageTerm.list') }}" title="">
+                         <span class="tio-calendar-note nav-icon"></span>
+                        <span class="text-truncate"> List All Usage Terms</span>
                     </a>
                 </li>
                     {{-- GIFT VOUCHER MANAGEMENT --}}

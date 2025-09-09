@@ -1,8 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',"Usage Term Edit")
-@push('css_or_js')
-@endpush
+@section('title',"VoucherType List")
 
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -256,6 +254,7 @@
             color: #856404;
         }
     </style>
+
     <style>
         /* Dropdown options - selected option ka background highlight */
         .select2-results__option[aria-selected="true"] {
@@ -319,22 +318,23 @@
         <div class="page-header">
             <h1 class="page-header-title">
                 <span class="page-header-icon">
-                    <img src="{{asset('public/assets/admin/img/edit.png')}}" class="w--26" alt="">
+                    <img src="{{asset('public/assets/admin/img/condition.png')}}" class="w--26" alt="">
                 </span>
-                <span>
-                   Edit Usage Term Edit
+                <span> Add  New Usage Term
                 </span>
             </h1>
         </div>
+        @php($language=\App\Models\BusinessSetting::where('key','language')->first())
+        @php($language = $language->value ?? null)
+        @php($defaultLang = str_replace('_', '-', app()->getLocale()))
         <!-- End Page Header -->
-        <div class="card">
-            <div class="card-body">
-                <form action="{{route('admin.UsageTerm.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @php($language=\App\Models\BusinessSetting::where('key','language')->first())
-                        @php($language = $language->value ?? null)
-                        @php($defaultLang = str_replace('_', '-', app()->getLocale()))
-                        @if ($language)
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{route('admin.workmanagement.store')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @if ($language)
 
                             <div>
                                 <!-- CREATE SECTION -->
@@ -346,12 +346,12 @@
                                     <!-- Step 1: Select Term Type -->
                                     <div class="step-title">Step 1: Select Term Type</div>
                                     <div class="term-type-selection">
-                                        <div class="term-type-card informational" id="informational" onclick="selectTermType('informational')">
+                                        <div class="term-type-card" onclick="selectTermType('informational')">
                                             <h3>📝 Informational Notes</h3>
                                             <p>Display messages to customers</p>
                                             <small style="color: #888;">Example: "Valid for dine-in only"</small>
                                         </div>
-                                        <div class="term-type-card conditional" id="conditional" onclick="selectTermType('conditional')">
+                                        <div class="term-type-card" onclick="selectTermType('conditional')">
                                             <h3>⚙️ Conditional Rules</h3>
                                             <p>Control when vouchers are available</p>
                                             <small style="color: #888;">Example: "Weekdays only"</small>
@@ -364,19 +364,20 @@
 
                                         <div class="form-group">
                                             <label for="term-title">Term Title</label>
-                                            <input type="text" id="term-title" name="term_title" value="{{ $ManagementType->term_title }}"  placeholder="Enter a title for this term">
+                                            <input type="text" id="term-title" name="term_title"   placeholder="Enter a title for this term">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="term-description">Description</label>
-                                            <textarea id="term-description" name="desc" placeholder="Describe what this term does">{{ $ManagementType->term_dec }}</textarea>
+                                            <textarea id="term-description" name="desc" placeholder="Describe what this term does"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="voucher-types">Applicable Voucher Types</label>
                                             <select id="voucher-types" name="voucher_type[]" multiple style="height: 100px;">
                                                 @foreach (\App\Models\VoucherType::get() as $item)
-                                                      <option value="{{ $item->id }}" >{{ $item->name }}</option>
+
+                                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                             <small>Hold Ctrl/Cmd to select multiple</small>
@@ -389,15 +390,15 @@
 
                                         <div class="form-group">
                                             <label for="customer-message">Customer Message</label>
-                                            <textarea id="customer-message" name="mesage" placeholder="Enter the message customers will see" style="min-height: 100px;">{{ $ManagementType->customer_message }}</textarea>
+                                            <textarea id="customer-message" name="mesage" placeholder="Enter the message customers will see" style="min-height: 100px;"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="display-when">When to Display</label>
                                             <select id="display-when" name="when_to_display">
-                                                <option value="always" {{ $ManagementType->display_title == "always" ? "selected":""}}>Always Show</option>
-                                                <option value="purchase" {{ $ManagementType->display_title == "purchase" ? "selected":""}}>During Purchase Only</option>
-                                                <option value="redemption" {{ $ManagementType->display_title == "redemption" ? "selected":""}}>During Redemption Only</option>
+                                                <option value="always">Always Show</option>
+                                                <option value="purchase">During Purchase Only</option>
+                                                <option value="redemption">During Redemption Only</option>
                                             </select>
                                         </div>
                                     </div>
@@ -406,67 +407,95 @@
                                     <div id="conditional-step" class="form-step">
                                         <div class="step-title">Step 3: Conditional Rules</div>
 
-
                                         <div class="form-group">
                                             <label>Available Days (leave unchecked for all days)</label>
                                             <div class="checkbox-group">
-
-                                               @foreach (['monday','tuesday','wednesday','thursday','friday','saturday','sunday'] as $day)
-                                                    <div class="checkbox-item">
-                                                        <input type="checkbox"
-                                                            id="day-{{ $day }}"
-                                                            name="days[]"
-                                                            value="{{ $day }}"
-                                                            {{ in_array($day, json_decode($ManagementType->days, true) ?? []) ? 'checked' : '' }}>
-                                                        <label for="day-{{ $day }}">{{ ucfirst($day) }}</label>
-                                                    </div>
-                                                @endforeach
-
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-monday" name="days[]" value="monday">
+                                                    <label for="day-monday">Monday</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-tuesday" name="days[]" value="tuesday">
+                                                    <label for="day-tuesday">Tuesday</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-wednesday" name="days[]" value="wednesday">
+                                                    <label for="day-wednesday">Wednesday</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-thursday" name="days[]" value="thursday">
+                                                    <label for="day-thursday">Thursday</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-friday" name="days[]" value="friday">
+                                                    <label for="day-friday">Friday</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-saturday" name="days[]" value="saturday">
+                                                    <label for="day-saturday">Saturday</label>
+                                                </div>
+                                                <div class="checkbox-item">
+                                                    <input type="checkbox" id="day-sunday" name="days[]" value="sunday">
+                                                    <label for="day-sunday">Sunday</label>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="min-purchase">Minimum Purchase Amount (optional)</label>
-                                            <input type="number" id="min-purchase" name="min_purchase_amount" value="{{ $ManagementType->min_purchase_account }}" placeholder="0.00" step="0.01" min="0">
+                                            <input type="number" id="min-purchase" name="min_purchase_amount" placeholder="0.00" step="0.01" min="0">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="restriction-action">What happens when condition is not met?</label>
                                             <select id="restriction-action" name="condition_is_not_met">
-                                                <option value="hide"  {{ $ManagementType->condition_is_not_met == "hide" ? "selected":""}}>Hide voucher completely</option>
-                                                <option value="warning"  {{ $ManagementType->condition_is_not_met == "warning" ? "selected":""}}>Show warning message</option>
-                                                <option value="block"  {{ $ManagementType->condition_is_not_met == "block" ? "selected":""}}>Block redemption</option>
+                                                <option value="hide">Hide voucher completely</option>
+                                                <option value="warning">Show warning message</option>
+                                                <option value="block">Block redemption</option>
                                             </select>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="restriction-message">Message when condition not met</label>
-                                            <textarea id="restriction-message" name="condition_not_met" placeholder="Enter message to show to customer">{{$ManagementType->message_when_condition_not_meet}}</textarea>
+                                            <textarea id="restriction-message" name="condition_not_met" placeholder="Enter message to show to customer"></textarea>
                                         </div>
                                     </div>
+
+                                    <!-- Action Buttons (Hidden initially) -->
+                                    {{-- <div id="action-buttons" class="form-step">
+                                        <button class="btn btn-primary" onclick="previewTerm()">Preview Term</button>
+                                        <button class="btn btn-success" onclick="saveTerm()">Save Term</button>
+                                    </div> --}}
+
+                                      <div class="btn--container justify-content-end mt-5">
+                                            <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
+                                            <button type="submit" class="btn btn--primary">{{translate('messages.submit')}}</button>
+                                        </div>
 
                                 </div>
 
                             </div>
                              @endif
-                    <div class="btn--container justify-content-end mt-5">
-                        <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
-                        <button type="submit" class="btn btn--primary">{{translate('messages.update')}}</button>
+                        </form>
                     </div>
-                </form>
-            </div>
+
             <!-- End Table -->
         </div>
+
+
     </div>
+
+
+
 @endsection
 
 @push('script_2')
-
-
     <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
 
  <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+
 
 <script>
 // Global variables
@@ -542,40 +571,17 @@ function selectTermType(type) {
     // Show appropriate content step
     if (type === 'informational') {
         document.getElementById('informational-step').classList.add('show');
-          document.getElementById('informational').classList.add('selected');
         document.getElementById('conditional-step').classList.remove('show');
         document.getElementById('term_type').value = 'informational';
     } else {
         document.getElementById('conditional-step').classList.add('show');
-          document.getElementById('conditional').classList.add('selected');
         document.getElementById('informational-step').classList.remove('show');
         document.getElementById('term_type').value = 'conditional';
     }
 
-
-
-
-
     // Show action buttons
     document.getElementById('action-buttons').classList.add('show');
 }
-
-
-// Blade / PHP variable ko JavaScript me sahi tarike se embed karna
-var table_valeu = "{{ $ManagementType->term_type }}";
-   document.getElementById('basic-info-step').classList.add('show');
-if (table_valeu === "informational") {
-    document.getElementById('informational-step').classList.add('show');
-    document.getElementById('informational').classList.add('selected');
-    document.getElementById('conditional-step').classList.remove('show');
-    document.getElementById('term_type').value = 'informational';
-} else {
-    document.getElementById('conditional-step').classList.add('show');
-    document.getElementById('conditional').classList.add('selected');
-    document.getElementById('informational-step').classList.remove('show');
-    document.getElementById('term_type').value = 'conditional';
-}
-
 
 // Preview function
 function previewTerm() {
@@ -749,7 +755,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-
 <script>
     $(function () {
         $('#type').select2({
@@ -761,6 +766,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 </script>
-
 
 @endpush

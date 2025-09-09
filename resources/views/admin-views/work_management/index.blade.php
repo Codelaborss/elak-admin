@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',"Usage Term List")
+@section('title',"Work Management List")
 
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                     <img src="{{asset('public/assets/admin/img/condition.png')}}" class="w--26" alt="">
                 </span>
                 <span>
-                   @livewireStyles Usage Term
+                    Work Management
                 </span>
             </h1>
         </div>
@@ -86,7 +86,7 @@
                     <div class="card-header py-2 border-0">
                         <div class="search--button-wrapper">
                             <h5 class="card-title">
-                                Usage Term<span class="badge badge-soft-dark ml-2" id="itemCount"></span>
+                                Work Management<span class="badge badge-soft-dark ml-2" id="itemCount"></span>
                             </h5>
                             <form  class="search-form">
                                 <!-- Search -->
@@ -116,10 +116,10 @@
                             <thead class="thead-light">
                             <tr class="text-center">
                                 <th class="border-0">{{translate('sl')}}</th>
-                                <th class="border-0">Title </th>
-                                <th class="border-0">Type</th>
-                                <th class="border-0">Voucher Type</th>
+                                <th class="border-0">Voucher Type </th>
+                                <th class="border-0">Guide Title	</th>
                                 <th class="border-0">Status</th>
+                                <th class="border-0">Last Modified	</th>
                                 <th class="border-0">Action</th>
                             </tr>
 
@@ -137,21 +137,17 @@
 
                                     {{-- Term Title --}}
                                     <td class="text-center">
-                                        <span title="{{ $UsageTerm->term_title }}" class="font-size-sm text-body mr-3">
-                                            {{ Str::limit($UsageTerm->term_title, 20, '...') }}
+                                        <span title="{{ $UsageTerm->voucher_name }}" class="font-size-sm text-body mr-3">
+                                            {{ Str::limit($UsageTerm->voucher_name, 20, '...') }}
                                         </span>
                                     </td>
 
                                     {{-- Term Type --}}
                                     <td class="text-center">
-                                        <span title="{{ $UsageTerm->term_type }}" class="font-size-sm text-body mr-3">
-                                            {{ Str::limit($UsageTerm->term_type, 20, '...') }}
+                                        <span title="{{ $UsageTerm->guid_title }}" class="font-size-sm text-body mr-3">
+                                            {{ Str::limit($UsageTerm->guid_title, 20, '...') }}
                                         </span>
                                     </td>
-
-                                {{-- Voucher Types --}}
-                                  {{-- Voucher Types --}}
-
 
                                     {{-- Status Toggle --}}
                                     <td class="text-center">
@@ -165,17 +161,21 @@
                                                 <span class="toggle-switch-indicator"></span>
                                             </span>
                                         </label>
-                                        <form action="{{ route('admin.VoucherType.status', [$UsageTerm->id]) }}"
+                                        <form action="{{ route('admin.workmanagement.status', [$UsageTerm->id]) }}"
                                             method="post" id="status-{{ $UsageTerm->id }}_form">
                                             @csrf
                                         </form>
                                     </td>
-
+                                    <td class="text-center">
+                                        <span title="{{ $UsageTerm->guid_title }}" class="font-size-sm text-body mr-3">
+                                            {{ Str::limit($UsageTerm->updated_at, 20, '...') }}
+                                        </span>
+                                    </td>
                                     {{-- Action Buttons --}}
                                     <td>
                                         <div class="btn--container justify-content-center">
                                             <a class="btn action-btn btn--primary btn-outline-primary"
-                                            href="{{ route('admin.UsageTerm.edit', [$UsageTerm->id]) }}"
+                                            href="{{ route('admin.workmanagement.edit', [$UsageTerm->id]) }}"
                                             title="Edit">
                                                 <i class="tio-edit"></i>
                                             </a>
@@ -186,7 +186,7 @@
                                             title="Delete">
                                                 <i class="tio-delete-outlined"></i>
                                             </a>
-                                            <form action="{{ route('admin.UsageTerm.delete', [$UsageTerm->id]) }}"
+                                            <form action="{{ route('admin.workmanagement.delete', [$UsageTerm->id]) }}"
                                                 method="post" id="client-{{ $UsageTerm->id }}">
                                                 @csrf @method('delete')
                                             </form>
