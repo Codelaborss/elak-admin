@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("occasion_name")->nullable();
             $table->string("business_category")->nullable();
             $table->string("display_priority")->nullable();
-            $table->string("occasion_gallery")->nullable();
+            $table->longText("occasion_gallery")->nullable();
             $table->string("status")->default("active");
             $table->timestamps();
         });

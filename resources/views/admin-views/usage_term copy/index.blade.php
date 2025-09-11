@@ -222,11 +222,16 @@
 @endsection
 
 @push('script_2')
-    <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
-
- <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
+<!-- Select2 (agar bootstrap ke baad bhi chalega) -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+<!-- Aapke custom scripts (last me) -->
+<script src="{{ asset('public/assets/admin/js/view-pages/segments-index.js') }}"></script>
+<script src="{{ asset('public/assets/admin/js/view-pages/client-side-index.js') }}"></script>
 
 <script>
     $(function () {

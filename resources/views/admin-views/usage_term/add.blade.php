@@ -1101,78 +1101,13 @@
                                         </div>
                                     </div>
 
-                                    <!-- Action Bar -->
-                                    {{-- <div class="action-bar">
-                                        <button class="btn btn-success" onclick="createDeepCondition()">💾 Create Condition</button>
-                                        <button class="btn btn-secondary" onclick="previewCondition()">👁️ Preview</button>
-                                        <button class="btn" onclick="resetConditionForm()">🔄 Reset Form</button>
-                                    </div> --}}
                                       <div class="btn--container justify-content-end mt-5">
                                             <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
                                             <button type="submit" class="btn btn--primary">{{translate('messages.submit')}}</button>
                                         </div>
 
                                 </div>
-                                <!-- MANAGE CONDITIONS -->
-                                {{-- <div id="manage" class="section">
-                                    <div class="page-header">
-                                        <h1>📋 Manage All Conditions</h1>
-                                        <p>View, edit, and manage all your created deep conditions</p>
-                                    </div>
-                                    <div class="conditions-grid" id="conditionsGrid">
-                                    </div>
-                                </div> --}}
-                                <!-- ASSIGN TO VOUCHERS -->
-                                {{-- <div id="assign" class="section">
-                                    <div class="page-header">
-                                        <h1>🔗 Assign Conditions to Vouchers</h1>
-                                        <p>Select which deep conditions apply to each voucher type</p>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="voucherTypeSelect">Select Voucher Type</label>
-                                        <select id="voucherTypeSelect" onchange="loadVoucherAssignments()">
-                                            <option value="">-- Select Voucher Type --</option>
-                                            <option value="in-store">In-Store Voucher</option>
-                                            <option value="online">Online Voucher</option>
-                                            <option value="service">Service Voucher</option>
-                                            <option value="gift">Gift Voucher</option>
-                                        </select>
-                                    </div>
-
-                                    <div id="assignmentContainer" style="display: none;">
-                                        <div class="conditions-grid" id="assignmentGrid">
-                                            <!-- Assignment options will be loaded here -->
-                                        </div>
-
-                                        <div class="action-bar">
-                                            <button class="btn btn-success" onclick="saveVoucherAssignments()">💾 Save Assignments</button>
-                                            <button class="btn btn-secondary" onclick="resetAssignments()">🔄 Reset</button>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <!-- PREVIEW TERMS -->
-                                {{-- <div id="preview" class="section">
-                                    <div class="page-header">
-                                        <h1>👁️ Preview Customer Terms</h1>
-                                        <p>See exactly how the terms will appear to your customers</p>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="previewVoucherSelect">Select Voucher Type to Preview</label>
-                                        <select id="previewVoucherSelect" onchange="generateCustomerPreview()">
-                                            <option value="">-- Select Voucher Type --</option>
-                                            <option value="in-store">In-Store Voucher</option>
-                                            <option value="online">Online Voucher</option>
-                                            <option value="service">Service Voucher</option>
-                                            <option value="gift">Gift Voucher</option>
-                                        </select>
-                                    </div>
-
-                                    <div id="customerPreview">
-                                        <!-- Customer preview will be generated here -->
-                                    </div>
-                                </div> --}}
                              @endif
                         </form>
                     </div>

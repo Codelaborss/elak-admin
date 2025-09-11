@@ -759,16 +759,40 @@
                         <span class="text-truncate"> List All Usage Terms</span>
                     </a>
                 </li>
+                 <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.UsageTerm.assign_to_voucher') }}" title="">
+                         <span class="tio-calendar-note nav-icon"></span>
+                        <span class="text-truncate"> Assign to Vouchers</span>
+                    </a>
+                </li>
+                 <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.UsageTerm.preview_terms') }}" title="">
+                         <span class="tio-calendar-note nav-icon"></span>
+                        <span class="text-truncate"> Preview Terms</span>
+                    </a>
+                </li>
                     {{-- GIFT VOUCHER MANAGEMENT --}}
                  <li class="nav-item">
-                    <small class="nav-subtitle" title="">GIFT VOUCHER MANAGEMENT</small>
+                    <small class="nav-subtitle" title="">GIFT Card VOUCHER MANAGEMENT</small>
                     <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                 </li>
 
                  <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.client-side.add-new') }}" title="">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.Giftcard.add-new') }}" title="">
                          <span class="tio-calendar-note nav-icon"></span>
-                        <span class="text-truncate"> Gift Voucher</span>
+                        <span class="text-truncate"> Create New Occasion</span>
+                    </a>
+                </li>
+                 <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.Giftcard.list') }}" title="">
+                         <span class="tio-calendar-note nav-icon"></span>
+                        <span class="text-truncate"> List Occasions</span>
+                    </a>
+                </li>
+                 <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.Giftcard.add-new') }}" title="">
+                         <span class="tio-calendar-note nav-icon"></span>
+                        <span class="text-truncate"> Bonus & Limits Settings</span>
                     </a>
                 </li>
 

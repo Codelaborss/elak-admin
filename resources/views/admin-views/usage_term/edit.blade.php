@@ -746,17 +746,17 @@
                                         <div class="form-group">
                                             <label>Available Days</label>
                                             <div class="checkbox-grid" id="daysCheckboxes">
-                                               {{-- @php
-                                                    // Decode JSON from DB into array
+                                             @php(
                                                     $selectedDays = is_array($ManagementType->timeandday_config_days)
                                                         ? $ManagementType->timeandday_config_days
-                                                        : json_decode($ManagementType->timeandday_config_days, true);
-
+                                                        : json_decode($ManagementType->timeandday_config_days, true)
+                                                )
+                                                @php(
                                                     $days = [
                                                         'monday', 'tuesday', 'wednesday',
                                                         'thursday', 'friday', 'saturday', 'sunday'
-                                                    ];
-                                                @endphp
+                                                ]
+                                                )
 
                                                 @foreach($days as $day)
                                                     <div class="checkbox-item">
@@ -767,7 +767,7 @@
                                                             {{ in_array($day, $selectedDays ?? []) ? 'checked' : '' }}>
                                                         <label for="day-{{ $day }}">{{ ucfirst($day) }}</label>
                                                     </div>
-                                                @endforeach --}}
+                                                @endforeach
 
                                             </div>
                                         </div>
@@ -802,30 +802,33 @@
                                         <div class="form-group">
                                             <label>Holiday Restrictions</label>
                                             <div class="checkbox-grid">
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="exclude-national" name="holiday_occasions_holiday_restrictions[]" value="national-holidays">
-                                                    <label for="exclude-national">Exclude National Holidays</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="exclude-religious" name="holiday_occasions_holiday_restrictions[]" value="religious-holidays">
-                                                    <label for="exclude-religious">Exclude Religious Holidays</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="exclude-ramadan" name="holiday_occasions_holiday_restrictions[]" value="ramadan">
-                                                    <label for="exclude-ramadan">Exclude Ramadan</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="exclude-christmas" name="holiday_occasions_holiday_restrictions[]" value="christmas">
-                                                    <label for="exclude-christmas">Exclude Christmas Period</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="exclude-newyear" name="holiday_occasions_holiday_restrictions[]" value="newyear">
-                                                    <label for="exclude-newyear">Exclude New Year</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="exclude-eid" name="holiday_occasions_holiday_restrictions[]" value="eid">
-                                                    <label for="exclude-eid">Exclude Eid Holidays</label>
-                                                </div>
+                                                  @php(
+                                                  $selectedRestrictions = is_array($ManagementType->holiday_occasions_holiday_restrictions)
+                                                        ? $ManagementType->holiday_occasions_holiday_restrictions
+                                                        : json_decode($ManagementType->holiday_occasions_holiday_restrictions, true)
+                                                )
+                                                @php(
+                                                   $restrictions = [
+                                                        'national-holidays'  => 'Exclude National Holidays',
+                                                        'religious-holidays' => 'Exclude Religious Holidays',
+                                                        'ramadan'            => 'Exclude Ramadan',
+                                                        'christmas'          => 'Exclude Christmas Period',
+                                                        'newyear'            => 'Exclude New Year',
+                                                        'eid'                => 'Exclude Eid Holidays',
+                                                    ]
+                                                )
+
+                                                @foreach($restrictions as $key => $label)
+                                                    <div class="checkbox-item">
+                                                        <input type="checkbox"
+                                                            id="restriction-{{ $key }}"
+                                                            name="holiday_occasions_holiday_restrictions[]"
+                                                            value="{{ $key }}"
+                                                            {{ in_array($key, $selectedRestrictions ?? []) ? 'checked' : '' }}>
+                                                        <label for="restriction-{{ $key }}">{{ $label }}</label>
+                                                    </div>
+                                                @endforeach
+
                                             </div>
                                         </div>
 
@@ -837,30 +840,35 @@
                                         <div class="form-group">
                                             <label>Special Occasions</label>
                                             <div class="checkbox-grid">
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="valentines" name="holiday_occasions_special_occasions[]" value="valentines">
-                                                    <label for="valentines">Valentine's Day</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="mothers-day" name="holiday_occasions_special_occasions[]" value="mothers-day">
-                                                    <label for="mothers-day">Mother's Day</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="fathers-day" name="holiday_occasions_special_occasions[]" value="fathers-day">
-                                                    <label for="fathers-day">Father's Day</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="graduation" name="holiday_occasions_special_occasions[]" value="graduation">
-                                                    <label for="graduation">Graduation Season</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="back-to-school" name="holiday_occasions_special_occasions[]" value="back-to-school">
-                                                    <label for="back-to-school">Back to School</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="black-friday" name="holiday_occasions_special_occasions[]" value="black-friday">
-                                                    <label for="black-friday">Black Friday</label>
-                                                </div>
+                                              @php(
+                                                    // DB se selected values decode karna
+                                                    $selectedOccasions = is_array($ManagementType->holiday_occasions_special_occasions)
+                                                        ? $ManagementType->holiday_occasions_special_occasions
+                                                        : json_decode($ManagementType->holiday_occasions_special_occasions, true)
+                                                )
+                                                 @php(
+                                                    // Available options
+                                                    $occasions = [
+                                                        'valentines'     => "Valentine's Day",
+                                                        'mothers-day'    => "Mother's Day",
+                                                        'fathers-day'    => "Father's Day",
+                                                        'graduation'     => "Graduation Season",
+                                                        'back-to-school' => "Back to School",
+                                                        'black-friday'   => "Black Friday",
+                                                    ]
+                                                )
+
+                                                @foreach($occasions as $key => $label)
+                                                    <div class="checkbox-item">
+                                                        <input type="checkbox"
+                                                            id="occasion-{{ $key }}"
+                                                            name="holiday_occasions_special_occasions[]"
+                                                            value="{{ $key }}"
+                                                            {{ in_array($key, $selectedOccasions ?? []) ? 'checked' : '' }}>
+                                                        <label for="occasion-{{ $key }}">{{ $label }}</label>
+                                                    </div>
+                                                @endforeach
+
                                             </div>
                                         </div>
                                     </div>
@@ -938,30 +946,36 @@
                                         <div class="form-group">
                                             <label>Venue Types</label>
                                             <div class="checkbox-grid">
+
+                                                 @php(
+                                                    // DB se selected values decode karna
+                                                   $selectedVenues = is_array($ManagementType->location_availability_venue_types)
+                                                        ? $ManagementType->location_availability_venue_types
+                                                        : json_decode($ManagementType->location_availability_venue_types, true)
+                                                )
+                                                 @php(
+                                                    // Available options
+                                                    $venues = [
+                                                       'in-store'  => 'In-Store Only',
+                                                        'online'    => 'Online Only',
+                                                        'delivery'  => 'Delivery Available',
+                                                        'pickup'    => 'Pickup Available',
+                                                        'dine-in'   => 'Dine-in Only',
+                                                        'takeaway'  => 'Takeaway Available',
+                                                    ]
+                                                )
+
+                                             @foreach($venues as $key => $label)
                                                 <div class="checkbox-item">
-                                                    <input type="checkbox" id="venue-instore"  name="location_availability_venue_types[]" value="in-store">
-                                                    <label for="venue-instore">In-Store Only</label>
+                                                    <input type="checkbox"
+                                                        id="venue-{{ $key }}"
+                                                        name="location_availability_venue_types[]"
+                                                        value="{{ $key }}"
+                                                        {{ in_array($key, $selectedVenues ?? []) ? 'checked' : '' }}>
+                                                    <label for="venue-{{ $key }}">{{ $label }}</label>
                                                 </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="venue-online" name="location_availability_venue_types[]" value="online">
-                                                    <label for="venue-online">Online Only</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="venue-delivery" name="location_availability_venue_types[]" value="delivery">
-                                                    <label for="venue-delivery">Delivery Available</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="venue-pickup" name="location_availability_venue_types[]" value="pickup">
-                                                    <label for="venue-pickup">Pickup Available</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="venue-dinein" name="location_availability_venue_types[]" value="dine-in">
-                                                    <label for="venue-dinein">Dine-in Only</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="venue-takeaway" name="location_availability_venue_types[]" value="takeaway">
-                                                    <label for="venue-takeaway">Takeaway Available</label>
-                                                </div>
+                                            @endforeach
+
                                             </div>
                                         </div>
 
@@ -1036,30 +1050,36 @@
                                         <div class="form-group">
                                             <label>Restriction Types</label>
                                             <div class="checkbox-grid">
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="non-refundable" name="restriction_polices_restriction_type[]" value="non-refundable">
-                                                    <label for="non-refundable">Non-refundable</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="non-transferable" name="restriction_polices_restriction_type[]" value="non-transferable">
-                                                    <label for="non-transferable">Non-transferable</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="no-cash-value"  name="restriction_polices_restriction_type[]"value="no-cash-value">
-                                                    <label for="no-cash-value">No cash value</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="no-combination" name="restriction_polices_restriction_type[]" value="no-combination">
-                                                    <label for="no-combination">Cannot combine with other offers</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="prior-reservation" name="restriction_polices_restriction_type[]" value="prior-reservation">
-                                                    <label for="prior-reservation">Prior reservation required</label>
-                                                </div>
-                                                <div class="checkbox-item">
-                                                    <input type="checkbox" id="id-required" name="restriction_polices_restriction_type[]" value="id-required">
-                                                    <label for="id-required">ID verification required</label>
-                                                </div>
+
+                                                   @php(
+                                                    // DB se selected values decode karna
+                                                 $selectedRestrictions = is_array($ManagementType->restriction_polices_restriction_type)
+                                                        ? $ManagementType->restriction_polices_restriction_type
+                                                        : json_decode($ManagementType->restriction_polices_restriction_type, true)
+                                                )
+                                                 @php(
+                                                    // Available options
+                                                    $restrictions = [
+                                                        'non-refundable'     => 'Non-refundable',
+                                                        'non-transferable'   => 'Non-transferable',
+                                                        'no-cash-value'      => 'No cash value',
+                                                        'no-combination'     => 'Cannot combine with other offers',
+                                                        'prior-reservation'  => 'Prior reservation required',
+                                                        'id-required'        => 'ID verification required',
+                                                    ]
+                                                )
+
+                                                @foreach($restrictions as $key => $label)
+                                                    <div class="checkbox-item">
+                                                        <input type="checkbox"
+                                                            id="restriction-{{ $key }}"
+                                                            name="restriction_polices_restriction_type[]"
+                                                            value="{{ $key }}"
+                                                            {{ in_array($key, $selectedRestrictions ?? []) ? 'checked' : '' }}>
+                                                        <label for="restriction-{{ $key }}">{{ $label }}</label>
+                                                    </div>
+                                                @endforeach
+
                                             </div>
                                         </div>
 

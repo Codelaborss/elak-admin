@@ -459,142 +459,37 @@ input:checked + .toggle-slider:before {
         @php($language = $language->value ?? null)
         @php($defaultLang = str_replace('_', '-', app()->getLocale()))
         <!-- End Page Header -->
+         <form action="{{route('admin.UsageTerm.getAssignments_update')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+        <div id="assign" class="section">
+            <div class="page-header">
+                <h1>🔗 Assign Conditions to Vouchers</h1>
+                <p>Select which deep conditions apply to each voucher type</p>
+            </div>
+
+            <div class="form-group">
+                <label for="voucherTypeSelect">Select Voucher Type</label>
+                <select id="voucherTypeSelect" name="voucher_id">
+                    <option value="">-- Select Voucher Type --</option>
+                    @foreach ($VoucherType as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Yahan data load hoga -->
+            <div id="voucherAssignmentsContainer"></div>
 
 
-            <div id="manage" class="section">
-                <div class="page-header">
-                    <h1>📋 Manage All Conditions</h1>
-                    <p>View, edit, and manage all your created deep conditions</p>
-                </div>
-                <div class="conditions-grid">
+            <div id="assignmentContainer" style="display: none;">
 
-                    <!-- Condition Card #1 -->
-                @foreach($UsageTermManagement as $key => $UsageTerm)
-                 <div class="row g-3">
-                    <div class="col-12">
-                    <div class="condition-card">
-                        <div class="condition-header">
-                            <div>
-                            <div class="condition-title">Weekend Offer</div>
-                            <div class="condition-description">Special discount available only on weekends.</div>
-                            </div>
-                        </div>
-                        <div class="condition-details">
-                            <div class="condition-detail-item">
-                           @php(
-                                $days = is_array($UsageTerm->timeandday_config_days)
-                                    ? $UsageTerm->timeandday_config_days
-                                    : json_decode($UsageTerm->timeandday_config_days, true)
-                            )
-
-                            <span class="detail-label">Days:</span>
-                            <span class="detail-value">
-                                {{ implode(', ', array_map('ucfirst', $days)) }}
-                            </span>
-
-
-
-                            </div>
-                            <div class="condition-detail-item">
-                            <span class="detail-label">Time:</span>
-                            <span class="detail-value">{{ $UsageTerm->timeandday_config_time_range_from }} - {{ $UsageTerm->timeandday_config_time_range_to }}</span>
-                            </div>
-                            <div class="condition-detail-item">
-                            <span class="detail-label">Limit:</span>
-                            <span class="detail-value">{{ $UsageTerm->usage_limits_limit_per_user }} / {{ $UsageTerm->usage_limits_period }}</span>
-                            </div>
-                            <div class="condition-detail-item">
-                            <span class="detail-label">Created:</span>
-                            <span class="detail-value">{{ $UsageTerm->created_at }}</span>
-                            </div>
-                            <div class="condition-detail-item">
-                            <span class="detail-label">Status:</span>
-                            <span class="detail-value">
-                                @if ($UsageTerm->status == "active")
-                                <div class="condition-detail-item">
-                                <span class="detail-label">Status:</span>
-                                <span class="detail-value status-active"  style="color:#28a745;">● Active</span>
-                                </div>
-
-                                @else
-                                <div class="condition-detail-item">
-                                <span class="detail-label">Status:</span>
-                                <span class="detail-value status-inactive"  style="color:#be1919;">● Inactive</span>
-                                </div>
-
-                                @endif
-                                  <div class="table-responsive datatable-custom">
-                                <table id="columnSearchDatatable"
-                                    class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
-                                    data-hs-datatables-options='{
-                                        "order": [],
-                                        "orderCellsTop": true,
-                                        "paging":false
-                                    }'>
-                                    <tbody id="set-rows">
-                                        <td class="text-center">
-                                            <label class="toggle-switch toggle-switch-sm" for="status-{{ $UsageTerm->id }}">
-                                                <input type="checkbox" class="toggle-switch-input dynamic-checkbox"
-                                                    {{ $UsageTerm->status == 'active' ? 'checked' : '' }}
-                                                    data-id="status-{{ $UsageTerm->id }}"
-                                                    data-type="status"
-                                                    id="status-{{ $UsageTerm->id }}">
-                                                <span class="toggle-switch-label mx-auto">
-                                                    <span class="toggle-switch-indicator"></span>
-                                                </span>
-                                            </label>
-                                            <form action="{{ route('admin.UsageTerm.status', [$UsageTerm->id]) }}"
-                                                method="post" id="status-{{ $UsageTerm->id }}_form">
-                                                @csrf
-                                            </form>
-                                        </td>
-                                    </tbody>
-                                </table>
-                                  </div>
-                            </div>
-                        </div>
-                        <div class="condition-actions">
-                                <a class="btn btn-primary"
-                                href="{{ route('admin.UsageTerm.edit', [$UsageTerm->id]) }}"
-                                title="Edit">
-                                    <i class="tio-edit"></i> Edit
-                                </a>
-
-                                <a class="btn btn-danger  form-alert"
-                                href="javascript:"
-                                data-id="client-{{ $UsageTerm->id }}"
-                                data-message="Want to delete this client ?"
-                                title="Delete">
-                                    <i class="tio-delete-outlined"></i> Delete
-                                </a>
-                             <form action="{{ route('admin.UsageTerm.delete', [$UsageTerm->id]) }}"
-                                    method="post" id="client-{{ $UsageTerm->id }}">
-                                    @csrf @method('delete')
-                                </form>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-             @endforeach
-
-                </div>
-
-                    @if(count($UsageTermManagement) !== 0)
-                    <hr>
-                    @endif
-                    <div class="page-area">
-                        {!! $UsageTermManagement->links() !!}
-                    </div>
-                    @if(count($UsageTermManagement) === 0)
-                    <div class="empty--data">
-                        <img src="{{asset('/public/assets/admin/svg/illustrations/sorry.svg')}}" alt="public">
-                        <h5>
-                            {{translate('no_data_found')}}
-                        </h5>
-                    </div>
-                    @endif
+                <div class="btn--container justify-content-end mt-5">
+                    <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
+                    <button type="submit" class="btn btn--primary">{{translate('messages.submit')}}</button>
                 </div>
             </div>
+        </div>
+         </form>
             <!-- End Table -->
     </div>
 
@@ -606,7 +501,63 @@ input:checked + .toggle-slider:before {
 <!-- Aapke custom scripts (last me) -->
 <script src="{{ asset('public/assets/admin/js/view-pages/segments-index.js') }}"></script>
 <script src="{{ asset('public/assets/admin/js/view-pages/client-side-index.js') }}"></script>
+<script>
 
+
+
+    $(document).ready(function () {
+
+    $("#voucherTypeSelect").on("change", function () {
+        let voucherId = $(this).val();
+
+        if (voucherId) {
+            $.ajax({
+                url: "/admin/UsageTerm/voucher-assignments/" + voucherId,
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                        document.getElementById('assignmentContainer').style.display = 'block';
+                    let html = '<div class="conditions-grid" id="assignmentGrid">';
+
+                    response.conditions.forEach(condition => {
+                        // Agar condition.voucher_id == selected voucherId to checked karo
+                        let isChecked = (condition.voucher_id == response.voucherId) ? "checked" : "";
+
+                        html += `
+                            <div class="condition-card ${isChecked ? 'selected' : ''}" style="cursor: pointer;">
+                                <input type="hidden" name="hidden_primary_id[]" value="${condition.id}" id="hidden_primary_id" />
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <input type="checkbox" name="voucher_update_ids[]" value="${condition.id}"
+                                           ${isChecked}
+                                           style="margin-right: 15px; transform: scale(1.5);"
+                                           onclick="event.stopPropagation();">
+                                    <div>
+                                        <div class="condition-title">${condition.baseinfor_condition_title ?? ''}</div>
+                                        <div class="condition-description">${condition.baseinfor_description ?? ''}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += '</div>';
+                    $("#voucherAssignmentsContainer").html(html);
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                    $("#voucherAssignmentsContainer").html("<p style='color:red;'>Error loading data</p>");
+                }
+            });
+        } else {
+              document.getElementById('assignmentContainer').style.display = 'none';
+            $("#voucherAssignmentsContainer").html("");
+        }
+    });
+});
+
+
+
+</script>
 
 <script>
     $(function () {

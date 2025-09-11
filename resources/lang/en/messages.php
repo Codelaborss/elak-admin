@@ -8222,4 +8222,5 @@ Smartly or Earn. ',
   'The voucher deliver field is required.' => 'The voucher deliver field is required.',
   'The payment confirm field is required.' => 'The payment confirm field is required.',
   'Preview Guide' => 'Preview Guide',
+  'store_added_successfully' => 'Store added successfully',
 );

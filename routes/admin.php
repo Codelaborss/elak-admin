@@ -233,7 +233,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('status/{id}', 'ManagementTypeController@status')->name('status');
         });
        // Management Types
-
              // Management Types
         Route::group(['prefix' => 'UsageTerm', 'as' => 'UsageTerm.'], function () {
             Route::get('add-new', 'UsageTermController@index')->name('add-new');
@@ -243,8 +242,31 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('update/{id}', 'UsageTermController@update')->name('update');
             Route::delete('delete/{id}', 'UsageTermController@delete')->name('delete');
             Route::post('status/{id}', 'UsageTermController@status')->name('status');
+            Route::get('assign-to-vouchers/', 'UsageTermController@assign_to_voucher')->name('assign_to_voucher');
+            Route::get('/voucher-assignments/{id}', 'UsageTermController@getAssignments')->name('getAssignments');
+            Route::post('/voucher-assignments-update', 'UsageTermController@getAssignments_update')->name('getAssignments_update');
+            Route::get('preview-terms/', 'UsageTermController@preview_terms')->name('preview_terms');
+             Route::get('/preview-terms-show/{id}', 'UsageTermController@preview_terms_show')->name('preview_terms_show');
         });
        // Management Types
+
+             // Gift Card
+        Route::group(['prefix' => 'Giftcard', 'as' => 'Giftcard.'], function () {
+            Route::get('add-new', 'GiftcardController@index')->name('add-new');
+            Route::match(['get', 'post'], 'list', 'GiftcardController@list')->name('list');
+            Route::post('store', 'GiftcardController@store')->name('store');
+            Route::get('edit/{id}', 'GiftcardController@edit')->name('edit');
+            Route::post('update/{id}', 'GiftcardController@update')->name('update');
+            Route::delete('delete/{id}', 'GiftcardController@delete')->name('delete');
+            Route::post('status/{id}', 'GiftcardController@status')->name('status');
+            Route::post('/status-toggle/{id}', 'GiftcardController@toggleStatus')->name('toggleStatus');
+            Route::get('assign-to-vouchers/', 'GiftcardController@assign_to_voucher')->name('assign_to_voucher');
+            Route::get('/voucher-assignments/{id}', 'GiftcardController@getAssignments')->name('getAssignments');
+            Route::post('/voucher-assignments-update', 'GiftcardController@getAssignments_update')->name('getAssignments_update');
+            Route::get('preview-terms/', 'GiftcardController@preview_terms')->name('preview_terms');
+             Route::get('/preview-terms-show/{id}', 'GiftcardController@preview_terms_show')->name('preview_terms_show');
+        });
+       // Gift Card
 
              // Management Types
         Route::group(['prefix' => 'workmanagement', 'as' => 'workmanagement.'], function () {
