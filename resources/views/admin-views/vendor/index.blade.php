@@ -12,9 +12,7 @@
                 <span class="page-header-icon">
                     <img src="{{asset('public/assets/admin/img/store.png')}}" class="w--26" alt="">
                 </span>
-                <span>
-                    {{translate('messages.add_new_store')}}
-                </span>
+                <span> {{translate('messages.add_new_store')}}</span>
             </h1>
         </div>
         @php($language=\App\Models\BusinessSetting::where('key','language')->first())
@@ -211,7 +209,9 @@
                                     <div class="form-group">
                                         <label class="input-label" for="choice_zones">{{translate('messages.zone')}}<span
                                                 class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-        data-original-title="{{translate('messages.select_zone_for_map')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.select_zone_for_map')}}"></span></label>
+                                            data-original-title="{{translate('messages.select_zone_for_map')}}">
+                                            <img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.select_zone_for_map')}}"></span>
+                                        </label>
                                         <select name="zone_id" id="choice_zones" required
                                                 class="form-control js-select2-custom"  data-placeholder="{{translate('messages.select_zone')}}">
                                                 <option value="" selected disabled>{{translate('messages.select_zone')}}</option>
@@ -229,18 +229,74 @@
                                     <div class="form-group">
                                         <label class="input-label" for="latitude">{{translate('messages.latitude')}}<span
                                                 class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-        data-original-title="{{translate('messages.store_lat_lng_warning')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_lat_lng_warning')}}"></span></label>
+                                            data-original-title="{{translate('messages.store_lat_lng_warning')}}">
+                                            <img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_lat_lng_warning')}}"></span>
+                                        </label>
                                         <input type="text" id="latitude"
                                                 name="latitude" class="form-control"
                                                 placeholder="{{ translate('messages.Ex:') }} -94.22213" value="{{old('latitude')}}" required readonly>
                                     </div>
                                     <div class="form-group mb-5">
                                         <label class="input-label" for="longitude">{{translate('messages.longitude')}}<span
-                                                class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-        data-original-title="{{translate('messages.store_lat_lng_warning')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_lat_lng_warning')}}"></span></label>
+                                                class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{translate('messages.store_lat_lng_warning')}}">
+                                                <img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_lat_lng_warning')}}">
+                                            </span>
+                                        </label>
                                         <input type="text"
                                                 name="longitude" class="form-control"
                                                 placeholder="{{ translate('messages.Ex:') }} 103.344322" id="longitude" value="{{old('longitude')}}" required readonly>
+                                    </div>
+                                    <div class="form-group mb-5">
+                                        <input type="hidden" name="hiiden_check" id="hiiden_check" value="0">
+                                        <label class="input-label" for="type">
+                                            {{translate('Is Main Branch')}}
+                                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{translate('messages.store_lat_lng_warning')}}"></span>
+                                            <input type="checkbox"
+                                                name="type"
+                                                id="type"
+                                                class="mt-2"
+                                                value="1"
+                                                {{ old('type') ? 'checked' : '' }}>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group" id="sub_branch_group">
+                                        <label class="input-label" for="parent_id">
+                                            {{translate('Main Branch')}}
+                                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{translate('Main Branch')}}"></span>
+                                        </label>
+                                        <select name="parent_id" id="parent_id"
+                                                class="form-control js-select2-custom"
+                                                data-placeholder="{{translate('Select Main Branch')}}">
+                                            <option value="" selected disabled>{{translate('Select Main Branch')}}</option>
+                                            @foreach(\App\Models\Store::active()->where('type', 'main')->get() as $Store)
+                                                @if(isset(auth('admin')->user()->Store_id))
+                                                    @if(auth('admin')->user()->Store_id == $Store->id)
+                                                        <option value="{{$Store->id}}">{{$Store->name}}</option>
+                                                    @endif
+                                                @else
+                                                    <option value="{{$Store->id}}">{{$Store->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="input-label" for="voucher_id">{{ translate('Voucher Type') }}
+                                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                                data-original-title="{{ translate('Voucher Type') }}"></span>
+                                        </label>
+
+                                        <select name="voucher_id[]" id="voucher_id" required
+                                                class="form-control js-select2-custom" data-placeholder="{{ translate('Select Voucher Type') }}" multiple>
+                                            @foreach(\App\Models\VoucherType::get() as $VoucherType)
+                                                <option value="{{ $VoucherType->id }}"
+                                                    @if( (old('voucher_id') && in_array($VoucherType->id, old('voucher_id')))
+                                                        || (isset($selectedVoucherIds) && in_array($VoucherType->id, $selectedVoucherIds)) )
+                                                        selected
+                                                    @endif
+                                                >{{ $VoucherType->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -435,6 +491,38 @@
     <script src="{{asset('public/assets/admin/js/spartan-multi-image-picker.js')}}"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{\App\Models\BusinessSetting::where('key', 'map_api_key')->first()->value}}&libraries=places&callback=initMap&v=3.45.8"></script>
+
+<script>
+$(document).ready(function(){
+  $('#voucher_id').select2({
+    placeholder: $('#voucher_id').data('placeholder'),
+    allowClear: true,
+    width: '100%'
+  });
+});
+</script>
+    <script>
+    function toggleSubBranch() {
+        let checkbox = document.getElementById("type");
+        let subBranch = document.getElementById("sub_branch_group");
+        let hiiden_check = document.getElementById("hiiden_check");
+
+        if (checkbox.checked) {
+            subBranch.style.display = "none"; // Hide sub branch
+            hiiden_check.value = "1"; // Hide sub branch
+        } else {
+            subBranch.style.display = "block"; // Show sub branch
+            hiiden_check.value = "0"; // Show sub branch
+        }
+    }
+
+    // Call on page load (so it respects old value)
+    document.addEventListener("DOMContentLoaded", toggleSubBranch);
+
+    // Call when checkbox changes
+    document.getElementById("type").addEventListener("change", toggleSubBranch);
+</script>
+
 
 <script>
     "use strict";

@@ -58,11 +58,13 @@ class VendorController extends Controller
 {
     public function index()
     {
+
         return view('admin-views.vendor.index');
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
@@ -71,6 +73,9 @@ class VendorController extends Controller
             'address' => 'required|max:1000',
             'latitude' => 'required',
             'longitude' => 'required',
+            'voucher_id' => 'nullable|max:200',
+            'parent_id' => 'nullable|max:200',
+            'type' => 'nullable|max:200',
             'email' => 'required|unique:vendors',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:vendors',
             'minimum_delivery_time' => 'required',
@@ -119,6 +124,16 @@ class VendorController extends Controller
             ->withInput();
         }
 
+        if($request->hiiden_check == "1"){
+            $type_value = "main";
+            $parent_id = "";
+                // dd("main");
+        }else{
+            $type_value = "sub branch";
+            $parent_id = $request->parent_id;
+                // dd("sub branch");
+        }
+
         $vendor = new Vendor();
         $vendor->f_name = $request->f_name;
         $vendor->l_name = $request->l_name;
@@ -138,6 +153,9 @@ class VendorController extends Controller
         $store->longitude = $request->longitude;
         $store->vendor_id = $vendor->id;
         $store->zone_id = $request->zone_id;
+        $store->parent_id = $parent_id;
+        $store->type = $type_value;
+        $store->voucher_id = json_encode($request->voucher_id);
         $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
@@ -215,6 +233,7 @@ class VendorController extends Controller
             return back();
         }
         $store = Store::withoutGlobalScope('translate')->findOrFail($id);
+        // dd($store);
         return view('admin-views.vendor.edit', compact('store'));
     }
 
@@ -230,6 +249,9 @@ class VendorController extends Controller
             'latitude' => 'required',
             'longitude' => 'required',
             'tin' => 'required',
+              'voucher_id' => 'nullable|max:200',
+            'parent_id' => 'nullable|max:200',
+            'type' => 'nullable|max:200',
             'tin_expire_date' => 'required',
             'password' => ['nullable', Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised(),function ($attribute, $value, $fail) {
                 if (strpos($value, ' ') !== false) {
@@ -242,6 +264,16 @@ class VendorController extends Controller
         ], [
             'f_name.required' => translate('messages.first_name_is_required')
         ]);
+
+            if($request->hiiden_check == "1"){
+            $type_value = "main";
+            $parent_id = "";
+                // dd("main");
+            }else{
+                $type_value = "sub branch";
+                $parent_id = $request->parent_id;
+                    // dd("sub branch");
+            }
 
         if($request->zone_id)
         {
@@ -288,6 +320,10 @@ class VendorController extends Controller
         $store->latitude = $request->latitude;
         $store->longitude = $request->longitude;
         $store->zone_id = $request->zone_id;
+        $store->parent_id = $parent_id;
+        $store->type = $type_value;
+        $store->voucher_id = json_encode($request->voucher_id);
+
         $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
@@ -1690,7 +1726,7 @@ class VendorController extends Controller
                     'module_id' => $collection['module_id'],
                     'minimum_order' => $collection['MinimumOrderAmount'],
                     'comission' => $collection['Comission'],
-        
+
                     'delivery_time' => (isset($collection['DeliveryTime']) && preg_match('([0-9]+[\-][0-9]+\s[min|hours|days])', $collection['DeliveryTime'])) ? $collection['DeliveryTime'] :'30-40 min',
                     'minimum_shipping_charge' => $collection['MinimumDeliveryFee'],
                     'per_km_shipping_charge' => $collection['PerKmDeliveryFee'],

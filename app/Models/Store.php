@@ -143,6 +143,9 @@ class Store extends Model
         'tin',
         'tin_expire_date',
         'tin_certificate_image',
+        'type',
+        'parent_id',
+        'voucher_id',
     ];
 
     /**

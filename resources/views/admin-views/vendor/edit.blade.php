@@ -271,6 +271,62 @@
                                                 name="longitude" class="form-control"
                                                 placeholder="{{ translate('messages.Ex:') }} 103.344322" id="longitude" value="{{$store->longitude}}" required readonly>
                                     </div>
+                                    <div class="form-group mb-5">
+                                        <input type="hidden" name="hiiden_check" id="hiiden_check" value="0">
+                                        <label class="input-label" for="type">
+                                            {{translate('Is Main Branch')}}
+                                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{translate('messages.store_lat_lng_warning')}}"></span>
+                                            <input type="checkbox"
+                                                name="type"
+                                                id="type"
+                                                class="mt-2"
+                                                value="1"
+                                                {{ $store->type == "main" ? 'checked' : '' }}>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group" id="sub_branch_group">
+                                        <label class="input-label" for="parent_id">
+                                            {{translate('Main Branch')}}
+                                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{translate('Main Branch')}}"></span>
+                                        </label>
+                                        <select name="parent_id" id="parent_id" class="form-control js-select2-custom" data-placeholder="{{translate('Select Main Branch')}}">
+                                            <option value="" selected disabled>{{translate('Select Main Branch')}}</option>
+                                            @foreach(\App\Models\Store::active()->where('type', 'main')->get() as $Store_item)
+                                                @if(isset(auth('admin')->user()->Store_id))
+                                                    @if(auth('admin')->user()->Store_id == $Store->id)
+                                                        <option value="{{$Store_item->id}}"  {{$store->parent_id == $Store_item->id? 'selected': ''}}>{{$Store_item->name}}</option>
+                                                    @endif
+                                                @else
+                                                    <option value="{{$Store_item->id}}" {{$store->parent_id == $Store_item->id? 'selected': ''}}>{{$Store_item->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @php(// Store ke vouchers ko decode karke array banao
+                        $selectedVoucherIds = $store->voucher_id ? json_decode($store->voucher_id, true) : []
+                            )
+                                  <div class="form-group">
+                                    <label class="input-label" for="voucher_id">{{ translate('Voucher Type') }}
+                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('Voucher Type') }}"></span>
+                                    </label>
+                                    <select name="voucher_id[]" id="voucher_id" required
+                                            class="form-control js-select2-custom"
+                                            data-placeholder="{{ translate('Select Voucher Type') }}" multiple>
+                                        @foreach(\App\Models\VoucherType::get() as $VoucherType)
+                                            <option value="{{ $VoucherType->id }}"
+                                                @if( (old('voucher_id') && in_array($VoucherType->id, old('voucher_id')))
+                                                    || (isset($selectedVoucherIds) && in_array($VoucherType->id, $selectedVoucherIds)) )
+                                                    selected
+                                                @endif
+                                            >{{ $VoucherType->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+
                                 </div>
                                 <div class="col-lg-8">
                                     <input id="pac-input" class="controls rounded"
@@ -485,6 +541,40 @@
     <script src="{{asset('public/assets/admin/js/spartan-multi-image-picker.js')}}"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{\App\Models\BusinessSetting::where('key', 'map_api_key')->first()->value}}&libraries=places&callback=initMap&v=3.45.8"></script>
+
+<script>
+$(document).ready(function(){
+  $('#voucher_id').select2({
+    placeholder: $('#voucher_id').data('placeholder'),
+    allowClear: true,
+    width: '100%'
+  });
+});
+</script>
+
+    <script>
+    function toggleSubBranch() {
+        let checkbox = document.getElementById("type");
+        let subBranch = document.getElementById("sub_branch_group");
+        let hiiden_check = document.getElementById("hiiden_check");
+
+        if (checkbox.checked) {
+            subBranch.style.display = "none"; // Hide sub branch
+            hiiden_check.value = "1"; // Hide sub branch
+        } else {
+            subBranch.style.display = "block"; // Show sub branch
+            hiiden_check.value = "0"; // Show sub branch
+        }
+    }
+
+    // Call on page load (so it respects old value)
+    document.addEventListener("DOMContentLoaded", toggleSubBranch);
+
+    // Call when checkbox changes
+    document.getElementById("type").addEventListener("change", toggleSubBranch);
+</script>
+
+
     <script>
         "use strict";
         $("#vendor_form").on('keydown', function(e){

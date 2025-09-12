@@ -17,7 +17,7 @@ class AddToColStoresTable extends Migration
             $table->json('pickup_zone_id')->nullable();
             $table->text('comment')->nullable();
             $table->string('parent_id')->nullable();
-            $table->string('type_or_sub_type_id')->nullable();
+            $table->string('type')->nullable();
             $table->string('voucher_id')->nullable();
         });
     }

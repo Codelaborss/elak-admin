@@ -773,7 +773,7 @@
                 </li>
                     {{-- GIFT VOUCHER MANAGEMENT --}}
                  <li class="nav-item">
-                    <small class="nav-subtitle" title="">GIFT Card VOUCHER MANAGEMENT</small>
+                    <small class="nav-subtitle" title="">GIFT Card  MANAGEMENT</small>
                     <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                 </li>
 
