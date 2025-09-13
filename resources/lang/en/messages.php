@@ -8229,4 +8229,8 @@ Smartly or Earn. ',
   'Main Branch' => 'Main Branch',
   'Select Main Branch' => 'Select Main Branch',
   'Is Main Branch' => 'Is Main Branch',
+  'The display priority field is required.' => 'The display priority field is required.',
+  'The business category field is required.' => 'The business category field is required.',
+  'The occasion name field is required.' => 'The occasion name field is required.',
+  'The min gift ard field is required.' => 'The min gift ard field is required.',
 );

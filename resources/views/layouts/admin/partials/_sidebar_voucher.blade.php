@@ -790,7 +790,7 @@
                     </a>
                 </li>
                  <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.Giftcard.add-new') }}" title="">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.Giftcard.add_bonus_setting') }}" title="">
                          <span class="tio-calendar-note nav-icon"></span>
                         <span class="text-truncate"> Bonus & Limits Settings</span>
                     </a>

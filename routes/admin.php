@@ -259,6 +259,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('/voucher-assignments-update', 'GiftcardController@getAssignments_update')->name('getAssignments_update');
             Route::get('preview-terms/', 'GiftcardController@preview_terms')->name('preview_terms');
              Route::get('/preview-terms-show/{id}', 'GiftcardController@preview_terms_show')->name('preview_terms_show');
+
+
+            // bonus
+             Route::get('add-bonus-setting', 'GiftcardController@add_bonus_setting')->name('add_bonus_setting');
+             Route::post('add-bonus-sore', 'GiftcardController@bonus_store')->name('bonus_store');
+
         });
        // Gift Card
 
@@ -414,6 +420,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::put('order_refund_rejection/', 'OrderController@order_refund_rejection')->name('order_refund_rejection');
             Route::get('/{status}', 'OrderController@list')->name('refund_attr');
         });
+
 
 
 

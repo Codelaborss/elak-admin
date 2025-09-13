@@ -16,6 +16,7 @@ use App\CentralLogics\Helpers;
 use App\Models\ManagementType;
 use App\Models\UsageTermManagement;
 use App\Http\Controllers\Controller;
+use App\Models\BonuLimitSetting;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Config;
 
@@ -294,4 +295,51 @@ public function toggleStatus($id)
     ]);
 }
 
-}
+// bonus
+   public function add_bonus_setting(Request $request)
+    {
+        $category =  Category::get();
+        return view('admin-views.gift_card.bonus', compact('category'));
+    }
+
+   public function bonus_store(Request $request)
+    {
+        // dd($request->all());
+            $validated = $request->validate([
+            "category" => "required|string",
+            "min" => "required|array",
+            "max" => "required|array",
+            "bonus" => "required|array",
+            "min_gift_ard" => "required|numeric",
+            "max_gift_ard" => "nullable|numeric",
+        ]);
+
+
+        $setting = new BonuLimitSetting();
+        $setting->category = $request->category;
+
+        // Combine arrays into JSON if needed
+        $setting->multi_level_bonus_configuration = json_encode([
+            "min" => $request->min,
+            "max" => $request->max,
+            "bonus" => $request->bonus,
+        ]);
+
+        $setting->min_gift_ard = $request->min_gift_ard;
+        $setting->max_gift_ard = $request->max_gift_ard;
+        $setting->save();
+
+        Toastr::success('Bonus configuration created successfully');
+        return back();
+
+    }
+
+
+
+
+
+
+
+    }
+
+
