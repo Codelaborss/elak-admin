@@ -14,7 +14,7 @@ class GiftCard extends Model
             "business_category",
             "display_priority",
             "occasion_gallery",
-            "hidden_store_id",
+
             "status",
         ];
 }

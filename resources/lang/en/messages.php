@@ -8237,4 +8237,5 @@ Smartly or Earn. ',
   'Limit To' => 'Limit To',
   'Limit From' => 'Limit From',
   'Bonus Tiers' => 'Bonus Tiers',
+  'The hidden store id must be an array.' => 'The hidden store id must be an array.',
 );

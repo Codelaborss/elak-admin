@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("multi_level_bonus_configuration")->nullable();
             $table->string("min_gift_ard")->nullable();
             $table->string("max_gift_ard")->nullable();
+               $table->longText("hidden_store_id")->nullable();
             $table->string("status")->default("active");
             $table->timestamps();
         });

@@ -311,7 +311,7 @@ public function toggleStatus($id)
             "min" => "required|array",
             "max" => "required|array",
             "bonus" => "required|array",
-            "hidden_store_id" => "required|array",
+            "hidden_store_id" => "required",
             "min_gift_ard" => "required|numeric",
             "max_gift_ard" => "nullable|numeric",
         ]);

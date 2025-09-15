@@ -16,6 +16,7 @@ class BonuLimitSetting extends Model
         'multi_level_bonus_configuration',
         'min_gift_ard',
         'max_gift_ard',
+        'hidden_store_id',
         'status',
     ];
 
