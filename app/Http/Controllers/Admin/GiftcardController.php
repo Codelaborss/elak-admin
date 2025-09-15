@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Storage;
 use DateTime;
 use App\Models\Item;
+use App\Models\Store;
 use App\Models\Client;
 use App\Models\Segment;
 use App\Models\Category;
@@ -14,9 +15,9 @@ use Illuminate\Http\Request;
 use App\Models\FlashSaleItem;
 use App\CentralLogics\Helpers;
 use App\Models\ManagementType;
+use App\Models\BonuLimitSetting;
 use App\Models\UsageTermManagement;
 use App\Http\Controllers\Controller;
-use App\Models\BonuLimitSetting;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Config;
 
@@ -327,6 +328,7 @@ public function toggleStatus($id)
 
         $setting->min_gift_ard = $request->min_gift_ard;
         $setting->max_gift_ard = $request->max_gift_ard;
+        $setting->hidden_store_id = $request->hidden_store_id;
         $setting->save();
 
         Toastr::success('Bonus configuration created successfully');
@@ -335,6 +337,17 @@ public function toggleStatus($id)
     }
 
 
+public function get_merchants(Request $request)
+{
+    $id = $request->category; // e.g. "3"
+
+    $giftCards = Store::whereJsonContains('category_id', $id)->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $giftCards,
+    ]);
+}
 
 
 

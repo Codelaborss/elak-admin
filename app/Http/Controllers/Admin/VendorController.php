@@ -73,8 +73,12 @@ class VendorController extends Controller
             'address' => 'required|max:1000',
             'latitude' => 'required',
             'longitude' => 'required',
+            'bonus_tiers' => 'required',
+            'limit_from' => 'required',
+            'limit_to' => 'required',
             'voucher_id' => 'nullable|max:200',
             'parent_id' => 'nullable|max:200',
+            'category_id' => 'required|max:200',
             'type' => 'nullable|max:200',
             'email' => 'required|unique:vendors',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:vendors',
@@ -153,9 +157,13 @@ class VendorController extends Controller
         $store->longitude = $request->longitude;
         $store->vendor_id = $vendor->id;
         $store->zone_id = $request->zone_id;
+        $store->bonus_tiers = $request->bonus_tiers;
+        $store->limit_from = $request->limit_from;
+        $store->limit_to = $request->limit_to;
         $store->parent_id = $parent_id;
         $store->type = $type_value;
         $store->voucher_id = json_encode($request->voucher_id);
+        $store->category_id = json_encode($request->category_id);
         $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
@@ -248,9 +256,13 @@ class VendorController extends Controller
             'zone_id'=>'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'bonus_tiers' => 'required',
+            'limit_from' => 'required',
+            'limit_to' => 'required',
             'tin' => 'required',
-              'voucher_id' => 'nullable|max:200',
+            'voucher_id' => 'nullable|max:200',
             'parent_id' => 'nullable|max:200',
+            'category_id' => 'nullable|max:200',
             'type' => 'nullable|max:200',
             'tin_expire_date' => 'required',
             'password' => ['nullable', Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised(),function ($attribute, $value, $fail) {
@@ -320,10 +332,13 @@ class VendorController extends Controller
         $store->latitude = $request->latitude;
         $store->longitude = $request->longitude;
         $store->zone_id = $request->zone_id;
+           $store->bonus_tiers = $request->bonus_tiers;
+        $store->limit_from = $request->limit_from;
+        $store->limit_to = $request->limit_to;
         $store->parent_id = $parent_id;
         $store->type = $type_value;
+         $store->category_id = json_encode($request->category_id);
         $store->voucher_id = json_encode($request->voucher_id);
-
         $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';

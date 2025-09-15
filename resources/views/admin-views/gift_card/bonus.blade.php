@@ -451,20 +451,21 @@
                                     <h1>Bonus & Limits Settings</h1>
                                     <p>Configure multi-level bonus tiers and amount limits per merchant</p>
                                 </div>
-
+                                <input type="hidden" name="hidden_store_id" id="hidden_store_id" />
                                 <div class="form-section">
                                     <div class="section-title">Select Category & Merchant</div>
-
                                     <div class="form-group">
                                         <label for="categoryFilter">Business Category</label>
                                         <select id="categoryFilter" name="category" onchange="loadMerchantsByCategory()">
                                             <option value="">-- Select Category --</option>
-                                            <option>Hotels</option>
-                                            <option>Restaurants</option>
-                                            <option>Cinemas</option>
-                                            <option>Spas & Wellness</option>
-                                            <option>Shopping Centers</option>
-                                            <option>Entertainment Venues</option>
+                                          @foreach(\App\Models\Category::get() as $Category)
+                                                <option value="{{ $Category->id }}"
+                                                @if( (old('category_id') && in_array($Category->id, old('category_id')))
+                                                    || (isset($selectedVoucherIds) && in_array($Category->id, $selectedVoucherIds)) )
+                                                    selected
+                                                @endif
+                                            >{{ $Category->name }}</option>
+                                        @endforeach
                                         </select>
                                     </div>
 
@@ -525,8 +526,6 @@
 @push('script_2')
     <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
 
       <script>
         // Data storage
@@ -584,35 +583,54 @@
         };
 
         // Load merchants by category
-        function loadMerchantsByCategory() {
-            const category = document.getElementById('categoryFilter').value;
-            const merchantsList = document.getElementById('merchantsList');
+    function loadMerchantsByCategory() {
+        const category = $('#categoryFilter').val();
+        const merchantsList = $('#merchantsList');
 
-            console.log('Loading merchants for category:', category);
+        console.log('Loading Store for category:', category);
 
-            if (!category) {
-                merchantsList.style.display = 'none';
-                return;
-            }
-
-            merchantsList.style.display = 'block';
-            merchantsList.innerHTML = '';
-
-            const merchants = merchantsData[category] || [];
-            merchants.forEach(merchant => {
-                const item = document.createElement('div');
-                item.className = 'merchant-item';
-                item.onclick = () => selectMerchant(merchant);
-                item.innerHTML = `
-                    <div class="merchant-name">${merchant.name}</div>
-                    <div class="merchant-info">
-                        Current: ${merchant.bonusTiers.length} bonus tiers |
-                        Limits: $${merchant.minAmount} - $${merchant.maxAmount}
-                    </div>
-                `;
-                merchantsList.appendChild(item);
-            });
+        if (!category) {
+            merchantsList.hide();
+            return;
         }
+
+        merchantsList.show().html('<div>Loading...</div>');
+
+        $.ajax({
+            url: '/admin/Giftcard/add-get-merchants',
+            method: 'GET',
+            data: { category: category },
+            dataType: 'json',
+            success: function(data) {
+
+                merchantsList.empty();
+                console.log(data.data)
+                if (!data.data || data.data.length === 0) {
+
+                    merchantsList.html('<div>No Store found</div>');
+                    return;
+                }
+                data.data.forEach(merchant => {
+                    const item = $(`
+                        <div class="merchant-item" onclick="update_ids(${merchant.id})">
+                            <div class="merchant-name">${merchant.name}</div>
+                            <div class="merchant-info">
+                                Current:  ${merchant.bonus_tiers} bonus tiers |
+                                Limits: $${merchant.limit_from} -$${merchant.limit_to}
+                            </div>
+                        </div>
+                    `);
+                    item.on('click', () => selectMerchant(merchant));
+                    merchantsList.append(item);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching merchants:', error);
+                merchantsList.html('<div>Error loading Store</div>');
+            }
+        });
+    }
+
 
         // Select merchant
         function selectMerchant(merchant) {
@@ -682,6 +700,18 @@
                 tierElement.remove();
             }
         }
+
+
+        function update_ids(id) {
+            const tiersList = document.getElementById('hidden_store_id');
+            if (tiersList) {
+                tiersList.value = id; // hidden input ke andar value set hogi
+                console.log("Hidden input updated:", tiersList.value);
+            } else {
+                console.error("hidden_store_id element not found!");
+            }
+        }
+
 
     </script>
 

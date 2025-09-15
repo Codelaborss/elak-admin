@@ -19,6 +19,9 @@ class AddToColStoresTable extends Migration
             $table->string('parent_id')->nullable();
             $table->string('type')->nullable();
             $table->string('voucher_id')->nullable();
+            $table->string('bonus_tiers')->nullable();
+            $table->string('limit_from')->nullable();
+            $table->string('limit_to')->nullable();
         });
     }
 

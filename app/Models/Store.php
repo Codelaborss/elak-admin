@@ -146,8 +146,10 @@ class Store extends Model
         'type',
         'parent_id',
         'voucher_id',
+        'bonus_tiers',
+        'limit_from',
+        'limit_to',
     ];
-
     /**
      * @var string[]
      */

@@ -8233,4 +8233,8 @@ Smartly or Earn. ',
   'The business category field is required.' => 'The business category field is required.',
   'The occasion name field is required.' => 'The occasion name field is required.',
   'The min gift ard field is required.' => 'The min gift ard field is required.',
+  'Select Category' => 'Select Category',
+  'Limit To' => 'Limit To',
+  'Limit From' => 'Limit From',
+  'Bonus Tiers' => 'Bonus Tiers',
 );

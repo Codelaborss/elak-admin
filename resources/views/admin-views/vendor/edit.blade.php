@@ -304,8 +304,8 @@
                                         </select>
                                     </div>
                                     @php(// Store ke vouchers ko decode karke array banao
-                        $selectedVoucherIds = $store->voucher_id ? json_decode($store->voucher_id, true) : []
-                            )
+                                    $selectedVoucherIds = $store->voucher_id ? json_decode($store->voucher_id, true) : []
+                                        )
                                   <div class="form-group">
                                     <label class="input-label" for="voucher_id">{{ translate('Voucher Type') }}
                                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
@@ -324,14 +324,46 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-
+                                    @php(// Store ke vouchers ko decode karke array banao
+                                    $selectedVoucherIds = $store->category_id ? json_decode($store->category_id, true) : []
+                                        )
+                                  <div class="form-group">
+                                    <label class="input-label" for="category_id">{{ translate('Category') }}
+                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('Category') }}"></span>
+                                    </label>
+                                    <select name="category_id[]" id="category_id" required
+                                            class="form-control js-select2-custom"
+                                            data-placeholder="{{ translate('Select Category') }}" multiple>
+                                        @foreach(\App\Models\Category::get() as $VoucherType)
+                                            <option value="{{ $VoucherType->id }}"
+                                                @if( (old('category_id') && in_array($VoucherType->id, old('category_id')))
+                                                    || (isset($selectedVoucherIds) && in_array($VoucherType->id, $selectedVoucherIds)) )
+                                                    selected
+                                                @endif
+                                            >{{ $VoucherType->name }}
+                                           </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 </div>
                                 <div class="col-lg-8">
                                     <input id="pac-input" class="controls rounded"
                                         data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.search_your_location_here') }}" type="text" placeholder="{{ translate('messages.search_here') }}" />
                                     <div id="map"></div>
+                                        <div class="form-group " style="margin-top: 92px">
+                                        <label class="input-label" for="bonus_tiers">{{translate('Bonus Tiers')}}</label>
+                                        <input type="text" id="bonus_tiers" value="{{$store->bonus_tiers}}"  name="bonus_tiers" class="form-control" placeholder="Bonus Tiers"  required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="input-label" for="limit_frm">{{translate('Limit From')}}</label>
+                                        <input type="text" id="limit_frm" value="{{$store->limit_from}}" name="limit_frm" class="form-control" placeholder="Limit From"  required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="input-label" for="limit_to">{{translate('Limit To')}}</label>
+                                        <input type="text" id="limit_to" value="{{$store->limit_to}}" name="limit_to" class="form-control" placeholder="Limit To"  required >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -551,6 +583,15 @@ $(document).ready(function(){
   });
 });
 </script>
+<script>
+$(document).ready(function(){
+  $('#category_id').select2({
+    placeholder: $('#category_id').data('placeholder'),
+    allowClear: true,
+    width: '100%'
+  });
+});
+</script>
 
     <script>
     function toggleSubBranch() {
@@ -576,23 +617,23 @@ $(document).ready(function(){
 
 
     <script>
-        "use strict";
-        $("#vendor_form").on('keydown', function(e){
-            if (e.keyCode === 13) {
-                e.preventDefault();
-            }
-        })
-      $(document).on('ready', function () {
-            $('.offcanvas').on('click', function(){
-                $('.offcanvas, .floating--date').removeClass('active')
+            "use strict";
+            $("#vendor_form").on('keydown', function(e){
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                }
             })
-            $('.floating-date-toggler').on('click', function(){
-                $('.offcanvas, .floating--date').toggleClass('active')
-            })
-        @if (isset(auth('admin')->user()->zone_id))
-            $('#choice_zones').trigger('change');
-        @endif
-    });
+        $(document).on('ready', function () {
+                $('.offcanvas').on('click', function(){
+                    $('.offcanvas, .floating--date').removeClass('active')
+                })
+                $('.floating-date-toggler').on('click', function(){
+                    $('.offcanvas, .floating--date').toggleClass('active')
+                })
+            @if (isset(auth('admin')->user()->zone_id))
+                $('#choice_zones').trigger('change');
+            @endif
+        });
 
         function readURL(input, viewer) {
             if (input.files && input.files[0]) {

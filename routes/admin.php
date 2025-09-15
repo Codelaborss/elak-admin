@@ -264,6 +264,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             // bonus
              Route::get('add-bonus-setting', 'GiftcardController@add_bonus_setting')->name('add_bonus_setting');
              Route::post('add-bonus-sore', 'GiftcardController@bonus_store')->name('bonus_store');
+             Route::get('add-get-merchants', 'GiftcardController@get_merchants')->name('get_merchants');
 
         });
        // Gift Card

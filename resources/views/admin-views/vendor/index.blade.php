@@ -298,11 +298,41 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                     <div class="form-group">
+                                        <label class="input-label" for="category_id">{{ translate('Category') }}
+                                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                                data-original-title="{{ translate('Category') }}"></span>
+                                        </label>
+                                        <select name="category_id[]" id="category_id" required
+                                                class="form-control js-select2-custom" data-placeholder="{{ translate('Select Category') }}" multiple>
+                                            @foreach(\App\Models\Category::get() as $Category)
+                                                <option value="{{ $Category->id }}"
+                                                    @if( (old('category_id') && in_array($Category->id, old('category_id')))
+                                                        || (isset($selectedVoucherIds) && in_array($Category->id, $selectedVoucherIds)) )
+                                                        selected
+                                                    @endif
+                                                >{{ $Category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-lg-8">
                                     <input id="pac-input" class="controls rounded"
                                         data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.search_your_location_here') }}" type="text" placeholder="{{ translate('messages.search_here') }}" />
                                     <div id="map"></div>
+
+                                    <div class="form-group " style="margin-top: 92px">
+                                        <label class="input-label" for="bonus_tiers">{{translate('Bonus Tiers')}}</label>
+                                        <input type="text" id="bonus_tiers" name="bonus_tiers" class="form-control" placeholder="Bonus Tiers"  required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="input-label" for="limit_frm">{{translate('Limit From')}}</label>
+                                        <input type="text" id="limit_frm" name="limit_frm" class="form-control" placeholder="Limit From"  required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="input-label" for="limit_to">{{translate('Limit To')}}</label>
+                                        <input type="text" id="limit_to" name="limit_to" class="form-control" placeholder="Limit To"  required >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -496,6 +526,15 @@
 $(document).ready(function(){
   $('#voucher_id').select2({
     placeholder: $('#voucher_id').data('placeholder'),
+    allowClear: true,
+    width: '100%'
+  });
+});
+</script>
+<script>
+$(document).ready(function(){
+  $('#category_id').select2({
+    placeholder: $('#category_id').data('placeholder'),
     allowClear: true,
     width: '100%'
   });
