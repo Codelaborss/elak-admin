@@ -439,12 +439,7 @@
                 <form action="{{route('admin.Giftcard.bonus_store')}}" method="post" enctype="multipart/form-data" id="occasionForm">
                     @csrf
                     @if ($language)
-
-
-
-
                         <div class="main-content">
-
                             <!-- MERCHANT BONUS & LIMITS -->
                             <div id="merchant-bonus" class="section">
                                 <div class="page-header">
@@ -452,6 +447,17 @@
                                     <p>Configure multi-level bonus tiers and amount limits per merchant</p>
                                 </div>
                                 <input type="hidden" name="hidden_store_id" id="hidden_store_id" />
+                                   <div class="form-section">
+                                    <div class="section-title">Select Type</div>
+                                    <div class="form-group">
+                                        <label for="type_select">Select Type</label>
+                                        <select id="type_select" name="type_select" >
+                                            <option value="">-- Select Category --</option>
+                                            <option value="flate">Flate Discount</option>
+                                            <option value="bonus">Bonus Discount</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-section">
                                     <div class="section-title">Select Category & Merchant</div>
                                     <div class="form-group">
@@ -468,7 +474,6 @@
                                         @endforeach
                                         </select>
                                     </div>
-
                                     <div class="merchant-list" id="merchantsList">
                                         <!-- Merchants will be loaded here -->
                                     </div>

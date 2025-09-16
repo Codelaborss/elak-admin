@@ -17,6 +17,7 @@ class BonuLimitSetting extends Model
         'min_gift_ard',
         'max_gift_ard',
         'hidden_store_id',
+        'type',
         'status',
     ];
 

@@ -282,19 +282,19 @@ class GiftcardController extends Controller
     }
 
 
-public function toggleStatus($id)
-{
-    $giftCard = GiftCard::findOrFail($id);
+    public function toggleStatus($id)
+    {
+        $giftCard = GiftCard::findOrFail($id);
 
-    // Toggle status
-    $giftCard->status = $giftCard->status === 'active' ? 'inactive' : 'active';
-    $giftCard->save();
+        // Toggle status
+        $giftCard->status = $giftCard->status === 'active' ? 'inactive' : 'active';
+        $giftCard->save();
 
-    return response()->json([
-        'success' => true,
-        'status' => $giftCard->status,
-    ]);
-}
+        return response()->json([
+            'success' => true,
+            'status' => $giftCard->status,
+        ]);
+    }
 
 // bonus
    public function add_bonus_setting(Request $request)
@@ -305,7 +305,6 @@ public function toggleStatus($id)
 
    public function bonus_store(Request $request)
     {
-        // dd($request->all());
             $validated = $request->validate([
             "category" => "required|string",
             "min" => "required|array",
@@ -314,8 +313,8 @@ public function toggleStatus($id)
             "hidden_store_id" => "required",
             "min_gift_ard" => "required|numeric",
             "max_gift_ard" => "nullable|numeric",
+            "type_select" => "required",
         ]);
-
 
         $setting = new BonuLimitSetting();
         $setting->category = $request->category;
@@ -324,12 +323,13 @@ public function toggleStatus($id)
         $setting->multi_level_bonus_configuration = json_encode([
             "min" => $request->min,
             "max" => $request->max,
-            "bonus" => $request->bonus,
+            "bonus" => $request->bonus
         ]);
 
         $setting->min_gift_ard = $request->min_gift_ard;
         $setting->max_gift_ard = $request->max_gift_ard;
         $setting->hidden_store_id = $request->hidden_store_id;
+        $setting->type = $request->type_select;
         $setting->save();
 
         Toastr::success('Bonus configuration created successfully');
@@ -337,22 +337,16 @@ public function toggleStatus($id)
 
     }
 
+    public function get_merchants(Request $request)
+    {
+        $id = $request->category;
+        $giftCards = Store::whereJsonContains('category_id', $id)->get();
 
-public function get_merchants(Request $request)
-{
-    $id = $request->category; // e.g. "3"
-
-    $giftCards = Store::whereJsonContains('category_id', $id)->get();
-
-    return response()->json([
-        'success' => true,
-        'data' => $giftCards,
-    ]);
-}
-
-
-
-
+        return response()->json([
+            'success' => true,
+            'data' => $giftCards,
+        ]);
+    }
 
     }
 
