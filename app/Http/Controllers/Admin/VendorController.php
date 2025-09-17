@@ -75,6 +75,7 @@ class VendorController extends Controller
             'longitude' => 'required',
             'bonus_tiers' => 'required',
             'limit_from' => 'required',
+            'flate_discount' => 'required',
             'limit_to' => 'required',
             'voucher_id' => 'nullable|max:200',
             'parent_id' => 'nullable|max:200',
@@ -160,6 +161,7 @@ class VendorController extends Controller
         $store->bonus_tiers = $request->bonus_tiers;
         $store->limit_from = $request->limit_from;
         $store->limit_to = $request->limit_to;
+        $store->flate_discount = $request->flate_discount;
         $store->parent_id = $parent_id;
         $store->type = $type_value;
         $store->voucher_id = json_encode($request->voucher_id);
@@ -258,6 +260,7 @@ class VendorController extends Controller
             'longitude' => 'required',
             'bonus_tiers' => 'required',
             'limit_from' => 'required',
+            'flate_discount' => 'required',
             'limit_to' => 'required',
             'tin' => 'required',
             'voucher_id' => 'nullable|max:200',
@@ -335,6 +338,7 @@ class VendorController extends Controller
            $store->bonus_tiers = $request->bonus_tiers;
         $store->limit_from = $request->limit_from;
         $store->limit_to = $request->limit_to;
+        $store->flate_discount = $request->flate_discount;
         $store->parent_id = $parent_id;
         $store->type = $type_value;
          $store->category_id = json_encode($request->category_id);

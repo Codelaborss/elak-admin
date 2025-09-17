@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use Storage;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Config;
 class GiftcardController extends Controller
 {
 
-   public function list(Request $request)
+    public function list(Request $request)
     {
         $category = Category::get();
 
@@ -46,7 +47,7 @@ class GiftcardController extends Controller
             )
             ->paginate(config('default_pagination'));
 
-        return view('admin-views.gift_card.index', compact('UsageTermManagement','category'));
+        return view('admin-views.gift_card.index', compact('UsageTermManagement', 'category'));
     }
 
     public function index(Request $request)
@@ -58,13 +59,13 @@ class GiftcardController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-       $validated = $request->validate([
+        $validated = $request->validate([
             "occasion_name" => "required",
             "business_category" => "required",
             "display_priority" => "required",
             "occasion_gallery" => "nullable|array",
         ]);
-       $imagePaths = [];
+        $imagePaths = [];
 
         if ($request->hasFile('occasion_gallery')) {
             foreach ($request->file('occasion_gallery') as $index => $image) {
@@ -84,20 +85,20 @@ class GiftcardController extends Controller
         $occasion->occasion_gallery = json_encode($imagePaths);
         $occasion->save();
 
-          Toastr::success('Usages Term and Condition Created successfully');
-            return back();
+        Toastr::success('Usages Term and Condition Created successfully');
+        return back();
     }
 
 
     public function edit($id)
     {
-         $category = Category::get();
+        $category = Category::get();
         $ManagementType = GiftCard::where('id', $id)->first();
-         $gallery = is_string($ManagementType->occasion_gallery)
-        ? json_decode($ManagementType->occasion_gallery, true)
-        : $ManagementType->occasion_gallery;
+        $gallery = is_string($ManagementType->occasion_gallery)
+            ? json_decode($ManagementType->occasion_gallery, true)
+            : $ManagementType->occasion_gallery;
 
-        return view('admin-views.gift_card.edit', compact('ManagementType','category','gallery'));
+        return view('admin-views.gift_card.edit', compact('ManagementType', 'category', 'gallery'));
     }
 
     public function update(Request $request, $id)
@@ -159,7 +160,7 @@ class GiftcardController extends Controller
     public function delete(Request $request, $id)
     {
         $ManagementType = GiftCard::findOrFail($id);
-          //  Delete Logo
+        //  Delete Logo
         if ($ManagementType->logo && file_exists(public_path($ManagementType->logo))) {
             unlink(public_path($ManagementType->logo));
         }
@@ -169,22 +170,20 @@ class GiftcardController extends Controller
         return back();
     }
 
-    public function status( $id)
+    public function status($id)
     {
         $ManagementType = GiftCard::findOrFail($id);
         // dd($ManagementType);
         // agar active hai to inactive karo, warna active karo
         $ManagementType->status = $ManagementType->status === 'active' ? 'inactive' : 'active';
         $ManagementType->save();
-        Toastr::success('Usages Term and Condition Status successfully  '.$ManagementType->status);
+        Toastr::success('Usages Term and Condition Status successfully  ' . $ManagementType->status);
         return back();
-
     }
     public function assign_to_voucher(Request $request)
     {
-            $VoucherType = VoucherType::all();
-            return view('admin-views.gift_card.assign_of_voucher', compact('VoucherType'));
-
+        $VoucherType = VoucherType::all();
+        return view('admin-views.gift_card.assign_of_voucher', compact('VoucherType'));
     }
     public function getAssignments($id)
     {
@@ -194,7 +193,6 @@ class GiftcardController extends Controller
             'voucherId' => $id,
             'conditions' => $conditions
         ]);
-
     }
     public function getAssignments_update(Request $request)
     {
@@ -231,10 +229,10 @@ class GiftcardController extends Controller
         return back();
     }
 
-       public function preview_terms()
+    public function preview_terms()
     {
-      $VoucherType = VoucherType::all();
-            return view('admin-views.gift_card.preview_term', compact('VoucherType'));
+        $VoucherType = VoucherType::all();
+        return view('admin-views.gift_card.preview_term', compact('VoucherType'));
     }
 
     public function preview_terms_show($id)
@@ -296,16 +294,51 @@ class GiftcardController extends Controller
         ]);
     }
 
-// bonus
-   public function add_bonus_setting(Request $request)
+
+
+
+    // bonus crud
+    public function list_bonus(Request $request)
     {
-        $category =  Category::get();
-        return view('admin-views.gift_card.bonus', compact('category'));
+        $category = Category::get();
+        $Store = Store::get();
+
+        $search = $request->input('search_store'); // correct field name
+        $categoryId = $request->input('category_id'); // correct field name
+
+        $BonuLimitSetting = BonuLimitSetting::query()
+            ->leftJoin('categories', 'bonu_limit_settings.category', '=', 'categories.id')
+            ->leftJoin('voucher_types', 'bonu_limit_settings.voucher_type', '=', 'voucher_types.id')
+            ->leftJoin('stores', 'bonu_limit_settings.hidden_store_id', '=', 'stores.id')
+            ->when($search, function ($q) use ($search) {
+                $q->where('bonu_limit_settings.hidden_store_id', 'like', "%{$search}%");
+            })
+            ->when($categoryId, function ($q) use ($categoryId) {
+                $q->where('bonu_limit_settings.category', $categoryId);
+            })
+            ->orderBy('bonu_limit_settings.type', 'asc')
+            ->select(
+                'bonu_limit_settings.*',
+                'categories.name as category_name',
+                'voucher_types.name as voucher_type_name',
+                'stores.name as store_name'
+            )
+            ->paginate(config('default_pagination'));
+
+
+        return view('admin-views.gift_card.index_bonus', compact('BonuLimitSetting', 'category', 'Store'));
     }
 
-   public function bonus_store(Request $request)
+    public function add_bonus_setting(Request $request)
     {
-            $validated = $request->validate([
+        $category =  Category::get();
+        $VoucherType =  VoucherType::get();
+        return view('admin-views.gift_card.bonus', compact('category', 'VoucherType'));
+    }
+
+    public function bonus_store(Request $request)
+    {
+        $validated = $request->validate([
             "category" => "required|string",
             "min" => "required|array",
             "max" => "required|array",
@@ -314,6 +347,7 @@ class GiftcardController extends Controller
             "min_gift_ard" => "required|numeric",
             "max_gift_ard" => "nullable|numeric",
             "type_select" => "required",
+            "voucher_type" => "required",
         ]);
 
         $setting = new BonuLimitSetting();
@@ -330,11 +364,11 @@ class GiftcardController extends Controller
         $setting->max_gift_ard = $request->max_gift_ard;
         $setting->hidden_store_id = $request->hidden_store_id;
         $setting->type = $request->type_select;
+        $setting->voucher_type = $request->voucher_type;
         $setting->save();
 
         Toastr::success('Bonus configuration created successfully');
         return back();
-
     }
 
     public function get_merchants(Request $request)
@@ -348,6 +382,77 @@ class GiftcardController extends Controller
         ]);
     }
 
+    public function toggleStatus_bonus($id)
+    {
+        $giftCard = BonuLimitSetting::findOrFail($id);
+
+        // Toggle status
+        $giftCard->status = $giftCard->status === 'active' ? 'inactive' : 'active';
+        $giftCard->save();
+
+        return response()->json([
+            'success' => true,
+            'status' => $giftCard->status,
+        ]);
     }
 
+    public function delete_bonus(Request $request, $id)
+    {
+        $ManagementType = BonuLimitSetting::findOrFail($id);
 
+        $ManagementType->delete();
+
+        Toastr::success('Usages Bonus deleted successfully');
+        return back();
+    }
+
+    public function edit_bonus($id)
+    {
+        $category = Category::get();
+        $BonuLimitSetting = BonuLimitSetting::where('id', $id)->first();
+
+        $id = $BonuLimitSetting->category;
+        $giftCards = Store::whereJsonContains('category_id', $id)->get();
+        // dd($giftCards);
+        return view('admin-views.gift_card.edit_bonus', compact('BonuLimitSetting', 'category', 'giftCards'));
+    }
+
+  public function update_bonus(Request $request ,$id)
+{
+    $request->validate([
+        "category" => "required|string",
+        "min" => "required|array",
+        "max" => "required|array",
+        "bonus" => "required|array",
+        "hidden_store_id" => "required",
+        "min_gift_ard" => "required|numeric",
+        "max_gift_ard" => "nullable|numeric",
+        "type_select" => "required",
+        "voucher_type" => "required",
+    ]);
+
+    // existing record खोजो
+    $setting = BonuLimitSetting::findOrFail($id);
+
+    // values update करो
+    $setting->category = $request->category;
+    $setting->multi_level_bonus_configuration = json_encode([
+        "min" => $request->min,
+        "max" => $request->max,
+        "bonus" => $request->bonus
+    ]);
+    $setting->min_gift_ard = $request->min_gift_ard;
+    $setting->max_gift_ard = $request->max_gift_ard;
+    $setting->hidden_store_id = $request->hidden_store_id;
+    $setting->type = $request->type_select;
+    $setting->voucher_type = $request->voucher_type;
+
+    $setting->save();
+
+    Toastr::success('Bonus configuration updated successfully');
+    return back();
+}
+
+
+
+}

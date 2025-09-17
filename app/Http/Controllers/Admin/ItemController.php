@@ -39,6 +39,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class ItemController extends Controller
 {
@@ -67,22 +68,33 @@ class ItemController extends Controller
             'all_ids' => $all_module
         ]);
 
-
-
-
     }
-
-
 
     public function index(Request $request)
     {
+        // dd(Session());
+        // dd(config('module.current_module_id'));
+        // dd(config('module.current_module_type'));
+        // dd(config('module.current_module_name'));
+
+        // dd(session('current_module_id'));
+        // dd(session('current_module_type'));
+        // dd(session('current_module_name'));
+
         $categories = Category::where(['position' => 0])->get();
 
         $taxData = Helpers::getTaxSystemType();
         $productWiseTax = $taxData['productWiseTax'];
         $taxVats = $taxData['taxVats'];
 
-        return view('admin-views.product.index', compact('categories', 'productWiseTax', 'taxVats'));
+        if(config('module.current_module_id') == "5"){
+
+            return view('admin-views.product.voucher_index', compact('categories', 'productWiseTax', 'taxVats'));
+        }else{
+            return view('admin-views.product.index', compact('categories', 'productWiseTax', 'taxVats'));
+
+        }
+
     }
 
     public function store(Request $request)

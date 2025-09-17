@@ -333,6 +333,10 @@
                                         <label class="input-label" for="limit_to">{{translate('Limit To')}}</label>
                                         <input type="text" id="limit_to" name="limit_to" class="form-control" placeholder="Limit To"  required >
                                     </div>
+                                    <div class="form-group">
+                                        <label class="input-label" for="flate_discount">{{translate('Flate Discount')}}</label>
+                                        <input type="text" id="flate_discount" name="flate_discount" class="form-control" placeholder="Flate Discount"  required >
+                                    </div>
                                 </div>
                             </div>
                         </div>

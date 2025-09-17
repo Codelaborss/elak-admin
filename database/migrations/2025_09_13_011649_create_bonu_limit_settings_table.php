@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("max_gift_ard")->nullable();
             $table->longText("hidden_store_id")->nullable();
             $table->longText("type")->nullable();
+            $table->longText("voucher_type")->nullable();
             $table->string("status")->default("active");
             $table->timestamps();
         });

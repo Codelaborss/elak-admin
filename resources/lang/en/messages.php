@@ -8239,4 +8239,5 @@ Smartly or Earn. ',
   'Bonus Tiers' => 'Bonus Tiers',
   'The hidden store id must be an array.' => 'The hidden store id must be an array.',
   'The type select must be a number.' => 'The type select must be a number.',
+  'Flate Discount' => 'Flate Discount',
 );

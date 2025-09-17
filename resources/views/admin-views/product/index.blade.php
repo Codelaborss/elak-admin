@@ -8,571 +8,381 @@
 @endpush
 
 @section('content')
-
-
-     <!-- Page Header -->
-
-     <div class="container-fluid px-4 py-3">
-      <div class="page-header d-flex flex-wrap __gap-15px justify-content-between align-items-center">
-          <h1 class="page-header-title">
-              <span class="page-header-icon">
-                  <img src="{{ asset('public/assets/admin/img/items.png') }}" class="w--22" alt="">
-              </span>
-              <span>
-                  {{ translate('messages.add_new_item') }}
-              </span>
-          </h1>
-          <div class=" d-flex flex-sm-nowrap flex-wrap  align-items-end">
-              <div class="text--primary-2 d-flex flex-wrap align-items-center mr-2">
-                  <a href="{{ route('admin.item.product_gallery') }}" class="btn btn-outline-primary btn--primary d-flex align-items-center bg-not-hover-primary-ash rounded-8 gap-2">
-                      <img src="{{ asset('public/assets/admin/img/product-gallery.png') }}" class="w--22" alt="">
-                      <span>{{translate('Add Info From Gallery')}}</span>
-                  </a>
-              </div>
-
-              @if(Config::get('module.current_module_type') == 'food')
-              <div class="text--primary-2 py-1 d-flex flex-wrap align-items-center mb-3 foodModalShow"  type="button" >
-                  <strong class="mr-2">{{translate('See_how_it_works!')}}</strong>
-                  <div>
-                      <i class="tio-info-outined"></i>
-                  </div>
-              </div>
-              @else
-              <div class="text--primary-2 py-1 d-flex flex-wrap align-items-center mb-3 attributeModalShow" type="button" >
-                  <strong class="mr-2">{{translate('See_how_it_works!')}}</strong>
-                  <div>
-                      <i class="tio-info-outined"></i>
-                  </div>
-              </div>
-              @endif
-          </div>
-      </div>
-        <div class="bg-white shadow rounded-lg p-4">
-
-            <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
-
-            <!-- Step 1: Select Voucher Type -->
-
-
-            <div class="section-card rounded p-4 mb-4">
-                <h2 class="fw-semibold h5 mb-4">🎯 Step 1: Select Voucher Type</h2>
-                <div class="row g-3">
-                @php $i = 1; @endphp
-                @foreach (\App\Models\VoucherType::orderBy('name')->get() as $voucherType)
-                    <div class="col-md-4">
-                        <div class="voucher-card border rounded p-4 text-center h-100"
-                            onclick="section_one('{{ $i }}' , '{{ $voucherType->id }}')"
-                            data-value="{{ $voucherType->name }}">
-                            <div class="display-4 mb-2">
-                                <img src="{{ asset($voucherType->logo) }}" alt="{{ $voucherType->name }}" style="width: 40px;" />
-                            </div>
-
-                            <h6 class="fw-semibold">{{ $voucherType->name }}</h6>
-                            <small class="text-muted">{{ $voucherType->desc }}</small>
-                        </div>
-                    </div>
-                    @php $i++; @endphp
-                @endforeach
-
-                    {{-- <div class="col-md-4">
-                        <div class="voucher-card border rounded p-4 text-center h-100"
-                            onclick="section_one('1')"
-                            data-value="Delivery">
-                            <div class="display-4 mb-2">🚚</div>
-                            <h6 class="fw-semibold">Delivery/Pickup</h6>
-                            <small class="text-muted">E-commerce style vouchers with cart functionality</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                    <div class="voucher-card border rounded p-4 text-center h-100"
-                        onclick="section_one('2')"
-                        data-value="Store">
-                        <div class="display-4 mb-2">🏪</div>
-                        <h6 class="fw-semibold">In-Store</h6>
-                        <small class="text-muted">Instant purchase with QR/Barcode redemption</small>
-                    </div>
-                    </div>
-                    <div class="col-md-4">
-                    <div class="voucher-card border rounded p-4 text-center h-100"
-                        onclick="section_one('3')"
-                        data-value="Discount">
-                        <div class="display-4 mb-2">💵</div>
-                        <h6 class="fw-semibold">Flat Discount</h6>
-                        <small class="text-muted">Percentage-based discount on bill amount</small>
-                    </div>
-                    </div> --}}
+    <div class="content container-fluid">
+        <!-- Page Header -->
+        <div class="page-header d-flex flex-wrap __gap-15px justify-content-between align-items-center">
+            <h1 class="page-header-title">
+                <span class="page-header-icon">
+                    <img src="{{ asset('public/assets/admin/img/items.png') }}" class="w--22" alt="">
+                </span>
+                <span>
+                    {{ translate('messages.add_new_item') }}
+                </span>
+            </h1>
+            <div class=" d-flex flex-sm-nowrap flex-wrap  align-items-end">
+                <div class="text--primary-2 d-flex flex-wrap align-items-center mr-2">
+                    <a href="{{ route('admin.item.product_gallery') }}" class="btn btn-outline-primary btn--primary d-flex align-items-center bg-not-hover-primary-ash rounded-8 gap-2">
+                        <img src="{{ asset('public/assets/admin/img/product-gallery.png') }}" class="w--22" alt="">
+                        <span>{{translate('Add Info From Gallery')}}</span>
+                    </a>
                 </div>
-            </div>
 
-            <!-- Step 2: Select Management Type -->
-            <div class="section-card rounded p-4 mb-4" id="management_selection">
-                <h2 class="fw-semibold h5 mb-4">⚙️ Step 2: Select Management Type</h2>
-                <div class="row g-3" id="append_all_data">
-                    {{-- <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('4')">
-                            <div class="display-4 mb-2">🛒</div>
-                            <h6 class="fw-semibold">Shop</h6>
-                            <small class="text-muted">General retail products management</small>
-                        </div>
+                @if(Config::get('module.current_module_type') == 'food')
+                <div class="text--primary-2 py-1 d-flex flex-wrap align-items-center mb-3 foodModalShow"  type="button" >
+                    <strong class="mr-2">{{translate('See_how_it_works!')}}</strong>
+                    <div>
+                        <i class="tio-info-outined"></i>
                     </div>
-                    <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('5')">
-                            <div class="display-4 mb-2">💊</div>
-                            <h6 class="fw-semibold">Pharmacy</h6>
-                            <small class="text-muted">Medicine and health products</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('6')">
-                            <div class="display-4 mb-2">🛒</div>
-                            <h6 class="fw-semibold">Grocery</h6>
-                            <small class="text-muted">Food and daily essentials</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('7')">
-                            <div class="display-4 mb-2">🍽️</div>
-                            <h6 class="fw-semibold">Food</h6>
-                            <small class="text-muted">Restaurant and food delivery</small>
-                        </div>
-                    </div> --}}
                 </div>
+                @else
+                <div class="text--primary-2 py-1 d-flex flex-wrap align-items-center mb-3 attributeModalShow" type="button" >
+                    <strong class="mr-2">{{translate('See_how_it_works!')}}</strong>
+                    <div>
+                        <i class="tio-info-outined"></i>
+                    </div>
+                </div>
+                @endif
             </div>
-
+        </div>
+        <!-- End Page Header -->
         <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
             @csrf
             @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
-
-            <!-- Basic Information  same-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info">
-                <h3 class="h5 fw-semibold mb-4">📝 Basic Information</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-
-                      <div class="form-group">
-                            <label class="input-label"
-                                for="default_name">{{ translate('Voucher Name') }}
-                                ( {{ translate('(Default)') }}) <span class="form-label-secondary text-danger"
-                                data-toggle="tooltip" data-placement="right"
-                                data-original-title="{{ translate('messages.Required.')}}"> *
-                                </span>
-                            </label>
-                            <input type="text" name="name[]" id="default_name"  class="form-control" placeholder="{{ translate('messages.new_item') }}" >
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Owner</label>
-                          <select
-                                name="select_client"
-                                id="select_client"
-                                class="form-control Clients-select"
-                                data-placeholder="-- Select Client --">
-                                <option>Select owner</option>
-                                @foreach (\App\Models\Client::all() as $item)
-                                <option value="{{ $item->id }}"
-                                    @if(collect(old('type', []))->contains($item->id)) selected @endif>
-                                        {{ $item->name }}
-                                </option>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            @if ($language)
+                            <ul class="nav nav-tabs border-0 mb-3">
+                                <li class="nav-item">
+                                    <a class="nav-link lang_link active"
+                                    href="#"
+                                    id="default-link">{{translate('messages.default')}}</a>
+                                </li>
+                                @foreach (json_decode($language) as $lang)
+                                    <li class="nav-item">
+                                        <a class="nav-link lang_link"
+                                            href="#"
+                                            id="{{ $lang }}-link">{{ \App\CentralLogics\Helpers::get_language_name($lang) . '(' . strtoupper($lang) . ')' }}</a>
+                                    </li>
                                 @endforeach
-                            </select>
-                                <div class="valid-feedback">
-                                Great choice! Client selected successfully.
+                            </ul>
+                            @endif
+                            @if ($language)
+                            <div class="lang_form"
+                            id="default-form">
+                                <div class="form-group">
+                                    <label class="input-label"
+                                        for="default_name">{{ translate('messages.name') }}
+                                        ( {{ translate('messages.Default') }}) <span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span>
+
+                                    </label>
+                                    <input type="text" name="name[]" id="default_name"
+                                        class="form-control" placeholder="{{ translate('messages.new_item') }}"
+
+                                         >
+                                </div>
+                                <input type="hidden" name="lang[]" value="default">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="exampleFormControlInput1">{{ translate('messages.short_description') }} ({{ translate('messages.default') }})<span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span></label>
+                                    <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                                </div>
                             </div>
-                    </div>
-                </div>
-
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-
-                         <label class="form-label" for="segment_type">
-                            Segment Types
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select
-                            name="segment_type"
-                            id="segment_type"
-                            class="form-control segment-select"
-                            data-placeholder="-- Select Segment --">
-                            <option></option>
-                            {{-- @foreach ($Segment as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }} / {{ $item->type }}</option>
-                            @endforeach --}}
-                        </select>
-                        <div class="valid-feedback">
-                            Great choice! Segment selected successfully.
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                   <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
-                </div>
-                <div class="row g-3">
-                        {{-- Item image ( Ratio 1:1 ) --}}
-                    <div class="col-md-12">
-                        <div class=" h-100">
-                            <div class=" d-flex flex-wrap align-items-center">
-                                <div class="w-100 d-flex flex-wrap __gap-15px">
-                                    <div class="flex-grow-1 mx-auto">
-                                        <label class="text-dark d-block mb-4 mb-xl-5">
-                                            {{ translate('messages.item_image') }}
-                                            <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                        </label>
-                                        <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
+                                @foreach (json_decode($language) as $lang)
+                                    <div class="d-none lang_form"
+                                        id="{{ $lang }}-form">
+                                        <div class="form-group">
+                                            <label class="input-label"
+                                                for="{{ $lang }}_name">{{ translate('messages.name') }}
+                                                ({{ strtoupper($lang) }})
+                                            </label>
+                                            <input type="text" name="name[]" id="{{ $lang }}_name"
+                                                class="form-control" placeholder="{{ translate('messages.new_item') }}"
+                                                 >
+                                        </div>
+                                        <input type="hidden" name="lang[]" value="{{ $lang }}">
+                                        <div class="form-group mb-0">
+                                            <label class="input-label"
+                                                for="exampleFormControlInput1">{{ translate('messages.short_description') }} ({{ strtoupper($lang) }})</label>
+                                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1 mx-auto">
-                                        <label class="text-dark d-block mb-4 mb-xl-5">
-                                            {{ translate('messages.item_thumbnail') }}
-                                            @if(Config::get('module.current_module_type') == 'food')
-                                            <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            @else
-                                            <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            @endif
-                                        </label>
-                                        <label class="d-inline-block m-0 position-relative">
-                                            <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
-                                            <div class="icon-file-group">
-                                                <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
-                                                accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                                                        <i class="tio-edit"></i>
-                                                </div>
+                                @endforeach
+                            @else
+                                <div id="default-form">
+                                    <div class="form-group">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.name') }} ({{ translate('messages.default') }})</label>
+                                        <input type="text" name="name[]" class="form-control"
+                                            placeholder="{{ translate('messages.new_item') }}" >
+                                    </div>
+                                    <input type="hidden" name="lang[]" value="default">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.short_description') }}</label>
+                                        <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-wrap align-items-center">
+                            <div class="w-100 d-flex flex-wrap __gap-15px">
+                                <div class="flex-grow-1 mx-auto">
+                                    <label class="text-dark d-block mb-4 mb-xl-5">
+                                        {{ translate('messages.item_image') }}
+                                        <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                    </label>
+                                    <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
+                                </div>
+                                <div class="flex-grow-1 mx-auto">
+                                    <label class="text-dark d-block mb-4 mb-xl-5">
+                                        {{ translate('messages.item_thumbnail') }}
+                                        @if(Config::get('module.current_module_type') == 'food')
+                                        <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                        @else
+                                        <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
+                                        @endif
+                                    </label>
+                                    <label class="d-inline-block m-0 position-relative">
+                                        <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
+                                        <div class="icon-file-group">
+                                            <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
+                                            accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                    <i class="tio-edit"></i>
                                             </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--  Store & Category Info same -->
-            <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_store_category">
-                <h3 class="h5 fw-semibold mb-4">🏪 Store & Category Info</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Partner Store <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Select partner store</option>
-                            <option>Teh Kotjok - SGC Cikarang</option>
-                            <option>McDonald's Riyadh</option>
-                            <option>Burger King Jeddah</option>
-                            <option>Pizza Hut Dammam</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Select category</option>
-                            <option>Restaurant</option>
-                            <option>Cafe</option>
-                            <option>Fast Food</option>
-                            <option>Fine Dining</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Service Type</label>
-                        <select class="form-select form-control">
-                            <option>Dine In Only</option>
-                            <option>Delivery Only</option>
-                            <option>Dine In & Delivery</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Location/Branch</label>
-                        <select class="form-select form-control">
-                            <option>All Branches</option>
-                            <option>Specific Branch</option>
-                            <option>Multiple Selected Branches</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Discount Settings -->
-            <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_settings">
-                <h3 class="h5 fw-semibold mb-4">💰 Discount Configuration</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Discount Type <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Percentage (%)</option>
-                            <option>Fixed Amount (SAR)</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Discount Value <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" placeholder="Ex: 15" step="0.01">
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Minimum Bill Amount (SAR) <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" placeholder="Ex: 20000" step="0.01">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Discount Cap (SAR)</label>
-                        <input type="number" class="form-control" placeholder="Leave empty for unlimited" step="0.01">
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Valid Until Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" value="2025-12-31">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Usage Limit per User</label>
-                        <input type="number" class="form-control" placeholder="Ex: 1 (leave empty for unlimited)">
-                    </div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-discount-cap" checked>
-                            <label class="form-check-label" for="no-discount-cap">No discount cap (like Grab example)</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="unlimited-redemptions" checked>
-                            <label class="form-check-label" for="unlimited-redemptions">Unlimited redemptions</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="stackable-offers">
-                            <label class="form-check-label" for="stackable-offers">Check with outlet if stackable with other offers</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="anytime-redemption" checked>
-                            <label class="form-check-label" for="anytime-redemption">Redeemable anytime during opening hours</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Store Category Info -->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="store_category">
-                <h3 class="h5 fw-semibold mb-4">🏪 {{ translate('Store_&_Category_Info') }}</h3>
-
-
-                 {{-- Store & Category Info --}}
-                <div class="col-md-12">
-                    <div class="row g-2 align-items-end">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="form-group mb-0">
-                                <label class="input-label" for="store_id">{{ translate('messages.store') }} <span class="form-label-secondary text-danger"
-                                    data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                    </span><span
-                                        class="input-label-secondary"></span></label>
-                                <select name="store_id" id="store_id"
-                                    data-placeholder="{{ translate('messages.select_store') }}" class="js-data-example-ajax form-control"
-                                    oninvalid="this.setCustomValidity('{{ translate('messages.please_select_store') }}')">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="category_id">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
-                                    data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                    </span></label>
-                                <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
-                                    class="js-data-example-ajax form-control">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="sub-categories">{{ translate('messages.sub_category') }}<span
-                                        class="input-label-secondary"
-                                        title="{{ translate('messages.category_required_warning') }}"><img
-                                            src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
-                                            alt="{{ translate('messages.category_required_warning') }}"></span></label>
-                                <select name="sub_category_id" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
-                                    id="sub-categories">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="condition_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label" for="condition_id">{{ translate('messages.Suitable_For') }}<span
-                                        class="input-label-secondary"></span></label>
-                                <select name="condition_id" id="condition_id"
-                                    data-placeholder="{{ translate('messages.Select_Condition') }}" class="js-data-example-ajax form-control"
-                                    oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="brand_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label" for="brand_id">{{ translate('messages.Brand') }}<span
-                                        class="input-label-secondary"></span></label>
-                                <select name="brand_id" id="brand_id"
-                                    data-placeholder="{{ translate('messages.Select_brand') }}" class="js-data-example-ajax form-control"
-                                    oninvalid="this.setCustomValidity('{{ translate('messages.Select_brand') }}')">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="unit_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label text-capitalize"
-                                    for="unit">{{ translate('messages.unit') }}</label>
-                                <select name="unit" id="unit" class="form-control js-select2-custom">
-                                    @foreach (\App\Models\Unit::all() as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->unit }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="veg_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="exampleFormControlInput1">{{ translate('messages.item_type') }} <span class="form-label-secondary text-danger"
-                                    data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                    </span></label>
-                                <select name="veg" id="veg" class="form-control js-select2-custom"
-                                    required>
-                                    <option value="0">{{ translate('messages.non_veg') }}</option>
-                                    <option value="1">{{ translate('messages.veg') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
-
-                            <div class="col-sm-6" id="nutrition">
-                                <label class="input-label" for="sub-categories">
-                                    {{translate('Nutrition')}}
-                                    <span class="input-label-secondary" title="{{ translate('Specify the necessary keywords relating to energy values for the item.') }}" data-toggle="tooltip">
-                                        <i class="tio-info-outined"></i>
-                                    </span>
-                                </label>
-                                <select name="nutritions[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
-
-                                    @foreach (\App\Models\Nutrition::select(['nutrition'])->get() as $nutrition)
-                                        <option value="{{ $nutrition->nutrition }}">{{ $nutrition->nutrition }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="col-sm-6" id="allergy">
-                                <label class="input-label" for="sub-categories">
-                                    {{translate('Allegren Ingredients')}}
-                                    <span class="input-label-secondary" title="{{ translate('Specify the ingredients of the item which can make a reaction as an allergen.') }}" data-toggle="tooltip">
-                                        <i class="tio-info-outined"></i>
-                                    </span>
-                                </label>
-                                <select name="allergies[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
-                                    @foreach (\App\Models\Allergy::select(['allergy'])->get() as $allergy)
-                                        <option value="{{ $allergy->allergy }}">{{ $allergy->allergy }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endif
-
-
-                        <div class="col-sm-6 col-lg-3" id="maximum_cart_quantity">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="maximum_cart_quantity">{{ translate('messages.Maximum_Purchase_Quantity_Limit') }}
-                                    <span
-                                    class="input-label-secondary text--title" data-toggle="tooltip"
-                                    data-placement="right"
-                                    data-original-title="{{ translate('If_this_limit_is_exceeded,_customers_can_not_buy_the_item_in_a_single_purchase.') }}">
-                                    <i class="tio-info-outined"></i>
-                                </span>
-                                </label>
-                                <input type="number"  placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="maximum_cart_quantity" min="0" id="cart_quantity">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="organic">
-                            <div class="form-check mb-sm-2 pb-sm-1">
-                                <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    {{ translate('messages.is_organic') }}
-                                </label>
-                                </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="basic">
-                            <div class="form-check mb-sm-2 pb-sm-1">
-                                <input class="form-check-input" name="basic" type="checkbox" value="1" id="flexCheckDefaultBasic" checked>
-                                <label class="form-check-label" for="flexCheckDefaultBasic">
-                                    {{ translate('messages.Is_Basic_Medicine') }}
-                                </label>
-                                </div>
-                        </div>
-                        @if(Config::get('module.current_module_type') == 'pharmacy')
-                        <div class="col-sm-6 col-lg-3" id="is_prescription_required">
-                            <div class="form-check mb-sm-2 pb-sm-1">
-                                <input class="form-check-input" name="is_prescription_required" type="checkbox" value="1" id="flexCheckDefaultprescription" checked>
-                                <label class="form-check-label" for="flexCheckDefaultprescription">
-                                    {{ translate('messages.is_prescription_required') }}
-                                </label>
-                                </div>
-                        </div>
-
-
-                        <div class="col-sm-6" id="generic_name">
-                            <label class="input-label" for="sub-categories">
-                                {{translate('generic_name')}}
-                                <span class="input-label-secondary" title="{{ translate('Specify the medicine`s active ingredient that makes it work') }}" data-toggle="tooltip">
-                                    <i class="tio-info-outined"></i>
-                                </span>
-                            </label>
-                            <div class="dropdown suggestion_dropdown">
-                                <input type="text" class="form-control" name="generic_name" autocomplete="off">
-                                @if(count(\App\Models\GenericName::select(['generic_name'])->get())>0)
-                                <div class="dropdown-menu">
-                                    @foreach (\App\Models\GenericName::select(['generic_name'])->get() as $generic_name)
-                                    <div class="dropdown-item">{{ $generic_name->generic_name }}</div>
-                                    @endforeach
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        @endif
-
-                        @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
-                            <div class="col-sm-6 col-lg-3" id="halal">
-                                <div class="form-check mb-sm-2 pb-sm-1">
-                                    <input class="form-check-input" name="is_halal" type="checkbox" value="1" id="flexCheckDefault1" checked>
-                                    <label class="form-check-label" for="flexCheckDefault1">
-                                        {{ translate('messages.Is_It_Halal') }}
+                                        </div>
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card shadow--card-2 border-0">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <span class="card-header-icon mr-2">
+                                    <i class="tio-tune-horizontal"></i>
+                                </span>
+                                <span> {{ translate('Store_&_Category_Info') }} </span>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-2 align-items-end">
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label" for="store_id">{{ translate('messages.store') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span><span
+                                                class="input-label-secondary"></span></label>
+                                        <select name="store_id" id="store_id"
+                                            data-placeholder="{{ translate('messages.select_store') }}" class="js-data-example-ajax form-control"
+                                            oninvalid="this.setCustomValidity('{{ translate('messages.please_select_store') }}')">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="category_id">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
+                                            class="js-data-example-ajax form-control">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="sub-categories">{{ translate('messages.sub_category') }}<span
+                                                class="input-label-secondary"
+                                                title="{{ translate('messages.category_required_warning') }}"><img
+                                                    src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
+                                                    alt="{{ translate('messages.category_required_warning') }}"></span></label>
+                                        <select name="sub_category_id" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
+                                            id="sub-categories">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3" id="condition_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label" for="condition_id">{{ translate('messages.Suitable_For') }}<span
+                                                class="input-label-secondary"></span></label>
+                                        <select name="condition_id" id="condition_id"
+                                            data-placeholder="{{ translate('messages.Select_Condition') }}" class="js-data-example-ajax form-control"
+                                            oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3" id="brand_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label" for="brand_id">{{ translate('messages.Brand') }}<span
+                                                class="input-label-secondary"></span></label>
+                                        <select name="brand_id" id="brand_id"
+                                            data-placeholder="{{ translate('messages.Select_brand') }}" class="js-data-example-ajax form-control"
+                                            oninvalid="this.setCustomValidity('{{ translate('messages.Select_brand') }}')">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3" id="unit_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label text-capitalize"
+                                            for="unit">{{ translate('messages.unit') }}</label>
+                                        <select name="unit" id="unit" class="form-control js-select2-custom">
+                                            @foreach (\App\Models\Unit::all() as $unit)
+                                                <option value="{{ $unit->id }}">{{ $unit->unit }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3" id="veg_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.item_type') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <select name="veg" id="veg" class="form-control js-select2-custom"
+                                            required>
+                                            <option value="0">{{ translate('messages.non_veg') }}</option>
+                                            <option value="1">{{ translate('messages.veg') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+
+                                    <div class="col-sm-6" id="nutrition">
+                                        <label class="input-label" for="sub-categories">
+                                            {{translate('Nutrition')}}
+                                            <span class="input-label-secondary" title="{{ translate('Specify the necessary keywords relating to energy values for the item.') }}" data-toggle="tooltip">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+                                        <select name="nutritions[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
+
+                                            @foreach (\App\Models\Nutrition::select(['nutrition'])->get() as $nutrition)
+                                                <option value="{{ $nutrition->nutrition }}">{{ $nutrition->nutrition }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
 
-                        @endif
+                                    <div class="col-sm-6" id="allergy">
+                                        <label class="input-label" for="sub-categories">
+                                            {{translate('Allegren Ingredients')}}
+                                            <span class="input-label-secondary" title="{{ translate('Specify the ingredients of the item which can make a reaction as an allergen.') }}" data-toggle="tooltip">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+                                        <select name="allergies[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
+                                            @foreach (\App\Models\Allergy::select(['allergy'])->get() as $allergy)
+                                                <option value="{{ $allergy->allergy }}">{{ $allergy->allergy }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
+
+                                <div class="col-sm-6 col-lg-3" id="maximum_cart_quantity">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="maximum_cart_quantity">{{ translate('messages.Maximum_Purchase_Quantity_Limit') }}
+                                            <span
+                                            class="input-label-secondary text--title" data-toggle="tooltip"
+                                            data-placement="right"
+                                            data-original-title="{{ translate('If_this_limit_is_exceeded,_customers_can_not_buy_the_item_in_a_single_purchase.') }}">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                        </label>
+                                        <input type="number"  placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="maximum_cart_quantity" min="0" id="cart_quantity">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3" id="organic">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          {{ translate('messages.is_organic') }}
+                                        </label>
+                                      </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3" id="basic">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="basic" type="checkbox" value="1" id="flexCheckDefaultBasic" checked>
+                                        <label class="form-check-label" for="flexCheckDefaultBasic">
+                                          {{ translate('messages.Is_Basic_Medicine') }}
+                                        </label>
+                                      </div>
+                                </div>
+                                @if(Config::get('module.current_module_type') == 'pharmacy')
+                                <div class="col-sm-6 col-lg-3" id="is_prescription_required">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="is_prescription_required" type="checkbox" value="1" id="flexCheckDefaultprescription" checked>
+                                        <label class="form-check-label" for="flexCheckDefaultprescription">
+                                          {{ translate('messages.is_prescription_required') }}
+                                        </label>
+                                      </div>
+                                </div>
+
+
+                                <div class="col-sm-6" id="generic_name">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('generic_name')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the medicine`s active ingredient that makes it work') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <div class="dropdown suggestion_dropdown">
+                                        <input type="text" class="form-control" name="generic_name" autocomplete="off">
+                                        @if(count(\App\Models\GenericName::select(['generic_name'])->get())>0)
+                                        <div class="dropdown-menu">
+                                            @foreach (\App\Models\GenericName::select(['generic_name'])->get() as $generic_name)
+                                            <div class="dropdown-item">{{ $generic_name->generic_name }}</div>
+                                            @endforeach
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+
+
+                                @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+                                    <div class="col-sm-6 col-lg-3" id="halal">
+                                        <div class="form-check mb-sm-2 pb-sm-1">
+                                            <input class="form-check-input" name="is_halal" type="checkbox" value="1" id="flexCheckDefault1" checked>
+                                            <label class="form-check-label" for="flexCheckDefault1">
+                                                {{ translate('messages.Is_It_Halal') }}
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6" id="addon_input">
-                    <div class="c border-0">
+                    <div class="card shadow--card-2 border-0">
                         <div class="card-header">
                             <h5 class="card-title">
                                 <span class="card-header-icon"><i class="tio-dashboard-outlined"></i></span>
@@ -596,7 +406,7 @@
                     </div>
                 </div>
                 <div class="col-md-6" id="time_input">
-                    <div class="c border-0">
+                    <div class="card shadow--card-2 border-0">
                         <div class="card-header">
                             <h5 class="card-title">
                                 <span class="card-header-icon"><i class="tio-date-range"></i></span>
@@ -626,742 +436,141 @@
                         </div>
                     </div>
                 </div>
-                 {{-- Store & Category Info --}}
-
-
-                {{--
-                <!-- Shop Fields -->
-                <div class="d-none" id="shop-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Store</option>
-                                <option>Branch 1</option>
-                                <option>Branch 2</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Electronics</option>
-                                <option>Fashion</option>
-                                <option>Home & Garden</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Brand</label>
-                            <select class="form-select form-control">
-                                <option>Select brand</option>
-                                <option>Brand A</option>
-                                <option>Brand B</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pharmacy Fields -->
-                <div class="d-none" id="pharmacy-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Pharmacy</option>
-                                <option>Branch Pharmacy</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Prescription Medicine</option>
-                                <option>Over Counter</option>
-                                <option>Health Products</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Suitable For</label>
-                            <select class="form-select form-control">
-                                <option>Select Condition</option>
-                                <option>Adults</option>
-                                <option>Children</option>
-                                <option>Elderly</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Unit</label>
-                            <select class="form-select form-control">
-                                <option>Kg</option>
-                                <option>Piece</option>
-                                <option>Box</option>
-                                <option>Bottle</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Grocery Fields -->
-                <div class="d-none" id="grocery-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Grocery</option>
-                                <option>Supermarket Branch</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Fresh Produce</option>
-                                <option>Dairy</option>
-                                <option>Packaged Foods</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Unit</label>
-                            <select class="form-select form-control">
-                                <option>Kg</option>
-                                <option>Piece</option>
-                                <option>Package</option>
-                                <option>Liter</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Food Fields -->
-                <div class="d-none" id="food-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Restaurant</option>
-                                <option>Food Court</option>
-                                <option>Delivery Kitchen</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Main Dishes</option>
-                                <option>Appetizers</option>
-                                <option>Desserts</option>
-                                <option>Beverages</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Item Type <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Non veg</option>
-                                <option>Veg</option>
-                                <option>Halal</option>
-                            </select>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
-            <!-- Shop Management Settings -->
-            <div class="section-card rounded p-4 mb-4 d-none section" id="shop_fields">
-                <h3 class="h5 fw-semibold mb-4">🛒 Shop Management Settings</h3>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-            </div>
-            <!-- Pharmacy Management Fields -->
-            <div class="section-card rounded p-4 mb-4 d-none section one_four_complete" id="pharmacy_fields">
-                <h3 class="h5 fw-semibold mb-4">💊 Pharmacy Management Settings</h3>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="is-basic-medicine">
-                        <label class="form-check-label" for="is-basic-medicine">Is Basic Medicine</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="is-prescription-required">
-                        <label class="form-check-label" for="is-prescription-required">Is prescription required</label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Generic name</label>
-                    <input type="text" class="form-control" placeholder="Enter generic name">
-                </div>
-            </div>
-            <!-- Grocery Management Fields -->
-            <div class="section-card rounded p-4 mb-4 d-none section" id="grocery_fields">
-                <h3 class="h5 fw-semibold mb-4">🛒 Grocery Management Settings</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Nutrition</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Allergen Ingredients</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is-organic">
-                            <label class="form-check-label" for="is-organic">Is organic</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is-halal">
-                            <label class="form-check-label" for="is-halal">Is It Halal</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Food Management Fields -->
-            <div class="section-card rounded p-4 mb-4 d-none section" id="food_fields">
-                <h3 class="h5 fw-semibold mb-4">🍽️ Food Management Settings</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Nutrition</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Allergen Ingredients</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="is-halal-food">
-                    <label class="form-check-label" for="is-halal-food">Is It Halal</label>
-                </div>
-
-                <!-- Addon Section -->
-                <div class="border-top pt-4 mb-4">
-                    <h4 class="h6 fw-semibold mb-3">🧩 Addon</h4>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Addon</label>
-                        <select class="form-select form-control">
-                            <option>Select addon</option>
-                            <option>Extra Cheese</option>
-                            <option>Extra Sauce</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Time Schedule Section -->
-                <div class="border-top pt-4 mb-4">
-                    <h4 class="h6 fw-semibold mb-3">⏰ Time Schedule</h4>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Available time starts</label>
-                            <input type="time" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Available time ends</label>
-                            <input type="time" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Food Variations Section -->
-                <div class="border-top pt-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="h6 fw-semibold mb-0">🔄 Food Variations</h4>
-                        <button type="button" class="btn btn-primary btn-sm">Add new variation +</button>
-                    </div>
-                    <div class="text-center text-muted">
-                        <div class="display-1 mb-2">📦</div>
-                        <div>No variation added</div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-            <!-- Price Information  same-->
-            <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="price_info">
-                <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
-
-                  {{-- Price Information --}}
                 <div class="col-md-12">
-                    <div class="card-body">
-                        <div class="row g-2">
-                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span></label>
-                                    <input type="number" min="0" max="999999999999.99" step="0.01"
-                                        value="1" name="price" class="form-control"
-                                        placeholder="{{ translate('messages.Ex:') }} 100" required>
+                    <div class="card shadow--card-2 border-0">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <span class="card-header-icon"><i class="tio-label-outlined"></i></span>
+                                <span>{{ translate('Price Information') }}</span>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-2">
+                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <input type="number" min="0" max="999999999999.99" step="0.01"
+                                            value="1" name="price" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6" id="stock_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="total_stock">{{ translate('messages.total_stock') }}</label>
+                                        <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
+                                    </div>
+                                </div>
+                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.discount_type') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span><span
+                                                class="input-label-secondary text--title" data-toggle="tooltip"
+                                                data-placement="right"
+                                                data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+                                        <select name="discount_type" id="discount_type"
+                                            class="form-control js-select2-custom">
+                                            <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                            <option value="amount">{{ translate('messages.amount') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.discount') }}
+                                        <span id=symble> (%) </span>
+                                            <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <input type="number" min="0" max="9999999999999999999999" value="0"
+                                            name="discount" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6" id="stock_input">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="total_stock">{{ translate('messages.total_stock') }}</label>
-                                    <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
-                                </div>
-                            </div>
-                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.discount_type') }} <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span><span
-                                            class="input-label-secondary text--title" data-toggle="tooltip"
-                                            data-placement="right"
-                                            data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
-                                            <i class="tio-info-outined"></i>
-                                        </span>
-                                    </label>
-                                    <select name="discount_type" id="discount_type"
-                                        class="form-control js-select2-custom">
-                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
-                                        <option value="amount">{{ translate('messages.amount') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})
+                        </div>
+                    </div>
+                </div>
+
+
+                @if ($productWiseTax)
+                <div class="col-lg-12">
+                    <div class="card shadow--card-2 border-0">
+                        <div class="card-header flex-wrap">
+                            <h5 class="card-title">
+                                <span class="card-header-icon mr-2">
+                                    <i class="tio-canvas-text"></i>
+                                </span>
+                                <span>{{ translate('messages.Tax_Information') }}</span>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                                <span class="mb-2 d-block title-clr fw-normal">{{ translate('Select Tax Rate') }}</span>
+                                <select name="tax_ids[]" required id="tax__rate" class="form-control js-select2-custom"
+                                    multiple="multiple" placeholder="Type & Select Tax Rate">
+                                    @foreach ($taxVats as $taxVat)
+                                        <option value="{{ $taxVat->id }}"> {{ $taxVat->name }}
+                                            ({{ $taxVat->tax_rate }}%)
                                         </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.discount') }}
-                                    <span id=symble> (%) </span>
-                                        <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span></label>
-                                    <input type="number" min="0" max="9999999999999999999999" value="0"
-                                        name="discount" class="form-control"
-                                        placeholder="{{ translate('messages.Ex:') }} 100">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- Voucher Behavior Settings same-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="voucher_behavior">
-                <h3 class="h5 fw-semibold mb-4">⚙️ Voucher Behavior Settings</h3>
-
-                <!-- Delivery/Pickup Specific -->
-                <div id="delivery-behavior">
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="enable-cart">
-                                <label class="form-check-label" for="enable-cart">Enable Cart Functionality</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="enable-tracking">
-                                <label class="form-check-label" for="enable-tracking">Enable Order Tracking</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="allow-scheduled">
-                                <label class="form-check-label" for="allow-scheduled">Allow Scheduled Delivery</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Delivery Areas</label>
-                            <select class="form-select form-control" multiple>
-                                <option>Central Riyadh</option>
-                                <option>North Riyadh</option>
-                                <option>East Riyadh</option>
-                                <option>West Riyadh</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Delivery Fee (SAR)</label>
-                            <input type="number" class="form-control" placeholder="Ex: 15">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- In-Store Specific -->
-                <div class="d-none" id="instore-behavior">
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">QR Code Type</label>
-                            <select class="form-select form-control">
-                                <option>Dynamic QR</option>
-                                <option>Static QR</option>
-                                <option>QR + Barcode</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Redemption Method</label>
-                            <select class="form-select form-control">
-                                <option>Scan to Redeem</option>
-                                <option>Code Entry</option>
-                                <option>Both</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="instant-redeem">
-                                <label class="form-check-label" for="instant-redeem">Allow Instant Redemption</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="partial-redeem">
-                                <label class="form-check-label" for="partial-redeem">Allow Partial Redemption</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="buy-now-only">
-                                <label class="form-check-label" for="buy-now-only">Buy Now Only (No Cart)</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Discount Behavior -->
-                <div id="discount-behavior">
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Discount Type</label>
-                            <select class="form-select form-control">
-                                <option>Percentage (%)</option>
-                                <option>Fixed Amount (SAR)</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Discount Value</label>
-                            <input type="number" class="form-control" placeholder="Ex: 15">
-                        </div>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Minimum Bill Amount (SAR)</label>
-                            <input type="number" class="form-control" placeholder="Ex: 20000">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Maximum Discount Cap (SAR)</label>
-                            <input type="number" class="form-control" placeholder="Leave empty for no cap">
-                        </div>
-                    </div>
-                    <div class="row g-2 mb-4">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="cashless-only" checked disabled>
-                                <label class="form-check-label" for="cashless-only">Cashless Payment Only (Required)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="bill-calculator" checked>
-                                <label class="form-check-label" for="bill-calculator">Enable Bill Calculator Interface</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="auto-calculation">
-                                <label class="form-check-label" for="auto-calculation">Auto Calculate Discounted Amount</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="show-breakdown">
-                                <label class="form-check-label" for="show-breakdown">Show Payment Breakdown</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Payment Methods -->
-                    <div class="border-top pt-4 mb-4">
-                        <h4 class="h6 fw-semibold mb-3">💳 Allowed Payment Methods (Cashless Only)</h4>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="credit-debit-cards" checked>
-                                    <label class="form-check-label" for="credit-debit-cards">Credit/Debit Cards (Visa, MasterCard, Mada)</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="apple-pay" checked>
-                                    <label class="form-check-label" for="apple-pay">Apple Pay</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="wallet-payment" checked>
-                                    <label class="form-check-label" for="wallet-payment">Digital Wallet</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="bank-transfer">
-                                    <label class="form-check-label" for="bank-transfer">Bank Transfer</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="stc-pay">
-                                    <label class="form-check-label" for="stc-pay">STC Pay</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Voucher Display Settings -->
-                    <div class="border-top pt-4 mb-4">
-                        <h4 class="h6 fw-semibold mb-3">🎨 Voucher Display Settings</h4>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Display Title Template</label>
-                                <input type="text" class="form-control" value="{discount}% off total bill">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Subtitle Template</label>
-                                <input type="text" class="form-control" value="SAR{minimum} minimum spend">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-medium">Cashless Payment Notice</label>
-                            <textarea class="form-control" rows="2">Cashless Payment Only - Credit/Debit Cards, Apple Pay, and Digital Wallet accepted</textarea>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="show-partner-logo" checked>
-                                    <label class="form-check-label" for="show-partner-logo">Show Partner Logo on Voucher</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="show-cashless-badge" checked>
-                                    <label class="form-check-label" for="show-cashless-badge">Show "Cashless Only" Badge</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bill Input Settings -->
-                    <div class="border-top pt-4">
-                        <h4 class="h6 fw-semibold mb-3">🧮 Bill Input Interface Settings</h4>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Bill Input Label</label>
-                                <input type="text" class="form-control" value="Enter amount on receipt">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Currency Symbol</label>
-                                <select class="form-select form-control">
-                                    <option>SAR</option>
-                                    <option>USD</option>
-                                    <option>AED</option>
+                                    @endforeach
                                 </select>
+
                             </div>
                         </div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Number Pad Style</label>
-                                <select class="form-select form-control">
-                                    <option>Full Screen Calculator</option>
-                                    <option>Compact Keyboard</option>
-                                    <option>Native Input</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Decimal Places</label>
-                                <select class="form-select form-control">
-                                    <option>0</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                            </div>
+                    </div>
+
+                    @endif
+
+
+                <div class="col-lg-12" id="food_variation_section">
+                    <div class="card shadow--card-2 border-0">
+                        <div class="card-header flex-wrap">
+                            <h5 class="card-title">
+                                <span class="card-header-icon mr-2">
+                                    <i class="tio-canvas-text"></i>
+                                </span>
+                                <span>{{ translate('messages.food_variations') }}</span>
+                            </h5>
+                            <a class="btn text--primary-2" id="add_new_option_button">
+                                {{ translate('add_new_variation') }}
+                                <i class="tio-add"></i>
+                            </a>
                         </div>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="show-calculation-preview" checked>
-                                    <label class="form-check-label" for="show-calculation-preview">Show Real-time Calculation Preview</label>
+                        <div class="card-body">
+                            <!-- Empty Variation -->
+                            <div id="empty-variation">
+                                <div class="text-center">
+                                    <img src="{{asset('/public/assets/admin/img/variation.png')}}" alt="">
+                                    <div>{{translate('No variation added')}}</div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="highlight-savings">
-                                    <label class="form-check-label" for="highlight-savings">Highlight Savings Amount</label>
-                                </div>
+                            <div id="add_new_option">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Usage Terms & Conditions same-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="usage_terms">
-                <h3 class="h5 fw-semibold mb-4">📋 Usage Terms & Conditions</h3>
-                <div class="row g-2 mb-4">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="valid-in-store">
-                            <label class="form-check-label" for="valid-in-store">Valid in-store only</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="redeem-schedule">
-                            <label class="form-check-label" for="redeem-schedule">Redeem on Mon–Sun 10:00am – 10:00pm. Including public holidays</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="valid-30-days">
-                            <label class="form-check-label" for="valid-30-days">Valid for 30 days after purchase</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="one-per-bill">
-                            <label class="form-check-label" for="one-per-bill">Limited to 1 voucher per bill</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="non-refundable">
-                            <label class="form-check-label" for="non-refundable">Non-refundable</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="unlimited-purchase">
-                            <label class="form-check-label" for="unlimited-purchase">Unlimited purchase for user</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="prior-booking">
-                            <label class="form-check-label" for="prior-booking">Prior booking is required</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-holidays">
-                            <label class="form-check-label" for="no-holidays">Offers does not include official holidays</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-ramadan">
-                            <label class="form-check-label" for="no-ramadan">Offers does not include Ramadan</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="included-brands">
-                            <label class="form-check-label" for="included-brands">Included brands</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="higher-price-apply">
-                            <label class="form-check-label" for="higher-price-apply">The higher price will apply if the products do not match</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="redeemable-branches">
-                            <label class="form-check-label" for="redeemable-branches">Redeemable at 4 branches</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Valid Until Date</label>
-                        <input type="date" class="form-control" value="2025-12-31">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Usage Limit per User</label>
-                        <input type="number" class="form-control" placeholder="Ex: 1">
-                    </div>
-                </div>
-            </div>
-            <!-- Attributes same-->
-            <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="attributes">
-                <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('attribute') }}</h3>
-
-            <div class="row g-2">
-
                 <div class="col-md-12" id="attribute_section">
-                    <div class="c border-0">
-                        <div class=" pb-0">
+                    <div class="card shadow--card-2 border-0">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <span class="card-header-icon"><i class="tio-canvas-text"></i></span>
+                                <span>{{ translate('attribute') }}</span>
+                            </h5>
+                        </div>
+                        <div class="card-body pb-0">
                             <div class="row g-2">
                                 <div class="col-12">
                                     <div class="form-group mb-0">
@@ -1394,35 +603,35 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-            </div>
-            <!-- Tags same-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="tags">
-                <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('tags') }}</h3>
                 <div class="col-md-12">
-                    <div class="row g-2">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                    <div class="card shadow--card-2 border-0">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <span class="card-header-icon"><i class="tio-label"></i></span>
+                                <span>{{ translate('tags') }}</span>
+                            </h5>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Action Buttons -->
-            <div class="col-md-12">
-                <div class="btn--container justify-content-end">
-                    <button type="reset" id="reset_btn"
-                        class="btn btn--reset">{{ translate('messages.reset') }}</button>
-                    <button type="submit" id="submitButton"  class="btn btn--primary">{{ translate('messages.submit') }}</button>
+                <div class="col-md-12">
+                    <div class="btn--container justify-content-end">
+                        <button type="reset" id="reset_btn"
+                            class="btn btn--reset">{{ translate('messages.reset') }}</button>
+                        <button type="submit" id="submitButton"  class="btn btn--primary">{{ translate('messages.submit') }}</button>
+                    </div>
                 </div>
             </div>
-
         </form>
-        </div>
-      </div>
-
+    </div>
 
     <div class="modal" id="food-modal">
         <div class="modal-dialog modal-xl">
@@ -1438,6 +647,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal" id="attribute-modal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -1456,13 +666,13 @@
 
 
 @push('script_2')
-{{-- dashboard code --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
     <script>
         "use strict";
+
+
         $(document).on('change', '#discount_type', function () {
          let data =  document.getElementById("discount_type");
          if(data.value === 'amount'){
@@ -1471,7 +681,9 @@
             else{
              $('#symble').text("(%)");
          }
-         });
+     });
+
+
         $(document).ready(function() {
             $("#add_new_option_button").click(function(e) {
                 $('#empty-variation').hide();
@@ -1525,8 +737,8 @@
                 </label>
             </div>
         </div>
-        </div>
-        <div class="col-xl-4 col-lg-6">
+    </div>
+    <div class="col-xl-4 col-lg-6">
         <div class="row g-2">
             <div class="col-6">
                 <label for="">{{ translate('Min') }}</label>
@@ -1873,7 +1085,6 @@
                     $('#loading').show();
                 },
                 success: function(data) {
-                    console.log(data);
                     $('#loading').hide();
                     $('#variant_combination').html(data.view);
                     if (data.length < 1) {
@@ -2026,410 +1237,6 @@
     </script>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const managementSelection = document.querySelectorAll('#management_selection');
-            const voucherCards = document.querySelectorAll('.voucher-card');
-            const voucherCards2 = document.querySelectorAll('.voucher-card_2');
-            // Get all elements by ID
-            const basic_info = document.getElementById('basic_info');
-            const discount_store_category = document.getElementById('discount_store_category');
-            const discount_settings = document.getElementById('discount_settings');
-            const store_category = document.getElementById('store_category');
-            const shop_fields = document.getElementById('shop_fields');
-            const pharmacy_fields = document.getElementById('pharmacy_fields');
-            const grocery_fields = document.getElementById('grocery_fields');
-            const food_fields = document.getElementById('food_fields');
-            const price_info = document.getElementById('price_info');
-            const voucher_behavior = document.getElementById('voucher_behavior');
-            const usage_terms = document.getElementById('usage_terms');
-            const attributes = document.getElementById('attributes');
-            const tags = document.getElementById('tags');
 
-            function section_one(loopIndex, primaryId) {
-                // اگر hidden input میں primary id رکھنی ہے:
-                document.getElementById('hidden_value').value = loopIndex;
-                managementSelection.forEach(el => {
-                    if (loopIndex === "1" || loopIndex === "2") {
-                        submit_voucher_type(loopIndex,primaryId); // اب اصل primary id pass کر رہے ہیں
-                        el.classList.remove('d-none');
-                        // Hide discount-specific sections
-                        [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, tags].forEach(el => {
-                            if (el) el.classList.add('d-none');
-                        });
-
-                    } else if (loopIndex === "3") {
-                        submit_voucher_type(loopIndex,primaryId);
-                        el.classList.add('d-none');
-
-                        // Show discount-specific sections
-                        [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, tags].forEach(el => {
-                            if (el) el.classList.remove('d-none');
-                        });
-                    }
-                });
-            }
-            function section_second(value_two) {
-                const hidden_value = document.getElementById('hidden_value').value;
-                // Convert to strings for proper comparison
-                const hiddenVal = String(hidden_value);
-                const valueTwo = String(value_two);
-                // Get all elements
-                const basic_info = document.getElementById('basic_info');
-                const discount_store_category = document.getElementById('discount_store_category');
-                const discount_settings = document.getElementById('discount_settings');
-                const store_category = document.getElementById('store_category');
-                const shop_fields = document.getElementById('shop_fields');
-                const pharmacy_fields = document.getElementById('pharmacy_fields');
-                const grocery_fields = document.getElementById('grocery_fields');
-                const food_fields = document.getElementById('food_fields');
-                const price_info = document.getElementById('price_info');
-                const voucher_behavior = document.getElementById('voucher_behavior');
-                const usage_terms = document.getElementById('usage_terms');
-                const attributes = document.getElementById('attributes');
-                const tags = document.getElementById('tags');
-
-                // Helper function to show elements
-                function showElements(elements) {
-                    elements.forEach(el => {
-                        if (el) el.classList.remove('d-none');
-                    });
-                }
-
-                // Helper function to hide elements
-                function hideElements(elements) {
-                    elements.forEach(el => {
-                        if (el) el.classList.add('d-none');
-                    });
-                }
-
-                // Main logic based on voucher type and management type
-                switch (hiddenVal) {
-                    case "1": // Delivery/Pickup
-                        switch (valueTwo) {
-                            case "4": // Shop + Delivery
-                                showElements([basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields, food_fields]);
-                                showShopFields();
-                                break;
-
-                            case "5": // Pharmacy + Delivery
-                                showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
-                                showPharmacyFields();
-                                break;
-
-                            case "6": // Grocery + Delivery
-                                showElements([basic_info, store_category, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
-                                showGroceryFields();
-                                break;
-
-                            case "7": // Food + Delivery
-                                showElements([basic_info, store_category, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
-                                showFoodFields();
-                                break;
-                        }
-                        break;
-
-                    case "2": // In-Store
-                        switch (valueTwo) {
-                            case "4": // Shop + In-Store
-                                showElements([basic_info, store_category, shop_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
-                                showShopFields();
-                                break;
-
-                            case "5": // Pharmacy + In-Store
-                                showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
-                                showPharmacyFields();
-                                break;
-
-                            case "6": // Grocery + In-Store
-                                showElements([basic_info, store_category, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
-                                showGroceryFields();
-                                break;
-
-                            case "7": // Food + In-Store
-                                showElements([basic_info, store_category, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
-                                showFoodFields();
-                                break;
-                        }
-                        break;
-
-                    case "3": // Flat Discount
-                        if (valueTwo === "4") {
-                            showElements([basic_info, discount_store_category, discount_settings, voucher_behavior, usage_terms, tags]);
-                            hideElements([store_category, shop_fields, pharmacy_fields, grocery_fields, food_fields, price_info, attributes]);
-                        }
-                        break;
-                }
-            }
-            // Helper functions for showing specific field types
-            function showShopFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
-
-                if (shopFields) shopFields.classList.remove('d-none');
-                if (pharmacyFields) pharmacyFields.classList.add('d-none');
-                if (groceryFields) groceryFields.classList.add('d-none');
-                if (foodFields) foodFields.classList.add('d-none');
-            }
-            function showPharmacyFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
-
-                if (pharmacyFields) pharmacyFields.classList.remove('d-none');
-                if (shopFields) shopFields.classList.add('d-none');
-                if (groceryFields) groceryFields.classList.add('d-none');
-                if (foodFields) foodFields.classList.add('d-none');
-            }
-            function showGroceryFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
-
-                if (groceryFields) groceryFields.classList.remove('d-none');
-                if (shopFields) shopFields.classList.add('d-none');
-                if (pharmacyFields) pharmacyFields.classList.add('d-none');
-                if (foodFields) foodFields.classList.add('d-none');
-            }
-            function showFoodFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
-
-                if (foodFields) foodFields.classList.remove('d-none');
-                if (shopFields) shopFields.classList.add('d-none');
-                if (pharmacyFields) pharmacyFields.classList.add('d-none');
-                if (groceryFields) groceryFields.classList.add('d-none');
-            }
-            // Highlight selected voucher-card
-            voucherCards.forEach(card => {
-                card.addEventListener('click', function () {
-                    voucherCards.forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-            });
-            // Highlight selected management voucher-card
-            // voucherCards2.forEach(card => {
-            //     card.addEventListener('click', function () {
-            //         voucherCards2.forEach(c => c.classList.remove('selected'));
-            //         this.classList.add('selected');
-            //     });
-            // });
-            // Make functions globally accessible
-            window.section_one = section_one;
-            window.section_second = section_second;
-        });
-    </script>
-
-    <script>
-        function submit_voucher_type(loopIndex,id) {
-            var loopIndex = loopIndex;
-            var primary_vouchertype_id = id;
-
-            console.log("Sending ID:", primary_vouchertype_id);
-
-            $.ajax({
-                url: "{{ route('admin.item.voucherType.store') }}", // <-- اپنے route کے حساب سے بدلیں
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}", // Laravel CSRF protection کیلئے ضروری
-                    voucher_type_id: primary_vouchertype_id,
-                    loopIndex: loopIndex
-                },
-                success: function(response) {
-                    console.log("Success:", response);
-                    // empty previous content
-                    $("#append_all_data").empty();
-                    // starting index (4 se start karna hai)
-                    let index = 4;
-                    // loop through modules
-                    response.all_ids.forEach(function(module) {
-                        let card = `
-                            <div class="col-md-3">
-                                <div class="voucher-card_2 border rounded p-4 text-center h-100"
-                                    onclick="section_second(${index})">
-                                     <div class="display-4 mb-2">
-                                        <img src="${module.thumbnail}" alt="${module.module_name}" style="width:40px; height:auto;" />
-                                    </div>
-
-                                    <h6 class="fw-semibold">${module.module_name}</h6>
-                                    <small class="text-muted">${module.description ?? ''}</small>
-                                </div>
-                            </div>
-
-                        `;
-                        $("#append_all_data").append(card);
-
-                        index++; // next card ke liye +1
-                    });
-                },
-
-                error: function(xhr, status, error) {
-                    console.error("Error:", error);
-                    alert("Something went wrong!");
-                }
-            });
-        }
-
-
-        $(document).on('click', '.voucher-card_2', function () {
-            $('.voucher-card_2').removeClass('selected');
-            $(this).addClass('selected');
-        });
-
-    </script>
-
- <script>
-    $(document).ready(function () {
-        // -------------------- Segment Select2 --------------------
-        $('.segment-select').select2({
-            placeholder: "-- Select Segment --",
-            allowClear: true,
-            width: '100%',
-            dropdownAutoWidth: true,
-            minimumResultsForSearch: 3,
-            templateResult: formatOption,
-            templateSelection: formatSelection
-        });
-
-        // -------------------- Client Select2 --------------------
-        $('.Clients-select').select2({
-            placeholder: "-- Select Clients --",
-            allowClear: true,
-            width: '100%',
-            dropdownAutoWidth: true,
-            minimumResultsForSearch: 3,
-            templateResult: formatOption,
-            templateSelection: formatSelection
-        });
-
-        // -------------------- Option Formatter --------------------
-        function formatOption(option) {
-            if (!option.id) return option.text;
-
-            const parts = option.text.split(' / ');
-            if (parts.length === 2) {
-                const name = parts[0];
-                const type = parts[1];
-                const typeClass = type === 'free' ? 'success' : type === 'paid' ? 'primary' : 'warning';
-
-                return $(
-                    '<div class="d-flex justify-content-between align-items-center">' +
-                        '<span>' + name + '</span>' +
-                        '<span class="badge bg-' + typeClass + '">' + type + '</span>' +
-                    '</div>'
-                );
-            }
-            return option.text;
-        }
-
-        function formatSelection(option) {
-            return option.text || option.placeholder;
-        }
-
-        // -------------------- Client Change => Load Segments --------------------
-        $('.Clients-select').on('change', function () {
-            let clientId = $(this).val();
-            if (!clientId) return;
-            // alert(clientId);
-            let url = "{{ route('admin.client-side.getSegments', ':id') }}".replace(':id', clientId);
-
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function (res) {
-                    // Clear and refill segment dropdown
-                    $('#segment_type').empty().append('<option></option>');
-
-                    $.each(res, function (index, item) {
-                        $('#segment_type').append(
-                            '<option value="' + item.id + '">' + item.name + ' / ' + item.type + '</option>'
-                        );
-                    });
-
-                    // Refresh Select2
-                    $('#segment_type').trigger('change');
-                },
-                error: function () {
-                    alert("Error loading segments!");
-                }
-            });
-        });
-
-        // -------------------- Segment Select Validation --------------------
-        $('.segment-select').on('select2:select', function (e) {
-            const data = e.params.data;
-            $('#selectedValue').removeClass('alert-info alert-warning')
-                .addClass('alert-success')
-                .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
-            $(this).addClass('is-valid');
-        });
-
-        $('.segment-select').on('select2:clear', function () {
-            $('#selectedValue').removeClass('alert-success')
-                .addClass('alert-info')
-                .html('No segment selected yet');
-            $(this).removeClass('is-valid');
-        });
-
-        // -------------------- Clients Select Validation --------------------
-        $('.Clients-select').on('select2:select', function (e) {
-            const data = e.params.data;
-            $('#selectedValue').removeClass('alert-info alert-warning')
-                .addClass('alert-success')
-                .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
-            $(this).addClass('is-valid');
-        });
-
-        $('.Clients-select').on('select2:clear', function () {
-            $('#selectedValue').removeClass('alert-success')
-                .addClass('alert-info')
-                .html('No Clients selected yet');
-            $(this).removeClass('is-valid');
-        });
-
-        // -------------------- Submit Demo --------------------
-        $('#submitBtn').on('click', function () {
-            const selectedClients = $('.Clients-select').val();
-            const selectedSegment = $('.segment-select').val();
-            const clientName = $('#client_name').val();
-
-            if (!selectedClients) {
-                alert('Please select a Client first!');
-                return;
-            }
-
-            if (!selectedSegment) {
-                alert('Please select a Segment first!');
-                return;
-            }
-
-            if (!clientName) {
-                alert('Please enter client name!');
-                return;
-            }
-
-            alert(
-                'Client saved successfully!\n' +
-                'Client: ' + $('.Clients-select option:selected').text() +
-                '\nSegment: ' + $('.segment-select option:selected').text() +
-                '\nName: ' + clientName
-            );
-        });
-    });
-</script>
 
 @endpush

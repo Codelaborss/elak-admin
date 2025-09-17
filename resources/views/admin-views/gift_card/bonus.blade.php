@@ -429,6 +429,19 @@
     border-top: 3px solid #e9ecef;
     margin-top: 40px;
     }
+
+    .radio-group {
+    display: flex;
+    gap: 20px; /* dono ke beech thoda space */
+    }
+
+    .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* text aur radio button ke beech spacing */
+    cursor: pointer;
+    }
+
     </style>
     <div class="content container-fluid">
         @php($language=\App\Models\BusinessSetting::where('key','language')->first())
@@ -447,14 +460,37 @@
                                     <p>Configure multi-level bonus tiers and amount limits per merchant</p>
                                 </div>
                                 <input type="hidden" name="hidden_store_id" id="hidden_store_id" />
-                                   <div class="form-section">
-                                    <div class="section-title">Select Type</div>
+                                    <div class="form-section">
                                     <div class="form-group">
-                                        <label for="type_select">Select Type</label>
-                                        <select id="type_select" name="type_select" >
-                                            <option value="">-- Select Category --</option>
-                                            <option value="flate">Flate Discount</option>
-                                            <option value="bonus">Bonus Discount</option>
+                                        <label>Select Type</label>
+                                        <div class="radio-group">
+                                        <label>
+                                            <input type="radio" id="type_flate" name="type_select" value="flate">
+                                            Flate Discount
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="type_bonus" name="type_select" value="bonus">
+                                            Bonus Discount
+                                        </label>
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+                                <div class="form-section">
+                                    <div class="section-title">Select Voucher Type</div>
+                                    <div class="form-group">
+                                        <label for="voucher_type">Voucher Type</label>
+                                        <select id="voucher_type" name="voucher_type" onchange="loadMerchantsByCategory()">
+                                            <option value="">-- Select Voucher Type --</option>
+                                          @foreach(\App\Models\VoucherType::get() as $VoucherType)
+                                                <option value="{{ $VoucherType->id }}"
+                                                @if( (old('voucher_type') && in_array($VoucherType->id, old('voucher_type')))
+                                                    || (isset($selectedVoucherIds) && in_array($VoucherType->id, $selectedVoucherIds)) )
+                                                    selected
+                                                @endif
+                                            >{{ $VoucherType->name }}</option>
+                                        @endforeach
                                         </select>
                                     </div>
                                 </div>

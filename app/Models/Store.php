@@ -149,6 +149,7 @@ class Store extends Model
         'bonus_tiers',
         'limit_from',
         'limit_to',
+        'flate_discount',
     ];
     /**
      * @var string[]

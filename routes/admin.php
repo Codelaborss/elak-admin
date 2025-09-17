@@ -265,7 +265,11 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
              Route::get('add-bonus-setting', 'GiftcardController@add_bonus_setting')->name('add_bonus_setting');
              Route::post('add-bonus-sore', 'GiftcardController@bonus_store')->name('bonus_store');
              Route::get('add-get-merchants', 'GiftcardController@get_merchants')->name('get_merchants');
-
+             Route::match(['get', 'post'], 'list-bonus', 'GiftcardController@list_bonus')->name('list_bonus');
+             Route::post('/status-toggle-bonus/{id}', 'GiftcardController@toggleStatus_bonus')->name('toggleStatus_bonus');
+             Route::delete('delete-bonus/{id}', 'GiftcardController@delete_bonus')->name('delete_bonus');
+             Route::get('edit-bonus/{id}', 'GiftcardController@edit_bonus')->name('edit_bonus');
+               Route::post('update-bonus/{id}', 'GiftcardController@update_bonus')->name('update_bonus');
         });
        // Gift Card
 

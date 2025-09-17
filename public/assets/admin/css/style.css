@@ -139,7 +139,7 @@
 }
 
 .menu-bg {
-    background-color: #005555;
+    background-color: #EEEEEE;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -4927,7 +4927,7 @@ div.scroll-down {
 }
 
 .bg--005555 {
-    background-color: #005555;
+    background-color: #EEEEEE;
 }
 
 .loading-inner {
@@ -9297,7 +9297,7 @@ body > .initial-38-1 {
 }
 
 .sidebar--search-form {
-    background-color: #005555;
+    background-color: #EEEEEE;
     position: sticky;
     top: 0;
     z-index: 9;
@@ -15874,7 +15874,7 @@ img{
 
 
 
-@media screen and (max-width: 575px) {    
+@media screen and (max-width: 575px) {
     .bg-mobile-transparent{
         background-color: transparent !important;
     }
