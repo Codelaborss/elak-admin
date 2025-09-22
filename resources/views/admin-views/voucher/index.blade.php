@@ -86,12 +86,8 @@
           </div>
       </div>
         <div class="bg-white shadow rounded-lg p-4">
-
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
-
             <!-- Step 1: Select Voucher Type -->
-
-
             <div class="section-card rounded p-4 mb-4">
                 <h2 class="fw-semibold h5 mb-4">🎯 Step 1: Select Voucher Type</h2>
                 <div class="row g-3">
@@ -111,80 +107,22 @@
                     </div>
                     @php $i++; @endphp
                 @endforeach
-
-                    {{-- <div class="col-md-4">
-                        <div class="voucher-card border rounded p-4 text-center h-100"
-                            onclick="section_one('1')"
-                            data-value="Delivery">
-                            <div class="display-4 mb-2">🚚</div>
-                            <h6 class="fw-semibold">Delivery/Pickup</h6>
-                            <small class="text-muted">E-commerce style vouchers with cart functionality</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                    <div class="voucher-card border rounded p-4 text-center h-100"
-                        onclick="section_one('2')"
-                        data-value="Store">
-                        <div class="display-4 mb-2">🏪</div>
-                        <h6 class="fw-semibold">In-Store</h6>
-                        <small class="text-muted">Instant purchase with QR/Barcode redemption</small>
-                    </div>
-                    </div>
-                    <div class="col-md-4">
-                    <div class="voucher-card border rounded p-4 text-center h-100"
-                        onclick="section_one('3')"
-                        data-value="Discount">
-                        <div class="display-4 mb-2">💵</div>
-                        <h6 class="fw-semibold">Flat Discount</h6>
-                        <small class="text-muted">Percentage-based discount on bill amount</small>
-                    </div>
-                    </div> --}}
                 </div>
             </div>
-
             <!-- Step 2: Select Management Type -->
             <div class="section-card rounded p-4 mb-4" id="management_selection">
                 <h2 class="fw-semibold h5 mb-4">⚙️ Step 2: Select Management Type</h2>
                 <div class="row g-3" id="append_all_data">
-                    {{-- <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('4')">
-                            <div class="display-4 mb-2">🛒</div>
-                            <h6 class="fw-semibold">Shop</h6>
-                            <small class="text-muted">General retail products management</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('5')">
-                            <div class="display-4 mb-2">💊</div>
-                            <h6 class="fw-semibold">Pharmacy</h6>
-                            <small class="text-muted">Medicine and health products</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('6')">
-                            <div class="display-4 mb-2">🛒</div>
-                            <h6 class="fw-semibold">Grocery</h6>
-                            <small class="text-muted">Food and daily essentials</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="voucher-card_2 border rounded p-4 text-center h-100" onclick="section_second('7')">
-                            <div class="display-4 mb-2">🍽️</div>
-                            <h6 class="fw-semibold">Food</h6>
-                            <small class="text-muted">Restaurant and food delivery</small>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
-
         <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
             @csrf
             @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
 
-            <!-- Basic Information  same-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info">
+            <!-- Basic Information one-->
+            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info_main">
                 <h3 class="h5 fw-semibold mb-4"> Basic Information</h3>
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
@@ -267,125 +205,9 @@
                         </div>
                     </div> --}}
             </div>
-            <!--  Store & Category Info same -->
-            <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_store_category">
-                <h3 class="h5 fw-semibold mb-4">🏪 Store & Category Info</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Partner Store <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Select partner store</option>
-                            <option>Teh Kotjok - SGC Cikarang</option>
-                            <option>McDonald's Riyadh</option>
-                            <option>Burger King Jeddah</option>
-                            <option>Pizza Hut Dammam</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Select category</option>
-                            <option>Restaurant</option>
-                            <option>Cafe</option>
-                            <option>Fast Food</option>
-                            <option>Fine Dining</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Service Type</label>
-                        <select class="form-select form-control">
-                            <option>Dine In Only</option>
-                            <option>Delivery Only</option>
-                            <option>Dine In & Delivery</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Location/Branch</label>
-                        <select class="form-select form-control">
-                            <option>All Branches</option>
-                            <option>Specific Branch</option>
-                            <option>Multiple Selected Branches</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Discount Settings -->
-            <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_settings">
-                <h3 class="h5 fw-semibold mb-4">💰 Discount Configuration</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Discount Type <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Percentage (%)</option>
-                            <option>Fixed Amount (SAR)</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Discount Value <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" placeholder="Ex: 15" step="0.01">
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Minimum Bill Amount (SAR) <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" placeholder="Ex: 20000" step="0.01">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Discount Cap (SAR)</label>
-                        <input type="number" class="form-control" placeholder="Leave empty for unlimited" step="0.01">
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Valid Until Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" value="2025-12-31">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Usage Limit per User</label>
-                        <input type="number" class="form-control" placeholder="Ex: 1 (leave empty for unlimited)">
-                    </div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-discount-cap" checked>
-                            <label class="form-check-label" for="no-discount-cap">No discount cap (like Grab example)</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="unlimited-redemptions" checked>
-                            <label class="form-check-label" for="unlimited-redemptions">Unlimited redemptions</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="stackable-offers">
-                            <label class="form-check-label" for="stackable-offers">Check with outlet if stackable with other offers</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="anytime-redemption" checked>
-                            <label class="form-check-label" for="anytime-redemption">Redeemable anytime during opening hours</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Store Category Info -->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="store_category">
+              <!-- Partner Information one-->
+            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="store_category_main">
                 <h3 class="h5 fw-semibold mb-4"> {{ translate('Partner Information') }}</h3>
-
                  {{-- Store & Category Info --}}
                 <div class="col-md-12">
                     <div class="row g-2 align-items-end">
@@ -521,21 +343,6 @@
                                 </select>
                             </div>
                         @endif
-
-                        {{-- <div class="col-sm-6 col-lg-3" id="maximum_cart_quantity">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="maximum_cart_quantity">{{ translate('messages.Maximum_Purchase_Quantity_Limit') }}
-                                    <span
-                                    class="input-label-secondary text--title" data-toggle="tooltip"
-                                    data-placement="right"
-                                    data-original-title="{{ translate('If_this_limit_is_exceeded,_customers_can_not_buy_the_item_in_a_single_purchase.') }}">
-                                    <i class="tio-info-outined"></i>
-                                </span>
-                                </label>
-                                <input type="number"  placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="maximum_cart_quantity" min="0" id="cart_quantity">
-                            </div>
-                        </div> --}}
                         <div class="col-sm-6 col-lg-3" id="organic">
                             <div class="form-check mb-sm-2 pb-sm-1">
                                 <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
@@ -649,565 +456,610 @@
                         </div>
                     </div>
                 </div>
-                 {{-- Store & Category Info --}}
-
-
-                {{--
-                <!-- Shop Fields -->
-                <div class="d-none" id="shop-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Store</option>
-                                <option>Branch 1</option>
-                                <option>Branch 2</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Electronics</option>
-                                <option>Fashion</option>
-                                <option>Home & Garden</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Brand</label>
-                            <select class="form-select form-control">
-                                <option>Select brand</option>
-                                <option>Brand A</option>
-                                <option>Brand B</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pharmacy Fields -->
-                <div class="d-none" id="pharmacy-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Pharmacy</option>
-                                <option>Branch Pharmacy</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Prescription Medicine</option>
-                                <option>Over Counter</option>
-                                <option>Health Products</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Suitable For</label>
-                            <select class="form-select form-control">
-                                <option>Select Condition</option>
-                                <option>Adults</option>
-                                <option>Children</option>
-                                <option>Elderly</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Unit</label>
-                            <select class="form-select form-control">
-                                <option>Kg</option>
-                                <option>Piece</option>
-                                <option>Box</option>
-                                <option>Bottle</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Grocery Fields -->
-                <div class="d-none" id="grocery-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Grocery</option>
-                                <option>Supermarket Branch</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Fresh Produce</option>
-                                <option>Dairy</option>
-                                <option>Packaged Foods</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Unit</label>
-                            <select class="form-select form-control">
-                                <option>Kg</option>
-                                <option>Piece</option>
-                                <option>Package</option>
-                                <option>Liter</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Food Fields -->
-                <div class="d-none" id="food-category-fields">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Store <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select store</option>
-                                <option>Main Restaurant</option>
-                                <option>Food Court</option>
-                                <option>Delivery Kitchen</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Select category</option>
-                                <option>Main Dishes</option>
-                                <option>Appetizers</option>
-                                <option>Desserts</option>
-                                <option>Beverages</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Sub Category</label>
-                            <select class="form-select form-control">
-                                <option>Select sub category</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Item Type <span class="text-danger">*</span></label>
-                            <select class="form-select form-control">
-                                <option>Non veg</option>
-                                <option>Veg</option>
-                                <option>Halal</option>
-                            </select>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
-            <!-- Shop Management Settings -->
-            <div class="section-card rounded p-4 mb-4 d-none section" id="shop_fields">
-                <h3 class="h5 fw-semibold mb-4">🛒 Shop Management Settings</h3>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-            </div>
-            <!-- Pharmacy Management Fields -->
-            <div class="section-card rounded p-4 mb-4 d-none section one_four_complete" id="pharmacy_fields">
-                <h3 class="h5 fw-semibold mb-4">💊 Pharmacy Management Settings</h3>
 
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
+           {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
-                <div class="mb-4">
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="is-basic-medicine">
-                        <label class="form-check-label" for="is-basic-medicine">Is Basic Medicine</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="is-prescription-required">
-                        <label class="form-check-label" for="is-prescription-required">Is prescription required</label>
-                    </div>
-                </div>
+                <!-- Voucher Details -->
+                <div class="section-card rounded p-4 mb-4  d-none section" id="Product_voucher_fields_1_7">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
 
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Generic name</label>
-                    <input type="text" class="form-control" placeholder="Enter generic name">
-                </div>
-            </div>
-            <!-- Grocery Management Fields -->
-            <div class="section-card rounded p-4 mb-4 d-none section" id="grocery_fields">
-                <h3 class="h5 fw-semibold mb-4">🛒 Grocery Management Settings</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Nutrition</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Allergen Ingredients</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is-organic">
-                            <label class="form-check-label" for="is-organic">Is organic</label>
+                    <div class="row g-3 mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is-halal">
-                            <label class="form-check-label" for="is-halal">Is It Halal</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Food Management Fields -->
-            <div class="section-card rounded p-4 mb-4 d-none section" id="food_fields">
-                <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
 
-                {{-- <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Nutrition</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Allergen Ingredients</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                </div> --}}
-
-                <div class="row g-3 mb-3">
-                    <div class="col-12">
-                        <label class="form-label fw-medium">Voucher Title</label>
-                        <input type="text" class="form-control" placeholder="Voucher Title">
-                    </div>
-                </div>
-
-
-                <div class="row g-3">
-                    <div class="col-12">
-                        <div class=" h-100">
-                            <div class=" d-flex flex-wrap align-items-center">
-                                <div class="w-100 d-flex flex-wrap __gap-15px">
-                                    <div class="flex-grow-1 mx-auto">
-                                        <label class="text-dark d-block mb-4 mb-xl-5">
-                                            {{ translate('messages.item_image') }}
-                                            <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                        </label>
-                                        <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
-                                    </div>
-                                    <div class="flex-grow-1 mx-auto">
-                                        <label class="text-dark d-block mb-4 mb-xl-5">
-                                            {{ translate('messages.item_thumbnail') }}
-                                            @if(Config::get('module.current_module_type') == 'food')
-                                            <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            @else
-                                            <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            @endif
-                                        </label>
-                                        <label class="d-inline-block m-0 position-relative">
-                                            <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
-                                            <div class="icon-file-group">
-                                                <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
-                                                accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                                                        <i class="tio-edit"></i>
+                         <div class="row g-3">
+                        <div class="col-12">
+                            <div class=" h-100">
+                                <div class=" d-flex flex-wrap align-items-center">
+                                    <div class="w-100 d-flex flex-wrap __gap-15px">
+                                        <div class="flex-grow-1 mx-auto">
+                                            <label class="text-dark d-block mb-4 mb-xl-5">
+                                                {{ translate('messages.item_image') }}
+                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                            </label>
+                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
+                                        </div>
+                                        <div class="flex-grow-1 mx-auto">
+                                            <label class="text-dark d-block mb-4 mb-xl-5">
+                                                {{ translate('messages.item_thumbnail') }}
+                                                @if(Config::get('module.current_module_type') == 'food')
+                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                @else
+                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                @endif
+                                            </label>
+                                            <label class="d-inline-block m-0 position-relative">
+                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
+                                                <div class="icon-file-group">
+                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
+                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                            <i class="tio-edit"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3 col-12 ">
-                        <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                        <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="form-group">
-                            <label class="input-label" for="food_add_one">{{ translate('Food Add One') }}
-                                <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('Segment') }}"></span>
-                            </label>
-                            <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" multiple>
-                                @foreach (\App\Models\Item::whereNull('voucher_type')->get() as $item)
-                                <option value="{{ $item->id }}"
-                                    @if(collect(old('food_add_one', []))->contains($item->id)) selected @endif>
-                                        {{ $item->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                    {{-- <div class="form-group">
-                        <h3 class="h5 fw-semibold "> {{ translate('Food Add One') }}</h3>
-                        <input type="text" class="form-control" name="food_add_one" placeholder="{{translate('Search Food Add One')}}" data-role="tagsinput">
-                    </div> --}}
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                        <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
-                    </div>
-                </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="is-halal-food">
-                    <label class="form-check-label" for="is-halal-food">Is It Halal</label>
-                </div>
-
-                <!-- Addon Section -->
-                {{-- <div class="border-top pt-4 mb-4">
-                    <h4 class="h6 fw-semibold mb-3">🧩 Addon</h4>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Addon</label>
-                        <select class="form-select form-control">
-                            <option>Select addon</option>
-                            <option>Extra Cheese</option>
-                            <option>Extra Sauce</option>
-                        </select>
-                    </div>
-                </div> --}}
-
-                <!-- Time Schedule Section -->
-                {{-- <div class="border-top pt-4 mb-4">
-                    <h4 class="h6 fw-semibold mb-3">⏰ Time Schedule</h4>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Available time starts</label>
-                            <input type="time" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Available time ends</label>
-                            <input type="time" class="form-control">
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
                         </div>
                     </div>
-                </div> --}}
 
-                <!-- Food Variations Section -->
-                {{-- <div class="border-top pt-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="h6 fw-semibold mb-0">🔄 Food Variations</h4>
-                        <button type="button" class="btn btn-primary btn-sm">Add new variation +</button>
-                    </div>
-                    <div class="text-center text-muted">
-                        <div class="display-1 mb-2">📦</div>
-                        <div>No variation added</div>
-                    </div>
-                </div> --}}
-            </div>
-
-            <!-- Price Information  same-->
-            <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="price_info">
-                <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
-                  {{-- Price Information --}}
-                <div class="col-md-12">
-                        <div class="row g-2">
-                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span></label>
-                                    <input type="number" min="0" max="999999999999.99" step="0.01"
-                                        value="1" name="price" class="form-control"
-                                        placeholder="{{ translate('messages.Ex:') }} 100" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6" id="stock_input">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="total_stock">{{ translate('messages.total_stock') }}</label>
-                                    <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
-                                </div>
-                            </div>
-                            {{-- <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.discount_type') }} <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span><span
-                                            class="input-label-secondary text--title" data-toggle="tooltip"
-                                            data-placement="right"
-                                            data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
-                                            <i class="tio-info-outined"></i>
-                                        </span>
+                     <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                    <label class="input-label" for="food_add_one">{{ translate('Usage Limit per visit') }}
+                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('Segment') }}"></span>
                                     </label>
-                                    <select name="discount_type" id="discount_type"
-                                        class="form-control js-select2-custom">
-                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
-                                        <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})
-                                        <option value="cash back">{{ translate('Cash Back') }}
-                                        </option>
+                                    <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="unlimited">unlimited</option>
                                     </select>
                                 </div>
-                            </div> --}}
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
+                            <input type="text" class="form-control" placeholder="Maximum Purchase Quantity Limit">
+                        </div>
+                    </div>
 
-                            <div class="col-6 col-md-3">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="discount_type">{{ translate('messages.discount_type') }}
-                                        <span class="form-label-secondary text-danger"
+                       <div class="row g-3 mb-3">
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="input-label" for="brand">{{ translate('Brand') }}
+                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('Brand') }}"></span>
+                                </label>
+                                <select name="brand[]" id="brand" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Brand') }}" >
+                                    @foreach (\App\Models\Brand::all() as $item)
+                                    <option value="{{ $item->id }}"
+                                        @if(collect(old('brand', []))->contains($item->id)) selected @endif>
+                                            {{ $item->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="input-label" for="Unit">{{ translate('Unit') }}
+                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('Unit') }}"></span>
+                                </label>
+                                <select name="Unit[]" id="Unit" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Unit') }}" >
+                                    @foreach (\App\Models\Unit::all() as $item)
+                                    <option value="{{ $item->id }}"
+                                        @if(collect(old('Unit', []))->contains($item->id)) selected @endif>
+                                            {{ $item->unit }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="is-halal-food">
+                            <label class="form-check-label" for="is-halal-food">Include Shipping</label>
+                        </div>
+
+                      <div class="row g-3 mb-3">
+                            <h3 class="h5 fw-semibold col-12">Time Schedule</h3>
+                        <div class="col-6 col-md-4">
+                            <label class="form-label fw-medium">Available time starts</label>
+                            <input type="time" class="form-control" >
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label class="form-label fw-medium">Available time ends</label>
+                            <input type="time" class="form-control" >
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label class="form-label fw-medium">Valid Until</label>
+                            <input type="date" class="form-control" >
+                        </div>
+                    </div>
+                     <div class="col-12">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- 💰 Price Information -->
+                <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="product_voucher_price_info_1_7">
+                    <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
+                    {{-- Price Information --}}
+                    <div class="col-md-12">
+                            <div class="row g-2">
+                                <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
                                             data-toggle="tooltip" data-placement="right"
                                             data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span>
-                                        <span class="input-label-secondary text--title" data-toggle="tooltip"
-                                            data-placement="right"
-                                            data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
-                                            <i class="tio-info-outined"></i>
-                                        </span>
-                                    </label>
-
-                                    <!-- Dropdown: Only Percent & Fixed -->
-                                    <select name="discount_type" id="discount_type"
-                                        class="form-control js-select2-custom">
-                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
-                                        <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Separate Switch Button for Cash Back -->
-                            <div class="col-6 col-md-2">
-                                <div class="form-group mb-0">
-                                    <label class="input-label">{{ translate('Cash Back') }}</label>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" name="cash_back" class="custom-control-input" id="cash_back_switch">
-                                        <label class="custom-control-label" for="cash_back_switch"></label>
+                                            </span></label>
+                                        <input type="number" min="0" max="999999999999.99" step="0.01"
+                                            value="1" name="price" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100" required>
                                     </div>
                                 </div>
-                            </div>
-
-                         <div class="col-6 col-md-2">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.discount') }}
-                                    <span id=symble> (%) </span>
-                                        <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span></label>
-                                    <input type="number" min="0" max="9999999999999999999999" value="0"
-                                        name="discount" class="form-control"
-                                        placeholder="{{ translate('messages.Ex:') }} 100">
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-2">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('Valid Until') }}
-                                    </label>
-                                    <input type="date" name="valid_date" class="form-control" >
-                                </div>
-                            </div>
-                             <div class="col-12 col-md-6">
-                                  <!-- Single slider example -->
-                                <div class="form-group">
-                                <label>Usage Limit per User: <span id="usageValue">20</span></label>
-                                <input type="range" class="custom-range" id="usageRange" min="0" max="100" value="20">
-                                </div>
-                             </div>
-                             <div class="col-12 col-md-6">
-                                   <div class="form-group">
-                                <label>Maximum Purchase Limit: <span id="maxValue">50</span></label>
-                                <input type="range" class="custom-range" id="maxRange" min="0" max="100" value="50">
-                                </div>
-                             </div>
-                             <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                <label>Current Stock Qty</label>
-                                <input type="text" class="form-control" value="795">
-                                </div>
-                             </div>
-                             <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                <label id="orderRangeLabel">Order Range: 31 - 100</label>
-                                <div class="position-relative w-100">
-                                    <div id="progressBar"
-                                        style="position:absolute; height:5px; background:#065c5c; top:50%; transform:translateY(-50%); border-radius:5px;">
+                                <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('Total Stock') }}
+                                        </label>
+                                        <input type="number" name="total_stock" class="form-control" >
                                     </div>
-                                    <input type="range" class="custom-range" id="minRange" min="0" max="100" value="31" style="position:relative; z-index:2;">
-                                    <input type="range" class="custom-range" id="maxRangex" min="0" max="100" value="100" style="position:relative; z-index:2;">
                                 </div>
+                                <div class="col-6 col-md-3" id="stock_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="total_stock">{{ translate('messages.total_stock') }}</label>
+                                        <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
+                                    </div>
                                 </div>
-                            </div>
-                               <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                <label>Time Schedule</label>
-                                <input type="datetime-local" class="form-control" value="795">
+                                <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('Offer Type') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span><span
+                                                class="input-label-secondary text--title" data-toggle="tooltip"
+                                                data-placement="right"
+                                                data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+                                        <select name="discount_type" id="discount_type"
+                                            class="form-control js-select2-custom">
+                                            <option value="percent">{{ translate('Direct discount') }}</option>
+                                            <option value="cash back">{{ translate('Cash Back') }} </option>
+                                        </select>
+                                    </div>
                                 </div>
-                             </div>
-                             <div class="col-12">
-                                <input class="form-check-input" type="checkbox" id="include_shipping">
-                                <label class="form-check-label" for="include_shipping">Include Shipping</label>
-                            </div>
 
-                            {{-- <div class="col-lg-12" id="food_variation_section"> --}}
-                            <div class="col-lg-12" >
-                                    <div class="card shadow--card-2 border-0">
-                                        <div class="card-header flex-wrap">
-                                            <h5 class="card-title">
-                                                <span class="card-header-icon mr-2">
-                                                    <i class="tio-canvas-text"></i>
-                                                </span>
-                                                <span>{{ translate('messages.food_variations') }}</span>
-                                            </h5>
-                                            <a class="btn text--primary-2" id="add_new_option_button">
-                                                {{ translate('add_new_variation') }}
-                                                <i class="tio-add"></i>
-                                            </a>
-                                        </div>
-                                        <div class="card-body">
-                                            <!-- Empty Variation -->
-                                            <div id="empty-variation">
-                                                <div class="text-center">
-                                                    <img src="{{asset('/public/assets/admin/img/variation.png')}}" alt="">
-                                                    <div>{{translate('No variation added')}}</div>
-                                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="discount_type">{{ translate('messages.discount_type') }}
+                                            <span class="form-label-secondary text-danger"
+                                                data-toggle="tooltip" data-placement="right"
+                                                data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span>
+                                            <span class="input-label-secondary text--title" data-toggle="tooltip"
+                                                data-placement="right"
+                                                data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+
+                                        <!-- Dropdown: Only Percent & Fixed -->
+                                        <select name="discount_type" id="discount_type"
+                                            class="form-control js-select2-custom">
+                                            <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                            <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('discount Value') }}
+                                            <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <input type="number" min="0" max="9999999999999999999999" value="0"
+                                            name="discount" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100">
+                                    </div>
+                                </div>
+                                <!-- Attributes same-->
+                                <div class="col-12">
+                                    <div class="d-none section one_four_complete two_four_complete" id="attributes">
+                                        <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('attribute') }}</h3>
+                                        <div class="row g-2">
+                                            <div class="col-md-12" id="attribute_section">
+                                                    <div class=" pb-0">
+                                                        <div class="row g-2">
+                                                            <div class="col-12">
+                                                                <div class="form-group mb-0">
+                                                                    <label class="input-label"
+                                                                        for="exampleFormControlSelect1">{{ translate('messages.attribute') }}<span
+                                                                            class="input-label-secondary"></span></label>
+                                                                    <select name="attribute_id[]" id="choice_attributes"
+                                                                        class="form-control js-select2-custom" multiple="multiple">
+                                                                        @foreach (\App\Models\Attribute::orderBy('name')->get() as $attribute)
+                                                                            <option value="{{ $attribute['id'] }}">{{ $attribute['name'] }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <div class="customer_choice_options d-flex __gap-24px"
+                                                                    id="customer_choice_options">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="variant_combination" id="variant_combination">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             </div>
-                                            <div id="add_new_option">
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                        </div>
+                            </div>
+                    </div>
                 </div>
 
-            </div>
+           {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
-             <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="how_it_work">
+            {{-- ==================== Delivery/Pickup  == Food ===================== --}}
+
+                <!-- Voucher Details -->
+                <div class="section-card rounded p-4 mb-4 d-none section" id="food_voucher_fields_1_8">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+
+                    {{-- <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">Nutrition</label>
+                            <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">Allergen Ingredients</label>
+                            <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
+                        </div>
+                    </div> --}}
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
+                        </div>
+                    </div>
+
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class=" h-100">
+                                <div class=" d-flex flex-wrap align-items-center">
+                                    <div class="w-100 d-flex flex-wrap __gap-15px">
+                                        <div class="flex-grow-1 mx-auto">
+                                            <label class="text-dark d-block mb-4 mb-xl-5">
+                                                {{ translate('messages.item_image') }}
+                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                            </label>
+                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
+                                        </div>
+                                        <div class="flex-grow-1 mx-auto">
+                                            <label class="text-dark d-block mb-4 mb-xl-5">
+                                                {{ translate('messages.item_thumbnail') }}
+                                                @if(Config::get('module.current_module_type') == 'food')
+                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                @else
+                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                @endif
+                                            </label>
+                                            <label class="d-inline-block m-0 position-relative">
+                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
+                                                <div class="icon-file-group">
+                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
+                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                            <i class="tio-edit"></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                                <label class="input-label" for="food_add_one">{{ translate('Food Add One') }}
+                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('Segment') }}"></span>
+                                </label>
+                                <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                    @foreach (\App\Models\Item::whereNull('voucher_type')->get() as $item)
+                                    <option value="{{ $item->id }}"
+                                        @if(collect(old('food_add_one', []))->contains($item->id)) selected @endif>
+                                            {{ $item->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        {{-- <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('Food Add One') }}</h3>
+                            <input type="text" class="form-control" name="food_add_one" placeholder="{{translate('Search Food Add One')}}" data-role="tagsinput">
+                        </div> --}}
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="is-halal-food">
+                        <label class="form-check-label" for="is-halal-food">Is It Halal</label>
+                    </div>
+
+                    <!-- Addon Section -->
+                    {{-- <div class="border-top pt-4 mb-4">
+                        <h4 class="h6 fw-semibold mb-3">🧩 Addon</h4>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">Addon</label>
+                            <select class="form-select form-control">
+                                <option>Select addon</option>
+                                <option>Extra Cheese</option>
+                                <option>Extra Sauce</option>
+                            </select>
+                        </div>
+                    </div> --}}
+
+                    <!-- Time Schedule Section -->
+                    {{-- <div class="border-top pt-4 mb-4">
+                        <h4 class="h6 fw-semibold mb-3">⏰ Time Schedule</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Available time starts</label>
+                                <input type="time" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Available time ends</label>
+                                <input type="time" class="form-control">
+                            </div>
+                        </div>
+                    </div> --}}
+
+                    <!-- Food Variations Section -->
+                    {{-- <div class="border-top pt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="h6 fw-semibold mb-0">🔄 Food Variations</h4>
+                            <button type="button" class="btn btn-primary btn-sm">Add new variation +</button>
+                        </div>
+                        <div class="text-center text-muted">
+                            <div class="display-1 mb-2">📦</div>
+                            <div>No variation added</div>
+                        </div>
+                    </div> --}}
+                </div>
+                <!-- 💰 Price Information one-->
+                <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="food_voucher_price_info_1_8">
+                    <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
+                    {{-- Price Information --}}
+                    <div class="col-md-12">
+                            <div class="row g-2">
+                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <input type="number" min="0" max="999999999999.99" step="0.01"
+                                            value="1" name="price" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6" id="stock_input">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="total_stock">{{ translate('messages.total_stock') }}</label>
+                                        <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
+                                    </div>
+                                </div>
+                                {{-- <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.discount_type') }} <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span><span
+                                                class="input-label-secondary text--title" data-toggle="tooltip"
+                                                data-placement="right"
+                                                data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+                                        <select name="discount_type" id="discount_type"
+                                            class="form-control js-select2-custom">
+                                            <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                            <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})
+                                            <option value="cash back">{{ translate('Cash Back') }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="discount_type">{{ translate('messages.discount_type') }}
+                                            <span class="form-label-secondary text-danger"
+                                                data-toggle="tooltip" data-placement="right"
+                                                data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span>
+                                            <span class="input-label-secondary text--title" data-toggle="tooltip"
+                                                data-placement="right"
+                                                data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                                <i class="tio-info-outined"></i>
+                                            </span>
+                                        </label>
+
+                                        <!-- Dropdown: Only Percent & Fixed -->
+                                        <select name="discount_type" id="discount_type"
+                                            class="form-control js-select2-custom">
+                                            <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                            <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Separate Switch Button for Cash Back -->
+                                <div class="col-6 col-md-2">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label">{{ translate('Cash Back') }}</label>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" name="cash_back" class="custom-control-input" id="cash_back_switch">
+                                            <label class="custom-control-label" for="cash_back_switch"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="col-6 col-md-2">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.discount') }}
+                                        <span id=symble> (%) </span>
+                                            <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <input type="number" min="0" max="9999999999999999999999" value="0"
+                                            name="discount" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('Valid Until') }}
+                                        </label>
+                                        <input type="date" name="valid_date" class="form-control" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- Single slider example -->
+                                    <div class="form-group">
+                                    <label>Usage Limit per User: <span id="usageValue">20</span></label>
+                                    <input type="range" class="custom-range" id="usageRange" min="0" max="100" value="20">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                    <label>Maximum Purchase Limit: <span id="maxValue">50</span></label>
+                                    <input type="range" class="custom-range" id="maxRange" min="0" max="100" value="50">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                    <label>Current Stock Qty</label>
+                                    <input type="text" class="form-control" value="795">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                    <label id="orderRangeLabel">Order Range: 31 - 100</label>
+                                    <div class="position-relative w-100">
+                                        <div id="progressBar"
+                                            style="position:absolute; height:5px; background:#065c5c; top:50%; transform:translateY(-50%); border-radius:5px;">
+                                        </div>
+                                        <input type="range" class="custom-range" id="minRange" min="0" max="100" value="31" style="position:relative; z-index:2;">
+                                        <input type="range" class="custom-range" id="maxRangex" min="0" max="100" value="100" style="position:relative; z-index:2;">
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                    <label>Time Schedule</label>
+                                    <input type="datetime-local" class="form-control" value="795">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-check-input" type="checkbox" id="include_shipping">
+                                    <label class="form-check-label" for="include_shipping">Include Shipping</label>
+                                </div>
+
+                                {{-- <div class="col-lg-12" id="food_variation_section"> --}}
+                                <div class="col-lg-12" >
+                                        <div class="card shadow--card-2 border-0">
+                                            <div class="card-header flex-wrap">
+                                                <h5 class="card-title">
+                                                    <span class="card-header-icon mr-2">
+                                                        <i class="tio-canvas-text"></i>
+                                                    </span>
+                                                    <span>{{ translate('messages.food_variations') }}</span>
+                                                </h5>
+                                                <a class="btn text--primary-2" id="add_new_option_button">
+                                                    {{ translate('add_new_variation') }}
+                                                    <i class="tio-add"></i>
+                                                </a>
+                                            </div>
+                                            <div class="card-body">
+                                                <!-- Empty Variation -->
+                                                <div id="empty-variation">
+                                                    <div class="text-center">
+                                                        <img src="{{asset('/public/assets/admin/img/variation.png')}}" alt="">
+                                                        <div>{{translate('No variation added')}}</div>
+                                                    </div>
+                                                </div>
+                                                <div id="add_new_option">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </div>
+                    </div>
+                </div>
+
+           {{-- ==================== Delivery/Pickup  == Food ===================== --}}
+
+              {{-- How It Works --}}
+             <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="how_it_work_main">
                 <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('How It Works') }}</h3>
                 <p class="text-muted">Instructions for using your voucher</p>
 
@@ -1227,7 +1079,8 @@
                     </div>
                 </div>
             </div>
-            <div class="section-card rounded p-4 mb-4  section3  d-none" id="term_condition">
+            {{--  Terms & Conditions --}}
+            <div class="section-card rounded p-4 mb-4  section3  d-none" id="term_condition_main">
                 <h3 class="h5 fw-semibold mb-2">🏷️ {{ translate('Terms & Conditions') }}</h3>
                 <p class="text-muted">Set your business terms</p>
                 <div class="card border shadow-sm mt-3">
@@ -1265,7 +1118,8 @@
                     </div>
                 </div>
             </div>
-            <div class="section-card rounded p-4 mb-4 section3 d-none" id="review_submit">
+            {{--  Review & Submit --}}
+            <div class="section-card rounded p-4 mb-4 section3 d-none" id="review_submit_main">
                 <h3 class="h5 fw-semibold mb-2">🏷️ {{ translate('Review & Submit') }}</h3>
                 <p class="text-muted">Review your voucher before submitting</p>
 
@@ -1362,6 +1216,195 @@
                 </div>
             </div>
 
+
+            <!--  Store & Category Info same -->
+            {{-- <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_store_category">
+                <h3 class="h5 fw-semibold mb-4">🏪 Store & Category Info</h3>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Partner Store <span class="text-danger">*</span></label>
+                        <select class="form-select form-control">
+                            <option>Select partner store</option>
+                            <option>Teh Kotjok - SGC Cikarang</option>
+                            <option>McDonald's Riyadh</option>
+                            <option>Burger King Jeddah</option>
+                            <option>Pizza Hut Dammam</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
+                        <select class="form-select form-control">
+                            <option>Select category</option>
+                            <option>Restaurant</option>
+                            <option>Cafe</option>
+                            <option>Fast Food</option>
+                            <option>Fine Dining</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Service Type</label>
+                        <select class="form-select form-control">
+                            <option>Dine In Only</option>
+                            <option>Delivery Only</option>
+                            <option>Dine In & Delivery</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Location/Branch</label>
+                        <select class="form-select form-control">
+                            <option>All Branches</option>
+                            <option>Specific Branch</option>
+                            <option>Multiple Selected Branches</option>
+                        </select>
+                    </div>
+                </div>
+            </div> --}}
+            <!-- Discount Settings -->
+            {{-- <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_settings">
+                <h3 class="h5 fw-semibold mb-4">💰 Discount Configuration</h3>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Discount Type <span class="text-danger">*</span></label>
+                        <select class="form-select form-control">
+                            <option>Percentage (%)</option>
+                            <option>Fixed Amount (SAR)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Discount Value <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" placeholder="Ex: 15" step="0.01">
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Minimum Bill Amount (SAR) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" placeholder="Ex: 20000" step="0.01">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Maximum Discount Cap (SAR)</label>
+                        <input type="number" class="form-control" placeholder="Leave empty for unlimited" step="0.01">
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Valid Until Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" value="2025-12-31">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Usage Limit per User</label>
+                        <input type="number" class="form-control" placeholder="Ex: 1 (leave empty for unlimited)">
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="no-discount-cap" checked>
+                            <label class="form-check-label" for="no-discount-cap">No discount cap (like Grab example)</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="unlimited-redemptions" checked>
+                            <label class="form-check-label" for="unlimited-redemptions">Unlimited redemptions</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="stackable-offers">
+                            <label class="form-check-label" for="stackable-offers">Check with outlet if stackable with other offers</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="anytime-redemption" checked>
+                            <label class="form-check-label" for="anytime-redemption">Redeemable anytime during opening hours</label>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
+            <!-- Shop Management Settings -->
+            {{-- <div class="section-card rounded p-4 mb-4 d-none section" id="shop_fields">
+                <h3 class="h5 fw-semibold mb-4">🛒 Shop Management Settings</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
+                        <input type="number" class="form-control" placeholder="Ex: 10">
+                    </div>
+                </div>
+            </div> --}}
+            <!-- Pharmacy Management Fields -->
+            {{-- <div class="section-card rounded p-4 mb-4 d-none section one_four_complete" id="pharmacy_fields">
+                <h3 class="h5 fw-semibold mb-4">💊 Pharmacy Management Settings</h3>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
+                        <input type="number" class="form-control" placeholder="Ex: 10">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="is-basic-medicine">
+                        <label class="form-check-label" for="is-basic-medicine">Is Basic Medicine</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="is-prescription-required">
+                        <label class="form-check-label" for="is-prescription-required">Is prescription required</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-medium">Generic name</label>
+                    <input type="text" class="form-control" placeholder="Enter generic name">
+                </div>
+            </div> --}}
+            <!-- Grocery Management Settings -->
+            {{-- <div class="section-card rounded p-4 mb-4 d-none section" id="grocery_fields">
+                <h3 class="h5 fw-semibold mb-4">🛒 Grocery Management Settings</h3>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Nutrition</label>
+                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Allergen Ingredients</label>
+                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
+                        <input type="number" class="form-control" placeholder="Ex: 10">
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is-organic">
+                            <label class="form-check-label" for="is-organic">Is organic</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is-halal">
+                            <label class="form-check-label" for="is-halal">Is It Halal</label>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
 
             <!-- Voucher Behavior Settings same-->
             {{-- <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="voucher_behavior">
@@ -1834,7 +1877,7 @@
                 // 🟢 WorkManagement (list items)
                 let workHtml = "";
                 $.each(response.work_management, function(index, item) {
-                    workHtml += "<li>" + item.title + "</li>";
+                    workHtml += "<li>" + item.guid_title + "</li>";
                 });
                 $("#workList").html(workHtml);
 
@@ -1846,7 +1889,7 @@
                         <div class="border rounded p-5 d-flex align-items-center">
                         <input class="form-check-input mr-2" type="checkbox" id="term${term.id}">
                         <label class="form-check-label mb-0" for="term${term.id}">
-                            ${term.name}
+                            ${term.baseinfor_condition_title}
                         </label>
                         </div>
                     </div>
@@ -2510,28 +2553,23 @@
     </script>
 
 
+ {{--        --}}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const managementSelection = document.querySelectorAll('#management_selection');
             const voucherCards = document.querySelectorAll('.voucher-card');
             const voucherCards2 = document.querySelectorAll('.voucher-card_2');
             // Get all elements by ID
-            const basic_info = document.getElementById('basic_info');
-            const discount_store_category = document.getElementById('discount_store_category');
-            const discount_settings = document.getElementById('discount_settings');
-            const store_category = document.getElementById('store_category');
-            const shop_fields = document.getElementById('shop_fields');
-            const pharmacy_fields = document.getElementById('pharmacy_fields');
-            const grocery_fields = document.getElementById('grocery_fields');
-            const food_fields = document.getElementById('food_fields');
-            const price_info = document.getElementById('price_info');
-            const voucher_behavior = document.getElementById('voucher_behavior');
-            const usage_terms = document.getElementById('usage_terms');
-            const attributes = document.getElementById('attributes');
-            const tags = document.getElementById('tags');
-            const how_it_work = document.getElementById('how_it_work');
-            const term_condition = document.getElementById('term_condition');
-            const review_submit = document.getElementById('review_submit');
+            const basic_info_main = document.getElementById('basic_info_main');
+            const store_category_main = document.getElementById('store_category_main');
+            const how_it_work_main = document.getElementById('how_it_work_main');
+            const term_condition_main = document.getElementById('term_condition_main');
+            const review_submit_main = document.getElementById('review_submit_main');
+
+            const Product_voucher_fields_1_7 = document.getElementById('Product_voucher_fields_1_7');
+            const product_voucher_price_info_1_7 = document.getElementById('product_voucher_price_info_1_7');
+            const food_voucher_fields_1_8 = document.getElementById('food_voucher_fields_1_8');
+            const food_voucher_price_info_1_8 = document.getElementById('food_voucher_price_info_1_8');
 
             function section_one(loopIndex, primaryId) {
 
@@ -2543,16 +2581,16 @@
                         submit_voucher_type(loopIndex,primaryId); // اب اصل primary id pass کر رہے ہیں
                         el.classList.remove('d-none');
                         // Hide discount-specific sections
-                        [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, tags].forEach(el => {
+                        [basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
                             if (el) el.classList.add('d-none');
                         });
 
-                    } else if (loopIndex === "3") {
+                    } else if (loopIndex === "3" || loopIndex === "4") {
                         submit_voucher_type(loopIndex,primaryId);
                         el.classList.add('d-none');
 
                         // Show discount-specific sections
-                        [basic_info, discount_store_category, discount_settings, store_category, voucher_behavior, usage_terms, tags].forEach(el => {
+                        [basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
                             if (el) el.classList.remove('d-none');
                         });
                     }
@@ -2564,22 +2602,21 @@
                 const hiddenVal = String(hidden_value);
                 const valueTwo = String(value_two);
                 // Get all elements
-                const basic_info = document.getElementById('basic_info');
-                const discount_store_category = document.getElementById('discount_store_category');
-                const discount_settings = document.getElementById('discount_settings');
-                const store_category = document.getElementById('store_category');
-                const shop_fields = document.getElementById('shop_fields');
-                const pharmacy_fields = document.getElementById('pharmacy_fields');
-                const grocery_fields = document.getElementById('grocery_fields');
-                const food_fields = document.getElementById('food_fields');
-                const price_info = document.getElementById('price_info');
-                const voucher_behavior = document.getElementById('voucher_behavior');
-                const usage_terms = document.getElementById('usage_terms');
-                const attributes = document.getElementById('attributes');
-                const tags = document.getElementById('tags');
-                const how_it_work = document.getElementById('how_it_work');
-                const term_condition = document.getElementById('term_condition');
-                const review_submit = document.getElementById('review_submit');
+                const basic_info_main = document.getElementById('basic_info_main');
+                const store_category_main = document.getElementById('store_category_main');
+                const how_it_work_main = document.getElementById('how_it_work_main');
+                const term_condition_main = document.getElementById('term_condition_main');
+                const review_submit_main = document.getElementById('review_submit_main');
+
+
+                const Product_voucher_fields_1_7 = document.getElementById('Product_voucher_fields_1_7');
+                const product_voucher_price_info_1_7 = document.getElementById('product_voucher_price_info_1_7');
+                const food_voucher_fields_1_8 = document.getElementById('food_voucher_fields_1_8');
+                const food_voucher_price_info_1_8 = document.getElementById('food_voucher_price_info_1_8');
+
+                // Product_voucher_fields_1_7,product_voucher_price_info_1_7
+                // food_voucher_fields_1_8,food_voucher_price_info_1_8
+
                 // Helper function to show elements
                 function showElements(elements) {
                     elements.forEach(el => {
@@ -2598,27 +2635,28 @@
                 switch (hiddenVal) {
                     case "1": // Delivery/Pickup
                         switch (valueTwo) {
-                            case "4": // Shop + Delivery
+                            case "5": // Shop + Delivery
                                 showElements([basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields, food_fields]);
+                                hideElements([Product_voucher_fields_1_7,product_voucher_price_info_1_7,food_voucher_fields_1_8,food_voucher_price_info_1_8 ]);
                                 showShopFields();
                                 break;
 
-                            case "5": // Pharmacy + Delivery
+                            case "6": // Pharmacy + Delivery
+                            alert("sdjvjdvjds");
                                 showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
+                                hideElements([Product_voucher_fields_1_7,product_voucher_price_info_1_7,food_voucher_fields_1_8,food_voucher_price_info_1_8]);
                                 showPharmacyFields();
                                 break;
 
-                            case "6": // Grocery + Delivery
-                                showElements([basic_info, store_category, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
+                            case "7": // Grocery + Delivery
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main,Product_voucher_fields_1_7,product_voucher_price_info_1_7]);
+                                hideElements([food_voucher_fields_1_8,food_voucher_price_info_1_8]);
                                 showGroceryFields();
                                 break;
 
-                            case "7": // Food + Delivery
-                                showElements([basic_info, store_category, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags,how_it_work,term_condition,review_submit]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
+                            case "8": // Food + Delivery
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main ,food_voucher_fields_1_8,food_voucher_price_info_1_8]);
+                                hideElements([Product_voucher_fields_1_7,product_voucher_price_info_1_7]);
                                 showFoodFields();
                                 break;
                         }
@@ -2626,26 +2664,26 @@
 
                     case "2": // In-Store
                         switch (valueTwo) {
-                            case "4": // Shop + In-Store
-                                showElements([basic_info, store_category, shop_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                            case "5": // Shop + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
                                 hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
                                 showShopFields();
                                 break;
 
-                            case "5": // Pharmacy + In-Store
-                                showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                            case "6": // Pharmacy + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
                                 hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
                                 showPharmacyFields();
                                 break;
 
-                            case "6": // Grocery + In-Store
-                                showElements([basic_info, store_category, grocery_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                            case "7": // Grocery + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
                                 hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
                                 showGroceryFields();
                                 break;
 
-                            case "7": // Food + In-Store
-                                showElements([basic_info, store_category, food_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
+                            case "8": // Food + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
                                 hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
                                 showFoodFields();
                                 break;
@@ -2653,9 +2691,57 @@
                         break;
 
                     case "3": // Flat Discount
-                        if (valueTwo === "4") {
-                            showElements([basic_info, discount_store_category, discount_settings, voucher_behavior, usage_terms, tags]);
-                            hideElements([store_category, shop_fields, pharmacy_fields, grocery_fields, food_fields, price_info, attributes]);
+                      switch (valueTwo) {
+                            case "5": // Shop + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
+                                showShopFields();
+                                break;
+
+                            case "6": // Pharmacy + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
+                                showPharmacyFields();
+                                break;
+
+                            case "7": // Grocery + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
+                                showGroceryFields();
+                                break;
+
+                            case "8": // Food + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
+                                showFoodFields();
+                                break;
+                        }
+                        break;
+                    case "4": // Flat Discount
+                        switch (valueTwo) {
+                            case "5": // Shop + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
+                                showShopFields();
+                                break;
+
+                            case "6": // Pharmacy + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
+                                showPharmacyFields();
+                                break;
+
+                            case "7": // Grocery + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
+                                showGroceryFields();
+                                break;
+
+                            case "8": // Food + In-Store
+                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
+                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
+                                showFoodFields();
+                                break;
                         }
                         break;
                 }
@@ -2745,7 +2831,7 @@
                     // empty previous content
                     $("#append_all_data").empty();
                     // starting index (4 se start karna hai)
-                    let index = 4;
+                    let index = 5;
                     // loop through modules
                     response.all_ids.forEach(function(module) {
                         let card = `
