@@ -87,13 +87,7 @@ class ItemController extends Controller
         $productWiseTax = $taxData['productWiseTax'];
         $taxVats = $taxData['taxVats'];
 
-        if(config('module.current_module_id') == "5"){
-
-            return view('admin-views.product.voucher_index', compact('categories', 'productWiseTax', 'taxVats'));
-        }else{
             return view('admin-views.product.index', compact('categories', 'productWiseTax', 'taxVats'));
-
-        }
 
     }
 

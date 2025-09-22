@@ -60,7 +60,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         });
 
         Route::post('item/variant-price', 'ItemController@variant_price')->name('item.variant-price');
-
+        // item route
         Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
             Route::get('add-new', 'ItemController@index')->name('add-new');
             Route::post('get-data', 'ItemController@get_voucher_type')->name('voucherType.store');
@@ -109,6 +109,63 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::get('bulk-export', 'ItemController@bulk_export_index')->name('bulk-export-index');
             Route::post('bulk-export', 'ItemController@bulk_export_data')->name('bulk-export');
         });
+
+        // voucher  routes
+
+        Route::group(['prefix' => 'Voucher', 'as' => 'Voucher.', 'middleware' => ['module:Voucher']], function () {
+            Route::get('add-new', 'VoucherController@index')->name('add-new');
+            Route::post('get-data', 'VoucherController@get_voucher_type')->name('voucherType.store');
+            Route::post('variant-combination', 'VoucherController@variant_combination')->name('variant-combination');
+            Route::post('store', 'VoucherController@store')->name('store');
+            Route::get('edit/{id}', 'VoucherController@edit')->name('edit');
+            Route::post('update/{id}', 'VoucherController@update')->name('update');
+            Route::get('list', 'VoucherController@list')->name('list');
+            Route::delete('delete/{id}', 'VoucherController@delete')->name('delete');
+            Route::get('status/{id}/{status}', 'VoucherController@status')->name('status');
+            Route::get('review-status/{id}/{status}', 'VoucherController@reviews_status')->name('reviews.status');
+            Route::post('search', 'VoucherController@search')->name('search');
+            Route::post('store/{store_id}/search', 'VoucherController@search_store')->name('store-search');
+            Route::get('reviews', 'VoucherController@review_list')->name('reviews');
+            // Route::post('reviews/search', 'VoucherController@review_search')->name('reviews.search');
+            Route::get('remove-image', 'VoucherController@remove_image')->name('remove-image');
+            Route::get('view/{id}', 'VoucherController@view')->name('view');
+            Route::get('store-Voucher-export', 'VoucherController@store_Voucher_export')->name('store-Voucher-export');
+            Route::get('reviews-export', 'VoucherController@reviews_export')->name('reviews_export');
+            Route::get('Voucher-wise-reviews-export', 'VoucherController@Voucher_wise_reviews_export')->name('Voucher_wise_reviews_export');
+
+            Route::get('new/Voucher/list', 'VoucherController@approval_list')->name('approval_list');
+            Route::get('approved', 'VoucherController@approved')->name('approved');
+            Route::get('product_denied', 'VoucherController@deny')->name('deny');
+            Route::get('requested/Voucher/view/{id}', 'VoucherController@requested_Voucher_view')->name('requested_Voucher_view');
+            Route::get('product-gallery', 'VoucherController@product_gallery')->name('product_gallery');
+
+            //ajax request
+            Route::get('get-categories', 'VoucherController@get_categories')->name('get-categories');
+            Route::get('get-Vouchers', 'VoucherController@get_Vouchers')->name('getVouchers');
+            Route::get('get-Vouchers-flashsale', 'VoucherController@get_Vouchers_flashsale')->name('getVouchers-flashsale');
+            Route::post('food-variation-generate', 'VoucherController@food_variation_generator')->name('food-variation-generate');
+            Route::post('variation-generate', 'VoucherController@variation_generator')->name('variation-generate');
+
+
+            Route::get('export', 'VoucherController@export')->name('export');
+
+            //Mainul
+            Route::get('get-variations', 'VoucherController@get_variations')->name('get-variations');
+            Route::get('get-stock', 'VoucherController@get_stock')->name('get_stock');
+            Route::post('stock-update', 'VoucherController@stock_update')->name('stock-update');
+
+            //Import and export
+            Route::get('bulk-import', 'VoucherController@bulk_import_index')->name('bulk-import');
+            Route::post('bulk-import', 'VoucherController@bulk_import_data');
+            Route::get('bulk-export', 'VoucherController@bulk_export_index')->name('bulk-export-index');
+            Route::post('bulk-export', 'VoucherController@bulk_export_data')->name('bulk-export');
+
+            Route::get('/branches', 'VoucherController@getBranches')->name('get_branches');
+            Route::get('/get-document', 'VoucherController@get_document')->name('get_document');
+
+
+        });
+
 
         Route::group(['prefix' => 'promotional-banner', 'as' => 'promotional-banner.', 'middleware' => ['module:banner']], function () {
             Route::get('add-new', 'OtherBannerController@promotional_index')->name('add-new');
@@ -308,7 +365,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'store', 'as' => 'store.'], function () {
             Route::get('get-stores-data/{store}', 'VendorController@get_store_data')->name('get-stores-data');
             Route::get('store-filter/{id}', 'VendorController@store_filter')->name('store-filter');
-            Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('store-filter');
+            Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('store-filter1');
             Route::get('get-stores', 'VendorController@get_stores')->name('get-stores');
             Route::get('get-providers', 'VendorController@get_providers')->name('get-providers');
             Route::get('get-addons', 'VendorController@get_addons')->name('get_addons');
@@ -443,9 +500,9 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('update-order', 'BusinessSettingsController@update_order')->name('update-order');
             Route::post('update-priority', 'BusinessSettingsController@update_priority')->name('update-priority');
             Route::get('app-settings', 'BusinessSettingsController@app_settings')->name('app-settings');
-            Route::POST('app-settings', 'BusinessSettingsController@update_app_settings')->name('app-settings');
+            Route::POST('app-settings', 'BusinessSettingsController@update_app_settings')->name('app-settings1');
             Route::get('pages/admin-landing-page-settings/{tab?}', 'BusinessSettingsController@admin_landing_page_settings')->name('admin-landing-page-settings');
-            Route::POST('pages/admin-landing-page-settings/{tab}', 'BusinessSettingsController@update_admin_landing_page_settings')->name('admin-landing-page-settings');
+            Route::POST('pages/admin-landing-page-settings/{tab}', 'BusinessSettingsController@update_admin_landing_page_settings')->name('admin-landing-page-settings1');
             Route::get('promotional-status/{id}/{status}', 'BusinessSettingsController@promotional_status')->name('promotional-status');
             Route::get('pages/admin-landing-page-settings/promotional-section/edit/{id}', 'BusinessSettingsController@promotional_edit')->name('promotional-edit');
             Route::post('promotional-section/update/{id}', 'BusinessSettingsController@promotional_update')->name('promotional-update');

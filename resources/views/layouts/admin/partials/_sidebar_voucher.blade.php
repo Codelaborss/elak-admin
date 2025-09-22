@@ -559,7 +559,7 @@
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('Voucher Addon') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Voucher Addon') }}
+                                {{ translate('Food Addon') }}
                             </span>
                         </a>
                     </li>
@@ -567,7 +567,7 @@
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.VoucherType.add-new') }}" title="{{ translate('Voucher Type') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Voucher Type') }}
+                                {{ translate('Food Type') }}
                             </span>
                         </a>
                     </li>
@@ -579,63 +579,122 @@
                             </span>
                         </a>
                     </li>
-                        @if (\App\CentralLogics\Helpers::module_permission_check('item'))
-                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/item*') ? 'active' : '' }}">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Voucher Setup') }}">
-                        <i class="tio-premium-outlined nav-icon"></i>
-                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('Voucher Setup') }}</span>
-                    </a>
-                    <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/item*') ? 'block' : 'none' }}">
-                        <li class="nav-item {{ Request::is('admin/item/add-new') || (Request::is('admin/item/edit/*') && strpos(request()->fullUrl(), 'product_gellary=1') !== false  )  ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.add-new') }}" title="{{ translate('messages.add_new') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate">{{ translate('messages.add_new') }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ Request::is('admin/item/list') || (Request::is('admin/item/edit/*') && (strpos(request()->fullUrl(), 'temp_product=1') == false && strpos(request()->fullUrl(), 'product_gellary=1') == false  ) ) ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.list') }}" title="{{ translate('messages.food_list') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate">{{ translate('messages.list') }}</span>
-                            </a>
-                        </li>
-                        {{-- @if (\App\CentralLogics\Helpers::get_mail_status('product_gallery')) --}}
-                        <li class="nav-item {{  Request::is('admin/item/product-gallery') ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.product_gallery') }}" title="{{ translate('messages.Product_Gallery') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate">{{ translate('Voucher Gallery') }}</span>
-                            </a>
-                        </li>
-                        {{-- @endif --}}
-                        @if (\App\CentralLogics\Helpers::get_mail_status('product_approval'))
-                        <li class="nav-item {{  Request::is('admin/item/requested/item/view/*') || Request::is('admin/item/new/item/list') || (Request::is('admin/item/edit/*') && strpos(request()->fullUrl(), 'temp_product=1') !== false  ) ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.approval_list') }}" title="{{ translate('messages.New_Item_Request') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate">{{ translate('messages.New_Food_Request') }}</span>
-                            </a>
-                        </li>
-                        @endif
-                        <li class="nav-item {{ Request::is('admin/item/reviews') ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.reviews') }}" title="{{ translate('messages.review_list') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate">{{ translate('messages.review') }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ Request::is('admin/item/bulk-import') ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ Request::is('admin/item/bulk-export') ? 'active' : '' }}">
-                            <a class="nav-link " href="{{ route('admin.item.bulk-export-index') }}" title="{{ translate('messages.bulk_export') }}">
-                                <span class="tio-circle nav-indicator-icon"></span>
-                                <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @endif
 
+                         <!-- Food -->
+                    @if (\App\CentralLogics\Helpers::module_permission_check('item'))
+                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/item*') ? 'active' : '' }}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Food Setup') }}">
+                            <i class="tio-premium-outlined nav-icon"></i>
+                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('Food Setup') }}</span>
+                        </a>
+                        <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/item*') ? 'block' : 'none' }}">
+                            <li class="nav-item {{ Request::is('admin/item/add-new') || (Request::is('admin/item/edit/*') && strpos(request()->fullUrl(), 'product_gellary=1') !== false  )  ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.add-new') }}" title="{{ translate('messages.add_new') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{ translate('messages.add_new') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Request::is('admin/item/list') || (Request::is('admin/item/edit/*') && (strpos(request()->fullUrl(), 'temp_product=1') == false && strpos(request()->fullUrl(), 'product_gellary=1') == false  ) ) ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.list') }}" title="{{ translate('messages.food_list') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{ translate('messages.list') }}</span>
+                                </a>
+                            </li>
+                            {{-- @if (\App\CentralLogics\Helpers::get_mail_status('product_gallery')) --}}
+                            <li class="nav-item {{  Request::is('admin/item/product-gallery') ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.product_gallery') }}" title="{{ translate('messages.Product_Gallery') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{ translate('messages.Food_Gallery') }}</span>
+                                </a>
+                            </li>
+                            {{-- @endif --}}
+                            @if (\App\CentralLogics\Helpers::get_mail_status('product_approval'))
+                            <li class="nav-item {{  Request::is('admin/item/requested/item/view/*') || Request::is('admin/item/new/item/list') || (Request::is('admin/item/edit/*') && strpos(request()->fullUrl(), 'temp_product=1') !== false  ) ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.approval_list') }}" title="{{ translate('messages.New_Item_Request') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{ translate('messages.New_Food_Request') }}</span>
+                                </a>
+                            </li>
+                            @endif
+                            <li class="nav-item {{ Request::is('admin/item/reviews') ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.reviews') }}" title="{{ translate('messages.review_list') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate">{{ translate('messages.review') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Request::is('admin/item/bulk-import') ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Request::is('admin/item/bulk-export') ? 'active' : '' }}">
+                                <a class="nav-link " href="{{ route('admin.item.bulk-export-index') }}" title="{{ translate('messages.bulk_export') }}">
+                                    <span class="tio-circle nav-indicator-icon"></span>
+                                    <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
+
+                    {{-- voucher links --}}
+                    @if (\App\CentralLogics\Helpers::module_permission_check('item'))
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/voucher*') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Voucher Setup') }}">
+                                <i class="tio-premium-outlined nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('Voucher Setup') }}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/Voucher*') ? 'block' : 'none' }}">
+                                <li class="nav-item {{ Request::is('admin/Voucher/add-new') || (Request::is('admin/Voucher/edit/*') && strpos(request()->fullUrl(), 'product_gellary=1') !== false  )  ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.add-new') }}" title="{{ translate('messages.add_new') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('messages.add_new') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/Voucher/list') || (Request::is('admin/Voucher/edit/*') && (strpos(request()->fullUrl(), 'temp_product=1') == false && strpos(request()->fullUrl(), 'product_gellary=1') == false  ) ) ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.list') }}" title="{{ translate('messages.food_list') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('messages.list') }}</span>
+                                    </a>
+                                </li>
+                                {{-- @if (\App\CentralLogics\Helpers::get_mail_status('product_gallery')) --}}
+                                <li class="nav-item {{  Request::is('admin/Voucher/product-gallery') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.product_gallery') }}" title="{{ translate('messages.Product_Gallery') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('Voucher Gallery') }}</span>
+                                    </a>
+                                </li>
+                                {{-- @endif --}}
+                                @if (\App\CentralLogics\Helpers::get_mail_status('product_approval'))
+                                <li class="nav-item {{  Request::is('admin/Voucher/requested/Voucher/view/*') || Request::is('admin/Voucher/new/Voucher/list') || (Request::is('admin/Voucher/edit/*') && strpos(request()->fullUrl(), 'temp_product=1') !== false  ) ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.approval_list') }}" title="{{ translate('messages.New_Item_Request') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('messages.New_Food_Request') }}</span>
+                                    </a>
+                                </li>
+                                @endif
+                                <li class="nav-item {{ Request::is('admin/Voucher/reviews') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.reviews') }}" title="{{ translate('messages.review_list') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('messages.review') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/Voucher/bulk-import') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/Voucher/bulk-export') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.bulk-export-index') }}" title="{{ translate('messages.bulk_export') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
 
 
 
