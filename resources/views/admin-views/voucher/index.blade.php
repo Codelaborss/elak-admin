@@ -7,6 +7,11 @@
     <link href="{{ asset('public/assets/admin/css/tags-input.min.css') }}" rel="stylesheet">
 @endpush
   <style>
+    .voucher-card.selected, .voucher-card_2.selected , .btns.selected  {
+    border: 2px solid #10B981 !important;
+    background-color: #f0fdf4 !important;
+        }
+
     .range-slider {
       position: relative;
       width: 100%;
@@ -46,6 +51,456 @@
       border-radius: 5px;
     }
   </style>
+  <style>
+
+
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .form-section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #5a67d8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #5a67d8;
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #5a67d8;
+            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+        }
+
+        .bundle-type-description {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .bundle-type-description.show {
+            display: block;
+        }
+
+        .bundle-config-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .bundle-config-section.show {
+            display: block;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9ff;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #edf2ff;
+        }
+
+        .checkbox-item input {
+            margin-right: 10px;
+            scale: 1.2;
+        }
+
+        .product-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fafbfc;
+            transition: all 0.3s ease;
+        }
+
+        .product-card.selected {
+            border-color: #5a67d8;
+            background: #f0f4ff;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #38a169;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #5a67d8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4c51bf;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .btn-success {
+            background: #38a169;
+            color: white;
+            font-size: 1.1em;
+            padding: 15px 30px;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+            transform: translateY(-2px);
+        }
+
+        .variations-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .variation-group {
+            margin-bottom: 15px;
+        }
+
+        .variation-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        .variation-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .variation-option {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .variation-option:hover {
+            border-color: #5a67d8;
+        }
+
+        .variation-option.selected {
+            background: #5a67d8;
+            color: white;
+            border-color: #5a67d8;
+        }
+
+        .addons-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+
+        .addon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .addon-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-calculator {
+            /* background: #edf2ff; */
+            padding: 20px;
+            border-radius: 12px;
+            /* margin-top: 20px; */
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+        }
+
+        .price-total {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #38a169;
+            border-top: 2px solid #38a169;
+            padding-top: 10px;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #5a67d8;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .voucher-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .voucher-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8em;
+            font-weight: bold;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+
+        .qr-code-placeholder {
+            width: 150px;
+            height: 150px;
+            background: white;
+            margin: 20px auto;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .voucher-details {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .voucher-details h4 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .voucher-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .voucher-details li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .voucher-details li:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 @section('content')
 
      <!-- Page Header -->
@@ -87,6 +542,12 @@
       </div>
         <div class="bg-white shadow rounded-lg p-4">
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
+            <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
+            <div id="btn-group" class="flex items-center gap-1 bg-muted p-1 rounded-lg shadow-inner">
+                <button onclick="bundle('simple')" class=" border rounded p-4 text-center btns selected" data-testid="button-form-product">🛍️ Simple</button>
+                <button onclick="bundle('bundle')" class=" border rounded p-4 text-center btns " data-testid="button-form-bundle">📦 Bundle</button>
+            </div>
+
             <!-- Step 1: Select Voucher Type -->
             <div class="section-card rounded p-4 mb-4">
                 <h2 class="fw-semibold h5 mb-4">🎯 Step 1: Select Voucher Type</h2>
@@ -121,344 +582,344 @@
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
 
-            <!-- Basic Information one-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info_main">
-                <h3 class="h5 fw-semibold mb-4"> Basic Information</h3>
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                            <label class="input-label"
-                                for="default_name">{{ translate('Client App Name') }}
-                            </label>
-                            <input type="text" name="name[]" id="default_name"  class="form-control" placeholder="{{ translate('Client App Name') }}" >
+                <!-- Basic Information one-->
+                <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info_main">
+                    <h3 class="h5 fw-semibold mb-4"> Basic Information</h3>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                        <div class="form-group">
+                                <label class="input-label"
+                                    for="default_name">{{ translate('Client App Name') }}
+                                </label>
+                                <input type="text" name="name[]" id="default_name"  class="form-control" placeholder="{{ translate('Client App Name') }}" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">Client  Name</label>
+                            <select
+                                    name="select_client"
+                                    id="select_client"
+                                    class="form-control Clients-select"
+                                    data-placeholder="-- Select Client --">
+                                    <option>Select owner</option>
+                                    @foreach (\App\Models\Client::all() as $item)
+                                    <option value="{{ $item->id }}"
+                                        @if(collect(old('type', []))->contains($item->id)) selected @endif>
+                                            {{ $item->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                    <div class="valid-feedback">
+                                    Great choice! Client selected successfully.
+                                </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Client  Name</label>
-                          <select
-                                name="select_client"
-                                id="select_client"
-                                class="form-control Clients-select"
-                                data-placeholder="-- Select Client --">
-                                <option>Select owner</option>
-                                @foreach (\App\Models\Client::all() as $item)
-                                <option value="{{ $item->id }}"
-                                    @if(collect(old('type', []))->contains($item->id)) selected @endif>
-                                        {{ $item->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                                <div class="valid-feedback">
-                                Great choice! Client selected successfully.
-                            </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="input-label" for="segment_type">{{ translate('Segment') }}
-                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-                            data-original-title="{{ translate('Segment') }}"></span>
-                    </label>
-                    <select name="segment_type[]" id="segment_type" required
-                            class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                    <div class="form-group">
+                        <label class="input-label" for="segment_type">{{ translate('Segment') }}
+                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                data-original-title="{{ translate('Segment') }}"></span>
+                        </label>
+                        <select name="segment_type[]" id="segment_type" required
+                                class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" multiple>
 
-                    </select>
-                </div>
-                  {{--
-                    <div class="mb-3">
-                        <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                    <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </select>
                     </div>
-                    <div class="row g-3">
-                        <div class="col-md-12">
-                            <div class=" h-100">
-                                <div class=" d-flex flex-wrap align-items-center">
-                                    <div class="w-100 d-flex flex-wrap __gap-15px">
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_image') }}
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            </label>
-                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
-                                        </div>
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_thumbnail') }}
-                                                @if(Config::get('module.current_module_type') == 'food')
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @else
-                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @endif
-                                            </label>
-                                            <label class="d-inline-block m-0 position-relative">
-                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
-                                                <div class="icon-file-group">
-                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
-                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                                                            <i class="tio-edit"></i>
+                    {{--
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                        <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class=" h-100">
+                                    <div class=" d-flex flex-wrap align-items-center">
+                                        <div class="w-100 d-flex flex-wrap __gap-15px">
+                                            <div class="flex-grow-1 mx-auto">
+                                                <label class="text-dark d-block mb-4 mb-xl-5">
+                                                    {{ translate('messages.item_image') }}
+                                                    <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                </label>
+                                                <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
+                                            </div>
+                                            <div class="flex-grow-1 mx-auto">
+                                                <label class="text-dark d-block mb-4 mb-xl-5">
+                                                    {{ translate('messages.item_thumbnail') }}
+                                                    @if(Config::get('module.current_module_type') == 'food')
+                                                    <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                    @else
+                                                    <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                    @endif
+                                                </label>
+                                                <label class="d-inline-block m-0 position-relative">
+                                                    <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
+                                                    <div class="icon-file-group">
+                                                        <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
+                                                        accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                                <i class="tio-edit"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                </div>
+                <!-- Partner Information one-->
+                <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="store_category_main">
+                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Partner Information') }}</h3>
+                    {{-- Store & Category Info --}}
+                    <div class="col-md-12">
+                        <div class="row g-2 align-items-end">
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="form-group mb-0">
+                                <label class="input-label" for="store_id">
+                                    {{ translate('messages.store') }}
+                                    <span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.') }}"> *
+                                    </span>
+                                </label>
+                                <select name="store_id" id="store_id"
+                                    data-placeholder="{{ translate('messages.select_store') }}"
+                                    class="js-data-example-ajax form-control"
+                                    onchange="findBranch(this.value)">
+                                </select>
+                            </div>
+                        </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="category_id">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span></label>
+                                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
+                                        class="js-data-example-ajax form-control">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="sub-categories">{{ translate('messages.sub_category') }}<span
+                                            class="input-label-secondary"
+                                            title="{{ translate('messages.category_required_warning') }}"><img
+                                                src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
+                                                alt="{{ translate('messages.category_required_warning') }}"></span></label>
+                                    <select name="sub_category_id" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
+                                        id="sub-categories">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                            <div class="form-group mb-0">
+                                    <label class="input-label" for="sub_branch_id">{{ translate('Branches') }}
+                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('Branches') }}"></span>
+                                    </label>
+                                    <select name="sub_branch_id[]" id="sub-branch" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Branches') }}" multiple>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6 col-lg-3" id="condition_input">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="condition_id">{{ translate('messages.Suitable_For') }}<span
+                                            class="input-label-secondary"></span></label>
+                                    <select name="condition_id" id="condition_id"
+                                        data-placeholder="{{ translate('messages.Select_Condition') }}" class="js-data-example-ajax form-control"
+                                        oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3" id="brand_input">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="brand_id">{{ translate('messages.Brand') }}<span
+                                            class="input-label-secondary"></span></label>
+                                    <select name="brand_id" id="brand_id"
+                                        data-placeholder="{{ translate('messages.Select_brand') }}" class="js-data-example-ajax form-control"
+                                        oninvalid="this.setCustomValidity('{{ translate('messages.Select_brand') }}')">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3" id="unit_input">
+                                <div class="form-group mb-0">
+                                    <label class="input-label text-capitalize"
+                                        for="unit">{{ translate('messages.unit') }}</label>
+                                    <select name="unit" id="unit" class="form-control js-select2-custom">
+                                        @foreach (\App\Models\Unit::all() as $unit)
+                                            <option value="{{ $unit->id }}">{{ $unit->unit }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3" id="veg_input">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="exampleFormControlInput1">{{ translate('messages.item_type') }} <span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span></label>
+                                    <select name="veg" id="veg" class="form-control js-select2-custom"
+                                        required>
+                                        <option value="0">{{ translate('messages.non_veg') }}</option>
+                                        <option value="1">{{ translate('messages.veg') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+
+                                <div class="col-sm-6" id="nutrition">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('Nutrition')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the necessary keywords relating to energy values for the item.') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <select name="nutritions[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
+
+                                        @foreach (\App\Models\Nutrition::select(['nutrition'])->get() as $nutrition)
+                                            <option value="{{ $nutrition->nutrition }}">{{ $nutrition->nutrition }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-6" id="allergy">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('Allegren Ingredients')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the ingredients of the item which can make a reaction as an allergen.') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <select name="allergies[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
+                                        @foreach (\App\Models\Allergy::select(['allergy'])->get() as $allergy)
+                                            <option value="{{ $allergy->allergy }}">{{ $allergy->allergy }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+                            <div class="col-sm-6 col-lg-3" id="organic">
+                                <div class="form-check mb-sm-2 pb-sm-1">
+                                    <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        {{ translate('messages.is_organic') }}
+                                    </label>
+                                    </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3" id="basic">
+                                <div class="form-check mb-sm-2 pb-sm-1">
+                                    <input class="form-check-input" name="basic" type="checkbox" value="1" id="flexCheckDefaultBasic" checked>
+                                    <label class="form-check-label" for="flexCheckDefaultBasic">
+                                        {{ translate('messages.Is_Basic_Medicine') }}
+                                    </label>
+                                    </div>
+                            </div>
+                            @if(Config::get('module.current_module_type') == 'pharmacy')
+                                <div class="col-sm-6 col-lg-3" id="is_prescription_required">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="is_prescription_required" type="checkbox" value="1" id="flexCheckDefaultprescription" checked>
+                                        <label class="form-check-label" for="flexCheckDefaultprescription">
+                                            {{ translate('messages.is_prescription_required') }}
+                                        </label>
+                                        </div>
+                                </div>
+                                <div class="col-sm-6" id="generic_name">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('generic_name')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the medicine`s active ingredient that makes it work') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <div class="dropdown suggestion_dropdown">
+                                        <input type="text" class="form-control" name="generic_name" autocomplete="off">
+                                        @if(count(\App\Models\GenericName::select(['generic_name'])->get())>0)
+                                        <div class="dropdown-menu">
+                                            @foreach (\App\Models\GenericName::select(['generic_name'])->get() as $generic_name)
+                                            <div class="dropdown-item">{{ $generic_name->generic_name }}</div>
+                                            @endforeach
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                            @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+                                <div class="col-sm-6 col-lg-3" id="halal">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="is_halal" type="checkbox" value="1" id="flexCheckDefault1" checked>
+                                        <label class="form-check-label" for="flexCheckDefault1">
+                                            {{ translate('messages.Is_It_Halal') }}
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="addon_input">
+                        <div class="c border-0">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <span class="card-header-icon"><i class="tio-dashboard-outlined"></i></span>
+                                    <span>{{ translate('messages.addon') }}</span>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="exampleFormControlSelect1">{{ translate('messages.addon') }}<span
+                                            class="input-label-secondary"
+                                            title="{{ translate('messages.addon') }}"><img
+                                                src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
+                                                alt="{{ translate('messages.store_required_warning') }}"></span></label>
+                                    <select name="addon_ids[]" class="form-control js-select2-custom"
+                                        multiple="multiple" id="add_on">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="time_input">
+                        <div class="c border-0">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <span class="card-header-icon"><i class="tio-date-range"></i></span>
+                                    <span>{{ translate('time_schedule') }}</span>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <div class="col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label class="input-label"
+                                                for="exampleFormControlInput1">{{ translate('messages.available_time_starts') }}</label>
+                                            <input type="time" name="available_time_starts" class="form-control"
+                                                id="available_time_starts"
+                                                placeholder="{{ translate('messages.Ex:') }} 10:30 am">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label class="input-label"
+                                                for="exampleFormControlInput1">{{ translate('messages.available_time_ends') }}</label>
+                                            <input type="time" name="available_time_ends" class="form-control"
+                                                id="available_time_ends" placeholder="5:45 pm">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
-            </div>
-              <!-- Partner Information one-->
-            <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="store_category_main">
-                <h3 class="h5 fw-semibold mb-4"> {{ translate('Partner Information') }}</h3>
-                 {{-- Store & Category Info --}}
-                <div class="col-md-12">
-                    <div class="row g-2 align-items-end">
-                      <div class="col-sm-6 col-lg-4">
-                        <div class="form-group mb-0">
-                            <label class="input-label" for="store_id">
-                                {{ translate('messages.store') }}
-                                <span class="form-label-secondary text-danger"
-                                    data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('messages.Required.') }}"> *
-                                </span>
-                            </label>
-                            <select name="store_id" id="store_id"
-                                data-placeholder="{{ translate('messages.select_store') }}"
-                                class="js-data-example-ajax form-control"
-                                onchange="findBranch(this.value)">
-                            </select>
-                        </div>
-                    </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="category_id">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
-                                    data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                    </span></label>
-                                <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
-                                    class="js-data-example-ajax form-control">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="sub-categories">{{ translate('messages.sub_category') }}<span
-                                        class="input-label-secondary"
-                                        title="{{ translate('messages.category_required_warning') }}"><img
-                                            src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
-                                            alt="{{ translate('messages.category_required_warning') }}"></span></label>
-                                <select name="sub_category_id" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
-                                    id="sub-categories">
-                                </select>
-                            </div>
-                        </div>
-                          <div class="col-sm-12">
-                          <div class="form-group mb-0">
-                                <label class="input-label" for="sub_branch_id">{{ translate('Branches') }}
-                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('Branches') }}"></span>
-                                </label>
-                                <select name="sub_branch_id[]" id="sub-branch" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Branches') }}" multiple>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-lg-3" id="condition_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label" for="condition_id">{{ translate('messages.Suitable_For') }}<span
-                                        class="input-label-secondary"></span></label>
-                                <select name="condition_id" id="condition_id"
-                                    data-placeholder="{{ translate('messages.Select_Condition') }}" class="js-data-example-ajax form-control"
-                                    oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="brand_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label" for="brand_id">{{ translate('messages.Brand') }}<span
-                                        class="input-label-secondary"></span></label>
-                                <select name="brand_id" id="brand_id"
-                                    data-placeholder="{{ translate('messages.Select_brand') }}" class="js-data-example-ajax form-control"
-                                    oninvalid="this.setCustomValidity('{{ translate('messages.Select_brand') }}')">
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="unit_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label text-capitalize"
-                                    for="unit">{{ translate('messages.unit') }}</label>
-                                <select name="unit" id="unit" class="form-control js-select2-custom">
-                                    @foreach (\App\Models\Unit::all() as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->unit }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="veg_input">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="exampleFormControlInput1">{{ translate('messages.item_type') }} <span class="form-label-secondary text-danger"
-                                    data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                    </span></label>
-                                <select name="veg" id="veg" class="form-control js-select2-custom"
-                                    required>
-                                    <option value="0">{{ translate('messages.non_veg') }}</option>
-                                    <option value="1">{{ translate('messages.veg') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
-
-                            <div class="col-sm-6" id="nutrition">
-                                <label class="input-label" for="sub-categories">
-                                    {{translate('Nutrition')}}
-                                    <span class="input-label-secondary" title="{{ translate('Specify the necessary keywords relating to energy values for the item.') }}" data-toggle="tooltip">
-                                        <i class="tio-info-outined"></i>
-                                    </span>
-                                </label>
-                                <select name="nutritions[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
-
-                                    @foreach (\App\Models\Nutrition::select(['nutrition'])->get() as $nutrition)
-                                        <option value="{{ $nutrition->nutrition }}">{{ $nutrition->nutrition }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="col-sm-6" id="allergy">
-                                <label class="input-label" for="sub-categories">
-                                    {{translate('Allegren Ingredients')}}
-                                    <span class="input-label-secondary" title="{{ translate('Specify the ingredients of the item which can make a reaction as an allergen.') }}" data-toggle="tooltip">
-                                        <i class="tio-info-outined"></i>
-                                    </span>
-                                </label>
-                                <select name="allergies[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
-                                    @foreach (\App\Models\Allergy::select(['allergy'])->get() as $allergy)
-                                        <option value="{{ $allergy->allergy }}">{{ $allergy->allergy }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endif
-                        <div class="col-sm-6 col-lg-3" id="organic">
-                            <div class="form-check mb-sm-2 pb-sm-1">
-                                <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    {{ translate('messages.is_organic') }}
-                                </label>
-                                </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3" id="basic">
-                            <div class="form-check mb-sm-2 pb-sm-1">
-                                <input class="form-check-input" name="basic" type="checkbox" value="1" id="flexCheckDefaultBasic" checked>
-                                <label class="form-check-label" for="flexCheckDefaultBasic">
-                                    {{ translate('messages.Is_Basic_Medicine') }}
-                                </label>
-                                </div>
-                        </div>
-                        @if(Config::get('module.current_module_type') == 'pharmacy')
-                            <div class="col-sm-6 col-lg-3" id="is_prescription_required">
-                                <div class="form-check mb-sm-2 pb-sm-1">
-                                    <input class="form-check-input" name="is_prescription_required" type="checkbox" value="1" id="flexCheckDefaultprescription" checked>
-                                    <label class="form-check-label" for="flexCheckDefaultprescription">
-                                        {{ translate('messages.is_prescription_required') }}
-                                    </label>
-                                    </div>
-                            </div>
-                            <div class="col-sm-6" id="generic_name">
-                                <label class="input-label" for="sub-categories">
-                                    {{translate('generic_name')}}
-                                    <span class="input-label-secondary" title="{{ translate('Specify the medicine`s active ingredient that makes it work') }}" data-toggle="tooltip">
-                                        <i class="tio-info-outined"></i>
-                                    </span>
-                                </label>
-                                <div class="dropdown suggestion_dropdown">
-                                    <input type="text" class="form-control" name="generic_name" autocomplete="off">
-                                    @if(count(\App\Models\GenericName::select(['generic_name'])->get())>0)
-                                    <div class="dropdown-menu">
-                                        @foreach (\App\Models\GenericName::select(['generic_name'])->get() as $generic_name)
-                                        <div class="dropdown-item">{{ $generic_name->generic_name }}</div>
-                                        @endforeach
-                                    </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                        @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
-                            <div class="col-sm-6 col-lg-3" id="halal">
-                                <div class="form-check mb-sm-2 pb-sm-1">
-                                    <input class="form-check-input" name="is_halal" type="checkbox" value="1" id="flexCheckDefault1" checked>
-                                    <label class="form-check-label" for="flexCheckDefault1">
-                                        {{ translate('messages.Is_It_Halal') }}
-                                    </label>
-                                </div>
-                            </div>
-
-
-                        @endif
                     </div>
                 </div>
-                <div class="col-md-6" id="addon_input">
-                    <div class="c border-0">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <span class="card-header-icon"><i class="tio-dashboard-outlined"></i></span>
-                                <span>{{ translate('messages.addon') }}</span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="exampleFormControlSelect1">{{ translate('messages.addon') }}<span
-                                        class="input-label-secondary"
-                                        title="{{ translate('messages.addon') }}"><img
-                                            src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
-                                            alt="{{ translate('messages.store_required_warning') }}"></span></label>
-                                <select name="addon_ids[]" class="form-control js-select2-custom"
-                                    multiple="multiple" id="add_on">
 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" id="time_input">
-                    <div class="c border-0">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <span class="card-header-icon"><i class="tio-date-range"></i></span>
-                                <span>{{ translate('time_schedule') }}</span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row g-2">
-                                <div class="col-sm-6">
-                                    <div class="form-group mb-0">
-                                        <label class="input-label"
-                                            for="exampleFormControlInput1">{{ translate('messages.available_time_starts') }}</label>
-                                        <input type="time" name="available_time_starts" class="form-control"
-                                            id="available_time_starts"
-                                            placeholder="{{ translate('messages.Ex:') }} 10:30 am">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group mb-0">
-                                        <label class="input-label"
-                                            for="exampleFormControlInput1">{{ translate('messages.available_time_ends') }}</label>
-                                        <input type="time" name="available_time_ends" class="form-control"
-                                            id="available_time_ends" placeholder="5:45 pm">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-           {{-- ==================== Delivery/Pickup  == Product ===================== --}}
+                {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
                 <!-- Voucher Details -->
                 <div class="section-card rounded p-4 mb-4  d-none section" id="Product_voucher_fields_1_7">
@@ -599,7 +1060,7 @@
                     </div>
 
                 </div>
-                <!-- 💰 Price Information -->
+                <!--  Price Information -->
                 <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="product_voucher_price_info_1_7">
                     <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
@@ -692,7 +1153,7 @@
                                 </div>
                                 <!-- Attributes same-->
                                 <div class="col-12">
-                                    <div class="d-none section one_four_complete two_four_complete" id="attributes">
+                                    <div class=" section " id="attributes">
                                         <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('attribute') }}</h3>
                                         <div class="row g-2">
                                             <div class="col-md-12" id="attribute_section">
@@ -736,11 +1197,11 @@
                     </div>
                 </div>
 
-           {{-- ==================== Delivery/Pickup  == Product ===================== --}}
+                {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
-            {{-- ==================== Delivery/Pickup  == Food ===================== --}}
+                {{-- ==================== Delivery/Pickup  == Food ===================== --}}
 
-                <!-- Voucher Details -->
+                 <!-- Voucher Details -->
                 <div class="section-card rounded p-4 mb-4 d-none section" id="food_voucher_fields_1_8">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
 
@@ -876,7 +1337,7 @@
                         </div>
                     </div> --}}
                 </div>
-                <!-- 💰 Price Information one-->
+                <!--  Price Information one-->
                 <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="food_voucher_price_info_1_8">
                     <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
@@ -1056,7 +1517,1167 @@
                     </div>
                 </div>
 
-           {{-- ==================== Delivery/Pickup  == Food ===================== --}}
+               {{-- ==================== Delivery/Pickup  == Food ===================== --}}
+
+
+               {{-- ==================== Delivery/Pickup  == Food and Product Bundle ===================== --}}
+
+                 <!-- Voucher Details -->
+                <div class="section-card rounded p-4 mb-4 d-none section" id="bundel_food_voucher_fields_1_7_1_8">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+                    {{-- Voucher Title --}}
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-medium">Valid Until</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    {{-- images  --}}
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class=" h-100">
+                                <div class=" d-flex flex-wrap align-items-center">
+                                    <div class="w-100 d-flex flex-wrap __gap-15px">
+                                        <div class="flex-grow-1 mx-auto">
+                                            <label class="text-dark d-block mb-4 mb-xl-5">
+                                                {{ translate('messages.item_image') }}
+                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                            </label>
+                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
+                                        </div>
+                                        <div class="flex-grow-1 mx-auto">
+                                            <label class="text-dark d-block mb-4 mb-xl-5">
+                                                {{ translate('messages.item_thumbnail') }}
+                                                @if(Config::get('module.current_module_type') == 'food')
+                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                @else
+                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
+                                                @endif
+                                            </label>
+                                            <label class="d-inline-block m-0 position-relative">
+                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
+                                                <div class="icon-file-group">
+                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
+                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                            <i class="tio-edit"></i>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                    </div>
+                    {{-- Bundle Type Selection --}}
+                    <div class="col-12 col-md-12">
+                        <div class="form-group mb-0">
+                            <h3 class="h5 fw-semibold mb-2">🎯 {{ translate('Bundle Type Selection') }}</h3>
+                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control">
+                            <option value="">Select Bundle Offer Type</option>
+                            <option value="fixed_bundle">Fixed Bundle - Specific products at set price</option>
+                            <option value="bogo_free">🔄 BOGO Free - Buy one get one free</option>
+                            <option value="buy_x_get_y">🎁 Buy X Get Y - Buy products get different product free</option>
+                            <option value="gift">💝 Free Gift with Purchase</option>
+                            <option value="bundle">📦 Group Product Bundle</option>
+                            <option value="mix_match">🔀 Mix & Match - Customer chooses from categories</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{-- panel1 --}}
+                    <div class="col-12 mt-5" id="panel1">
+                        <div class="row g-3 fixed_bundle_div" style="display:none;">
+                              <div id="bundleTypeDescription" class="bundle-type-description show">
+                                    <div id="descriptionContent">
+                                    <h4>Fixed Bundle - Specific products at set price</h4>
+                                    <p><strong>Description:</strong> Create a bundle with specific products at a fixed price. Customer gets exactly these products for the set price.</p>
+                                    <p><strong>Example:</strong> Phone + Case + Charger = $299 (instead of $335 individually)</p>
+                                    <p><strong>Pricing Method:</strong> fixed price</p>
+                                </div>
+                                </div>
+                                <div id="bundleConfigSection" class="bundle-config-section show mt-4">
+                                    <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Bundle Fixed Price</label>
+                                                <input type="number" id="fixedBundlePrice" class="form-control" step="0.01" placeholder="Enter bundle price">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="container my-4">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae odit, eos veritatis in facere fugiat omnis. Delectus tempore, magnam praesentium doloribus velit eum dicta nihil dolor illum reiciendis sed perferendis sit cupiditate aliquam eos nostrum soluta, beatae et blanditiis. Quod modi molestiae sed veritatis maxime impedit suscipit tempora ex, quaerat quo. Dolore maiores vitae recusandae, rem assumenda quam id quod praesentium ex facilis, repellat qui consequuntur reiciendis deleniti magnam, et harum! Vel consectetur error architecto odit id facere distinctio quia cum fuga, magni nulla labore? Beatae ratione, sint placeat dicta nostrum, incidunt dolor corporis quae impedit quas laudantium asperiores.
+                            </div>
+                        </div>
+                        <div class="row g-3 bogo_free_div" style="display:none;">
+                            <div id="bundleTypeDescription" class="bundle-type-description show">
+                                    <div id="descriptionContent">
+                                    <h4>📝 BOGO FREE</h4>
+                                    <p><strong>Description:</strong> Buy one product, get another product completely free. Customer pays for the higher-priced item.</p>
+                                    <p><strong>Example:</strong> Buy Large Pizza ($15), get Medium Pizza free (save $12)</p>
+                                    <p><strong>Pricing Method:</strong> pay higher price</p>
+                                </div>
+                                </div>
+                                <div id="bundleConfigSection" class="bundle-config-section show mt-4">
+                                    <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                        <div class="form-group">
+                                            <p><strong>Instructions:</strong> Add products to bundle. First product will be "paid item", second will be "free item". Customer pays for higher-priced item.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body ">
+
+                                    <!-- BOGO Configuration -->
+                                    <div class="p-3 bg-white border rounded mb-4">
+                                        <h4 class="mb-3">🔄 BOGO Configuration</h4>
+
+                                        <!-- BOGO Product -->
+                                        <div class="mb-3">
+                                        <label class="form-label">BOGO Product</label>
+                                        <div class="mb-2 d-flex flex-wrap gap-2">
+                                            <!-- Dynamic product tags will appear here -->
+                                        </div>
+                                        <div class="input-group">
+                                            <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Add products for BOGO offer..."
+                                            data-testid="input-tag"
+                                            >
+                                            <button
+                                            class="btn btn-primary"
+                                            type="button"
+                                            data-testid="button-add-tag"
+                                            disabled
+                                            >
+                                            <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                        </div>
+
+                                        <!-- Buy & Get Quantity -->
+                                        <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Buy Quantity</label>
+                                            <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="1"
+                                            value="1"
+                                            data-testid="input-buy-quantity"
+                                            >
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Get Quantity</label>
+                                            <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="1"
+                                            value="1"
+                                            data-testid="input-get-quantity"
+                                            >
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Valid Until -->
+                                    <div class="mb-3">
+                                        <label class="form-label" for="validUntilDate">Valid Until</label>
+                                        <input
+                                        type="date"
+                                        class="form-control"
+                                        id="validUntilDate"
+                                        placeholder="mm/dd/yyyy"
+                                        data-testid="input-bundle-valid-until"
+                                        >
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="row g-3 buy_x_get_y_div" style="display:none;">
+                            <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                <h4>📝 BUY X GET Y</h4>
+                                <p><strong>Description:</strong> Buy specific products and get different products free or discounted.</p>
+                                <p><strong>Example:</strong> Buy any Main Course, get free Drink or Dessert</p>
+                                <p><strong>Pricing Method:</strong> conditional free</p>
+                            </div>
+                            </div>
+                            <div id="bundleConfigSection" class="bundle-config-section show mt-4">
+                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                    <div class="form-group">
+                                        <p><strong>Instructions:</strong> Add products customers must buy first, then add products they get free. Configure roles appropriately.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body ">
+                                <!-- Buy X Get Y Configuration -->
+                                <div class="p-3 bg-white border rounded mb-4">
+                                    <h4 class="mb-3">🎁 Buy X Get Y Configuration</h4>
+
+                                    <!-- Buy Products -->
+                                    <div class="mb-3">
+                                    <label class="form-label">Buy These Products</label>
+                                    <div class="mb-2 d-flex flex-wrap gap-2">
+                                        <!-- Added product tags dynamically -->
+                                    </div>
+                                    <div class="input-group">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Add products to purchase..."
+                                        data-testid="input-tag"
+                                        >
+                                        <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        data-testid="button-add-tag"
+                                        disabled
+                                        >
+                                        <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+
+                                    <!-- Buy Qty / Get Qty / Max Uses -->
+                                    <div class="row g-3 mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Buy Quantity</label>
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        placeholder="2"
+                                        value="1"
+                                        data-testid="input-buy-x-quantity"
+                                        >
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Get Quantity</label>
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        placeholder="1"
+                                        value="1"
+                                        data-testid="input-get-y-quantity"
+                                        >
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Max Uses</label>
+                                        <input
+                                        type="number"
+                                        class="form-control"
+                                        placeholder="5"
+                                        value="1"
+                                        data-testid="input-max-uses"
+                                        >
+                                    </div>
+                                    </div>
+
+                                    <!-- Free Product -->
+                                    <div class="mb-3">
+                                    <label class="form-label">Free Product</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Product that will be given for free"
+                                        data-testid="input-free-product"
+                                    >
+                                    </div>
+                                </div>
+
+                                <!-- Valid Until -->
+                                <div class="mb-3">
+                                    <label class="form-label" for="validUntilDate">Valid Until</label>
+                                    <input
+                                    type="date"
+                                    class="form-control"
+                                    id="validUntilDate"
+                                    placeholder="mm/dd/yyyy"
+                                    data-testid="input-bundle-valid-until"
+                                    >
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 gift_div" style="display:none;">
+                             <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                <h4>Free Gift with Purchase</h4>
+                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
+                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
+                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
+                                </div>
+                            </div>
+                            <div id="bundleConfigSection" class="bundle-config-section show mt-4">
+                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Total Items Customer Must Choose</label>
+                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Bundle Price</label>
+                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body ">
+                                <!-- Free Gift Configuration -->
+                                <div class="p-3 bg-white border rounded mb-4">
+                                    <h4 class="mb-3">💝 Free Gift Configuration</h4>
+
+                                    <!-- Min Spend + Free Gift Product -->
+                                    <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Minimum Spend Amount</label>
+                                        <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control"
+                                            placeholder="50.00"
+                                            value="0"
+                                            data-testid="input-minimum-spend"
+                                        >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Free Gift Product</label>
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Gift product name"
+                                        data-testid="input-gift-product"
+                                        >
+                                    </div>
+                                    </div>
+
+                                    <!-- Qualifying Products -->
+                                    <div class="mb-3">
+                                    <label class="form-label">Qualifying Products</label>
+                                    <div class="mb-2 d-flex flex-wrap gap-2">
+                                        <!-- Product tags dynamically show here -->
+                                    </div>
+                                    <div class="input-group">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Add products that qualify for free gift..."
+                                        data-testid="input-tag"
+                                        >
+                                        <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        data-testid="button-add-tag"
+                                        disabled
+                                        >
+                                        <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <!-- Valid Until -->
+                                <div class="mb-3">
+                                    <label class="form-label" for="validUntilDate">Valid Until</label>
+                                    <input
+                                    type="date"
+                                    class="form-control"
+                                    id="validUntilDate"
+                                    placeholder="mm/dd/yyyy"
+                                    data-testid="input-bundle-valid-until"
+                                    >
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 bundle_div" style="display:none;">
+                              <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                <h4>📦 Group Product Bundle</h4>
+                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
+                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
+                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
+                                </div>
+                            </div>
+                            <div id="bundleConfigSection" class="bundle-config-section show mt-4">
+                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Total Items Customer Must Choose</label>
+                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Bundle Price</label>
+                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body ">
+                                <!-- Group Product Bundle Configuration -->
+                                <div class="p-3 bg-white border rounded mb-4">
+                                    <h4 class="mb-3">📦 Group Product Bundle</h4>
+
+                                    <!-- Bundle Products -->
+                                    <div class="mb-3">
+                                    <label class="form-label">Bundle Products</label>
+                                    <div class="mb-2 d-flex flex-wrap gap-2">
+                                        <!-- Added products will appear here -->
+                                    </div>
+                                    <div class="input-group">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Add products to the bundle..."
+                                        data-testid="input-tag"
+                                        >
+                                        <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        data-testid="button-add-tag"
+                                        disabled
+                                        >
+                                        <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+
+                                    <!-- Discount Type + Discount Amount -->
+                                    <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Bundle Discount Type</label>
+                                        <select class="form-select" data-testid="select-bundle-discount-type">
+                                        <option>% Percentage Off</option>
+                                        <option>$ Fixed Amount Off</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Discount Amount</label>
+                                        <input
+                                        type="number"
+                                        step="0.01"
+                                        class="form-control"
+                                        placeholder="10"
+                                        data-testid="input-bundle-discount"
+                                        value="0"
+                                        >
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <!-- Valid Until -->
+                                <div class="mb-3">
+                                    <label class="form-label" for="validUntilDate">Valid Until</label>
+                                    <input
+                                    type="date"
+                                    class="form-control"
+                                    id="validUntilDate"
+                                    placeholder="mm/dd/yyyy"
+                                    data-testid="input-bundle-valid-until"
+                                    >
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 mix_match_div" style="display:none;">
+                            <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                <h4>📝 MIX MATCH</h4>
+                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
+                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
+                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
+                                </div>
+                            </div>
+                            <div id="bundleConfigSection" class="bundle-config-section show mt-4">
+                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Total Items Customer Must Choose</label>
+                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Bundle Price</label>
+                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body ">
+                                    <!-- Mix and Match Collection -->
+                                    <div class="p-3 bg-white border rounded mb-4">
+                                        <h4 class="mb-3">🔀 Mix and Match Collection</h4>
+
+                                        <!-- Collection Category -->
+                                        <div class="mb-3">
+                                        <label class="form-label">Collection Category</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="e.g., T-Shirts, Accessories, etc."
+                                            data-testid="input-mix-match-category"
+                                        >
+                                        </div>
+
+                                        <!-- Available Products -->
+                                        <div class="mb-3">
+                                        <label class="form-label">Available Products</label>
+                                        <div class="mb-2 d-flex flex-wrap gap-2">
+                                            <!-- Dynamic product tags will appear here -->
+                                        </div>
+                                        <div class="input-group">
+                                            <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Add products available for mix and match..."
+                                            data-testid="input-tag"
+                                            >
+                                            <button
+                                            class="btn btn-primary"
+                                            type="button"
+                                            data-testid="button-add-tag"
+                                            disabled
+                                            >
+                                            <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                        </div>
+
+                                        <!-- 3-column grid -->
+                                        <div class="row g-3">
+                                            <!-- Buy Quantity -->
+                                            <div class="col-md-4">
+                                                <label class="form-label">Buy Quantity</label>
+                                                <input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="3"
+                                                value="1"
+                                                data-testid="input-mix-match-quantity"
+                                                >
+                                            </div>
+
+                                            <!-- Discount Amount -->
+                                            <div class="col-md-4">
+                                                <label class="form-label">Discount Amount</label>
+                                                <input
+                                                type="number"
+                                                step="0.01"
+                                                class="form-control"
+                                                placeholder="5.00"
+                                                value="0"
+                                                data-testid="input-mix-match-discount"
+                                                >
+                                            </div>
+
+                                            <!-- Max Uses Per Customer -->
+                                            <div class="col-md-4">
+                                                <label class="form-label">Max Uses Per Customer</label>
+                                                <input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="2"
+                                                value="1"
+                                                data-testid="input-mix-match-max-uses"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Valid Until -->
+                                    <div class="mb-3">
+                                        <label class="form-label" for="validUntilDate">Valid Until</label>
+                                        <input
+                                        type="date"
+                                        class="form-control"
+                                        id="validUntilDate"
+                                        placeholder="mm/dd/yyyy"
+                                        data-testid="input-bundle-valid-until"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 bogo_free_div" style="display:none;">
+                            <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                <h4>📝 BOGO Free</h4>
+                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
+                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
+                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    {{-- tags --}}
+                     <div class="col-12 mt-3">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div>
+                </div>
+                <!--  Price Information one-->
+                <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete"id="bundel_food_voucher_price_info_1_7_1_8">
+                    <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
+                    {{-- Price Information --}}
+                    <div class="col-md-12">
+                        <div class="row g-2">
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span></label>
+                                    <input type="number" min="0" max="999999999999.99" step="0.01"
+                                        value="1" name="price" class="form-control"
+                                        placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="offer_type">{{ translate('Offer Type') }}
+                                    </label>
+
+                                    <!-- Dropdown: Only Percent & Fixed -->
+                                    <select name="offer_type" id="offer_type"
+                                        class="form-control js-select2-custom">
+                                        <option value="direct discount">{{ translate('Direct Discount') }} </option>
+                                        <option value="cash back">{{ translate('Cash back') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="discount_type">{{ translate('Discount Type') }}
+                                    </label>
+
+                                    <!-- Dropdown: Only Percent & Fixed -->
+                                    <select name="discount_type" id="discount_type"
+                                        class="form-control js-select2-custom">
+                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                        <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('Discount Value') }}
+                                    </label>
+                                        <input type="number" min="0" max="9999999999999999999999" value="0"
+                                            name="discount" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Example divs to show/hide panel2 -->
+                            <div class="col-12">
+                                <div id="panel2">
+                                <div class="row g-3 bogo_free_div" style="display:none;">
+                                    <div class="container ">
+                                        <div class="card border-0 shadow-sm">
+                                            <div class="card-body ">
+                                            <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+
+                                            <!-- BOGO Section -->
+                                            <div class="mb-4">
+                                                <h5 class="text-muted mb-3">🔄 BOGO Pricing Settings</h5>
+
+                                                <div class="p-3 bg-white border rounded">
+                                                <p class="small text-muted mb-3">
+                                                    For BOGO offers, set the regular price for one item.
+                                                    The system will automatically apply the free item.
+                                                </p>
+
+                                                <!-- Grid System -->
+                                                <div class="row g-3">
+                                                    <!-- Regular Item Price -->
+                                                    <div class="col-md-6">
+                                                    <label class="form-label">Regular Item Price</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="29.99"
+                                                        step="0.01"
+                                                        data-testid="input-bogo-price"
+                                                        >
+                                                    </div>
+                                                    </div>
+
+                                                    <!-- Total Available Sets -->
+                                                    <div class="col-md-6">
+                                                    <label class="form-label">Total Available Sets</label>
+                                                    <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="50"
+                                                        data-testid="input-bogo-stock"
+                                                    >
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <!-- /BOGO Section -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 buy_x_get_y_div" style="display:none;">
+                                    <div class="container my-4">
+                                        <div class="card border-0 shadow-sm">
+                                            <div class="card-body ">
+                                            <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+
+                                            <!-- Buy X Get Y Section -->
+                                            <div class="mb-4">
+                                                <h5 class="text-muted mb-3">🎁 Buy X Get Y Pricing</h5>
+
+                                                <div class="p-3 bg-white border rounded">
+                                                <!-- Grid System -->
+                                                <div class="row g-3">
+                                                    <!-- Price per Item (Buy) -->
+                                                    <div class="col-md-4">
+                                                    <label class="form-label">Price per Item (Buy)</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="15.99"
+                                                        step="0.01"
+                                                        data-testid="input-buy-x-price"
+                                                        >
+                                                    </div>
+                                                    </div>
+
+                                                    <!-- Free Item Value -->
+                                                    <div class="col-md-4">
+                                                    <label class="form-label">Free Item Value</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="9.99"
+                                                        step="0.01"
+                                                        data-testid="input-free-item-value"
+                                                        >
+                                                    </div>
+                                                    </div>
+
+                                                    <!-- Available Offers -->
+                                                    <div class="col-md-4">
+                                                    <label class="form-label">Available Offers</label>
+                                                    <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="100"
+                                                        data-testid="input-buy-x-get-y-stock"
+                                                    >
+                                                    </div>
+                                                </div>
+
+                                                <!-- Deal Summary -->
+                                                <div class="mt-4 p-3 bg-light border rounded">
+                                                    <p class="small fw-bold mb-1">💰 Deal Summary:</p>
+                                                    <p class="small text-muted mb-1">
+                                                    Please enter a valid price for Buy X Get Y offer
+                                                    </p>
+                                                    <p class="small mb-0">
+                                                    Total Value: <span class="fw-semibold">$</span> |
+                                                    Customer Pays: <span class="fw-semibold">$0.00</span> |
+                                                    Savings: <span class="fw-semibold text-success">$0.00</span>
+                                                    </p>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <!-- /Buy X Get Y Section -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row g-3 gift_div" style="display:none;">
+                                <div class="container my-4">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body ">
+                                        <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+
+                                        <!-- Free Gift Section -->
+                                        <div class="mb-4">
+                                            <h5 class="text-muted mb-3">💝 Free Gift Pricing</h5>
+
+                                            <div class="p-3 bg-white border rounded">
+                                            <!-- Grid System -->
+                                            <div class="row g-3">
+                                                <!-- Minimum Spend Required -->
+                                                <div class="col-md-4">
+                                                <label class="form-label">Minimum Spend Required</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="50.00"
+                                                    step="0.01"
+                                                    data-testid="input-min-spend-amount"
+                                                    >
+                                                </div>
+                                                </div>
+
+                                                <!-- Free Gift Value -->
+                                                <div class="col-md-4">
+                                                <label class="form-label">Free Gift Value</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="12.99"
+                                                    step="0.01"
+                                                    data-testid="input-gift-value"
+                                                    >
+                                                </div>
+                                                </div>
+
+                                                <!-- Available Gifts -->
+                                                <div class="col-md-4">
+                                                <label class="form-label">Available Gifts</label>
+                                                <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="200"
+                                                    data-testid="input-gift-stock"
+                                                >
+                                                </div>
+                                            </div>
+
+                                            <!-- Deal Summary -->
+                                            <div class="mt-4 p-3 bg-light border rounded">
+                                                <p class="small fw-bold mb-1">💰 Deal Summary:</p>
+                                                <p class="small text-muted mb-1">
+                                                Spend $0.00 get free gift worth $0.00
+                                                </p>
+                                                <p class="small mb-0">
+                                                Total Value: <span class="fw-semibold">$0.00</span> |
+                                                Free Gift Worth: <span class="fw-semibold text-success">$0.00</span>
+                                                </p>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Free Gift Section -->
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+                                <div class="row g-3 bundle_div" style="display:none;">
+                                <div class="container my-4">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body ">
+                                        <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+
+                                        <!-- Group Product Bundle Section -->
+                                        <div class="mb-4">
+                                            <h5 class="text-muted mb-3">📦 Group Product Bundle Pricing</h5>
+
+                                            <div class="p-3 bg-white border rounded">
+                                            <!-- Grid System -->
+                                            <div class="row g-3">
+                                                <!-- Individual Items Total -->
+                                                <div class="col-md-6">
+                                                <label class="form-label">Individual Items Total</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="79.99"
+                                                    step="0.01"
+                                                    data-testid="input-bundle-total-price"
+                                                    >
+                                                </div>
+                                                </div>
+
+                                                <!-- Bundle Discount (%) -->
+                                                <div class="col-md-6">
+                                                <label class="form-label">Bundle Discount (%)</label>
+                                                <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="15"
+                                                    step="1"
+                                                    data-testid="input-group-bundle-discount"
+                                                >
+                                                </div>
+                                            </div>
+
+                                            <!-- Bundle Summary -->
+                                            <div class="mt-4 p-3 bg-light border rounded">
+                                                <p class="small fw-bold mb-1">💰 Bundle Summary:</p>
+                                                <p class="small text-muted mb-1">
+                                                Please enter a valid total price for group bundle
+                                                </p>
+                                                <p class="small mb-0">
+                                                Individual Total: <span class="fw-semibold">$</span> |
+                                                Bundle Price: <span class="fw-semibold text-primary">$0.00</span> |
+                                                You Save: <span class="fw-semibold text-success">$0.00</span>
+                                                </p>
+                                            </div>
+
+                                            <!-- Available Bundles -->
+                                            <div class="mt-4">
+                                                <label class="form-label">Available Bundles</label>
+                                                <input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="25"
+                                                data-testid="input-bundle-quantity"
+                                                >
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Group Product Bundle Section -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row g-3 mix_match_div" style="display:none;">
+
+                                <div class="container my-4">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body ">
+                                        <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+
+                                        <!-- Mix & Match Section -->
+                                        <div class="mb-4">
+                                            <h5 class="text-muted mb-3">🔀 Mix and Match Pricing</h5>
+
+                                            <div class="p-3 bg-white border rounded">
+                                            <!-- Grid System -->
+                                            <div class="row g-3">
+                                                <!-- Regular Price Each -->
+                                                <div class="col-md-4">
+                                                <label class="form-label">Regular Price Each</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="24.99"
+                                                    step="0.01"
+                                                    data-testid="input-mix-match-regular-price"
+                                                    >
+                                                </div>
+                                                </div>
+
+                                                <!-- Mix & Match Discount -->
+                                                <div class="col-md-4">
+                                                <label class="form-label">Mix &amp; Match Discount</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="5.00"
+                                                    step="0.01"
+                                                    data-testid="input-mix-match-discount"
+                                                    >
+                                                </div>
+                                                </div>
+
+                                                <!-- Required Quantity -->
+                                                <div class="col-md-4">
+                                                <label class="form-label">Required Quantity</label>
+                                                <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="3"
+                                                    data-testid="input-mix-match-quantity"
+                                                >
+                                                </div>
+                                            </div>
+
+                                            <!-- Mix & Match Summary -->
+                                            <div class="mt-4 p-3 bg-light border rounded">
+                                                <p class="small fw-bold mb-1">💰 Mix & Match Summary:</p>
+                                                <p class="small text-muted mb-1">
+                                                Please enter a valid price per item for mix &amp; match
+                                                </p>
+                                                <p class="small mb-0">
+                                                Regular Price (1 items): <span class="fw-semibold">$</span> |
+                                                Mix &amp; Match Price: <span class="fw-semibold text-primary">$0.00</span> |
+                                                You Save: <span class="fw-semibold text-success">$0.00</span>
+                                                </p>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Mix & Match Section -->
+
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="row g-3 fixed_bundle_div" style="display:none;">
+                                    <div class="container my-4">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae odit, eos veritatis in facere fugiat omnis. Delectus tempore, magnam praesentium doloribus velit eum dicta nihil dolor illum reiciendis sed perferendis sit cupiditate aliquam eos nostrum soluta, beatae et blanditiis. Quod modi molestiae sed veritatis maxime impedit suscipit tempora ex, quaerat quo. Dolore maiores vitae recusandae, rem assumenda quam id quod praesentium ex facilis, repellat qui consequuntur reiciendis deleniti magnam, et harum! Vel consectetur error architecto odit id facere distinctio quia cum fuga, magni nulla labore? Beatae ratione, sint placeat dicta nostrum, incidunt dolor corporis quae impedit quas laudantium asperiores.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           {{-- ==================== Delivery/Pickup  == Food and Product Bundle ===================== --}}
+
+           {{-- Bundle Products Configuration --}}
+             <div class="form-section form-section section-card rounded p-4 mb-4   d-none"  id="Bundle_products_configuration">
+                 <h3 class="h5 fw-semibold mb-2">🛍️ {{ translate('Bundle Products Configuration') }}</h3>
+                <div id="selectedProducts">
+                    <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
+                </div>
+                <button type="button" class="btn btn-primary" id="addProductBtn">+ Add Product to Bundle</button>
+                <!-- Available Products to Choose From -->
+                <div id="availableProducts" style="display: none;">
+                    <h3>Available Products:</h3>
+                    <div class="product-card" data-id="1" data-name="Large Pizza" data-price="15.00">
+                        <div class="product-header">
+                            <div class="product-info">
+                                <div class="product-name">Large Pizza</div>
+                                <div class="product-price">$15.00</div>
+                            </div>
+                            <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                        </div>
+                    </div>
+                    <div class="product-card" data-id="2" data-name="Medium Pizza" data-price="12.00">
+                        <div class="product-header">
+                            <div class="product-info">
+                                <div class="product-name">Medium Pizza</div>
+                                <div class="product-price">$12.00</div>
+                            </div>
+                            <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                        </div>
+                    </div>
+                    <div class="product-card" data-id="3" data-name="Soft Drink" data-price="3.00">
+                        <div class="product-header">
+                            <div class="product-info">
+                                <div class="product-name">Soft Drink</div>
+                                <div class="product-price">$3.00</div>
+                            </div>
+                            <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                        </div>
+                    </div>
+                    <div class="product-card" data-id="4" data-name="Burger Deluxe" data-price="18.00">
+                        <div class="product-header">
+                            <div class="product-info">
+                                <div class="product-name">Burger Deluxe</div>
+                                <div class="product-price">$18.00</div>
+                            </div>
+                            <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                        </div>
+                    </div>
+                    <div class="product-card" data-id="5" data-name="French Fries" data-price="5.00">
+                        <div class="product-header">
+                            <div class="product-info">
+                                <div class="product-name">French Fries</div>
+                                <div class="product-price">$5.00</div>
+                            </div>
+                            <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container mt-5">
+                    <div class="form-container">
+                        <!-- Price Calculator -->
+                        <div class="price-calculator" id="priceCalculator" style="display: none;">
+                            <h3>💰 Bundle Price Calculation</h3>
+                            <div id="priceBreakdown"></div>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="form-section">
+                            <button type="button" class="btn btn-success" id="saveBundleBtn">💾 Save Bundle & Generate Voucher</button>
+                        </div>
+                        <!-- Voucher Preview -->
+                        <div class="voucher-preview" id="voucherPreview" style="display: none;">
+                            <h2>🎫 Bundle Voucher Generated!</h2>
+
+                            <div class="voucher-code" id="voucherCode">BUNDLE-2025-001</div>
+
+                            <div class="qr-code-placeholder">
+                                <div>📱 QR CODE</div>
+                            </div>
+                            <div class="voucher-details">
+                                <h4>📋 Bundle Details:</h4>
+                                <div id="bundleDetailsContent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+             <!-- Section 6: Bundle Rules -->
+            <div class="form-section section-card rounded p-4 mb-4   d-none" id="bundle_rule">
+                  <h3 class="h5 fw-semibold mb-4">⚙️ {{ translate('Bundle Rules & Limitations') }}</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="maxPerCustomer">Max Uses Per Customer</label>
+                        <input type="number" id="maxPerCustomer" class="form-control" min="1" placeholder="e.g., 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxTotal">Max Total Redemptions</label>
+                        <input type="number" id="maxTotal" class="form-control" min="1" placeholder="e.g., 100">
+                    </div>
+                    <div class="form-group">
+                        <label for="minOrderValue">Minimum Order Value</label>
+                        <input type="number" id="minOrderValue" class="form-control" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Valid for:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="dineIn" value="dine_in" checked>
+                            <label for="dineIn">Dine-in</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="takeaway" value="takeaway" checked>
+                            <label for="takeaway">Takeaway</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="delivery" value="delivery" checked>
+                            <label for="delivery">Delivery</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
               {{-- How It Works --}}
              <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="how_it_work_main">
@@ -1068,7 +2689,6 @@
                          <ol id="workList" class="pl-3 mb-0">
                             <!-- WorkManagement data will load here -->
                             </ol>
-
                     {{-- <ol class="pl-3 mb-0">
                         <li>Open the Arabi Value app and select the GiftCard Plus.</li>
                         <li>Choose a recipient from your contacts or select "Send to myself" if you want to use it personally.</li>
@@ -1118,6 +2738,7 @@
                     </div>
                 </div>
             </div>
+
             {{--  Review & Submit --}}
             <div class="section-card rounded p-4 mb-4 section3 d-none" id="review_submit_main">
                 <h3 class="h5 fw-semibold mb-2">🏷️ {{ translate('Review & Submit') }}</h3>
@@ -1216,601 +2837,6 @@
                 </div>
             </div>
 
-
-            <!--  Store & Category Info same -->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_store_category">
-                <h3 class="h5 fw-semibold mb-4">🏪 Store & Category Info</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Partner Store <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Select partner store</option>
-                            <option>Teh Kotjok - SGC Cikarang</option>
-                            <option>McDonald's Riyadh</option>
-                            <option>Burger King Jeddah</option>
-                            <option>Pizza Hut Dammam</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Category <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Select category</option>
-                            <option>Restaurant</option>
-                            <option>Cafe</option>
-                            <option>Fast Food</option>
-                            <option>Fine Dining</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Service Type</label>
-                        <select class="form-select form-control">
-                            <option>Dine In Only</option>
-                            <option>Delivery Only</option>
-                            <option>Dine In & Delivery</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Location/Branch</label>
-                        <select class="form-select form-control">
-                            <option>All Branches</option>
-                            <option>Specific Branch</option>
-                            <option>Multiple Selected Branches</option>
-                        </select>
-                    </div>
-                </div>
-            </div> --}}
-            <!-- Discount Settings -->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section3" id="discount_settings">
-                <h3 class="h5 fw-semibold mb-4">💰 Discount Configuration</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Discount Type <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
-                            <option>Percentage (%)</option>
-                            <option>Fixed Amount (SAR)</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Discount Value <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" placeholder="Ex: 15" step="0.01">
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Minimum Bill Amount (SAR) <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" placeholder="Ex: 20000" step="0.01">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Discount Cap (SAR)</label>
-                        <input type="number" class="form-control" placeholder="Leave empty for unlimited" step="0.01">
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Valid Until Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" value="2025-12-31">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Usage Limit per User</label>
-                        <input type="number" class="form-control" placeholder="Ex: 1 (leave empty for unlimited)">
-                    </div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-discount-cap" checked>
-                            <label class="form-check-label" for="no-discount-cap">No discount cap (like Grab example)</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="unlimited-redemptions" checked>
-                            <label class="form-check-label" for="unlimited-redemptions">Unlimited redemptions</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="stackable-offers">
-                            <label class="form-check-label" for="stackable-offers">Check with outlet if stackable with other offers</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="anytime-redemption" checked>
-                            <label class="form-check-label" for="anytime-redemption">Redeemable anytime during opening hours</label>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-            <!-- Shop Management Settings -->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section" id="shop_fields">
-                <h3 class="h5 fw-semibold mb-4">🛒 Shop Management Settings</h3>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-            </div> --}}
-            <!-- Pharmacy Management Fields -->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section one_four_complete" id="pharmacy_fields">
-                <h3 class="h5 fw-semibold mb-4">💊 Pharmacy Management Settings</h3>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="is-basic-medicine">
-                        <label class="form-check-label" for="is-basic-medicine">Is Basic Medicine</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="is-prescription-required">
-                        <label class="form-check-label" for="is-prescription-required">Is prescription required</label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Generic name</label>
-                    <input type="text" class="form-control" placeholder="Enter generic name">
-                </div>
-            </div> --}}
-            <!-- Grocery Management Settings -->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section" id="grocery_fields">
-                <h3 class="h5 fw-semibold mb-4">🛒 Grocery Management Settings</h3>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Nutrition</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Allergen Ingredients</label>
-                        <textarea class="form-control" rows="4" placeholder="Type your content and press enter"></textarea>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
-                        <input type="number" class="form-control" placeholder="Ex: 10">
-                    </div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is-organic">
-                            <label class="form-check-label" for="is-organic">Is organic</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is-halal">
-                            <label class="form-check-label" for="is-halal">Is It Halal</label>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-            <!-- Voucher Behavior Settings same-->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="voucher_behavior">
-                <h3 class="h5 fw-semibold mb-4">⚙️ Voucher Behavior Settings</h3>
-
-                <!-- Delivery/Pickup Specific -->
-                <div id="delivery-behavior">
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="enable-cart">
-                                <label class="form-check-label" for="enable-cart">Enable Cart Functionality</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="enable-tracking">
-                                <label class="form-check-label" for="enable-tracking">Enable Order Tracking</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="allow-scheduled">
-                                <label class="form-check-label" for="allow-scheduled">Allow Scheduled Delivery</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Delivery Areas</label>
-                            <select class="form-select form-control" multiple>
-                                <option>Central Riyadh</option>
-                                <option>North Riyadh</option>
-                                <option>East Riyadh</option>
-                                <option>West Riyadh</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Delivery Fee (SAR)</label>
-                            <input type="number" class="form-control" placeholder="Ex: 15">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- In-Store Specific -->
-                <div class="d-none" id="instore-behavior">
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">QR Code Type</label>
-                            <select class="form-select form-control">
-                                <option>Dynamic QR</option>
-                                <option>Static QR</option>
-                                <option>QR + Barcode</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Redemption Method</label>
-                            <select class="form-select form-control">
-                                <option>Scan to Redeem</option>
-                                <option>Code Entry</option>
-                                <option>Both</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="instant-redeem">
-                                <label class="form-check-label" for="instant-redeem">Allow Instant Redemption</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="partial-redeem">
-                                <label class="form-check-label" for="partial-redeem">Allow Partial Redemption</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="buy-now-only">
-                                <label class="form-check-label" for="buy-now-only">Buy Now Only (No Cart)</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Discount Behavior -->
-                <div id="discount-behavior">
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Discount Type</label>
-                            <select class="form-select form-control">
-                                <option>Percentage (%)</option>
-                                <option>Fixed Amount (SAR)</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Discount Value</label>
-                            <input type="number" class="form-control" placeholder="Ex: 15">
-                        </div>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Minimum Bill Amount (SAR)</label>
-                            <input type="number" class="form-control" placeholder="Ex: 20000">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-medium">Maximum Discount Cap (SAR)</label>
-                            <input type="number" class="form-control" placeholder="Leave empty for no cap">
-                        </div>
-                    </div>
-                    <div class="row g-2 mb-4">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="cashless-only" checked disabled>
-                                <label class="form-check-label" for="cashless-only">Cashless Payment Only (Required)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="bill-calculator" checked>
-                                <label class="form-check-label" for="bill-calculator">Enable Bill Calculator Interface</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="auto-calculation">
-                                <label class="form-check-label" for="auto-calculation">Auto Calculate Discounted Amount</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="show-breakdown">
-                                <label class="form-check-label" for="show-breakdown">Show Payment Breakdown</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Payment Methods -->
-                    <div class="border-top pt-4 mb-4">
-                        <h4 class="h6 fw-semibold mb-3">💳 Allowed Payment Methods (Cashless Only)</h4>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="credit-debit-cards" checked>
-                                    <label class="form-check-label" for="credit-debit-cards">Credit/Debit Cards (Visa, MasterCard, Mada)</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="apple-pay" checked>
-                                    <label class="form-check-label" for="apple-pay">Apple Pay</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="wallet-payment" checked>
-                                    <label class="form-check-label" for="wallet-payment">Digital Wallet</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="bank-transfer">
-                                    <label class="form-check-label" for="bank-transfer">Bank Transfer</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="stc-pay">
-                                    <label class="form-check-label" for="stc-pay">STC Pay</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Voucher Display Settings -->
-                    <div class="border-top pt-4 mb-4">
-                        <h4 class="h6 fw-semibold mb-3">🎨 Voucher Display Settings</h4>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Display Title Template</label>
-                                <input type="text" class="form-control" value="{discount}% off total bill">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Subtitle Template</label>
-                                <input type="text" class="form-control" value="SAR{minimum} minimum spend">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-medium">Cashless Payment Notice</label>
-                            <textarea class="form-control" rows="2">Cashless Payment Only - Credit/Debit Cards, Apple Pay, and Digital Wallet accepted</textarea>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="show-partner-logo" checked>
-                                    <label class="form-check-label" for="show-partner-logo">Show Partner Logo on Voucher</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="show-cashless-badge" checked>
-                                    <label class="form-check-label" for="show-cashless-badge">Show "Cashless Only" Badge</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bill Input Settings -->
-                    <div class="border-top pt-4">
-                        <h4 class="h6 fw-semibold mb-3">🧮 Bill Input Interface Settings</h4>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Bill Input Label</label>
-                                <input type="text" class="form-control" value="Enter amount on receipt">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Currency Symbol</label>
-                                <select class="form-select form-control">
-                                    <option>SAR</option>
-                                    <option>USD</option>
-                                    <option>AED</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Number Pad Style</label>
-                                <select class="form-select form-control">
-                                    <option>Full Screen Calculator</option>
-                                    <option>Compact Keyboard</option>
-                                    <option>Native Input</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-medium">Decimal Places</label>
-                                <select class="form-select form-control">
-                                    <option>0</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="show-calculation-preview" checked>
-                                    <label class="form-check-label" for="show-calculation-preview">Show Real-time Calculation Preview</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="highlight-savings">
-                                    <label class="form-check-label" for="highlight-savings">Highlight Savings Amount</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            <!-- Usage Terms & Conditions same-->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="usage_terms">
-                <h3 class="h5 fw-semibold mb-4">📋 Usage Terms & Conditions</h3>
-                <div class="row g-2 mb-4">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="valid-in-store">
-                            <label class="form-check-label" for="valid-in-store">Valid in-store only</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="redeem-schedule">
-                            <label class="form-check-label" for="redeem-schedule">Redeem on Mon–Sun 10:00am – 10:00pm. Including public holidays</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="valid-30-days">
-                            <label class="form-check-label" for="valid-30-days">Valid for 30 days after purchase</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="one-per-bill">
-                            <label class="form-check-label" for="one-per-bill">Limited to 1 voucher per bill</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="non-refundable">
-                            <label class="form-check-label" for="non-refundable">Non-refundable</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="unlimited-purchase">
-                            <label class="form-check-label" for="unlimited-purchase">Unlimited purchase for user</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="prior-booking">
-                            <label class="form-check-label" for="prior-booking">Prior booking is required</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-holidays">
-                            <label class="form-check-label" for="no-holidays">Offers does not include official holidays</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="no-ramadan">
-                            <label class="form-check-label" for="no-ramadan">Offers does not include Ramadan</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="included-brands">
-                            <label class="form-check-label" for="included-brands">Included brands</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="higher-price-apply">
-                            <label class="form-check-label" for="higher-price-apply">The higher price will apply if the products do not match</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="redeemable-branches">
-                            <label class="form-check-label" for="redeemable-branches">Redeemable at 4 branches</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Valid Until Date</label>
-                        <input type="date" class="form-control" value="2025-12-31">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-medium">Usage Limit per User</label>
-                        <input type="number" class="form-control" placeholder="Ex: 1">
-                    </div>
-                </div>
-            </div> --}}
-            <!-- Attributes same-->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="attributes">
-                <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('attribute') }}</h3>
-
-            <div class="row g-2">
-
-                <div class="col-md-12" id="attribute_section">
-                    <div class="c border-0">
-                        <div class=" pb-0">
-                            <div class="row g-2">
-                                <div class="col-12">
-                                    <div class="form-group mb-0">
-                                        <label class="input-label"
-                                            for="exampleFormControlSelect1">{{ translate('messages.attribute') }}<span
-                                                class="input-label-secondary"></span></label>
-                                        <select name="attribute_id[]" id="choice_attributes"
-                                            class="form-control js-select2-custom" multiple="multiple">
-                                            @foreach (\App\Models\Attribute::orderBy('name')->get() as $attribute)
-                                                <option value="{{ $attribute['id'] }}">{{ $attribute['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <div class="customer_choice_options d-flex __gap-24px"
-                                        id="customer_choice_options">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="variant_combination" id="variant_combination">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            </div> --}}
-            <!-- Tags same-->
-            {{-- <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="tags">
-                <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('tags') }}</h3>
-                <div class="col-md-12">
-                    <div class="row g-2">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <!-- Action Buttons -->
             <div class="col-md-12">
                 <div class="btn--container justify-content-end">
@@ -1853,6 +2879,17 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
 @endsection
 
 
@@ -1863,9 +2900,44 @@
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const select = document.getElementById("bundle_offer_type");
+
+        select.addEventListener("change", function () {
+            // sab panels ke divs hide karo
+            document.querySelectorAll(
+            "#panel1 .bogo_free_div, #panel1 .buy_x_get_y_div, #panel1 .gift_div, #panel1 .bundle_div, #panel1 .mix_match_div,   #panel1 .fixed_bundle_div,  #panel1 .bogo_free" +
+            "#panel2 .bogo_free_div, #panel2 .buy_x_get_y_div, #panel2 .gift_div, #panel2 .bundle_div, #panel2 .mix_match_div , #panel2 .fixed_bundle_div,#panel2 .fixed_bundle "
+            ).forEach(div => div.style.display = "none");
+
+            // selected value
+            // fixed_bundle    bogo_free fixed_bundle
+
+            const selected = this.value;
+
+            if (selected) {
+            document.querySelectorAll("#panel1 ." + selected + "_div, #panel2 ." + selected + "_div")
+                .forEach(div => div.style.display = "block");
+            }
+        });
+        });
+    </script>
 
     <script>
-      function getDataFromServer(storeId) {
+       const buttons = document.querySelectorAll("#btn-group .btns");
+            buttons.forEach(btn => {
+                btn.addEventListener("click", () => {
+                // sab se pehle purane selected hatao
+                buttons.forEach(b => b.classList.remove("selected"));
+                // jis par click hua usko selected do
+                btn.classList.add("selected");
+                });
+            });
+    </script>
+
+    <script>
+        function getDataFromServer(storeId) {
             $.ajax({
                 url: "{{ route('admin.Voucher.get_document') }}",
                 type: "GET",
@@ -1903,9 +2975,7 @@
                 }
             });
             }
-
-
-        </script>
+    </script>
 
     <script>
         const toggleBtn = document.getElementById("togglePreview");
@@ -2552,8 +3622,43 @@
         })
     </script>
 
-
  {{--        --}}
+   <script>
+        function bundle(type) {
+        // 1. Set the hidden input value
+        document.getElementById('hidden_bundel').value = type;
+
+        // 2. IDs of elements to hide
+        const ids = [
+            'management_selection',
+            'basic_info_main',
+            'store_category_main',
+            'how_it_work_main',
+            'term_condition_main',
+            'review_submit_main',
+            'Product_voucher_fields_1_7',
+            'product_voucher_price_info_1_7',
+            'food_voucher_fields_1_8',
+            'food_voucher_price_info_1_8',
+            'bundel_food_voucher_fields_1_7_1_8',
+            'bundel_food_voucher_price_info_1_7_1_8'
+        ];
+
+        // Add d-none to each element if it's visible
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.classList.contains('d-none')) {
+            el.classList.add('d-none');
+            }
+        });
+
+        // 3. Remove "selected" from ALL voucher-card_2 sections
+        document.querySelectorAll('.voucher-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        }
+   </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const managementSelection = document.querySelectorAll('#management_selection');
@@ -2565,57 +3670,91 @@
             const how_it_work_main = document.getElementById('how_it_work_main');
             const term_condition_main = document.getElementById('term_condition_main');
             const review_submit_main = document.getElementById('review_submit_main');
+            const bundle_rule = document.getElementById('bundle_rule');
+            const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
 
             const Product_voucher_fields_1_7 = document.getElementById('Product_voucher_fields_1_7');
             const product_voucher_price_info_1_7 = document.getElementById('product_voucher_price_info_1_7');
             const food_voucher_fields_1_8 = document.getElementById('food_voucher_fields_1_8');
             const food_voucher_price_info_1_8 = document.getElementById('food_voucher_price_info_1_8');
+            const bundel_food_voucher_fields_1_7_1_8 = document.getElementById('bundel_food_voucher_fields_1_7_1_8');
+            const bundel_food_voucher_price_info_1_7_1_8 = document.getElementById('bundel_food_voucher_price_info_1_7_1_8');
 
+
+            // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId) {
-
-                getDataFromServer(primaryId)
-                // اگر hidden input میں primary id رکھنی ہے:
+                getDataFromServer(primaryId);
+                // Set hidden input value
                 document.getElementById('hidden_value').value = loopIndex;
+
+                const managementSelection = document.querySelectorAll('#management_selection');
+
                 managementSelection.forEach(el => {
                     if (loopIndex === "1" || loopIndex === "2") {
-                        submit_voucher_type(loopIndex,primaryId); // اب اصل primary id pass کر رہے ہیں
+                        submit_voucher_type(loopIndex, primaryId);
                         el.classList.remove('d-none');
+
                         // Hide discount-specific sections
-                        [basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                            if (el) el.classList.add('d-none');
+                        const elementsToHide = [
+                            document.getElementById('basic_info'),
+                            document.getElementById('store_category'),
+                            document.getElementById('price_info'),
+                            document.getElementById('voucher_behavior'),
+                            document.getElementById('usage_terms'),
+                            document.getElementById('attributes'),
+                            document.getElementById('tags')
+                        ];
+
+                        elementsToHide.forEach(element => {
+                            if (element) element.classList.add('d-none');
                         });
 
                     } else if (loopIndex === "3" || loopIndex === "4") {
-                        submit_voucher_type(loopIndex,primaryId);
+                        submit_voucher_type(loopIndex, primaryId);
                         el.classList.add('d-none');
 
                         // Show discount-specific sections
-                        [basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags].forEach(el => {
-                            if (el) el.classList.remove('d-none');
+                        const elementsToShow = [
+                            document.getElementById('basic_info'),
+                            document.getElementById('store_category'),
+                            document.getElementById('price_info'),
+                            document.getElementById('voucher_behavior'),
+                            document.getElementById('usage_terms'),
+                            document.getElementById('attributes'),
+                            document.getElementById('tags')
+                        ];
+
+                        elementsToShow.forEach(element => {
+                            if (element) element.classList.remove('d-none');
                         });
                     }
                 });
             }
+
             function section_second(value_two) {
                 const hidden_value = document.getElementById('hidden_value').value;
+                const hidden_bundel = document.getElementById('hidden_bundel').value;
+
                 // Convert to strings for proper comparison
                 const hiddenVal = String(hidden_value);
                 const valueTwo = String(value_two);
+                const hiddenBundel = String(hidden_bundel);
+
                 // Get all elements
                 const basic_info_main = document.getElementById('basic_info_main');
                 const store_category_main = document.getElementById('store_category_main');
                 const how_it_work_main = document.getElementById('how_it_work_main');
                 const term_condition_main = document.getElementById('term_condition_main');
                 const review_submit_main = document.getElementById('review_submit_main');
-
+                const bundle_rule = document.getElementById('bundle_rule');
+                const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
 
                 const Product_voucher_fields_1_7 = document.getElementById('Product_voucher_fields_1_7');
                 const product_voucher_price_info_1_7 = document.getElementById('product_voucher_price_info_1_7');
                 const food_voucher_fields_1_8 = document.getElementById('food_voucher_fields_1_8');
                 const food_voucher_price_info_1_8 = document.getElementById('food_voucher_price_info_1_8');
-
-                // Product_voucher_fields_1_7,product_voucher_price_info_1_7
-                // food_voucher_fields_1_8,food_voucher_price_info_1_8
+                const bundel_food_voucher_fields_1_7_1_8 = document.getElementById('bundel_food_voucher_fields_1_7_1_8');
+                const bundel_food_voucher_price_info_1_7_1_8 = document.getElementById('bundel_food_voucher_price_info_1_7_1_8');
 
                 // Helper function to show elements
                 function showElements(elements) {
@@ -2631,121 +3770,318 @@
                     });
                 }
 
-                // Main logic based on voucher type and management type
-                switch (hiddenVal) {
-                    case "1": // Delivery/Pickup
-                        switch (valueTwo) {
-                            case "5": // Shop + Delivery
-                                showElements([basic_info, store_category, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([Product_voucher_fields_1_7,product_voucher_price_info_1_7,food_voucher_fields_1_8,food_voucher_price_info_1_8 ]);
-                                showShopFields();
+                switch (hiddenBundel) {
+                    case "simple":
+                        switch (hiddenVal) {
+                            case "1": // Delivery/Pickup
+                                switch (valueTwo) {
+                                    case "5": // Shop + Delivery
+                                        showElements([
+                                            document.getElementById('basic_info'),
+                                            document.getElementById('store_category'),
+                                            document.getElementById('price_info'),
+                                            document.getElementById('voucher_behavior'),
+                                            document.getElementById('usage_terms'),
+                                            document.getElementById('attributes'),
+                                            document.getElementById('tags')
+                                        ]);
+                                        hideElements([Product_voucher_fields_1_7, product_voucher_price_info_1_7, food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        showShopFields();
+                                        break;
+
+                                    case "6": // Pharmacy + Delivery
+                                        showElements([
+                                            document.getElementById('basic_info'),
+                                            document.getElementById('store_category'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('price_info'),
+                                            document.getElementById('voucher_behavior'),
+                                            document.getElementById('usage_terms'),
+                                            document.getElementById('attributes'),
+                                            document.getElementById('tags')
+                                        ]);
+                                        hideElements([Product_voucher_fields_1_7, product_voucher_price_info_1_7, food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        showPharmacyFields();
+                                        break;
+
+                                    case "7": // Grocery + Delivery
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main, Product_voucher_fields_1_7, product_voucher_price_info_1_7]);
+                                        hideElements([food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        showGroceryFields();
+                                        break;
+
+                                    case "8": // Food + Delivery
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main, food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        hideElements([Product_voucher_fields_1_7, product_voucher_price_info_1_7]);
+                                        showFoodFields();
+                                        break;
+                                }
                                 break;
 
-                            case "6": // Pharmacy + Delivery
-                            alert("sdjvjdvjds");
-                                showElements([basic_info, store_category, pharmacy_fields, price_info, voucher_behavior, usage_terms, attributes, tags]);
-                                hideElements([Product_voucher_fields_1_7,product_voucher_price_info_1_7,food_voucher_fields_1_8,food_voucher_price_info_1_8]);
-                                showPharmacyFields();
+                            case "2": // In-Store
+                                switch (valueTwo) {
+                                    case "5": // Shop + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showShopFields();
+                                        break;
+
+                                    case "6": // Pharmacy + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showPharmacyFields();
+                                        break;
+
+                                    case "7": // Grocery + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showGroceryFields();
+                                        break;
+
+                                    case "8": // Food + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields')
+                                        ]);
+                                        showFoodFields();
+                                        break;
+                                }
                                 break;
 
-                            case "7": // Grocery + Delivery
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main,Product_voucher_fields_1_7,product_voucher_price_info_1_7]);
-                                hideElements([food_voucher_fields_1_8,food_voucher_price_info_1_8]);
-                                showGroceryFields();
-                                break;
+                            case "3": // Flat Discount
+                            case "4": // Another discount type
+                                switch (valueTwo) {
+                                    case "5": // Shop
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showShopFields();
+                                        break;
 
-                            case "8": // Food + Delivery
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main ,food_voucher_fields_1_8,food_voucher_price_info_1_8]);
-                                hideElements([Product_voucher_fields_1_7,product_voucher_price_info_1_7]);
-                                showFoodFields();
+                                    case "6": // Pharmacy
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showPharmacyFields();
+                                        break;
+
+                                    case "7": // Grocery
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showGroceryFields();
+                                        break;
+
+                                    case "8": // Food
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields')
+                                        ]);
+                                        showFoodFields();
+                                        break;
+                                }
                                 break;
                         }
                         break;
 
-                    case "2": // In-Store
-                        switch (valueTwo) {
-                            case "5": // Shop + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
-                                showShopFields();
+                    case "bundle":
+                      switch (hiddenVal) {
+                            case "1": // Delivery/Pickup
+                                switch (valueTwo) {
+                                    case "5": // Shop + Delivery
+                                        showElements([
+                                            document.getElementById('basic_info'),
+                                            document.getElementById('store_category'),
+                                            document.getElementById('price_info'),
+                                            document.getElementById('voucher_behavior'),
+                                            document.getElementById('usage_terms'),
+                                            document.getElementById('attributes'),
+                                            document.getElementById('tags')
+                                        ]);
+                                        hideElements([Product_voucher_fields_1_7, product_voucher_price_info_1_7, food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        showShopFields();
+                                        break;
+
+                                    case "6": // Pharmacy + Delivery
+                                        showElements([
+                                            document.getElementById('basic_info'),
+                                            document.getElementById('store_category'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('price_info'),
+                                            document.getElementById('voucher_behavior'),
+                                            document.getElementById('usage_terms'),
+                                            document.getElementById('attributes'),
+                                            document.getElementById('tags')
+                                        ]);
+                                        hideElements([Product_voucher_fields_1_7, product_voucher_price_info_1_7, food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        showPharmacyFields();
+                                        break;
+
+                                    case "7": // Grocery + Delivery
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main,Bundle_products_configuration,bundle_rule, review_submit_main, bundel_food_voucher_fields_1_7_1_8, bundel_food_voucher_price_info_1_7_1_8]);
+                                        hideElements([food_voucher_fields_1_8, food_voucher_price_info_1_8]);
+                                        showGroceryFields();
+                                        break;
+
+                                    case "8": // Food + Delivery
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main,Bundle_products_configuration, bundle_rule,review_submit_main, bundel_food_voucher_fields_1_7_1_8, bundel_food_voucher_price_info_1_7_1_8]);
+                                        hideElements([Product_voucher_fields_1_7, product_voucher_price_info_1_7]);
+                                        showFoodFields();
+                                        break;
+                                }
                                 break;
 
-                            case "6": // Pharmacy + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
-                                showPharmacyFields();
+                            case "2": // In-Store
+                                switch (valueTwo) {
+                                    case "5": // Shop + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showShopFields();
+                                        break;
+
+                                    case "6": // Pharmacy + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showPharmacyFields();
+                                        break;
+
+                                    case "7": // Grocery + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showGroceryFields();
+                                        break;
+
+                                    case "8": // Food + In-Store
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields')
+                                        ]);
+                                        showFoodFields();
+                                        break;
+                                }
                                 break;
 
-                            case "7": // Grocery + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
-                                showGroceryFields();
-                                break;
+                            case "3": // Flat Discount
+                            case "4": // Another discount type
+                                switch (valueTwo) {
+                                    case "5": // Shop
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showShopFields();
+                                        break;
 
-                            case "8": // Food + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
-                                showFoodFields();
+                                    case "6": // Pharmacy
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('grocery_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showPharmacyFields();
+                                        break;
+
+                                    case "7": // Grocery
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('food_fields')
+                                        ]);
+                                        showGroceryFields();
+                                        break;
+
+                                    case "8": // Food
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        hideElements([
+                                            document.getElementById('discount_store_category'),
+                                            document.getElementById('discount_settings'),
+                                            document.getElementById('shop_fields'),
+                                            document.getElementById('pharmacy_fields'),
+                                            document.getElementById('grocery_fields')
+                                        ]);
+                                        showFoodFields();
+                                        break;
+                                }
                                 break;
                         }
                         break;
 
-                    case "3": // Flat Discount
-                      switch (valueTwo) {
-                            case "5": // Shop + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
-                                showShopFields();
-                                break;
-
-                            case "6": // Pharmacy + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
-                                showPharmacyFields();
-                                break;
-
-                            case "7": // Grocery + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
-                                showGroceryFields();
-                                break;
-
-                            case "8": // Food + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
-                                showFoodFields();
-                                break;
-                        }
-                        break;
-                    case "4": // Flat Discount
-                        switch (valueTwo) {
-                            case "5": // Shop + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, pharmacy_fields, grocery_fields, food_fields]);
-                                showShopFields();
-                                break;
-
-                            case "6": // Pharmacy + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, grocery_fields, food_fields]);
-                                showPharmacyFields();
-                                break;
-
-                            case "7": // Grocery + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, food_fields]);
-                                showGroceryFields();
-                                break;
-
-                            case "8": // Food + In-Store
-                                showElements([basic_info_main , store_category_main ,how_it_work_main,term_condition_main,review_submit_main]);
-                                hideElements([discount_store_category, discount_settings, shop_fields, pharmacy_fields, grocery_fields]);
-                                showFoodFields();
-                                break;
-                        }
-                        break;
                 }
             }
+
             // Helper functions for showing specific field types
             function showShopFields() {
                 const shopFields = document.getElementById('shop-category-fields');
@@ -2758,6 +4094,7 @@
                 if (groceryFields) groceryFields.classList.add('d-none');
                 if (foodFields) foodFields.classList.add('d-none');
             }
+
             function showPharmacyFields() {
                 const shopFields = document.getElementById('shop-category-fields');
                 const pharmacyFields = document.getElementById('pharmacy-category-fields');
@@ -2769,6 +4106,7 @@
                 if (groceryFields) groceryFields.classList.add('d-none');
                 if (foodFields) foodFields.classList.add('d-none');
             }
+
             function showGroceryFields() {
                 const shopFields = document.getElementById('shop-category-fields');
                 const pharmacyFields = document.getElementById('pharmacy-category-fields');
@@ -2780,6 +4118,7 @@
                 if (pharmacyFields) pharmacyFields.classList.add('d-none');
                 if (foodFields) foodFields.classList.add('d-none');
             }
+
             function showFoodFields() {
                 const shopFields = document.getElementById('shop-category-fields');
                 const pharmacyFields = document.getElementById('pharmacy-category-fields');
@@ -2791,20 +4130,38 @@
                 if (pharmacyFields) pharmacyFields.classList.add('d-none');
                 if (groceryFields) groceryFields.classList.add('d-none');
             }
-            // Highlight selected voucher-card
+
+            // DOMContentLoaded event listener for initialization
+            document.addEventListener("DOMContentLoaded", function () {
+                const managementSelection = document.querySelectorAll('#management_selection');
+                const voucherCards = document.querySelectorAll('.voucher-card');
+                const voucherCards2 = document.querySelectorAll('.voucher-card_2');
+
+                // Highlight selected voucher-card
+                voucherCards.forEach(card => {
+                    card.addEventListener('click', function () {
+                        voucherCards.forEach(c => c.classList.remove('selected'));
+                        this.classList.add('selected');
+                    });
+                });
+
+                // Event delegation for dynamically created voucher-card_2 elements
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.voucher-card_2')) {
+                        document.querySelectorAll('.voucher-card_2').forEach(card => {
+                            card.classList.remove('selected');
+                        });
+                        e.target.closest('.voucher-card_2').classList.add('selected');
+                    }
+                });
+            });
+                 // Highlight selected voucher-card
             voucherCards.forEach(card => {
                 card.addEventListener('click', function () {
                     voucherCards.forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
                 });
             });
-            // Highlight selected management voucher-card
-            // voucherCards2.forEach(card => {
-            //     card.addEventListener('click', function () {
-            //         voucherCards2.forEach(c => c.classList.remove('selected'));
-            //         this.classList.add('selected');
-            //     });
-            // });
             // Make functions globally accessible
             window.section_one = section_one;
             window.section_second = section_second;
@@ -2860,154 +4217,680 @@
                 }
             });
         }
-
-
         $(document).on('click', '.voucher-card_2', function () {
             $('.voucher-card_2').removeClass('selected');
             $(this).addClass('selected');
         });
-
     </script>
 
- <script>
-    $(document).ready(function () {
-        // -------------------- Segment Select2 --------------------
-        $('.segment-select').select2({
-            placeholder: "-- Select Segment --",
-            allowClear: true,
-            width: '100%',
-            dropdownAutoWidth: true,
-            minimumResultsForSearch: 3,
-            templateResult: formatOption,
-            templateSelection: formatSelection
-        });
+    <script>
+        $(document).ready(function () {
+            // -------------------- Segment Select2 --------------------
+            $('.segment-select').select2({
+                placeholder: "-- Select Segment --",
+                allowClear: true,
+                width: '100%',
+                dropdownAutoWidth: true,
+                minimumResultsForSearch: 3,
+                templateResult: formatOption,
+                templateSelection: formatSelection
+            });
 
-        // -------------------- Client Select2 --------------------
-        $('.Clients-select').select2({
-            placeholder: "-- Select Clients --",
-            allowClear: true,
-            width: '100%',
-            dropdownAutoWidth: true,
-            minimumResultsForSearch: 3,
-            templateResult: formatOption,
-            templateSelection: formatSelection
-        });
+            // -------------------- Client Select2 --------------------
+            $('.Clients-select').select2({
+                placeholder: "-- Select Clients --",
+                allowClear: true,
+                width: '100%',
+                dropdownAutoWidth: true,
+                minimumResultsForSearch: 3,
+                templateResult: formatOption,
+                templateSelection: formatSelection
+            });
 
-        // -------------------- Option Formatter --------------------
-        function formatOption(option) {
-            if (!option.id) return option.text;
+            // -------------------- Option Formatter --------------------
+            function formatOption(option) {
+                if (!option.id) return option.text;
 
-            const parts = option.text.split(' / ');
-            if (parts.length === 2) {
-                const name = parts[0];
-                const type = parts[1];
-                const typeClass = type === 'free' ? 'success' : type === 'paid' ? 'primary' : 'warning';
+                const parts = option.text.split(' / ');
+                if (parts.length === 2) {
+                    const name = parts[0];
+                    const type = parts[1];
+                    const typeClass = type === 'free' ? 'success' : type === 'paid' ? 'primary' : 'warning';
 
-                return $(
-                    '<div class="d-flex justify-content-between align-items-center">' +
-                        '<span>' + name + '</span>' +
-                        '<span class="badge bg-' + typeClass + '">' + type + '</span>' +
-                    '</div>'
-                );
+                    return $(
+                        '<div class="d-flex justify-content-between align-items-center">' +
+                            '<span>' + name + '</span>' +
+                            '<span class="badge bg-' + typeClass + '">' + type + '</span>' +
+                        '</div>'
+                    );
+                }
+                return option.text;
             }
-            return option.text;
+
+            function formatSelection(option) {
+                return option.text || option.placeholder;
+            }
+
+            // -------------------- Client Change => Load Segments --------------------
+            $('.Clients-select').on('change', function () {
+                let clientId = $(this).val();
+                if (!clientId) return;
+                // alert(clientId);
+                let url = "{{ route('admin.client-side.getSegments', ':id') }}".replace(':id', clientId);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        // Clear and refill segment dropdown
+                        $('#segment_type').empty().append('<option></option>');
+
+                        $.each(res, function (index, item) {
+                            $('#segment_type').append(
+                                '<option value="' + item.id + '">' + item.name + ' / ' + item.type + '</option>'
+                            );
+                        });
+
+                        // Refresh Select2
+                        $('#segment_type').trigger('change');
+                    },
+                    error: function () {
+                        alert("Error loading segments!");
+                    }
+                });
+            });
+
+            // -------------------- Segment Select Validation --------------------
+            $('.segment-select').on('select2:select', function (e) {
+                const data = e.params.data;
+                $('#selectedValue').removeClass('alert-info alert-warning')
+                    .addClass('alert-success')
+                    .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
+                $(this).addClass('is-valid');
+            });
+
+            $('.segment-select').on('select2:clear', function () {
+                $('#selectedValue').removeClass('alert-success')
+                    .addClass('alert-info')
+                    .html('No segment selected yet');
+                $(this).removeClass('is-valid');
+            });
+
+            // -------------------- Clients Select Validation --------------------
+            $('.Clients-select').on('select2:select', function (e) {
+                const data = e.params.data;
+                $('#selectedValue').removeClass('alert-info alert-warning')
+                    .addClass('alert-success')
+                    .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
+                $(this).addClass('is-valid');
+            });
+
+            $('.Clients-select').on('select2:clear', function () {
+                $('#selectedValue').removeClass('alert-success')
+                    .addClass('alert-info')
+                    .html('No Clients selected yet');
+                $(this).removeClass('is-valid');
+            });
+
+            // -------------------- Submit Demo --------------------
+            $('#submitBtn').on('click', function () {
+                const selectedClients = $('.Clients-select').val();
+                const selectedSegment = $('.segment-select').val();
+                const clientName = $('#client_name').val();
+
+                if (!selectedClients) {
+                    alert('Please select a Client first!');
+                    return;
+                }
+
+                if (!selectedSegment) {
+                    alert('Please select a Segment first!');
+                    return;
+                }
+
+                if (!clientName) {
+                    alert('Please enter client name!');
+                    return;
+                }
+
+                alert(
+                    'Client saved successfully!\n' +
+                    'Client: ' + $('.Clients-select option:selected').text() +
+                    '\nSegment: ' + $('.segment-select option:selected').text() +
+                    '\nName: ' + clientName
+                );
+            });
+        });
+    </script>
+
+{{-- domo --}}
+
+{{-- <script>
+    document.getElementById("addProductBtn").addEventListener("click", function() {
+        var bundleOffer = document.getElementById("bundle_offer_type").value;
+        var availableProducts = document.getElementById("availableProducts");
+
+
+        if (bundleOffer === "") {
+            alert("Please select an offer type first!");
+            return;
         }
 
-        function formatSelection(option) {
-            return option.text || option.placeholder;
+        if (availableProducts.style.display === "none") {
+            availableProducts.style.display = "block";
+        } else {
+            availableProducts.style.display = "none";
         }
+    });
+</script> --}}
 
-        // -------------------- Client Change => Load Segments --------------------
-        $('.Clients-select').on('change', function () {
-            let clientId = $(this).val();
-            if (!clientId) return;
-            // alert(clientId);
-            let url = "{{ route('admin.client-side.getSegments', ':id') }}".replace(':id', clientId);
+    <script>
+       // Bundle Products Configuration Complete JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    let selectedBundleProducts = [];
+    let bundleProductCounter = 1;
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function (res) {
-                    // Clear and refill segment dropdown
-                    $('#segment_type').empty().append('<option></option>');
+    // Add Product Button Click Handler
+    const addProductBtn = document.getElementById('addProductBtn');
+    if (addProductBtn) {
+        addProductBtn.addEventListener('click', function() {
+            const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+            const availableProducts = document.getElementById('availableProducts');
 
-                    $.each(res, function (index, item) {
-                        $('#segment_type').append(
-                            '<option value="' + item.id + '">' + item.name + ' / ' + item.type + '</option>'
-                        );
-                    });
+            // Check if bundle offer type is selected
+            if (!bundleOfferType || bundleOfferType === "") {
+                alert("Please select a bundle offer type first!");
+                return;
+            }
 
-                    // Refresh Select2
-                    $('#segment_type').trigger('change');
-                },
-                error: function () {
-                    alert("Error loading segments!");
+            // Toggle available products visibility
+            if (availableProducts) {
+                if (availableProducts.style.display === "none" || !availableProducts.style.display) {
+                    availableProducts.style.display = "block";
+                } else {
+                    availableProducts.style.display = "none";
+                }
+            }
+        });
+    }
+
+    // Select Product Button Click Handler
+    function initializeProductSelection() {
+        const selectProductBtns = document.querySelectorAll('.select-product-btn');
+
+        selectProductBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const productCard = this.closest('.product-card');
+                if (productCard) {
+                    const productId = productCard.getAttribute('data-id');
+                    const productName = productCard.getAttribute('data-name');
+                    const productPrice = parseFloat(productCard.getAttribute('data-price'));
+
+                    // Add product to bundle
+                    addProductToBundle(productId, productName, productPrice);
                 }
             });
         });
+    }
 
-        // -------------------- Segment Select Validation --------------------
-        $('.segment-select').on('select2:select', function (e) {
-            const data = e.params.data;
-            $('#selectedValue').removeClass('alert-info alert-warning')
-                .addClass('alert-success')
-                .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
-            $(this).addClass('is-valid');
+    // Add Product to Bundle Function
+    function addProductToBundle(id, name, price) {
+        // Check if product already exists
+        const existingProduct = selectedBundleProducts.find(product => product.id === id);
+        if (existingProduct) {
+            alert('This product is already added to the bundle!');
+            return;
+        }
+
+        const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+        let productRole = 'bundle_item';
+
+        // Determine product role based on bundle type
+        switch(bundleOfferType) {
+            case 'bogo_free':
+                productRole = selectedBundleProducts.length === 0 ? 'paid_item' : 'free_item';
+                break;
+            case 'buy_x_get_y':
+                productRole = selectedBundleProducts.length === 0 ? 'paid_item' : 'free_item';
+                break;
+            case 'fixed_bundle':
+            case 'bundle':
+                productRole = 'bundle_item';
+                break;
+            case 'gift':
+                productRole = selectedBundleProducts.length === 0 ? 'qualifying_item' : 'gift_item';
+                break;
+            case 'mix_match':
+                productRole = 'mix_match_item';
+                break;
+            default:
+                productRole = 'bundle_item';
+        }
+
+        // Create product object
+        const product = {
+            id: id,
+            name: name,
+            basePrice: price,
+            role: productRole,
+            quantity: 1,
+            selectedVariations: {},
+            selectedAddons: {},
+            finalPrice: price
+        };
+
+        selectedBundleProducts.push(product);
+        renderBundleProducts();
+        calculateBundlePrice();
+
+        // Hide available products after selection
+        const availableProducts = document.getElementById('availableProducts');
+        if (availableProducts) {
+            availableProducts.style.display = 'none';
+        }
+    }
+
+    // Render Bundle Products Function
+    function renderBundleProducts() {
+        const selectedProductsContainer = document.getElementById('selectedProducts');
+        if (!selectedProductsContainer) return;
+
+        selectedProductsContainer.innerHTML = '';
+
+        if (selectedBundleProducts.length === 0) {
+            selectedProductsContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>';
+            return;
+        }
+
+        selectedBundleProducts.forEach((product, index) => {
+            const productCard = createProductCard(product, index);
+            selectedProductsContainer.appendChild(productCard);
         });
 
-        $('.segment-select').on('select2:clear', function () {
-            $('#selectedValue').removeClass('alert-success')
-                .addClass('alert-info')
-                .html('No segment selected yet');
-            $(this).removeClass('is-valid');
+        // Initialize event listeners for the rendered products
+        initializeProductEventListeners();
+    }
+
+    // Create Product Card Function
+    function createProductCard(product, index) {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card selected';
+
+        const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+        let roleOptions = generateRoleOptions(bundleOfferType, product.role);
+
+        productCard.innerHTML = `
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">Base Price: $${product.basePrice.toFixed(2)}</div>
+                </div>
+                <div class="product-actions">
+                    <select class="form-control product-role-select" data-index="${index}" style="width: auto; margin-right: 10px;">
+                        ${roleOptions}
+                    </select>
+                    <button class="btn btn-danger remove-product-btn" data-index="${index}">Remove</button>
+                </div>
+            </div>
+
+            <div class="variations-section">
+                <div class="variation-group">
+                    <div class="variation-title">Size Options:</div>
+                    <div class="variation-options">
+                        <div class="variation-option ${product.selectedVariations.size === 'small' ? 'selected' : ''}"
+                             data-index="${index}" data-type="size" data-value="small" data-price="0">
+                             Small (+$0)
+                        </div>
+                        <div class="variation-option ${product.selectedVariations.size === 'medium' ? 'selected' : ''}"
+                             data-index="${index}" data-type="size" data-value="medium" data-price="2">
+                             Medium (+$2)
+                        </div>
+                        <div class="variation-option ${product.selectedVariations.size === 'large' ? 'selected' : ''}"
+                             data-index="${index}" data-type="size" data-value="large" data-price="5">
+                             Large (+$5)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="variation-group">
+                    <div class="variation-title">Add-ons:</div>
+                    <div class="addons-section">
+                        <div class="addon-item">
+                            <label>
+                                <input type="checkbox" class="addon-checkbox" data-index="${index}"
+                                       data-addon="extra_cheese" data-price="2"
+                                       ${product.selectedAddons.extra_cheese ? 'checked' : ''}>
+                                Extra Cheese (+$2)
+                            </label>
+                        </div>
+                        <div class="addon-item">
+                            <label>
+                                <input type="checkbox" class="addon-checkbox" data-index="${index}"
+                                       data-addon="extra_sauce" data-price="1"
+                                       ${product.selectedAddons.extra_sauce ? 'checked' : ''}>
+                                Extra Sauce (+$1)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px; font-weight: bold; color: #38a169;">
+                Item Total: $${product.finalPrice.toFixed(2)}
+                ${product.role === 'free_item' ? ' (FREE)' : ''}
+                ${product.role === 'gift_item' ? ' (GIFT)' : ''}
+            </div>
+        `;
+
+        return productCard;
+    }
+
+    // Generate Role Options Function
+    function generateRoleOptions(bundleType, currentRole) {
+        let options = '';
+
+        switch(bundleType) {
+            case 'bogo_free':
+            case 'buy_x_get_y':
+                options = `
+                    <option value="paid_item" ${currentRole === 'paid_item' ? 'selected' : ''}>Paid Item</option>
+                    <option value="free_item" ${currentRole === 'free_item' ? 'selected' : ''}>Free Item</option>
+                `;
+                break;
+            case 'gift':
+                options = `
+                    <option value="qualifying_item" ${currentRole === 'qualifying_item' ? 'selected' : ''}>Qualifying Item</option>
+                    <option value="gift_item" ${currentRole === 'gift_item' ? 'selected' : ''}>Gift Item</option>
+                `;
+                break;
+            case 'fixed_bundle':
+            case 'bundle':
+            case 'mix_match':
+            default:
+                options = `<option value="bundle_item" selected>Bundle Item</option>`;
+        }
+
+        return options;
+    }
+
+    // Initialize Product Event Listeners Function
+    function initializeProductEventListeners() {
+        // Role select change handlers
+        document.querySelectorAll('.product-role-select').forEach(select => {
+            select.addEventListener('change', function() {
+                const index = parseInt(this.dataset.index);
+                selectedBundleProducts[index].role = this.value;
+                calculateBundlePrice();
+            });
         });
 
-        // -------------------- Clients Select Validation --------------------
-        $('.Clients-select').on('select2:select', function (e) {
-            const data = e.params.data;
-            $('#selectedValue').removeClass('alert-info alert-warning')
-                .addClass('alert-success')
-                .html('<i class="fas fa-check-circle me-2"></i>Selected: <strong>' + data.text + '</strong>');
-            $(this).addClass('is-valid');
+        // Remove product handlers
+        document.querySelectorAll('.remove-product-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                selectedBundleProducts.splice(index, 1);
+                renderBundleProducts();
+                calculateBundlePrice();
+            });
         });
 
-        $('.Clients-select').on('select2:clear', function () {
-            $('#selectedValue').removeClass('alert-success')
-                .addClass('alert-info')
-                .html('No Clients selected yet');
-            $(this).removeClass('is-valid');
+        // Variation selection handlers
+        document.querySelectorAll('.variation-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                const type = this.dataset.type;
+                const value = this.dataset.value;
+                const extraPrice = parseFloat(this.dataset.price);
+
+                selectVariation(index, type, value, extraPrice);
+            });
         });
 
-        // -------------------- Submit Demo --------------------
-        $('#submitBtn').on('click', function () {
-            const selectedClients = $('.Clients-select').val();
-            const selectedSegment = $('.segment-select').val();
-            const clientName = $('#client_name').val();
+        // Addon checkbox handlers
+        document.querySelectorAll('.addon-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const index = parseInt(this.dataset.index);
+                const addon = this.dataset.addon;
+                const price = parseFloat(this.dataset.price);
 
-            if (!selectedClients) {
-                alert('Please select a Client first!');
+                toggleAddon(index, addon, price, this.checked);
+            });
+        });
+    }
+
+    // Select Variation Function
+    function selectVariation(productIndex, variationType, value, extraPrice) {
+        const product = selectedBundleProducts[productIndex];
+        product.selectedVariations[variationType] = value;
+
+        // Recalculate price
+        let newPrice = product.basePrice;
+
+        // Add variation price
+        if (product.selectedVariations.size) {
+            if (product.selectedVariations.size === 'medium') newPrice += 2;
+            else if (product.selectedVariations.size === 'large') newPrice += 5;
+        }
+
+        // Add addon prices
+        Object.values(product.selectedAddons).forEach(addonPrice => {
+            newPrice += addonPrice;
+        });
+
+        product.finalPrice = newPrice;
+        renderBundleProducts();
+        calculateBundlePrice();
+    }
+
+    // Toggle Addon Function
+    function toggleAddon(productIndex, addonName, price, isChecked) {
+        const product = selectedBundleProducts[productIndex];
+
+        if (isChecked) {
+            product.selectedAddons[addonName] = price;
+        } else {
+            delete product.selectedAddons[addonName];
+        }
+
+        // Recalculate price
+        let newPrice = product.basePrice;
+
+        // Add variation price
+        if (product.selectedVariations.size) {
+            if (product.selectedVariations.size === 'medium') newPrice += 2;
+            else if (product.selectedVariations.size === 'large') newPrice += 5;
+        }
+
+        // Add addon prices
+        Object.values(product.selectedAddons).forEach(addonPrice => {
+            newPrice += addonPrice;
+        });
+
+        product.finalPrice = newPrice;
+        renderBundleProducts();
+        calculateBundlePrice();
+    }
+
+    // Calculate Bundle Price Function
+    function calculateBundlePrice() {
+        const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+        let totalOriginalPrice = 0;
+        let totalBundlePrice = 0;
+
+        selectedBundleProducts.forEach(product => {
+            totalOriginalPrice += product.finalPrice;
+        });
+
+        switch(bundleOfferType) {
+            case 'bogo_free':
+                const paidItems = selectedBundleProducts.filter(p => p.role === 'paid_item');
+                const freeItems = selectedBundleProducts.filter(p => p.role === 'free_item');
+
+                if (paidItems.length > 0 && freeItems.length > 0) {
+                    totalBundlePrice = Math.max(...paidItems.map(p => p.finalPrice));
+                    // Add addon costs from free items
+                    freeItems.forEach(item => {
+                        totalBundlePrice += Object.values(item.selectedAddons).reduce((sum, price) => sum + price, 0);
+                    });
+                } else {
+                    totalBundlePrice = totalOriginalPrice;
+                }
+                break;
+
+            case 'fixed_bundle':
+                const fixedPrice = document.getElementById('fixedBundlePrice')?.value || 0;
+                totalBundlePrice = parseFloat(fixedPrice) || totalOriginalPrice;
+                break;
+
+            case 'buy_x_get_y':
+                const buyItems = selectedBundleProducts.filter(p => p.role === 'paid_item');
+                totalBundlePrice = buyItems.reduce((sum, item) => sum + item.finalPrice, 0);
+                break;
+
+            case 'gift':
+                const qualifyingItems = selectedBundleProducts.filter(p => p.role === 'qualifying_item');
+                totalBundlePrice = qualifyingItems.reduce((sum, item) => sum + item.finalPrice, 0);
+                break;
+
+            default:
+                totalBundlePrice = totalOriginalPrice;
+        }
+
+        // Update price display if exists
+        updatePriceDisplay(totalOriginalPrice, totalBundlePrice);
+    }
+
+    // Update Price Display Function
+    function updatePriceDisplay(originalPrice, bundlePrice) {
+        const priceCalculator = document.getElementById('priceCalculator');
+        const priceBreakdown = document.getElementById('priceBreakdown');
+
+        if (priceCalculator && priceBreakdown && selectedBundleProducts.length > 0) {
+            priceCalculator.style.display = 'block';
+
+            const savings = originalPrice - bundlePrice;
+            let breakdownHTML = `
+                <div class="price-row">
+                    <span>Original Total:</span>
+                    <span>$${originalPrice.toFixed(2)}</span>
+                </div>
+                <div class="price-row">
+                    <span>Bundle Price:</span>
+                    <span>$${bundlePrice.toFixed(2)}</span>
+                </div>
+                <div class="price-row">
+                    <span>You Save:</span>
+                    <span style="color: #e53e3e;">$${savings.toFixed(2)}</span>
+                </div>
+                <div class="price-row price-total">
+                    <span>Final Total:</span>
+                    <span>$${bundlePrice.toFixed(2)}</span>
+                </div>
+            `;
+
+            priceBreakdown.innerHTML = breakdownHTML;
+        } else if (priceCalculator) {
+            priceCalculator.style.display = 'none';
+        }
+    }
+
+    // Save Bundle Function
+    const saveBundleBtn = document.getElementById('saveBundleBtn');
+    if (saveBundleBtn) {
+        saveBundleBtn.addEventListener('click', function() {
+            if (selectedBundleProducts.length === 0) {
+                alert('Please add at least one product to the bundle!');
                 return;
             }
 
-            if (!selectedSegment) {
-                alert('Please select a Segment first!');
+            const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+            if (!bundleOfferType) {
+                alert('Please select a bundle offer type!');
                 return;
             }
 
-            if (!clientName) {
-                alert('Please enter client name!');
-                return;
-            }
+            // Generate voucher code
+            const voucherCode = `BUNDLE-${new Date().getFullYear()}-${bundleProductCounter.toString().padStart(3, '0')}`;
+            bundleProductCounter++;
 
-            alert(
-                'Client saved successfully!\n' +
-                'Client: ' + $('.Clients-select option:selected').text() +
-                '\nSegment: ' + $('.segment-select option:selected').text() +
-                '\nName: ' + clientName
-            );
+            // Show success message
+            alert(`Bundle saved successfully! Voucher Code: ${voucherCode}`);
+
+            // You can add more logic here to save the bundle data
+            console.log('Bundle Data:', {
+                voucherCode: voucherCode,
+                bundleType: bundleOfferType,
+                products: selectedBundleProducts
+            });
+
+            // Show voucher preview if it exists
+            showVoucherPreview(voucherCode, bundleOfferType, selectedBundleProducts);
+        });
+    }
+
+    // Show Voucher Preview Function
+    function showVoucherPreview(voucherCode, bundleType, products) {
+        const voucherPreview = document.getElementById('voucherPreview');
+        const voucherCodeEl = document.getElementById('voucherCode');
+        const bundleDetailsContent = document.getElementById('bundleDetailsContent');
+
+        if (voucherPreview && voucherCodeEl && bundleDetailsContent) {
+            voucherCodeEl.textContent = voucherCode;
+
+            let detailsHTML = `
+                <ul>
+                    <li><strong>Bundle Type:</strong> ${bundleType.replace(/_/g, ' ').toUpperCase()}</li>
+                    <li><strong>Products Count:</strong> ${products.length}</li>
+                </ul>
+                <h4>Products Included:</h4>
+                <ul>
+            `;
+
+            products.forEach(product => {
+                detailsHTML += `<li>${product.name} (${product.role.replace(/_/g, ' ')}) - $${product.finalPrice.toFixed(2)}</li>`;
+            });
+
+            detailsHTML += '</ul>';
+            bundleDetailsContent.innerHTML = detailsHTML;
+            voucherPreview.style.display = 'block';
+
+            // Scroll to preview
+            voucherPreview.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Initialize product selection when page loads
+    initializeProductSelection();
+
+    // Re-initialize when new products are added dynamically
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                initializeProductSelection();
+            }
         });
     });
-</script>
 
+    const availableProducts = document.getElementById('availableProducts');
+    if (availableProducts) {
+        observer.observe(availableProducts, { childList: true, subtree: true });
+    }
+});
 
+// Expose functions globally if needed
+window.bundleProductsManager = {
+    getSelectedProducts: function() {
+        return selectedBundleProducts || [];
+    },
+    clearProducts: function() {
+        selectedBundleProducts = [];
+        const container = document.getElementById('selectedProducts');
+        if (container) {
+            container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>';
+        }
+    }
+};
+    </script>
 @endpush
