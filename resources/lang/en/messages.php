@@ -8273,4 +8273,5 @@ Smartly or Earn. ',
   'Bundle Products Configuration' => 'Bundle Products Configuration',
   'Bundle Type Selection' => 'Bundle Type Selection',
   'Bundle Rules & Limitations' => 'Bundle Rules & Limitations',
+  'BOGO Product' => 'BOGO Product',
 );

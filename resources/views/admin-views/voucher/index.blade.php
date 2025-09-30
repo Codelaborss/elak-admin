@@ -735,7 +735,7 @@
                                         data-toggle="tooltip" data-placement="right"
                                         data-original-title="{{ translate('messages.Required.')}}"> *
                                         </span></label>
-                                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
+                                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}" onchange="get_product()"
                                         class="js-data-example-ajax form-control">
                                     </select>
                                 </div>
@@ -1319,7 +1319,7 @@
                 </div>
                 <!--  Price Information one-->
                 <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="food_voucher_price_info_1_4">
-                    <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
+                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="col-md-12">
                         <div class="row g-2">
@@ -1535,14 +1535,14 @@
                     {{-- Bundle Type Selection --}}
                     <div class="col-12 col-md-12">
                         <div class="form-group mb-0">
-                            <h3 class="h5 fw-semibold mb-2">🎯 {{ translate('Bundle Type Selection') }}</h3>
+                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
                             <select name="bundle_offer_type" id="bundle_offer_type" class="form-control">
                             <option value="">Select Bundle Offer Type</option>
-                            <option value="bogo_free">🔄 BOGO Free - Buy one get one free</option>
-                            <option value="buy_x_get_y">🎁 Buy X Get Y - Free</option>
-                            <option value="gift">💝 Free Gift with Purchase</option>
-                            <option value="bundle">📦 Group Product Bundle</option>
-                            <option value="mix_match">🔀 Mix & Match - Collect</option>
+                            <option value="bogo_free"> BOGO Free - Buy one get one free</option>
+                            <option value="buy_x_get_y"> Buy X Get Y - Free</option>
+                            <option value="gift"> Free Gift with Purchase</option>
+                            <option value="bundle"> Group Product Bundle</option>
+                            <option value="mix_match"> Mix & Match - Collect</option>
                             </select>
                         </div>
                     </div>
@@ -1551,14 +1551,14 @@
                         <div class="row g-3 bogo_free_div" style="display:none;">
                             <div id="bundleTypeDescription" class="bundle-type-description show">
                                     <div id="descriptionContent">
-                                    <h4>📝 BOGO FREE</h4>
+                                    <h4> BOGO FREE</h4>
                                     <p><strong>Description:</strong> Buy one product, get another product completely free. Customer pays for the higher-priced item.</p>
                                     <p><strong>Example:</strong> Buy Large Pizza ($15), get Medium Pizza free (save $12)</p>
                                     <p><strong>Pricing Method:</strong> pay higher price</p>
                                 </div>
                                 </div>
                                 <div id="bundleConfigSection" class="bundle-config-section show mt-4">
-                                    <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                    <div id="configContent"><h4> Bundle Configuration</h4>
                                         <div class="form-group">
                                             <p><strong>Instructions:</strong> Add products to bundle. First product will be "paid item", second will be "free item". Customer pays for higher-priced item.</p>
                                         </div>
@@ -1569,31 +1569,20 @@
 
                                     <!-- BOGO Configuration -->
                                     <div class="p-3 bg-white border rounded mb-4">
-                                        <h4 class="mb-3">🔄 BOGO Configuration</h4>
+                                        <h4 class="mb-3"> BOGO Configuration</h4>
 
-                                        <!-- BOGO Product -->
-                                        <div class="mb-3">
-                                        <label class="form-label">BOGO Product</label>
-                                        <div class="mb-2 d-flex flex-wrap gap-2">
-                                            <!-- Dynamic product tags will appear here -->
-                                        </div>
-                                        <div class="input-group">
-                                            <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Add products for BOGO offer..."
-                                            data-testid="input-tag"
-                                            >
-                                            <button
-                                            class="btn btn-primary"
-                                            type="button"
-                                            data-testid="button-add-tag"
-                                            disabled
-                                            >
-                                            <i class="bi bi-plus"></i>
-                                            </button>
-                                        </div>
-                                        </div>
+                                            <div class="col-sm-12 col-lg-12">
+                                               <div class="form-group mb-0">
+                                                   <label class="input-label"
+                                                       for="all_product_list">{{ translate('BOGO Product') }}<span class="form-label-secondary text-danger"
+                                                       data-toggle="tooltip" data-placement="right"
+                                                       data-original-title="{{ translate('messages.Required.')}}"> *
+                                                       </span></label>
+                                                   <select name="all_product_list" id="all_product_list"  class="js-data-example-ajax form-control">
+                                                   </select>
+                                               </div>
+                                           </div>
+
 
                                         <!-- Buy & Get Quantity -->
                                         <div class="row g-3">
@@ -1637,14 +1626,14 @@
                         <div class="row g-3 buy_x_get_y_div" style="display:none;">
                             <div id="bundleTypeDescription" class="bundle-type-description show">
                                 <div id="descriptionContent">
-                                <h4>📝 BUY X GET Y</h4>
+                                <h4> BUY X GET Y</h4>
                                 <p><strong>Description:</strong> Buy specific products and get different products free or discounted.</p>
                                 <p><strong>Example:</strong> Buy any Main Course, get free Drink or Dessert</p>
                                 <p><strong>Pricing Method:</strong> conditional free</p>
                             </div>
                             </div>
                             <div id="bundleConfigSection" class="bundle-config-section show mt-4">
-                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                <div id="configContent"><h4> Bundle Configuration</h4>
                                     <div class="form-group">
                                         <p><strong>Instructions:</strong> Add products customers must buy first, then add products they get free. Configure roles appropriately.</p>
                                     </div>
@@ -1654,7 +1643,7 @@
                                 <div class="card-body ">
                                 <!-- Buy X Get Y Configuration -->
                                 <div class="p-3 bg-white border rounded mb-4">
-                                    <h4 class="mb-3">🎁 Buy X Get Y Configuration</h4>
+                                    <h4 class="mb-3"> Buy X Get Y Configuration</h4>
 
                                     <!-- Buy Products -->
                                     <div class="mb-3">
@@ -1750,7 +1739,7 @@
                                 </div>
                             </div>
                             <div id="bundleConfigSection" class="bundle-config-section show mt-4">
-                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                <div id="configContent"><h4> Bundle Configuration</h4>
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label>Total Items Customer Must Choose</label>
@@ -1767,7 +1756,7 @@
                                 <div class="card-body ">
                                 <!-- Free Gift Configuration -->
                                 <div class="p-3 bg-white border rounded mb-4">
-                                    <h4 class="mb-3">💝 Free Gift Configuration</h4>
+                                    <h4 class="mb-3"> Free Gift Configuration</h4>
 
                                     <!-- Min Spend + Free Gift Product -->
                                     <div class="row g-3 mb-3">
@@ -1838,14 +1827,14 @@
                         <div class="row g-3 bundle_div" style="display:none;">
                               <div id="bundleTypeDescription" class="bundle-type-description show">
                                 <div id="descriptionContent">
-                                <h4>📦 Group Product Bundle</h4>
+                                <h4> Group Product Bundle</h4>
                                 <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
                                 <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
                                 <p><strong>Pricing Method:</strong> fixed bundle price</p>
                                 </div>
                             </div>
                             <div id="bundleConfigSection" class="bundle-config-section show mt-4">
-                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                <div id="configContent"><h4> Bundle Configuration</h4>
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label>Total Items Customer Must Choose</label>
@@ -1862,7 +1851,7 @@
                                 <div class="card-body ">
                                 <!-- Group Product Bundle Configuration -->
                                 <div class="p-3 bg-white border rounded mb-4">
-                                    <h4 class="mb-3">📦 Group Product Bundle</h4>
+                                    <h4 class="mb-3"> Group Product Bundle</h4>
 
                                     <!-- Bundle Products -->
                                     <div class="mb-3">
@@ -1892,7 +1881,7 @@
                                     <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Bundle Discount Type</label>
-                                        <select class="form-select" data-testid="select-bundle-discount-type">
+                                        <select class="form-control" data-testid="select-bundle-discount-type">
                                         <option>% Percentage Off</option>
                                         <option>$ Fixed Amount Off</option>
                                         </select>
@@ -1928,7 +1917,7 @@
                         <div class="row g-3 mix_match_div" style="display:none;">
                             <div id="bundleTypeDescription" class="bundle-type-description show">
                                 <div id="descriptionContent">
-                                <h4>📝 MIX MATCH</h4>
+                                <h4> MIX MATCH</h4>
                                 <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
                                 <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
                                 <p><strong>Pricing Method:</strong> fixed bundle price</p>
@@ -2054,7 +2043,7 @@
                 </div>
                 <!--  Price Information one-->
                 <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete"id="bundel_food_voucher_price_info_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
+                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="col-md-12">
                         <div class="row g-2">
@@ -2110,16 +2099,16 @@
                                 </div>
                             </div>
                             <!-- Example divs to show/hide panel2 -->
-                            <div class="col-12">
+                            <div class="col-12" id="panel2">
                                 <div class="row g-3 bogo_free_div" style="display:none;">
                                     <div class="container ">
                                         <div class="card border-0 shadow-sm">
                                             <div class="card-body ">
-                                            <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+                                            <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
 
                                             <!-- BOGO Section -->
                                             <div class="mb-4">
-                                                <h5 class="text-muted mb-3">🔄 BOGO Pricing Settings</h5>
+                                                <h5 class="text-muted mb-3"> BOGO Pricing Settings</h5>
 
                                                 <div class="p-3 bg-white border rounded">
                                                 <p class="small text-muted mb-3">
@@ -2167,11 +2156,11 @@
                                     <div class="container my-4">
                                         <div class="card border-0 shadow-sm">
                                             <div class="card-body ">
-                                            <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+                                            <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
 
                                             <!-- Buy X Get Y Section -->
                                             <div class="mb-4">
-                                                <h5 class="text-muted mb-3">🎁 Buy X Get Y Pricing</h5>
+                                                <h5 class="text-muted mb-3"> Buy X Get Y Pricing</h5>
 
                                                 <div class="p-3 bg-white border rounded">
                                                 <!-- Grid System -->
@@ -2220,7 +2209,7 @@
 
                                                 <!-- Deal Summary -->
                                                 <div class="mt-4 p-3 bg-light border rounded">
-                                                    <p class="small fw-bold mb-1">💰 Deal Summary:</p>
+                                                    <p class="small fw-bold mb-1"> Deal Summary:</p>
                                                     <p class="small text-muted mb-1">
                                                     Please enter a valid price for Buy X Get Y offer
                                                     </p>
@@ -2391,11 +2380,11 @@
                                 <div class="container my-4">
                                     <div class="card border-0 shadow-sm">
                                         <div class="card-body ">
-                                        <h4 class="card-title mb-4">📦 Bundle Pricing Configuration</h4>
+                                        <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
 
                                         <!-- Mix & Match Section -->
                                         <div class="mb-4">
-                                            <h5 class="text-muted mb-3">🔀 Mix and Match Pricing</h5>
+                                            <h5 class="text-muted mb-3"> Mix and Match Pricing</h5>
 
                                             <div class="p-3 bg-white border rounded">
                                             <!-- Grid System -->
@@ -2444,7 +2433,7 @@
 
                                             <!-- Mix & Match Summary -->
                                             <div class="mt-4 p-3 bg-light border rounded">
-                                                <p class="small fw-bold mb-1">💰 Mix & Match Summary:</p>
+                                                <p class="small fw-bold mb-1">Mix & Match Summary:</p>
                                                 <p class="small text-muted mb-1">
                                                 Please enter a valid price per item for mix &amp; match
                                                 </p>
@@ -2474,7 +2463,7 @@
 
            {{-- Bundle Products Configuration --}}
              <div class="form-section form-section section-card rounded p-4 mb-4   d-none"  id="Bundle_products_configuration">
-                 <h3 class="h5 fw-semibold mb-2">🛍️ {{ translate('Bundle Products Configuration') }}</h3>
+                 <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
                 <div id="selectedProducts">
                     <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
                 </div>
@@ -2534,16 +2523,16 @@
                     <div class="form-container">
                         <!-- Price Calculator -->
                         <div class="price-calculator" id="priceCalculator" style="display: none;">
-                            <h3>💰 Bundle Price Calculation</h3>
+                            <h3> Bundle Price Calculation</h3>
                             <div id="priceBreakdown"></div>
                         </div>
                         <!-- Submit Button -->
                         <div class="form-section">
-                            <button type="button" class="btn btn-success" id="saveBundleBtn">💾 Save Bundle & Generate Voucher</button>
+                            <button type="button" class="btn btn-success" id="saveBundleBtn"> Save Bundle & Generate Voucher</button>
                         </div>
                         <!-- Voucher Preview -->
                         <div class="voucher-preview" id="voucherPreview" style="display: none;">
-                            <h2>🎫 Bundle Voucher Generated!</h2>
+                            <h2> Bundle Voucher Generated!</h2>
 
                             <div class="voucher-code" id="voucherCode">BUNDLE-2025-001</div>
 
@@ -2551,7 +2540,7 @@
                                 <div>📱 QR CODE</div>
                             </div>
                             <div class="voucher-details">
-                                <h4>📋 Bundle Details:</h4>
+                                <h4> Bundle Details:</h4>
                                 <div id="bundleDetailsContent"></div>
                             </div>
                         </div>
@@ -2561,7 +2550,7 @@
             </div>
              <!-- Section 6: Bundle Rules -->
             <div class="form-section section-card rounded p-4 mb-4   d-none" id="bundle_rule">
-                  <h3 class="h5 fw-semibold mb-4">⚙️ {{ translate('Bundle Rules & Limitations') }}</h3>
+                  <h3 class="h5 fw-semibold mb-4"> {{ translate('Bundle Rules & Limitations') }}</h3>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="maxPerCustomer">Max Uses Per Customer</label>
@@ -2597,7 +2586,7 @@
 
               {{-- How It Works --}}
              <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="how_it_work_main">
-                <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('How It Works') }}</h3>
+                <h3 class="h5 fw-semibold mb-4"> {{ translate('How It Works') }}</h3>
                 <p class="text-muted">Instructions for using your voucher</p>
 
                 <div class="card border shadow-sm">
@@ -2617,7 +2606,7 @@
             </div>
             {{--  Terms & Conditions --}}
             <div class="section-card rounded p-4 mb-4  section3  d-none" id="term_condition_main">
-                <h3 class="h5 fw-semibold mb-2">🏷️ {{ translate('Terms & Conditions') }}</h3>
+                <h3 class="h5 fw-semibold mb-2"> {{ translate('Terms & Conditions') }}</h3>
                 <p class="text-muted">Set your business terms</p>
                 <div class="card border shadow-sm mt-3">
                     <div class="card-body">
@@ -2631,15 +2620,15 @@
                         <div class="col-md-4 mb-3">
                         <div class="border rounded p-5 d-flex align-items-center">
                             <input class="form-check-input mr-2" type="checkbox" id="nonRefundable">
-                            <label class="form-check-label mb-0" for="nonRefundable">🚫 Non-refundable</label>
+                            <label class="form-check-label mb-0" for="nonRefundable">Non-refundable</label>
                         </div>
                         </div>
 
                         <!-- Excludes holidays -->
                         <div class="col-md-4 mb-3">
                         <div class="border rounded p-5 d-flex align-items-center">
-                            <input class="form-check-input mr-2" type="checkbox" id="noHolidays">
-                            <label class="form-check-label mb-0" for="noHolidays">🏖️ Excludes official holidays</label>
+                            <input class="form-check-input mr-2" type="checkbox" id"noHolidays">
+                            <label class="form-check-label mb-0" for="noHolidays"> Excludes official holidays</label>
                         </div>
                         </div>
 
@@ -2647,7 +2636,7 @@
                         <div class="col-md-4 mb-3">
                         <div class="border rounded p-5 d-flex align-items-center">
                             <input class="form-check-input mr-2" type="checkbox" id="inStoreOnly">
-                            <label class="form-check-label mb-0" for="inStoreOnly">🏪 In-store only</label>
+                            <label class="form-check-label mb-0" for="inStoreOnly"> In-store only</label>
                         </div>
                         </div>
                     </div> --}}
@@ -2657,7 +2646,7 @@
 
             {{--  Review & Submit --}}
             <div class="section-card rounded p-4 mb-4 section3 d-none" id="review_submit_main">
-                <h3 class="h5 fw-semibold mb-2">🏷️ {{ translate('Review & Submit') }}</h3>
+                <h3 class="h5 fw-semibold mb-2"> {{ translate('Review & Submit') }}</h3>
                 <p class="text-muted">Review your voucher before submitting</p>
 
                 <div class="card border shadow-sm mt-3">
@@ -2665,20 +2654,20 @@
                     <!-- MAIN REVIEW CONTENT (always visible) -->
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                        <h5 class="font-weight-bold mb-3">📋 Client Information</h5>
+                        <h5 class="font-weight-bold mb-3"> Client Information</h5>
                         <p><strong>Client:</strong> Salvador Michael</p>
                         <p><strong>App:</strong> Maxine Solis</p>
                         <p><strong>Segment:</strong> Standard</p>
                         </div>
-                        <div class="col-md-6 mb-4">
-                        <h5 class="font-weight-bold mb-3">🤝 Partner Details</h5>
+                        <div class="col-md-6 mb-4"
+                        <h5 class="font-weight-bold mb-3"> Partner Details</h5>
                         <p><strong>Partner Name:</strong> Casey Hahn</p>
                         <p><strong>Category:</strong> Desserts</p>
                         <p><strong>Sub Category:</strong> Not set</p>
                         <p><strong>Branches:</strong> Rem obcaecati sit s</p>
-                        </div>
+                        </div
                         <div class="col-md-6 mb-4">
-                        <h5 class="font-weight-bold mb-3">🎫 Voucher Info</h5>
+                        <h5 class="font-weight-bold mb-3"> Voucher Info</h5>
                         <p><strong>Title:</strong> Accusamus cum rerum</p>
                         <p><strong>Thumbnail:</strong> https://www.kifatepy.me</p>
                         <p><strong>Image:</strong> https://www.sunyqylufyxisy.org.uk</p>
@@ -2686,7 +2675,7 @@
                         <p><strong>Tags:</strong> jdhjfd, dfgbjfdg</p>
                         </div>
                         <div class="col-md-6 mb-4">
-                        <h5 class="font-weight-bold mb-3">💰 Pricing</h5>
+                        <h5 class="font-weight-bold mb-3"> Pricing</h5>
                         <p><strong>Price:</strong> $435</p>
                         <p><strong>Discount:</strong> 30 $</p>
                         <p><strong>Valid Until:</strong> 1999-09-13</p>
@@ -2697,11 +2686,11 @@
                         <p><strong>Time Schedule:</strong> Sed eius distinctio</p>
                         </div>
                         <div class="col-md-6 mb-4">
-                        <h5 class="font-weight-bold mb-3">⚙️ How It Works</h5>
+                        <h5 class="font-weight-bold mb-3"> How It Works</h5>
                         <p><strong>Valid in Store Only:</strong> No</p>
                         </div>
                         <div class="col-md-6 mb-4">
-                        <h5 class="font-weight-bold mb-3">📋 Terms</h5>
+                        <h5 class="font-weight-bold mb-3"> Terms</h5>
                         <p><strong>Non-refundable:</strong> No</p>
                         <p><strong>Excludes Holidays:</strong> No</p>
                         <p><strong>In-store Only:</strong> No</p>
@@ -2709,12 +2698,12 @@
                     </div>
 
                     <div class="border-top pt-3 mt-3">
-                        <span class="badge badge-success">✅ Halal Certified</span>
+                        <span class="badge badge-success"> Halal Certified</span>
                     </div>
 
                     <!-- Variations -->
                     <div class="border-top pt-4 mt-4">
-                        <h5 class="font-weight-bold mb-3">🍽️ Variations (1)</h5>
+                        <h5 class="font-weight-bold mb-3"> Variations (1)</h5>
                         <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="card border shadow-sm p-3">
@@ -2818,25 +2807,25 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-        const select = document.getElementById("bundle_offer_type");
+            const select = document.getElementById("bundle_offer_type");
 
-        select.addEventListener("change", function () {
-            // sab panels ke divs hide karo
-            document.querySelectorAll(
-            "#panel1 .bogo_free_div, #panel1 .buy_x_get_y_div, #panel1 .gift_div, #panel1 .bundle_div, #panel1 .mix_match_div,   #panel1 .fixed_bundle_div,  #panel1 .bogo_free" +
-            "#panel2 .bogo_free_div, #panel2 .buy_x_get_y_div, #panel2 .gift_div, #panel2 .bundle_div, #panel2 .mix_match_div , #panel2 .fixed_bundle_div,#panel2 .fixed_bundle "
-            ).forEach(div => div.style.display = "none");
+            select.addEventListener("change", function () {
+                // sab panels ke divs hide karo
+                document.querySelectorAll(
+                "#panel1 .bogo_free_div, #panel1 .buy_x_get_y_div, #panel1 .gift_div, #panel1 .bundle_div, #panel1 .mix_match_div,   #panel1 .fixed_bundle_div,  #panel1 .bogo_free_div" +
+                "#panel2 .bogo_free_div, #panel2 .buy_x_get_y_div, #panel2 .gift_div, #panel2 .bundle_div, #panel2 .mix_match_div , #panel2 .fixed_bundle_div,#panel2 .bogo_free_div "
+                ).forEach(div => div.style.display = "none");
 
-            // selected value
-            // fixed_bundle    bogo_free fixed_bundle
+                // selected value
+                // fixed_bundle    bogo_free fixed_bundle
 
-            const selected = this.value;
+                const selected = this.value;
 
-            if (selected) {
-            document.querySelectorAll("#panel1 ." + selected + "_div, #panel2 ." + selected + "_div")
-                .forEach(div => div.style.display = "block");
-            }
-        });
+                if (selected) {
+                document.querySelectorAll("#panel1 ." + selected + "_div, #panel2 ." + selected + "_div")
+                    .forEach(div => div.style.display = "block");
+                }
+            });
         });
     </script>
 
@@ -3581,20 +3570,20 @@
             const voucherCards = document.querySelectorAll('.voucher-card');
             const voucherCards2 = document.querySelectorAll('.voucher-card_2');
             // Get all elements by ID
-            const basic_info_main = document.getElementById('basic_info_main');
-            const store_category_main = document.getElementById('store_category_main');
-            const how_it_work_main = document.getElementById('how_it_work_main');
-            const term_condition_main = document.getElementById('term_condition_main');
-            const review_submit_main = document.getElementById('review_submit_main');
-            const bundle_rule = document.getElementById('bundle_rule');
-            const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
+            // const basic_info_main = document.getElementById('basic_info_main');
+            // const store_category_main = document.getElementById('store_category_main');
+            // const how_it_work_main = document.getElementById('how_it_work_main');
+            // const term_condition_main = document.getElementById('term_condition_main');
+            // const review_submit_main = document.getElementById('review_submit_main');
+            // const bundle_rule = document.getElementById('bundle_rule');
+            // const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
 
-            const Product_voucher_fields_1_3 = document.getElementById('Product_voucher_fields_1_3');
-            const product_voucher_price_info_1_3 = document.getElementById('product_voucher_price_info_1_3');
-            const food_voucher_fields_1_4 = document.getElementById('food_voucher_fields_1_4');
-            const food_voucher_price_info_1_4 = document.getElementById('food_voucher_price_info_1_4');
-            const bundel_food_voucher_fields_1_3_1_4 = document.getElementById('bundel_food_voucher_fields_1_3_1_4');
-            const bundel_food_voucher_price_info_1_3_1_4 = document.getElementById('bundel_food_voucher_price_info_1_3_1_4');
+            // const Product_voucher_fields_1_3 = document.getElementById('Product_voucher_fields_1_3');
+            // const product_voucher_price_info_1_3 = document.getElementById('product_voucher_price_info_1_3');
+            // const food_voucher_fields_1_4 = document.getElementById('food_voucher_fields_1_4');
+            // const food_voucher_price_info_1_4 = document.getElementById('food_voucher_price_info_1_4');
+            // const bundel_food_voucher_fields_1_3_1_4 = document.getElementById('bundel_food_voucher_fields_1_3_1_4');
+            // const bundel_food_voucher_price_info_1_3_1_4 = document.getElementById('bundel_food_voucher_price_info_1_3_1_4');
 
 
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
@@ -3849,53 +3838,53 @@
             }
 
             // Helper functions for showing specific field types
-            function showShopFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
+            // function showShopFields() {
+            //     const shopFields = document.getElementById('shop-category-fields');
+            //     const pharmacyFields = document.getElementById('pharmacy-category-fields');
+            //     const groceryFields = document.getElementById('grocery-category-fields');
+            //     const foodFields = document.getElementById('food-category-fields');
 
-                if (shopFields) shopFields.classList.remove('d-none');
-                if (pharmacyFields) pharmacyFields.classList.add('d-none');
-                if (groceryFields) groceryFields.classList.add('d-none');
-                if (foodFields) foodFields.classList.add('d-none');
-            }
+            //     if (shopFields) shopFields.classList.remove('d-none');
+            //     if (pharmacyFields) pharmacyFields.classList.add('d-none');
+            //     if (groceryFields) groceryFields.classList.add('d-none');
+            //     if (foodFields) foodFields.classList.add('d-none');
+            // }
 
-            function showPharmacyFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
+            // function showPharmacyFields() {
+            //     const shopFields = document.getElementById('shop-category-fields');
+            //     const pharmacyFields = document.getElementById('pharmacy-category-fields');
+            //     const groceryFields = document.getElementById('grocery-category-fields');
+            //     const foodFields = document.getElementById('food-category-fields');
 
-                if (pharmacyFields) pharmacyFields.classList.remove('d-none');
-                if (shopFields) shopFields.classList.add('d-none');
-                if (groceryFields) groceryFields.classList.add('d-none');
-                if (foodFields) foodFields.classList.add('d-none');
-            }
+            //     if (pharmacyFields) pharmacyFields.classList.remove('d-none');
+            //     if (shopFields) shopFields.classList.add('d-none');
+            //     if (groceryFields) groceryFields.classList.add('d-none');
+            //     if (foodFields) foodFields.classList.add('d-none');
+            // }
 
-            function showGroceryFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
+            // function showGroceryFields() {
+            //     const shopFields = document.getElementById('shop-category-fields');
+            //     const pharmacyFields = document.getElementById('pharmacy-category-fields');
+            //     const groceryFields = document.getElementById('grocery-category-fields');
+            //     const foodFields = document.getElementById('food-category-fields');
 
-                if (groceryFields) groceryFields.classList.remove('d-none');
-                if (shopFields) shopFields.classList.add('d-none');
-                if (pharmacyFields) pharmacyFields.classList.add('d-none');
-                if (foodFields) foodFields.classList.add('d-none');
-            }
+            //     if (groceryFields) groceryFields.classList.remove('d-none');
+            //     if (shopFields) shopFields.classList.add('d-none');
+            //     if (pharmacyFields) pharmacyFields.classList.add('d-none');
+            //     if (foodFields) foodFields.classList.add('d-none');
+            // }
 
-            function showFoodFields() {
-                const shopFields = document.getElementById('shop-category-fields');
-                const pharmacyFields = document.getElementById('pharmacy-category-fields');
-                const groceryFields = document.getElementById('grocery-category-fields');
-                const foodFields = document.getElementById('food-category-fields');
+            // function showFoodFields() {
+            //     const shopFields = document.getElementById('shop-category-fields');
+            //     const pharmacyFields = document.getElementById('pharmacy-category-fields');
+            //     const groceryFields = document.getElementById('grocery-category-fields');
+            //     const foodFields = document.getElementById('food-category-fields');
 
-                if (foodFields) foodFields.classList.remove('d-none');
-                if (shopFields) shopFields.classList.add('d-none');
-                if (pharmacyFields) pharmacyFields.classList.add('d-none');
-                if (groceryFields) groceryFields.classList.add('d-none');
-            }
+            //     if (foodFields) foodFields.classList.remove('d-none');
+            //     if (shopFields) shopFields.classList.add('d-none');
+            //     if (pharmacyFields) pharmacyFields.classList.add('d-none');
+            //     if (groceryFields) groceryFields.classList.add('d-none');
+            // }
 
             // DOMContentLoaded event listener for initialization
             document.addEventListener("DOMContentLoaded", function () {
@@ -4659,4 +4648,41 @@ window.bundleProductsManager = {
     }
 };
     </script>
+
+
+<script>
+function get_product() {
+    var category_id = $("#category_id").val();
+    var store_id = $("#store_id").val();
+
+    if (store_id == "") {
+        alert("Please select store");
+    } else {
+        $.ajax({
+            url: "{{ route('admin.Voucher.get_product') }}",
+            type: "GET",
+            data: {
+                store_id: store_id,
+                category_id: category_id  // optional agar zaroori ho
+            },
+            success: function(response) {
+                $('#all_product_list')
+                    .empty()
+                    .append('<option value="">{{ translate("messages.select_branch") }}</option>');
+
+                $.each(response, function(key, product) {
+                    $('#all_product_list')
+                        .append('<option value="'+ product.id +'">'
+                        + product.name + ' ('+ product.type +')</option>');
+                });
+            },
+            error: function() {
+                toastr.error("{{ translate('messages.failed_to_load_branches') }}");
+            }
+        });
+    }
+}
+</script>
+
+
 @endpush

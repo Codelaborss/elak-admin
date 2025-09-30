@@ -161,6 +161,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('bulk-export', 'VoucherController@bulk_export_data')->name('bulk-export');
 
             Route::get('/branches', 'VoucherController@getBranches')->name('get_branches');
+            Route::get('/product-all-main', 'VoucherController@get_product')->name('get_product');
             Route::get('/get-document', 'VoucherController@get_document')->name('get_document');
 
 
