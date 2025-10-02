@@ -343,14 +343,44 @@ class ClientSideController extends Controller
         return back();
     }
 
-    public function getSegments($clientId)
-    {
-        $Client = Client::where('id', $clientId)->first();
-        // dd($Client->type);
-        $ids = explode(',', trim($Client->type));
-        $segments = Segment::whereIn('id', $ids)->get();
-        return response()->json($segments);
+    // public function getSegments($clientId)
+    // {
+    //     dd($clientId);
+    //     $Client = Client::where('id', $clientId)->first();
+    //     // dd($Client->type);
+    //     $ids = explode(',', trim($Client->type));
+    //     $segments = Segment::whereIn('id', $ids)->get();
+    //     return response()->json($segments);
+    // }
+
+public function getSegments($clientIds)
+{
+    // String ko array me convert karo
+    $ids = array_filter(array_map('trim', explode(',', $clientIds)));
+
+    // Ab multiple clients nikal lo
+    $clients = Client::whereIn('id', $ids)->get();
+    $allSegmentIds = [];
+
+    foreach ($clients as $client) {
+        if (!empty($client->type)) {
+            // Client ke type se segment IDs nikal lo
+            $segmentIds = array_filter(array_map('trim', explode(',', $client->type)));
+            $allSegmentIds = array_merge($allSegmentIds, $segmentIds);
+        }
     }
+
+    // Duplicate IDs remove karo
+    $allSegmentIds = array_unique($allSegmentIds);
+
+    // Final segments lao
+    $segments = Segment::whereIn('id', $allSegmentIds)->get();
+    // dd($segments);
+
+    return response()->json($segments);
+}
+
+
 
     public function filter(Request $request)
     {
