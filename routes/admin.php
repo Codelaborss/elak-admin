@@ -683,7 +683,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::get('automated-message/status/{id}/{status}', 'AutomatedMessageController@status')->name('automated_message.status');
             Route::delete('automated-message/destroy/{id}', 'AutomatedMessageController@destroy')->name('automated_message.destroy');
 
-            Route::group(['namespace' => 'System','prefix' => 'system-addon', 'as' => 'system-addon.', 'middleware'=>['module:user_management']], function () {
+            Route::group(['namespace' => 'System','prefix' => 'system-addon', 'as' => 'system-addon.', 'middleware'=>['module:voucher']], function () {
                 Route::get('/', 'AddonController@index')->name('index');
                 Route::post('publish', 'AddonController@publish')->name('publish');
                 Route::post('activation', 'AddonController@activation')->name('activation');

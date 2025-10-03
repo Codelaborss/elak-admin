@@ -614,7 +614,7 @@
                                     <label class="input-label" for="select_client">{{ translate('Client  Name') }}
                                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Client  Name') }}"></span>
                                     </label>
-                                    <select name="select_client[]" id="select_client" required class="form-control js-select2-custom Clients_select_new" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                    <select name="select_client[]" id="select_client" required class="form-control js-select2-custom Clients_select_new" data-placeholder="{{ translate('Select Client') }}" multiple>
                                         @foreach (\App\Models\Client::all() as $item)
                                         <option value="{{ $item->id }}" @if(collect(old('type', []))->contains($item->id)) selected @endif>
                                                 {{ $item->name }}
@@ -899,8 +899,7 @@
                                             <label class="d-inline-block m-0 position-relative">
                                                 <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
                                                 <div class="icon-file-group">
-                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
-                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none" accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                                                             <i class="tio-edit"></i>
                                                     </div>
                                                 </div>
@@ -922,7 +921,7 @@
                                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
                                             data-original-title="{{ translate('Segment') }}"></span>
                                     </label>
-                                    <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" >
+                                    <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -1163,7 +1162,7 @@
                                 <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
                                     data-original-title="{{ translate('Segment') }}"></span>
                             </label>
-                            <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                            <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" multiple>
                                 @foreach (\App\Models\Item::whereNull('voucher_type')->get() as $item)
                                 <option value="{{ $item->id }}"
                                     @if(collect(old('food_add_one', []))->contains($item->id)) selected @endif>
@@ -1444,7 +1443,7 @@
                                                 <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
                                                     <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
                                                 </label>
-                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
 
                                                 </select>
                                             </div>
@@ -1497,7 +1496,7 @@
                                                 <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
                                                     <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
                                                 </label>
-                                                <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                                <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
 
                                                 </select>
                                             </div>
@@ -1549,7 +1548,7 @@
                                                     <label class="input-label" for="select_bogo">{{ translate('BOGO Product') }}
                                                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
                                                     </label>
-                                                    <select name="select_bogo[]" id="select_bogo" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                                    <select name="select_bogo[]" id="select_bogo" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
                                                     </select>
                                                 </div>
                                            </div>
@@ -1584,7 +1583,7 @@
                                                     <label class="input-label" for="select_free_product">{{ translate('Free Product') }}
                                                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Free Product') }}"></span>
                                                     </label>
-                                                    <select name="select_free_product[]" id="select_free_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                                    <select name="select_free_product[]" id="select_free_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
                                                     </select>
                                                 </div>
                                            </div>
@@ -1629,11 +1628,14 @@
                                             <div class="col-sm-12 col-lg-12">
                                                 <div class="form-group mb-0">
                                                     <label class="input-label"
-                                                        for="all_category">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
+                                                        for="select_category_all">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
                                                         data-toggle="tooltip" data-placement="right"
                                                         data-original-title="{{ translate('messages.Required.')}}"> *
                                                         </span></label>
-                                                    <select name="all_category" id="all_category"  class="js-data-example-ajax form-control">
+                                                      <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
+                                                        @foreach (\App\Models\Category::all() as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -1642,7 +1644,7 @@
                                                     <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
                                                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
                                                     </label>
-                                                    <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Segment') }}" multiple>
+                                                    <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
                                                     </select>
                                                 </div>
                                            </div>
@@ -2010,7 +2012,7 @@
                         <h3 class="mt-3">Available Products:</h3>
                         <?php $i == 1; ?>
                       @foreach (\App\Models\Item::all() as $item)
-                         <div class="product-card" data-id="{{$i}}" data-name="{{$item->name}}" data-price="${{$item->price}}">
+                         <div class="product-card" data-id="{{$i}}" data-name="{{$item->name}}" data-price="{{$item->price}}">
                             <div class="product-header">
                                 <div class="product-info">
                                     <div class="product-name">{{$item->name}}</div>
@@ -3371,7 +3373,7 @@
         $(document).ready(function () {
             // -------------------- Segment Select2 --------------------
             $('.segment-select').select2({
-                placeholder: "-- Select Segment --",
+                placeholder: "-- Select Product --",
                 allowClear: true,
                 width: '100%',
                 dropdownAutoWidth: true,
@@ -3427,7 +3429,7 @@
                     type: 'GET',
                     success: function (res) {
                         // Clear and refill segment dropdown
-                        $('#segment_type').empty().append('<option value="">Select Segment</option>');
+                        $('#segment_type').empty().append('<option value="">Select Product</option>');
 
                         // Agar res ek array hai to loop karo
                         if (Array.isArray(res) && res.length > 0) {
@@ -3568,7 +3570,6 @@
             function addProductToBundle(id, name, price) {
                 // Check if product already exists
                 const existingProduct = selectedBundleProducts.find(product => product.id === id);
-                alert(existingProduct);
                 if (existingProduct) {
                     alert('This product is already added to the bundle!');
                     return;

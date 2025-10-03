@@ -545,6 +545,38 @@
                         </ul>
                         </li>
                     @endif
+                    <!-- AddOn -->
+                @if (\App\CentralLogics\Helpers::module_permission_check('addon'))
+                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/addon*') ? 'active' : '' }}">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('messages.addons') }}">
+                        <i class="tio-add-circle-outlined nav-icon"></i>
+                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.addons') }}</span>
+                    </a>
+                    <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/addon*') ? 'block' : 'none' }}">
+                        <li class="nav-item {{ Request::is('admin/addon/add-new') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.add-new') }}" title="{{ translate('messages.addon_list') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate">{{ translate('messages.list') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item {{ Request::is('admin/addon/bulk-import') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::is('admin/addon/bulk-export') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.bulk-export-index') }}" title="{{ translate('messages.bulk_export') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                <!-- End AddOn -->
+
                    @if (\App\CentralLogics\Helpers::module_permission_check('attribute'))
                         <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/attribute*') ? 'active' : '' }}">
                             <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.attribute.add-new') }}" title="{{ translate('messages.attributes') }}">

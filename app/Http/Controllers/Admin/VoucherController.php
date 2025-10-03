@@ -2196,4 +2196,5 @@ public function get_document(Request $request)
         $category = $category_id != 'all' ? Category::findOrFail($category_id) : null;
         return view('admin-views.voucher.product_gallery', compact('items', 'store', 'category', 'type'));
     }
+
 }

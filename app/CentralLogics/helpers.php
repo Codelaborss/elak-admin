@@ -2214,7 +2214,7 @@ class Helpers
                 }
 
                 $permission = $user->role->modules ?? null;
-
+                // dd($permission);
                 if ($permission && in_array($mod_name, (array)json_decode($permission))) {
                     return true;
                 }

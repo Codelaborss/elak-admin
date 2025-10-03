@@ -1081,7 +1081,10 @@
         } else {
             $('#stock_input').hide();
         }
+        alert(module_data);
+        console.log(module_data)
         if (module_data.add_on) {
+
             $('#addon_input').show();
         } else {
             $('#addon_input').hide();

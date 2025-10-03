@@ -1428,8 +1428,7 @@ class VendorController extends Controller
 
     public function get_addons(Request $request)
     {
-        $cat = AddOn::
-        withoutGlobalScope(StoreScope::class)->
+        $cat = AddOn:: withoutGlobalScope(StoreScope::class)->
         // withoutGlobalScope('translate')->
         where(['store_id' => $request->store_id])->active()->get();
         $res = '';

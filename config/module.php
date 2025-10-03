@@ -162,7 +162,7 @@ return [
      'voucher'=>[
         'order_status'=>['accepted'=>false],
         'order_place_to_schedule_interval'=>false,
-        'add_on'=>false,
+        'add_on'=>true,
         'stock'=>false,
         'veg_non_veg'=>false,
         'unit'=>false,

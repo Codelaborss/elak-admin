@@ -8286,4 +8286,6 @@ Smartly or Earn. ',
   'Minimum Spend Amount' => 'Minimum Spend Amount',
   'Free Product' => 'Free Product',
   'Client  Name' => 'Client  Name',
+  'Select Client' => 'Select Client',
+  11111 => '11111',
 );
