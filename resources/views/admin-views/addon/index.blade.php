@@ -324,37 +324,38 @@
     <script src="{{ asset('public/assets/admin') }}/js/view-pages/addon-index.js"></script>
     <script>
         "use strict";
-function getStoreSelect2Config(showAll) {
-    return {
-        ajax: {
-            url: '{{ url('/') }}/admin/store/get-stores',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                const data = {
-                    q: params.term,
-                    module_type: 'food',
-                    module_id: {{ Config::get('module.current_module_id') }},
-                    page: params.page || 1
-                };
+        function getStoreSelect2Config(showAll) {
+            return {
+                ajax: {
+                    url: '{{ url('/') }}/admin/store/get-stores',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        const data = {
+                            q: params.term,
+                            module_type: 'voucher',
+                            // module_type: 'food',
+                            module_id: {{ Config::get('module.current_module_id') }},
+                            page: params.page || 1
+                        };
 
-                if (showAll) {
-                    data.all = true;
-                }
+                        if (showAll) {
+                            data.all = true;
+                        }
 
-                return data;
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        },
-        placeholder: 'Select a store',
-        allowClear: true
-    };
-}
+                        return data;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Select a store',
+                allowClear: true
+            };
+        }
 
         $('#store').select2(getStoreSelect2Config(true));
         $('#store_id').select2(getStoreSelect2Config(false));

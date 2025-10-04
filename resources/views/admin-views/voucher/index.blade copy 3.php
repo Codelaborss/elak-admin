@@ -683,7 +683,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-sm-6 col-lg-3" id="condition_input">
+                            <div class="col-sm-6 col-lg-3" id="condition_input">
                                 <div class="form-group mb-0">
                                     <label class="input-label" for="condition_id">{{ translate('messages.Suitable_For') }}<span class="input-label-secondary"></span></label>
                                     <select name="condition_id" id="condition_id"data-placeholder="{{ translate('messages.Select_Condition') }}" class="js-data-example-ajax form-control" oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
@@ -722,7 +722,35 @@
                                     </select>
                                 </div>
                             </div>
+                            @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+                                <div class="col-sm-6" id="nutrition">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('Nutrition')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the necessary keywords relating to energy values for the item.') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <select name="nutritions[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
 
+                                        @foreach (\App\Models\Nutrition::select(['nutrition'])->get() as $nutrition)
+                                            <option value="{{ $nutrition->nutrition }}">{{ $nutrition->nutrition }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-6" id="allergy">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('Allegren Ingredients')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the ingredients of the item which can make a reaction as an allergen.') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <select name="allergies[]" class="form-control multiple-select2" data-placeholder="{{ translate('messages.Type your content and press enter') }}" multiple>
+                                        @foreach (\App\Models\Allergy::select(['allergy'])->get() as $allergy)
+                                            <option value="{{ $allergy->allergy }}">{{ $allergy->allergy }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
                             <div class="col-sm-6 col-lg-3" id="organic">
                                 <div class="form-check mb-sm-2 pb-sm-1">
                                     <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
@@ -738,12 +766,48 @@
                                         {{ translate('messages.Is_Basic_Medicine') }}
                                     </label>
                                 </div>
-                            </div> --}}
-
-
+                            </div>
+                            @if(Config::get('module.current_module_type') == 'pharmacy')
+                                <div class="col-sm-6 col-lg-3" id="is_prescription_required">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="is_prescription_required" type="checkbox" value="1" id="flexCheckDefaultprescription" checked>
+                                        <label class="form-check-label" for="flexCheckDefaultprescription">
+                                            {{ translate('messages.is_prescription_required') }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" id="generic_name">
+                                    <label class="input-label" for="sub-categories">
+                                        {{translate('generic_name')}}
+                                        <span class="input-label-secondary" title="{{ translate('Specify the medicine`s active ingredient that makes it work') }}" data-toggle="tooltip">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <div class="dropdown suggestion_dropdown">
+                                        <input type="text" class="form-control" name="generic_name" autocomplete="off">
+                                        @if(count(\App\Models\GenericName::select(['generic_name'])->get())>0)
+                                        <div class="dropdown-menu">
+                                            @foreach (\App\Models\GenericName::select(['generic_name'])->get() as $generic_name)
+                                            <div class="dropdown-item">{{ $generic_name->generic_name }}</div>
+                                            @endforeach
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                            @if(Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+                                <div class="col-sm-6 col-lg-3" id="halal">
+                                    <div class="form-check mb-sm-2 pb-sm-1">
+                                        <input class="form-check-input" name="is_halal" type="checkbox" value="1" id="flexCheckDefault1" checked>
+                                        <label class="form-check-label" for="flexCheckDefault1">
+                                            {{ translate('messages.Is_It_Halal') }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
-                    {{-- <div class="col-md-6" id="addon_input">
+                    <div class="col-md-6" id="addon_input">
                         <div class="c border-0">
                             <div class="card-header">
                                 <h5 class="card-title">
@@ -797,7 +861,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
 
                 {{-- ==================== Delivery/Pickup  == Product ===================== --}}
@@ -1976,7 +2040,7 @@
                                                 <option value="paid_item" selected>Paid Item</option>
                                                 <option value="free_item">Free Item</option>
                                             </select>
-                                            <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $i }}">Remove</button>
+                                            <button class="btn btn-danger remove-product-btn" data-index="{{ $i }}">Remove</button>
                                         </div>
                                     </div>
                                     {{-- ✅ Variations Section --}}
@@ -2053,7 +2117,24 @@
                                 <h3> Bundle Price Calculation</h3>
                                 <div id="priceBreakdown"></div>
                             </div>
+                            <!-- Submit Button -->
+                            <div class="form-section">
+                                <button type="button" class="btn btn-success" id="saveBundleBtn"> Save Bundle & Generate Voucher</button>
+                            </div>
+                            <!-- Voucher Preview -->
+                            <div class="voucher-preview" id="voucherPreview" style="display: none;">
+                                <h2> Bundle Voucher Generated!</h2>
 
+                                <div class="voucher-code" id="voucherCode">BUNDLE-2025-001</div>
+
+                                <div class="qr-code-placeholder">
+                                    <div>📱 QR CODE</div>
+                                </div>
+                                <div class="voucher-details">
+                                    <h4> Bundle Details:</h4>
+                                    <div id="bundleDetailsContent"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -3549,25 +3630,25 @@
             }
 
             // Select Product Button Click Handler
-            // function initializeProductSelection() {
-            //     const selectProductBtns = document.querySelectorAll('.select-product-btn');
+            function initializeProductSelection() {
+                const selectProductBtns = document.querySelectorAll('.select-product-btn');
 
-            //     selectProductBtns.forEach(btn => {
-            //         btn.addEventListener('click', function(e) {
-            //             e.preventDefault();
+                selectProductBtns.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
 
-            //             const productCard = this.closest('.product-card');
-            //             if (productCard) {
-            //                 const productId = productCard.getAttribute('data-id');
-            //                 const productName = productCard.getAttribute('data-name');
-            //                 const productPrice = parseFloat(productCard.getAttribute('data-price'));
+                        const productCard = this.closest('.product-card');
+                        if (productCard) {
+                            const productId = productCard.getAttribute('data-id');
+                            const productName = productCard.getAttribute('data-name');
+                            const productPrice = parseFloat(productCard.getAttribute('data-price'));
 
-            //                 // Add product to bundle
-            //                 addProductToBundle(productId, productName, productPrice);
-            //             }
-            //         });
-            //     });
-            // }
+                            // Add product to bundle
+                            addProductToBundle(productId, productName, productPrice);
+                        }
+                    });
+                });
+            }
 
             // Add Product to Bundle Function
             function addProductToBundle(id, name, price) {
@@ -4065,41 +4146,22 @@
 
 
 <script>
-// Product Selection and Variation Handler with Bundle Calculation
-$(document).ready(function() {
 
-    // Store selected products data
-    let selectedProducts = [];
+// Product Selection and Variation Handler
+$(document).ready(function() {
 
     // When "Select" button is clicked
     $(document).on('click', '.select-product-btn', function() {
         const card = $(this).closest('.product-card');
-        const productIndex = card.attr('data-id');
+        const productId = card.attr('data-id');
         const productName = card.attr('data-name');
-        const productPrice = parseFloat(card.attr('data-price'));
+        const productPrice = card.attr('data-price');
 
         // Hide the available product card
         card.hide();
 
-        // Find and show the corresponding selected product div
-        const selectedDiv = $(`#selectedProducts_${productIndex}`).length ?
-            $(`#selectedProducts_${productIndex}`) :
-            $(`[id^="selectedProducts_"]`).eq(productIndex - 1);
-
-        selectedDiv.removeClass('d-none').show();
-
-        // Add to selected products array
-        selectedProducts.push({
-            index: productIndex,
-            name: productName,
-            basePrice: productPrice,
-            variationPrice: 0,
-            addonPrice: 0,
-            role: 'paid_item'
-        });
-
-        // Update bundle calculation
-        updateBundleCalculation();
+        // Show the corresponding selected product div
+        $(`#selectedProducts_${productId}`).removeClass('d-none').show();
 
         // Show the entire availableProducts section if hidden
         $('#availableProducts').show();
@@ -4109,6 +4171,7 @@ $(document).ready(function() {
     $(document).on('click', '.remove-product-btn', function() {
         const index = $(this).attr('data-index');
         const selectedDiv = $(this).closest('[id^="selectedProducts_"]');
+        const productId = selectedDiv.attr('id').replace('selectedProducts_', '');
 
         // Hide the selected product div
         selectedDiv.addClass('d-none').hide();
@@ -4119,60 +4182,30 @@ $(document).ready(function() {
         // Reset all selections
         selectedDiv.find('.variation-option').removeClass('selected');
         selectedDiv.find('.addon-checkbox').prop('checked', false);
-        selectedDiv.find('.addon-item').removeClass('selected');
-
-        // Remove from selected products array
-        selectedProducts = selectedProducts.filter(p => p.index !== index);
-
-        // Update bundle calculation
-        updateBundleCalculation();
 
         // Reset item total
         updateItemTotal(index);
     });
 
-    // When product role is changed (Paid Item / Free Item)
-    $(document).on('change', '.product-role-select', function() {
-        const index = $(this).attr('data-index');
-        const role = $(this).val();
-
-        // Update role in selected products array
-        const product = selectedProducts.find(p => p.index === index);
-        if (product) {
-            product.role = role;
-        }
-
-        // Update bundle calculation
-        updateBundleCalculation();
-    });
-
     // When a variation option is clicked
     $(document).on('click', '.variation-option', function() {
         const index = $(this).attr('data-index');
+        const variationType = $(this).attr('data-type');
         const variationPrice = parseFloat($(this).attr('data-price')) || 0;
 
         // Remove 'selected' class from siblings in the same group
         $(this).siblings('.variation-option').removeClass('selected');
 
         // Toggle selection on clicked option
-        const wasSelected = $(this).hasClass('selected');
         $(this).toggleClass('selected');
 
-        // Update variation price in selected products array
-        const product = selectedProducts.find(p => p.index === index);
-        if (product) {
-            product.variationPrice = wasSelected ? 0 : variationPrice;
-        }
-
-        // Update item total and bundle calculation
+        // Update item total
         updateItemTotal(index);
-        updateBundleCalculation();
     });
 
     // When an addon checkbox is changed
     $(document).on('change', '.addon-checkbox', function() {
         const index = $(this).attr('data-index');
-        const addonPrice = parseFloat($(this).attr('data-price')) || 0;
         const addonItem = $(this).closest('.addon-item');
 
         // Add/remove background highlight based on checkbox state
@@ -4182,22 +4215,8 @@ $(document).ready(function() {
             addonItem.removeClass('selected');
         }
 
-        // Calculate total addon price for this product
-        const selectedDiv = $(this).closest('[id^="selectedProducts_"]');
-        let totalAddonPrice = 0;
-        selectedDiv.find('.addon-checkbox:checked').each(function() {
-            totalAddonPrice += parseFloat($(this).attr('data-price')) || 0;
-        });
-
-        // Update addon price in selected products array
-        const product = selectedProducts.find(p => p.index === index);
-        if (product) {
-            product.addonPrice = totalAddonPrice;
-        }
-
-        // Update item total and bundle calculation
+        // Update item total
         updateItemTotal(index);
-        updateBundleCalculation();
     });
 
     // Function to calculate and update item total
@@ -4205,8 +4224,7 @@ $(document).ready(function() {
         const selectedDiv = $(`[data-index="${index}"]`).first().closest('[id^="selectedProducts_"]');
 
         // Get base price from the product card
-        const basePriceText = selectedDiv.find('.product-price').text();
-        const basePrice = parseFloat(basePriceText.replace('Base Price: $', '').replace('$', '')) || 0;
+        const basePrice = parseFloat(selectedDiv.find('.product-price').text().replace('Base Price: $', '')) || 0;
 
         let total = basePrice;
 
@@ -4226,66 +4244,6 @@ $(document).ready(function() {
         selectedDiv.find('div[style*="Item Total"]').html(
             `Item Total: $${total.toFixed(2)}`
         );
-    }
-
-    // Function to update bundle price calculation
-    function updateBundleCalculation() {
-        if (selectedProducts.length === 0) {
-            $('#priceCalculator').hide();
-            return;
-        }
-
-        $('#priceCalculator').show();
-
-        let breakdown = '';
-        let originalTotal = 0;
-        let paidTotal = 0;
-        let freeItemsAddonTotal = 0;
-
-        selectedProducts.forEach(product => {
-            const itemTotal = product.basePrice + product.variationPrice + product.addonPrice;
-            originalTotal += itemTotal;
-
-            const roleLabel = product.role === 'free_item' ? '(Free + Add-ons)' : '(Paid)';
-            const priceDisplay = itemTotal.toFixed(2);
-
-            breakdown += `
-                <div class="price-row">
-                    <span class="item-name">${product.name} ${roleLabel}</span>
-                    <span class="item-price">${priceDisplay}</span>
-                </div>
-            `;
-
-            if (product.role === 'paid_item') {
-                paidTotal += itemTotal;
-            } else {
-                // For free items, only count addon price
-                freeItemsAddonTotal += product.addonPrice;
-            }
-        });
-
-        // Calculate final bundle total
-        const bundleTotal = paidTotal + freeItemsAddonTotal;
-        const savings = originalTotal - bundleTotal;
-
-        // Build the complete breakdown HTML
-        const calculationHTML = `
-            ${breakdown}
-            <div class="price-row total-row">
-                <span class="item-name">Original Total:</span>
-                <span class="item-price">${originalTotal.toFixed(2)}</span>
-            </div>
-            <div class="price-row savings-row">
-                <span class="item-name">You Save:</span>
-                <span class="item-price savings">${savings > 0 ? '-' : ''}${savings.toFixed(2)}</span>
-            </div>
-            <div class="price-row bundle-total-row">
-                <span class="bundle-label">Bundle Total:</span>
-                <span class="bundle-price">${bundleTotal.toFixed(2)}</span>
-            </div>
-        `;
-
-        $('#priceBreakdown').html(calculationHTML);
     }
 });
 

@@ -8288,4 +8288,7 @@ Smartly or Earn. ',
   'Client  Name' => 'Client  Name',
   'Select Client' => 'Select Client',
   11111 => '11111',
+  'Please select store' => 'Please select store',
+  'Food Unit' => 'Food Unit',
+  'The limit from field is required.' => 'The limit from field is required.',
 );

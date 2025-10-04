@@ -545,6 +545,44 @@
                         </ul>
                         </li>
                     @endif
+                      <!-- AddOn -->
+                @if (\App\CentralLogics\Helpers::module_permission_check('addon'))
+                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/addon*') ? 'active' : '' }}">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('messages.addons') }}">
+                        <i class="tio-add-circle-outlined nav-icon"></i>
+                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.addons') }}</span>
+                    </a>
+                    <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/addon*') ? 'block' : 'none' }}">
+                        <li class="nav-item {{ Request::is('admin/addon/addon-category') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.addon-category') }}" title="{{ translate('messages.Addon_Category') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate">{{ translate('messages.Addon_Category') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::is('admin/addon/add-new') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.add-new') }}" title="{{ translate('messages.addon_list') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate">{{ translate('messages.list') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item {{ Request::is('admin/addon/bulk-import') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::is('admin/addon/bulk-export') ? 'active' : '' }}">
+                            <a class="nav-link " href="{{ route('admin.addon.bulk-export-index') }}" title="{{ translate('messages.bulk_export') }}">
+                                <span class="tio-circle nav-indicator-icon"></span>
+                                <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                <!-- End AddOn -->
+{{--
                     <!-- AddOn -->
                 @if (\App\CentralLogics\Helpers::module_permission_check('addon'))
                 <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/addon*') ? 'active' : '' }}">
@@ -574,7 +612,7 @@
                         </li>
                     </ul>
                 </li>
-                @endif
+                @endif --}}
                 <!-- End AddOn -->
 
                    @if (\App\CentralLogics\Helpers::module_permission_check('attribute'))
@@ -591,11 +629,11 @@
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('Voucher Addon') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Food Addon') }}
+                                {{ translate('Food Unit') }}
                             </span>
                         </a>
                     </li>
-                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
+                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/ManagementType*') ? 'active' : '' }}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.VoucherType.add-new') }}" title="{{ translate('Voucher Type') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
@@ -603,7 +641,7 @@
                             </span>
                         </a>
                     </li>
-                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
+                    <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/ManagementType*') ? 'active' : '' }}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.ManagementType.add-new') }}" title="{{ translate('Management Type') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
@@ -678,6 +716,12 @@
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('Voucher Setup') }}</span>
                             </a>
                             <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/Voucher*') ? 'block' : 'none' }}">
+                                <li data-bs-toggle="modal" data-bs-target="#myModal" class="nav-item">
+                                    <a class="nav-link " >
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('Add New Item') }}</span>
+                                    </a>
+                                </li>
                                 <li class="nav-item {{ Request::is('admin/Voucher/add-new') || (Request::is('admin/Voucher/edit/*') && strpos(request()->fullUrl(), 'product_gellary=1') !== false  )  ? 'active' : '' }}">
                                     <a class="nav-link " href="{{ route('admin.Voucher.add-new') }}" title="{{ translate('messages.add_new') }}">
                                         <span class="tio-circle nav-indicator-icon"></span>
@@ -730,7 +774,7 @@
 
 
 
-                    @if (\App\CentralLogics\Helpers::module_permission_check('unit'))
+                    {{-- @if (\App\CentralLogics\Helpers::module_permission_check('unit'))
                     <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('messages.units') }}">
                             <i class="tio-ruler nav-icon"></i>
@@ -739,17 +783,17 @@
                             </span>
                         </a>
                     </li>
-                   @endif
-                   <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('messages.units') }}">
+                   @endif --}}
+                   <li class="navbar-vertical-aside-has-menu ">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="#" title="{{ translate('messages.units') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
                                 {{ translate('Common Condition') }}
                             </span>
                         </a>
                    </li>
-                   <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('messages.units') }}">
+                   <li class="navbar-vertical-aside-has-menu ">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="#" title="{{ translate('messages.units') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
                                 {{ translate('Brands') }}
@@ -1021,6 +1065,28 @@
 
 </div>
 
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Choose Link</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Select any link below:</p>
+          <a href="https://example.com/page?id=123" target="_blank" class="btn btn-outline-primary mb-2">
+            Link 1 (id=123)
+          </a>
+          <br>
+          <a href="https://example.com/page?id=456" target="_blank" class="btn btn-outline-success">
+            Link 2 (id=456)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 @push('script_2')
 <script>
