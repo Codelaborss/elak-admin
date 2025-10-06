@@ -53,6 +53,10 @@
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
             <div class="row g-2">
+
+                 <input type="hidden"
+                        name="hidden_food_and_product"
+                        value="{{ request()->get('name', 'Food') }}">
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">

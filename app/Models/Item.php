@@ -45,7 +45,8 @@ class Item extends Model
         'rating_count' => 'integer',
         'unit_id' => 'integer',
         'is_halal' => 'integer',
-        'voucher_type' => 'integer',
+        'voucher_type' => 'string',
+        'food_and_product_type' => 'string',
     ];
 
     protected $appends = ['unit_type', 'image_full_url', 'images_full_url'];

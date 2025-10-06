@@ -716,7 +716,7 @@
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('Voucher Setup') }}</span>
                             </a>
                             <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/Voucher*') ? 'block' : 'none' }}">
-                                <li data-bs-toggle="modal" data-bs-target="#myModal" class="nav-item">
+                                <li data-bs-toggle="modal" data-bs-target="#myModal_product_food" class="nav-item cursor-pointer">
                                     <a class="nav-link " >
                                         <span class="tio-circle nav-indicator-icon"></span>
                                         <span class="text-truncate">{{ translate('Add New Item') }}</span>
@@ -1066,27 +1066,44 @@
 </div>
 
 
-<!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Choose Link</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body text-center">
-          <p>Select any link below:</p>
-          <a href="https://example.com/page?id=123" target="_blank" class="btn btn-outline-primary mb-2">
-            Link 1 (id=123)
+<div class="modal fade" id="myModal_product_food" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-sm rounded-4">
+
+      <!-- Header -->
+      <div class="modal-header border-0 bg-light rounded-top-4">
+        <h5 class="modal-title fw-semibold text-dark">
+          Choose Item
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body text-center py-4">
+        <p class="text-muted mb-4">Select one of the following options:</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="{{ route('admin.item.add-new', ['name' => 'Food']) }}"
+             class="btn btn-primary px-4 py-2 fw-semibold rounded-3">
+            🍔 Food
           </a>
-          <br>
-          <a href="https://example.com/page?id=456" target="_blank" class="btn btn-outline-success">
-            Link 2 (id=456)
+          <a href="{{ route('admin.item.add-new', ['name' => 'Product']) }}"
+             class="btn btn-success px-4 py-2 fw-semibold rounded-3">
+            📦 Product
           </a>
         </div>
       </div>
+
+      <!-- Footer -->
+      <div class="modal-footer border-0 text-center justify-content-center">
+        <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-3" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+
     </div>
   </div>
+</div>
+
 
 @push('script_2')
 <script>

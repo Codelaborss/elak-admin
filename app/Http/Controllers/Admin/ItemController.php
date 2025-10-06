@@ -98,6 +98,7 @@ class ItemController extends Controller
             'name.0' => 'required',
             'name.*' => 'max:191',
             'category_id' => 'required',
+            'hidden_food_and_product' => 'required',
             'image' => [
                 Rule::requiredIf(function () use ($request) {
                     return (Config::get('module.current_module_type') != 'food' && $request?->product_gellary == null);
@@ -366,6 +367,7 @@ class ItemController extends Controller
         $item->discount = $request->discount_type == 'amount' ? $request->discount : $request->discount;
         $item->discount_type = $request->discount_type;
         $item->unit_id = $request->unit;
+        $item->food_and_product_type = $request->hidden_food_and_product;
         $item->attributes = $request->has('attribute_id') ? json_encode($request->attribute_id) : json_encode([]);
         $item->add_ons = $request->has('addon_ids') ? json_encode($request->addon_ids) : json_encode([]);
         $item->store_id = $request->store_id;

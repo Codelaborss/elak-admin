@@ -8291,4 +8291,6 @@ Smartly or Earn. ',
   'Please select store' => 'Please select store',
   'Food Unit' => 'Food Unit',
   'The limit from field is required.' => 'The limit from field is required.',
+  'Add New Item' => 'Add New Item',
+  'The image failed to upload.' => 'The image failed to upload.',
 );

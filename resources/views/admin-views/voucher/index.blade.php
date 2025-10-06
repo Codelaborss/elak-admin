@@ -7,540 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('public/assets/admin/css/tags-input.min.css') }}" rel="stylesheet">
 @endpush
-  <style>
-    .voucher-card.selected, .voucher-card_2.selected , .btns.selected  {
-    border: 2px solid #10B981 !important;
-    background-color: #f0fdf4 !important;
-        }
 
-    .range-slider {
-      position: relative;
-      width: 100%;
-    }
-    .range-slider input[type=range] {
-      position: absolute;
-      width: 100%;
-      height: 0;
-      pointer-events: none;
-      -webkit-appearance: none;
-      background: none;
-    }
-    .range-slider input[type=range]::-webkit-slider-thumb {
-      pointer-events: auto;
-      -webkit-appearance: none;
-      height: 18px;
-      width: 18px;
-      border-radius: 50%;
-      background: #fff;
-      border: 2px solid #007bff;
-      cursor: pointer;
-    }
-    .range-slider input[type=range]::-moz-range-thumb {
-      pointer-events: auto;
-      height: 18px;
-      width: 18px;
-      border-radius: 50%;
-      background: #fff;
-      border: 2px solid #007bff;
-      cursor: pointer;
-    }
-    .range-slider .progress {
-      position: absolute;
-      height: 4px;
-      background: #007bff;
-      top: 7px;
-      border-radius: 5px;
-    }
-  </style>
-  <style>
-
-
-        .form-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 12px 12px 0 0;
-            text-align: center;
-        }
-
-        .form-header h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
-
-        .form-header p {
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
-
-        .form-container {
-            background: white;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .form-section {
-            padding: 30px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-        }
-
-        .section-title {
-            font-size: 1.4em;
-            color: #5a67d8;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 20px;
-            background: #5a67d8;
-            margin-right: 12px;
-            border-radius: 2px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #4a5568;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #5a67d8;
-            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
-        }
-
-        .bundle-type-description {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .bundle-type-description.show {
-            display: block;
-        }
-
-        .bundle-config-section {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: #f8f9ff;
-            border-radius: 10px;
-            border: 2px solid #e2e8f0;
-        }
-
-        .bundle-config-section.show {
-            display: block;
-        }
-
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #f8f9ff;
-            border-radius: 6px;
-            transition: background 0.2s ease;
-        }
-
-        .checkbox-item:hover {
-            background: #edf2ff;
-        }
-
-        .checkbox-item input {
-            margin-right: 10px;
-            scale: 1.2;
-        }
-
-        .product-card {
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: #fafbfc;
-            transition: all 0.3s ease;
-        }
-
-        .product-card.selected {
-            border-color: #5a67d8;
-            background: #f0f4ff;
-        }
-
-        .product-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .product-info {
-            flex: 1;
-        }
-
-        .product-name {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 5px;
-        }
-
-        .product-price {
-            color: #38a169;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: #5a67d8;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #4c51bf;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: #e53e3e;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c53030;
-        }
-
-        .btn-success {
-            background: #38a169;
-            color: white;
-            font-size: 1.1em;
-            padding: 15px 30px;
-        }
-
-        .btn-success:hover {
-            background: #2f855a;
-            transform: translateY(-2px);
-        }
-
-        .variations-section {
-            margin-top: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .variation-group {
-            margin-bottom: 15px;
-        }
-
-        .variation-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #4a5568;
-        }
-
-        .variation-options {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .variation-option {
-            padding: 8px 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: white;
-        }
-
-        .variation-option:hover {
-            border-color: #5a67d8;
-        }
-
-        .variation-option.selected {
-            background: #5a67d8;
-            color: white;
-            border-color: #5a67d8;
-        }
-
-        .addons-section {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f8f9ff;
-            border-radius: 8px;
-        }
-
-        .addon-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .addon-item:last-child {
-            border-bottom: none;
-        }
-
-        .price-calculator {
-            /* background: #edf2ff; */
-            padding: 20px;
-            border-radius: 12px;
-            /* margin-top: 20px; */
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 5px 0;
-        }
-
-        .price-total {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #38a169;
-            border-top: 2px solid #38a169;
-            padding-top: 10px;
-        }
-
-        .search-bar {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 16px 12px 45px;
-            border: 2px solid #e2e8f0;
-            border-radius: 25px;
-            font-size: 16px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a0aec0;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #5a67d8;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .voucher-preview {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 30px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-        }
-
-        .voucher-code {
-            font-family: 'Courier New', monospace;
-            font-size: 1.8em;
-            font-weight: bold;
-            background: rgba(255,255,255,0.2);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
-            letter-spacing: 2px;
-        }
-
-        .qr-code-placeholder {
-            width: 150px;
-            height: 150px;
-            background: white;
-            margin: 20px auto;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .voucher-details {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .voucher-details h4 {
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .voucher-details ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .voucher-details li {
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .voucher-details li:last-child {
-            border-bottom: none;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .checkbox-group {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 @section('content')
-
+  <link rel="stylesheet" href="{{asset('public/assets/admin/css/voucher.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/admin/css/voucher.css')}}">
      <!-- Page Header -->
-
      <div class="container-fluid px-4 py-3">
-        <div class="page-header d-flex flex-wrap __gap-15px justify-content-between align-items-center">
-            <h1 class="page-header-title">
-                <span class="page-header-icon">
-                    <img src="{{ asset('public/assets/admin/img/items.png') }}" class="w--22" alt="">
-                </span>
-                <span>
-                    {{ translate('messages.add_new_item') }}
-                </span>
-            </h1>
-            <div class=" d-flex flex-sm-nowrap flex-wrap  align-items-end">
-                <div class="text--primary-2 d-flex flex-wrap align-items-center mr-2">
-                    <a href="{{ route('admin.Voucher.product_gallery') }}" class="btn btn-outline-primary btn--primary d-flex align-items-center bg-not-hover-primary-ash rounded-8 gap-2">
-                        <img src="{{ asset('public/assets/admin/img/product-gallery.png') }}" class="w--22" alt="">
-                        <span>{{translate('Add Info From Gallery')}}</span>
-                    </a>
-                </div>
-
-                @if(Config::get('module.current_module_type') == 'food')
-                <div class="text--primary-2 py-1 d-flex flex-wrap align-items-center mb-3 foodModalShow"  type="button" >
-                    <strong class="mr-2">{{translate('See_how_it_works!')}}</strong>
-                    <div>
-                        <i class="tio-info-outined"></i>
-                    </div>
-                </div>
-                @else
-                <div class="text--primary-2 py-1 d-flex flex-wrap align-items-center mb-3 attributeModalShow" type="button" >
-                    <strong class="mr-2">{{translate('See_how_it_works!')}}</strong>
-                    <div>
-                        <i class="tio-info-outined"></i>
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
+          @include("admin-views.voucher.include_heading")
         <div class="bg-white shadow rounded-lg p-4">
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
             <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
@@ -1334,10 +807,10 @@
                         </div>
                     </div>
                     {{-- Bundle Type Selection --}}
-                    <div class="col-12 col-md-12">
+                    {{-- <div class="col-12 col-md-12">
                         <div class="form-group mb-0">
                             <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
-                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control">
+                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" onchange="tab_section_change()">
                             <option value="">Select Bundle Offer Type</option>
                             <option value="bundle"> Fixed Bundle - Specific products at set price</option>
                             <option value="bogo_free"> BOGO Free - Buy one get one free</option>
@@ -1345,7 +818,30 @@
                             <option value="mix_match"> Mix & Match - Customer chooses from categories</option>
                             </select>
                         </div>
+                    </div> --}}
+                    {{-- Bundle Type Selection --}}
+                    <div class="col-12 col-md-12">
+                        <div class="form-group mb-0">
+                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
+                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" onchange="tab_section_change()">
+                                <option value="">Select Bundle Offer Type</option>
+                                <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
+                                    Fixed Bundle - Specific products at set price
+                                </option>
+                                <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                    BOGO Free - Buy one get one free
+                                </option>
+                                <option value="buy_x_get_y" {{ old('bundle_offer_type') == 'buy_x_get_y' ? 'selected' : '' }}>
+                                    Buy X Get Y - Buy products get different product free
+                                </option>
+                                <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
+                                    Mix & Match - Customer chooses from categories
+                                </option>
+                            </select>
+                        </div>
                     </div>
+
+
                     {{-- panel1 --}}
                     <div class="col-12 mt-5" id="panel1">
                          <div class="row g-3 bundle_div" style="display:none;">
@@ -1946,15 +1442,15 @@
                     <!-- Available Products to Choose From -->
                     <div id="availableProducts" style="display: none;">
                         <h3 class="mt-3">Available Products:</h3>
+                        <div class="row">
                      <?php $i = 1; ?>
                         @foreach (\App\Models\Item::all() as $item)
                             @php(
                                 // Decode variations JSON to an array
                                 $variations = json_decode($item->variations, true)
-
                             )
 
-                            <div class="product-card" data-id="{{ $i }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}">
+                            <div class="product-card col-12 " data-id="{{ $i }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}">
                                 <div class="product-header">
                                     <div class="product-info">
                                         <div class="product-name">{{ $item->name }}</div>
@@ -1964,8 +1460,8 @@
                                 </div>
                             </div>
 
-                            <div id="selectedProducts_{{$item->id}}" class="d-none">
-                                <div class="product-card selected">
+                            <div id="selectedProducts_{{$item->id}}" class="d-none col-12 col-md-5 mx-2">
+                                <div class="product-card selected col-12 mx-2">
                                     <div class="product-header">
                                         <div class="product-info">
                                             <div class="product-name">{{ $item->name }}</div>
@@ -1975,6 +1471,7 @@
                                             <select class="form-control product-role-select" data-index="{{ $i }}" style="width: auto;">
                                                 <option value="paid_item" selected>Paid Item</option>
                                                 <option value="free_item">Free Item</option>
+                                                  <option value="bundle_item" >Bundle Item</option>
                                             </select>
                                             <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $i }}">Remove</button>
                                         </div>
@@ -2044,6 +1541,7 @@
                         @endforeach
 
                     </div>
+                    </div>
 
 
                     <div class="container mt-5">
@@ -2058,6 +1556,7 @@
                     </div>
 
                 </div>
+
                 <!-- Section 6: Bundle Rules -->
                 <div class=" section-card rounded p-4 mb-4   d-none" id="bundle_rule">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Bundle Rules & Limitations') }}</h3>
@@ -2093,170 +1592,14 @@
                         </div>
                     </div>
                 </div>
+                 @include("admin-views.voucher.include_voucher")
 
-                {{-- How It Works --}}
-                <div class="section-card rounded p-4 mb-4 d-none section3 two_four_complete" id="how_it_work_main">
-                    <h3 class="h5 fw-semibold mb-4"> {{ translate('How It Works') }}</h3>
-                    <p class="text-muted">Instructions for using your voucher</p>
-                    <div class="card border shadow-sm">
-                        <div class="card-body">
-                            <ol id="workList" class="pl-3 mb-0">
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-                {{--  Terms & Conditions --}}
-                <div class="section-card rounded p-4 mb-4  section3  d-none" id="term_condition_main">
-                    <h3 class="h5 fw-semibold mb-2"> {{ translate('Terms & Conditions') }}</h3>
-                    <p class="text-muted">Set your business terms</p>
-                    <div class="card border shadow-sm mt-3">
-                        <div class="card-body">
-                            <h5 class="text-center font-weight-bold mb-4">Usage Terms</h5>
-                            <div id="usageTerms" class="row">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{--  Review & Submit --}}
-                <div class="section-card rounded p-4 mb-4 section3 d-none" id="review_submit_main">
-                    <h3 class="h5 fw-semibold mb-2"> {{ translate('Review & Submit') }}</h3>
-                    <p class="text-muted">Review your voucher before submitting</p>
-
-                    <div class="card border shadow-sm mt-3">
-                        <div class="card-body">
-                        <!-- MAIN REVIEW CONTENT (always visible) -->
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                            <h5 class="font-weight-bold mb-3"> Client Information</h5>
-                            <p><strong>Client:</strong> Salvador Michael</p>
-                            <p><strong>App:</strong> Maxine Solis</p>
-                            <p><strong>Segment:</strong> Standard</p>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                            <h5 class="font-weight-bold mb-3"> Partner Details</h5>
-                            <p><strong>Partner Name:</strong> Casey Hahn</p>
-                            <p><strong>Category:</strong> Desserts</p>
-                            <p><strong>Sub Category:</strong> Not set</p>
-                            <p><strong>Branches:</strong> Rem obcaecati sit s</p>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                            <h5 class="font-weight-bold mb-3"> Voucher Info</h5>
-                            <p><strong>Title:</strong> Accusamus cum rerum</p>
-                            <p><strong>Thumbnail:</strong> https://www.kifatepy.me</p>
-                            <p><strong>Image:</strong> https://www.sunyqylufyxisy.org.uk</p>
-                            <p><strong>Food Add-ons:</strong> fdgdgfdg, dfjgbdf</p>
-                            <p><strong>Tags:</strong> jdhjfd, dfgbjfdg</p>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                            <h5 class="font-weight-bold mb-3"> Pricing</h5>
-                            <p><strong>Price:</strong> $435</p>
-                            <p><strong>Discount:</strong> 30 $</p>
-                            <p><strong>Valid Until:</strong> 1999-09-13</p>
-                            <p><strong>Usage Limit:</strong> 20 per user</p>
-                            <p><strong>Max Purchase:</strong> 50</p>
-                            <p><strong>Stock:</strong> 795</p>
-                            <p><strong>Order Range:</strong> 31 - 100</p>
-                            <p><strong>Time Schedule:</strong> Sed eius distinctio</p>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                            <h5 class="font-weight-bold mb-3"> How It Works</h5>
-                            <p><strong>Valid in Store Only:</strong> No</p>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                            <h5 class="font-weight-bold mb-3"> Terms</h5>
-                            <p><strong>Non-refundable:</strong> No</p>
-                            <p><strong>Excludes Holidays:</strong> No</p>
-                            <p><strong>In-store Only:</strong> No</p>
-                            </div>
-                        </div>
-
-                        <div class="border-top pt-3 mt-3">
-                            <span class="badge badge-success"> Halal Certified</span>
-                        </div>
-
-                        <!-- Variations -->
-                        <div class="border-top pt-4 mt-4">
-                            <h5 class="font-weight-bold mb-3"> Variations (1)</h5>
-                            <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="card border shadow-sm p-3">
-                                <p class="font-weight-medium mb-1">Cillum aut et minus</p>
-                                <p class="text-muted small mb-0">$31 • Stock: 31</p>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <!-- TOGGLE BUTTON -->
-                        {{-- <div class="text-center mt-4">
-                            <button id="togglePreview" type="button" class="btn btn-secondary">
-                            Show Preview 👁️
-                            </button>
-                        </div> --}}
-
-                        <!-- PREVIEW BLOCK (hide/show only this) -->
-                        <div id="voucherPreview" class="card border-dashed mt-4 p-4" style="display: none;">
-                            <h5 class="font-weight-bold mb-3">Voucher Preview</h5>
-                            <div class="card bg-primary text-white p-4">
-                            <h3 class="mb-2">Accusamus cum rerum</h3>
-                            <p class="mb-3">Autem tenetur laboru</p>
-                            <div class="bg-white text-dark rounded p-3">
-                                <p class="h4 mb-0">$435</p>
-                                <small>Save 30$</small>
-                            </div>
-                            <div class="mt-3">
-                                <span class="badge badge-light">jdhjfd</span>
-                                <span class="badge badge-light">dfgbjfdg</span>
-                            </div>
-                            </div>
-                        </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="col-md-12">
-                    <div class="btn--container justify-content-end">
-                        <button type="reset" id="reset_btn"
-                            class="btn btn--reset">{{ translate('messages.reset') }}</button>
-                        <button type="submit" id="submitButton"  class="btn btn--primary">{{ translate('messages.submit') }}</button>
-                    </div>
-                </div>
             </form>
         </div>
       </div>
 
 
-    <div class="modal" id="food-modal">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close foodModalClose" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/IkoF9gPH6zs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                      </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal" id="attribute-modal">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close attributeModalClose" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/xG8fO7TXPbk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                      </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      @include("admin-views.voucher.include_model")
 
 @endsection
 
@@ -2267,30 +1610,6 @@
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const select = document.getElementById("bundle_offer_type");
-
-            select.addEventListener("change", function () {
-                // sab panels ke divs hide karo
-                document.querySelectorAll(
-                "#panel1 .bogo_free_div, #panel1 .buy_x_get_y_div, #panel1 .gift_div, #panel1 .bundle_div, #panel1 .mix_match_div,   #panel1 .fixed_bundle_div,  #panel1 .bogo_free_div" +
-                "#panel2 .bogo_free_div, #panel2 .buy_x_get_y_div, #panel2 .gift_div, #panel2 .bundle_div, #panel2 .mix_match_div , #panel2 .fixed_bundle_div,#panel2 .bogo_free_div "
-                ).forEach(div => div.style.display = "none");
-
-                // selected value
-                // fixed_bundle    bogo_free fixed_bundle
-
-                const selected = this.value;
-
-                if (selected) {
-                document.querySelectorAll("#panel1 ." + selected + "_div, #panel2 ." + selected + "_div")
-                    .forEach(div => div.style.display = "block");
-                }
-            });
-        });
-    </script>
 
     <script>
        const buttons = document.querySelectorAll("#btn-group .btns");
@@ -2852,12 +2171,6 @@
                 }
             });
         }
-
-        // $('#item_form').on('keydown', function(e) {
-        //     if (e.key === 'Enter') {
-        //     e.preventDefault(); // Prevent submission on Enter
-        //     }
-        // });
 
         $('#item_form').on('submit', function(e) {
             $('#submitButton').attr('disabled', true);
@@ -4061,10 +3374,8 @@
         }
     </script>
 
-
-
-
 <script>
+
 // Product Selection and Variation Handler with Bundle Calculation
 $(document).ready(function() {
 
@@ -4098,8 +3409,8 @@ $(document).ready(function() {
             role: 'paid_item'
         });
 
-        // Update bundle calculation
-        updateBundleCalculation();
+        // Update bundle calculation and display
+        updateBundleDisplay();
 
         // Show the entire availableProducts section if hidden
         $('#availableProducts').show();
@@ -4124,14 +3435,14 @@ $(document).ready(function() {
         // Remove from selected products array
         selectedProducts = selectedProducts.filter(p => p.index !== index);
 
-        // Update bundle calculation
-        updateBundleCalculation();
+        // Update bundle display
+        updateBundleDisplay();
 
         // Reset item total
         updateItemTotal(index);
     });
 
-    // When product role is changed (Paid Item / Free Item)
+    // When product role is changed (Paid Item / Free Item / Bundle Item)
     $(document).on('change', '.product-role-select', function() {
         const index = $(this).attr('data-index');
         const role = $(this).val();
@@ -4142,14 +3453,15 @@ $(document).ready(function() {
             product.role = role;
         }
 
-        // Update bundle calculation
-        updateBundleCalculation();
+        // Update bundle display
+        updateBundleDisplay();
     });
 
     // When a variation option is clicked
     $(document).on('click', '.variation-option', function() {
         const index = $(this).attr('data-index');
         const variationPrice = parseFloat($(this).attr('data-price')) || 0;
+        const variationType = $(this).attr('data-type') || 'default';
 
         // Remove 'selected' class from siblings in the same group
         $(this).siblings('.variation-option').removeClass('selected');
@@ -4162,17 +3474,17 @@ $(document).ready(function() {
         const product = selectedProducts.find(p => p.index === index);
         if (product) {
             product.variationPrice = wasSelected ? 0 : variationPrice;
+            product.variationType = wasSelected ? '' : variationType;
         }
 
-        // Update item total and bundle calculation
+        // Update item total and bundle display
         updateItemTotal(index);
-        updateBundleCalculation();
+        updateBundleDisplay();
     });
 
     // When an addon checkbox is changed
     $(document).on('change', '.addon-checkbox', function() {
         const index = $(this).attr('data-index');
-        const addonPrice = parseFloat($(this).attr('data-price')) || 0;
         const addonItem = $(this).closest('.addon-item');
 
         // Add/remove background highlight based on checkbox state
@@ -4185,19 +3497,28 @@ $(document).ready(function() {
         // Calculate total addon price for this product
         const selectedDiv = $(this).closest('[id^="selectedProducts_"]');
         let totalAddonPrice = 0;
+        let selectedAddons = [];
+
         selectedDiv.find('.addon-checkbox:checked').each(function() {
-            totalAddonPrice += parseFloat($(this).attr('data-price')) || 0;
+            const addonPrice = parseFloat($(this).attr('data-price')) || 0;
+            const addonName = $(this).parent().text().trim().split('(+$')[0].trim();
+            totalAddonPrice += addonPrice;
+            selectedAddons.push({
+                name: addonName,
+                price: addonPrice
+            });
         });
 
         // Update addon price in selected products array
         const product = selectedProducts.find(p => p.index === index);
         if (product) {
             product.addonPrice = totalAddonPrice;
+            product.selectedAddons = selectedAddons;
         }
 
-        // Update item total and bundle calculation
+        // Update item total and bundle display
         updateItemTotal(index);
-        updateBundleCalculation();
+        updateBundleDisplay();
     });
 
     // Function to calculate and update item total
@@ -4228,8 +3549,8 @@ $(document).ready(function() {
         );
     }
 
-    // Function to update bundle price calculation
-    function updateBundleCalculation() {
+    // Function to update bundle display (Left: Paid/Bundle, Right: Free)
+    function updateBundleDisplay() {
         if (selectedProducts.length === 0) {
             $('#priceCalculator').hide();
             return;
@@ -4237,7 +3558,59 @@ $(document).ready(function() {
 
         $('#priceCalculator').show();
 
-        let breakdown = '';
+        // Separate products by role
+        const paidAndBundleProducts = selectedProducts.filter(p =>
+            p.role === 'paid_item' || p.role === 'bundle_item'
+        );
+        const freeProducts = selectedProducts.filter(p => p.role === 'free_item');
+
+        // Build left column (Paid + Bundle Items)
+        let leftColumnHTML = '';
+        paidAndBundleProducts.forEach((product, idx) => {
+            const itemTotal = product.basePrice + product.variationPrice + product.addonPrice;
+            const roleLabel = product.role === 'bundle_item' ? 'Bundle Item' : 'Paid Item';
+
+            leftColumnHTML += `
+                <div class="product-detail-card">
+                    <h5>${product.name} <span class="badge bg-primary">${roleLabel}</span></h5>
+                    <p><strong>Base Price:</strong> $${product.basePrice.toFixed(2)}</p>
+                    ${product.variationType ? `<p><strong>Variation:</strong> ${product.variationType} (+$${product.variationPrice.toFixed(2)})</p>` : ''}
+                    ${product.selectedAddons && product.selectedAddons.length > 0 ? `
+                        <p><strong>Add-ons:</strong></p>
+                        <ul>
+                            ${product.selectedAddons.map(addon => `<li>${addon.name} (+$${addon.price.toFixed(2)})</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                    <p><strong>Item Total:</strong> $${itemTotal.toFixed(2)}</p>
+                </div>
+                ${idx < paidAndBundleProducts.length - 1 ? '<hr/>' : ''}
+            `;
+        });
+
+        // Build right column (Free Items)
+        let rightColumnHTML = '';
+        freeProducts.forEach((product, idx) => {
+            const itemTotal = product.basePrice + product.variationPrice + product.addonPrice;
+            const addonTotal = product.addonPrice;
+
+            rightColumnHTML += `
+                <div class="product-detail-card">
+                    <h5>${product.name} <span class="badge bg-success">Free Item</span></h5>
+                    <p><strong>Base Price:</strong> $${product.basePrice.toFixed(2)} <span class="text-success">(FREE)</span></p>
+                    ${product.variationType ? `<p><strong>Variation:</strong> ${product.variationType} <span class="text-success">(FREE)</span></p>` : ''}
+                    ${product.selectedAddons && product.selectedAddons.length > 0 ? `
+                        <p><strong>Add-ons (Chargeable):</strong></p>
+                        <ul>
+                            ${product.selectedAddons.map(addon => `<li>${addon.name} (+$${addon.price.toFixed(2)})</li>`).join('')}
+                        </ul>
+                        <p><strong>Add-ons Total:</strong> $${addonTotal.toFixed(2)}</p>
+                    ` : '<p class="text-success"><strong>No chargeable add-ons</strong></p>'}
+                </div>
+                ${idx < freeProducts.length - 1 ? '<hr/>' : ''}
+            `;
+        });
+
+        // Calculate totals
         let originalTotal = 0;
         let paidTotal = 0;
         let freeItemsAddonTotal = 0;
@@ -4246,17 +3619,7 @@ $(document).ready(function() {
             const itemTotal = product.basePrice + product.variationPrice + product.addonPrice;
             originalTotal += itemTotal;
 
-            const roleLabel = product.role === 'free_item' ? '(Free + Add-ons)' : '(Paid)';
-            const priceDisplay = itemTotal.toFixed(2);
-
-            breakdown += `
-                <div class="price-row">
-                    <span class="item-name">${product.name} ${roleLabel}</span>
-                    <span class="item-price">${priceDisplay}</span>
-                </div>
-            `;
-
-            if (product.role === 'paid_item') {
+            if (product.role === 'paid_item' || product.role === 'bundle_item') {
                 paidTotal += itemTotal;
             } else {
                 // For free items, only count addon price
@@ -4264,31 +3627,269 @@ $(document).ready(function() {
             }
         });
 
-        // Calculate final bundle total
         const bundleTotal = paidTotal + freeItemsAddonTotal;
         const savings = originalTotal - bundleTotal;
 
-        // Build the complete breakdown HTML
-        const calculationHTML = `
-            ${breakdown}
-            <div class="price-row total-row">
-                <span class="item-name">Original Total:</span>
-                <span class="item-price">${originalTotal.toFixed(2)}</span>
+        // Build the complete display HTML
+        const displayHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mb-3">Paid & Bundle Items</h4>
+                    ${leftColumnHTML || '<p class="text-muted">No paid items selected</p>'}
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-3">Free Items</h4>
+                    ${rightColumnHTML || '<p class="text-muted">No free items selected</p>'}
+                </div>
             </div>
-            <div class="price-row savings-row">
-                <span class="item-name">You Save:</span>
-                <span class="item-price savings">${savings > 0 ? '-' : ''}${savings.toFixed(2)}</span>
-            </div>
-            <div class="price-row bundle-total-row">
-                <span class="bundle-label">Bundle Total:</span>
-                <span class="bundle-price">${bundleTotal.toFixed(2)}</span>
+            <hr style="border: 2px solid #333; margin: 20px 0;"/>
+            <div class="price-summary">
+                <div class="price-row">
+                    <span class="item-name">Original Total:</span>
+                    <span class="item-price">$${originalTotal.toFixed(2)}</span>
+                </div>
+                <div class="price-row savings-row">
+                    <span class="item-name">You Save:</span>
+                    <span class="item-price savings">${savings > 0 ? '-$' : '$'}${Math.abs(savings).toFixed(2)}</span>
+                </div>
+                <div class="price-row bundle-total-row">
+                    <span class="bundle-label">Bundle Total:</span>
+                    <span class="bundle-price">$${bundleTotal.toFixed(2)}</span>
+                </div>
             </div>
         `;
 
-        $('#priceBreakdown').html(calculationHTML);
+        $('#priceBreakdown').html(displayHTML);
     }
 });
 
 </script>
+{{--
+<script>
 
+
+function tab_section_change() {
+    const value = document.getElementById("bundle_offer_type").value;
+
+    // dono panels
+    const panels = [document.getElementById("panel1"), document.getElementById("panel2")];
+
+    // pehle sab hide karo
+    function hideAll(panel) {
+        panel.querySelectorAll(".bundle_div, .bogo_free_div, .buy_x_get_y_div, .mix_match_div")
+            .forEach(div => div.style.display = "none");
+    }
+
+    panels.forEach(panel => {
+        if (!panel) return;
+
+        // sab hide kardo
+        hideAll(panel);
+
+        // ab switch chalao
+        switch (value) {
+            case "bundle":
+                panel.querySelectorAll(".bundle_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("bundle");
+                //   $('#availableProducts').hide();
+                break;
+
+            case "bogo_free":
+                panel.querySelectorAll(".bogo_free_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("bogo_free");
+                    // $('#availableProducts').hide();
+                break;
+
+            case "buy_x_get_y":
+                panel.querySelectorAll(".buy_x_get_y_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("buy_x_get_y");
+                    // $('#availableProducts').hide();
+                break;
+
+            case "mix_match":
+                panel.querySelectorAll(".mix_match_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("mix_match");
+                    // $('#availableProducts').hide();
+                break;
+
+            default:
+                // agar koi value na ho to kuch bhi mat show karo
+                break;
+        }
+    });
+}
+
+/**
+ * Product Role dropdown adjuster
+ */
+function setupRoleSelect(type) {
+    document.querySelectorAll(".product-role-select").forEach(select => {
+        select.innerHTML = ""; // sab options reset kar do
+
+        if (type === "bogo_free" || type === "buy_x_get_y") {
+            // Paid aur Free dono options
+            select.innerHTML = `
+                <option value="paid_item" selected>Paid Item</option>
+                <option value="free_item">Free Item</option>
+            `;
+            select.style.display = "inline-block"; // show
+        } else {
+            // sirf Bundle Item
+            select.innerHTML = `
+                <option value="bundle_item" selected>Bundle Item</option>
+            `;
+            select.style.display = "inline-block"; // visible rahega
+        }
+    });
+}
+
+
+
+</script>
+
+
+--}}
+
+<script>
+
+function tab_section_change() {
+    const value = document.getElementById("bundle_offer_type").value;
+
+    // dono panels
+    const panels = [document.getElementById("panel1"), document.getElementById("panel2")];
+
+    // ⭐ PEHLE SAB RESET KARO - YE NAYA CODE HAI
+    resetAllSelections();
+
+    // pehle sab hide karo
+    function hideAll(panel) {
+        panel.querySelectorAll(".bundle_div, .bogo_free_div, .buy_x_get_y_div, .mix_match_div")
+            .forEach(div => div.style.display = "none");
+    }
+
+    panels.forEach(panel => {
+        if (!panel) return;
+
+        // sab hide kardo
+        hideAll(panel);
+
+        // ab switch chalao
+        switch (value) {
+            case "bundle":
+                panel.querySelectorAll(".bundle_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("bundle");
+                break;
+
+            case "bogo_free":
+                panel.querySelectorAll(".bogo_free_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("bogo_free");
+                break;
+
+            case "buy_x_get_y":
+                panel.querySelectorAll(".buy_x_get_y_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("buy_x_get_y");
+                break;
+
+            case "mix_match":
+                panel.querySelectorAll(".mix_match_div").forEach(div => div.style.display = "block");
+                setupRoleSelect("mix_match");
+                break;
+
+            default:
+                // agar koi value na ho to kuch bhi mat show karo
+                break;
+        }
+    });
+}
+
+/**
+ * Product Role dropdown adjuster
+ */
+function setupRoleSelect(type) {
+    document.querySelectorAll(".product-role-select").forEach(select => {
+        select.innerHTML = ""; // sab options reset kar do
+
+        if (type === "bogo_free" || type === "buy_x_get_y") {
+            // Paid aur Free dono options
+            select.innerHTML = `
+                <option value="paid_item" selected>Paid Item</option>
+                <option value="free_item">Free Item</option>
+            `;
+            select.style.display = "inline-block"; // show
+        } else {
+            // sirf Bundle Item
+            select.innerHTML = `
+                <option value="bundle_item" selected>Bundle Item</option>
+            `;
+            select.style.display = "inline-block"; // visible rahega
+        }
+    });
+}
+
+/**
+ * ⭐ YE NAYA FUNCTION - SAB SELECTIONS RESET KARTA HAI
+ */
+function resetAllSelections() {
+    // 1. jQuery selectedProducts array ko khali karo (agar tumhara code use kar raha ho)
+    if (typeof selectedProducts !== 'undefined') {
+        selectedProducts = [];
+    }
+
+    // 2. Sab selected product divs ko hide karo
+    $('[id^="selectedProducts_"]').each(function() {
+        $(this).addClass('d-none').hide();
+    });
+
+    // 3. Sab available product cards ko wapis show karo
+    $('.product-card[data-id]').each(function() {
+        $(this).show();
+    });
+
+    // 4. Sab variations ki selection hatao
+    $('.variation-option').removeClass('selected');
+
+    // 5. Sab addon checkboxes uncheck karo
+    $('.addon-checkbox').prop('checked', false);
+    $('.addon-item').removeClass('selected');
+
+    // 6. Sab product role selects ko reset karo
+    $('.product-role-select').val('paid_item');
+
+    // 7. Price calculator hide karo
+    $('#priceCalculator').hide();
+    $('#priceBreakdown').html('');
+
+    // 8. Available products section hide karo
+    $('#availableProducts').hide();
+
+    // 9. Item totals ko reset karo
+    $('div[style*="Item Total"]').each(function() {
+        const parentDiv = $(this).closest('[id^="selectedProducts_"]');
+        const basePriceText = parentDiv.find('.product-price').first().text();
+        const basePrice = parseFloat(basePriceText.replace('Base Price: $', '').replace('$', '')) || 0;
+        $(this).html(`Item Total: $${basePrice.toFixed(2)}`);
+    });
+
+    // 10. "No products added yet" message wapis lao (agar hai to)
+    const noProductsMsg = '<p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>';
+    if ($('#selectedProducts').length && $('#selectedProducts').children().length === 0) {
+        $('#selectedProducts').html(noProductsMsg);
+    }
+
+    console.log('✅ All selections reset successfully!');
+}
+
+// ⭐ Page load par bundle_offer_type change event listener lagao
+$(document).ready(function() {
+    $('#bundle_offer_type').on('change', function() {
+        tab_section_change();
+    });
+
+    // Optional: Agar koi manual reset button banana ho
+    $('#resetBundleBtn').on('click', function() {
+        resetAllSelections();
+    });
+});
+
+</script>
 @endpush

@@ -325,7 +325,7 @@ if(in_array(config('module.current_module_type'),config('module.module_type') ))
 <script>
     let baseUrl = '{{ url('/') }}';
 </script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="{{asset('public/assets/admin/js/view-pages/common.js')}}"></script>
 <script src="{{asset('public/assets/admin/js/keyword-highlighted.js')}}"></script>
 <audio id="myAudio">

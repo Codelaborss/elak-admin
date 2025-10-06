@@ -20,6 +20,7 @@ return new class extends Migration
             $table->index('created_at');
             $table->index('order_count');
             $table->index('avg_rating');
+            $table->index('food_and_product_type');
         });
     }
 
