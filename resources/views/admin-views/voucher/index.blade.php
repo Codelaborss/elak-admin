@@ -18,265 +18,24 @@
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
             <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
             <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
-            <div id="btn-group" class="flex items-center gap-1 bg-muted p-1 rounded-lg shadow-inner">
-                <button onclick="bundle('simple')" class="border rounded p-4 text-center btns selected" data-testid="button-form-product">
-                <i class="fas fa-shopping-bag mr-2"></i> Simple
-                </button>
-                <button onclick="bundle('bundle')" class="border rounded p-4 text-center btns" data-testid="button-form-bundle">
-                <i class="fas fa-box mr-2"></i> Bundle
-                </button>
-                <button onclick="bundle('Flat discount')" class="border rounded p-4 text-center btns" data-testid="button-form-bundle">
-                <i class="fas fa-tags mr-2"></i> Flat discount
-                </button>
-                <button onclick="bundle('Gift')" class="border rounded p-4 text-center btns" data-testid="button-form-bundle">
-                <i class="fas fa-gift mr-2"></i> Gift
-                </button>
-            </div>
-            <!-- Step 1: Select Voucher Type -->
-            <div class="section-card rounded p-4 mb-4">
-                <h2 class="fw-semibold h5 mb-4">
-                 <i class="fas fa-bullseye me-2"></i> Step 1: Select Voucher Type
-                </h2>
-                <div class="row g-3">
-                    @php $i = 1; @endphp
-                    @foreach (\App\Models\VoucherType::orderBy('name')->get() as $voucherType)
-                        <div class="col-md-3">
-                            <div class="voucher-card border rounded p-4 text-center h-100"
-                                onclick="section_one('{{ $i }}' , '{{ $voucherType->id }}', '{{ $voucherType->name }}')"
-                                data-value="{{ $voucherType->name }}">
-                                <div class="display-4 mb-2">
-                                    <img src="{{ asset($voucherType->logo) }}" alt="{{ $voucherType->name }}" style="width: 40px;" />
-                                </div>
 
-                                <h6 class="fw-semibold">{{ $voucherType->name }}</h6>
-                                <small class="text-muted">{{ $voucherType->desc }}</small>
-                            </div>
-                        </div>
-                        @php $i++; @endphp
-                    @endforeach
-                </div>
-            </div>
-            <!-- Step 2: Select Management Type -->
-            <div class="section-card rounded p-4 mb-4" id="management_selection">
-                <h2 class="fw-semibold h5 mb-4">
-                 <i class="fas fa-cog me-2"></i> Step 2: Select Management Type
-                </h2>
-                <div class="row g-3" id="append_all_data"></div>
-            </div>
+            {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
+             @include("admin-views.voucher.include_client_voucher_management")
+
+
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
                 @csrf
                 @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
                 @php($language = $language->value ?? null)
                 @php($defaultLang = str_replace('_', '-', app()->getLocale()))
 
-                <!-- Client Information one-->
-                <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete" id="basic_info_main">
-                    <h3 class="h5 fw-semibold mb-4"> Client Information</h3>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="input-label"
-                                    for="default_name">{{ translate('Client App Name') }}
-                                </label>
-                                <input type="text" name="name" id="default_name"  class="form-control" placeholder="{{ translate('Client App Name') }}" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-
-                              <div class="form-group">
-                                    <label class="input-label" for="select_client">{{ translate('Client  Name') }}
-                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Client  Name') }}"></span>
-                                    </label>
-                                    <select name="select_client[]" id="select_client" required class="form-control js-select2-custom Clients_select_new" data-placeholder="{{ translate('Select Client') }}" multiple>
-                                        @foreach (\App\Models\Client::all() as $item)
-                                        <option value="{{ $item->id }}" @if(collect(old('type', []))->contains($item->id)) selected @endif>
-                                                {{ $item->name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label" for="segment_type">{{ translate('Segment') }}
-                            <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Segment') }}"></span>
-                        </label>
-                        <select name="segment_type[]" id="segment_type" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Segment') }}" multiple>
-                        </select>
-                    </div>
-                </div>
-                <!-- Partner Information one-->
-                <div class="section-card rounded p-4 mb-4 d-none section3 one_four_complete two_four_complete" id="store_category_main">
-                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Partner Information') }}</h3>
-                    {{-- Store & Category Info --}}
-                    <div class="col-md-12">
-                        <div class="row g-2 align-items-end">
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="form-group mb-0">
-                                    <label class="input-label" for="store_id">
-                                        {{ translate('messages.store') }}
-                                        <span class="form-label-secondary text-danger"
-                                            data-toggle="tooltip" data-placement="right"
-                                            data-original-title="{{ translate('messages.Required.') }}"> *
-                                        </span>
-                                    </label>
-                                    <select name="store_id" id="store_id"
-                                        data-placeholder="{{ translate('messages.select_store') }}"
-                                        class="js-data-example-ajax form-control"
-                                        onchange="findBranch(this.value)">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="category_id">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span></label>
-                                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}" onchange="get_product()"
-                                        class="js-data-example-ajax form-control">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"  for="sub-categories">{{ translate('messages.sub_category') }}<span class="input-label-secondary"  title="{{ translate('messages.category_required_warning') }}"><img  src="{{ asset('/public/assets/admin/img/info-circle.svg') }}" alt="{{ translate('messages.category_required_warning') }}"></span> </label>
-                                    <select name="sub_category_id" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
-                                        id="sub-categories">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group mb-0">
-                                    <label class="input-label" for="sub_branch_id">{{ translate('Branches') }}<span class="form-label-secondary" data-toggle="tooltip"data-placement="right" data-original-title="{{ translate('Branches') }}"></span> </label>
-                                    <select name="sub_branch_id[]" id="sub-branch" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Branches') }}" multiple>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {{-- <div class="col-sm-6 col-lg-3" id="condition_input">
-                                <div class="form-group mb-0">
-                                    <label class="input-label" for="condition_id">{{ translate('messages.Suitable_For') }}<span class="input-label-secondary"></span></label>
-                                    <select name="condition_id" id="condition_id"data-placeholder="{{ translate('messages.Select_Condition') }}" class="js-data-example-ajax form-control" oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3" id="brand_input">
-                                <div class="form-group mb-0">
-                                    <label class="input-label" for="brand_id">{{ translate('messages.Brand') }}<span class="input-label-secondary"></span></label>
-                                    <select name="brand_id" id="brand_id" data-placeholder="{{ translate('messages.Select_brand') }}" class="js-data-example-ajax form-control" oninvalid="this.setCustomValidity('{{ translate('messages.Select_brand') }}')">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3" id="unit_input">
-                                <div class="form-group mb-0">
-                                    <label class="input-label text-capitalize" for="unit">{{ translate('messages.unit') }}</label>
-                                    <select name="unit" id="unit" class="form-control js-select2-custom">
-                                        @foreach (\App\Models\Unit::all() as $unit)
-                                            <option value="{{ $unit->id }}">{{ $unit->unit }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3" id="veg_input">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('messages.item_type') }} <span class="form-label-secondary text-danger"
-                                        data-toggle="tooltip" data-placement="right"
-                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                        </span>
-                                    </label>
-                                    <select name="veg" id="veg" class="form-control js-select2-custom"
-                                        required>
-                                        <option value="0">{{ translate('messages.non_veg') }}</option>
-                                        <option value="1">{{ translate('messages.veg') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-lg-3" id="organic">
-                                <div class="form-check mb-sm-2 pb-sm-1">
-                                    <input class="form-check-input" name="organic" type="checkbox" value="1" id="flexCheckDefault" checked>
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        {{ translate('messages.is_organic') }}
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3" id="basic">
-                                <div class="form-check mb-sm-2 pb-sm-1">
-                                    <input class="form-check-input" name="basic" type="checkbox" value="1" id="flexCheckDefaultBasic" checked>
-                                    <label class="form-check-label" for="flexCheckDefaultBasic">
-                                        {{ translate('messages.Is_Basic_Medicine') }}
-                                    </label>
-                                </div>
-                            </div> --}}
-
-
-                        </div>
-                    </div>
-                    {{-- <div class="col-md-6" id="addon_input">
-                        <div class="c border-0">
-                            <div class="card-header">
-                                <h5 class="card-title">
-                                    <span class="card-header-icon"><i class="tio-dashboard-outlined"></i></span>
-                                    <span>{{ translate('messages.addon') }}</span>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlSelect1">{{ translate('messages.addon') }}<span
-                                            class="input-label-secondary"
-                                            title="{{ translate('messages.addon') }}"><img
-                                                src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
-                                                alt="{{ translate('messages.store_required_warning') }}"></span></label>
-                                    <select name="addon_ids[]" class="form-control js-select2-custom"
-                                        multiple="multiple" id="add_on">
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" id="time_input">
-                        <div class="c border-0">
-                            <div class="card-header">
-                                <h5 class="card-title">
-                                    <span class="card-header-icon"><i class="tio-date-range"></i></span>
-                                    <span>{{ translate('time_schedule') }}</span>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-2">
-                                    <div class="col-sm-6">
-                                        <div class="form-group mb-0">
-                                            <label class="input-label"
-                                                for="exampleFormControlInput1">{{ translate('messages.available_time_starts') }}</label>
-                                            <input type="time" name="available_time_starts" class="form-control"
-                                                id="available_time_starts"
-                                                placeholder="{{ translate('messages.Ex:') }} 10:30 am">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group mb-0">
-                                            <label class="input-label"
-                                                for="exampleFormControlInput1">{{ translate('messages.available_time_ends') }}</label>
-                                            <input type="time" name="available_time_ends" class="form-control"
-                                                id="available_time_ends" placeholder="5:45 pm">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                </div>
+                {{-- Client Information and Partner Information --}}
+                 @include("admin-views.voucher.include_client_partner_information")
 
                 {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
                 <!-- Voucher Details -->
-                <div class="section-card rounded p-4 mb-4  d-none section" id="Product_voucher_fields_1_3">
+                <div class="section-card rounded p-4 mb-4  d-none " id="Product_voucher_fields_1_3">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                     <div class="row g-3 mb-3">
                         <div class="col-12">
@@ -406,7 +165,7 @@
                     </div>
                 </div>
                 <!--  Price Information -->
-                <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="product_voucher_price_info_1_3">
+                <div class="section-card rounded p-4 mb-4 d-none " id="product_voucher_price_info_1_3">
                     <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="col-md-12">
@@ -517,7 +276,7 @@
                 {{-- ==================== Delivery/Pickup  == Food ===================== --}}
 
                 <!-- Voucher Details -->
-                <div class="section-card rounded p-4 mb-4 d-none section" id="food_voucher_fields_1_4">
+                <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_fields_1_4">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                     <div class="row g-3 mb-3">
                         <div class="col-12">
@@ -593,7 +352,7 @@
                     </div>
                 </div>
                 <!--  Price Information one-->
-                <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete" id="food_voucher_price_info_1_4">
+                <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_price_info_1_4">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="col-md-12">
@@ -752,7 +511,7 @@
                 {{-- ====================   Bundle Delivery/Pickup  == Food and Product Bundle ===================== --}}
 
                 <!-- Voucher Details -->
-                <div class="section-card rounded p-4 mb-4 d-none section" id="bundel_food_voucher_fields_1_3_1_4">
+                <div class="section-card rounded p-4 mb-4 d-none " id="bundel_food_voucher_fields_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                     {{-- Voucher Title --}}
                     <div class="row g-3 mb-3">
@@ -1139,7 +898,7 @@
                     </div>
                 </div>
                 <!--  Price Information one-->
-                <div class="section-card rounded p-4 mb-4 d-none section one_four_complete two_four_complete"id="bundel_food_voucher_price_info_1_3_1_4">
+                <div class="section-card rounded p-4 mb-4 d-none "id="bundel_food_voucher_price_info_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="row g-2">
@@ -1592,6 +1351,7 @@
                         </div>
                     </div>
                 </div>
+
                  @include("admin-views.voucher.include_voucher")
 
             </form>
@@ -1661,10 +1421,10 @@
                 alert("Something went wrong!");
                 }
             });
-            }
+        }
     </script>
 
-    <script>
+    {{-- <script>
         const toggleBtn = document.getElementById("togglePreview");
         const preview = document.getElementById("voucherPreview");
         let show = false;
@@ -1674,7 +1434,7 @@
         preview.style.display = show ? "block" : "none";
         toggleBtn.textContent = show ? "Hide Preview 🙈" : "Show Preview 👁️";
         });
-    </script>
+    </script> --}}
 
     <script>
         // Single sliders
@@ -3339,42 +3099,38 @@
     </script>
 
 
-
     <script>
-        function get_product() {
-            var category_id = $("#category_id").val();
-            var store_id = $("#store_id").val();
+function get_product() {
+    var category_id = $("#category_id").val();
+    var store_id = $("#store_id").val();
 
-            if (store_id == "") {
-                alert("Please select store");
-            } else {
-                $.ajax({
-                    url: "{{ route('admin.Voucher.get_product') }}",
-                    type: "GET",
-                    data: {
-                        store_id: store_id,
-                        category_id: category_id  // optional agar zaroori ho
-                    },
-                    success: function(response) {
-                        $('.all_product_list')
-                            .empty()
-                            .append('<option value="">{{ translate("Select Product") }}</option>');
+    if (store_id == "") {
+        alert("Please select store");
+    } else {
+        $.ajax({
+            url: "{{ route('admin.Voucher.get_product') }}",
+            type: "GET",
+            data: {
+                store_id: store_id,
+                category_id: category_id  // optional agar zaroori ho
+            },
+            success: function(response) {
+                $('.all_product_list')
+                    .empty()
+                    .append('<option value="">{{ translate("Select Product") }}</option>');
 
-                        $.each(response, function(key, product) {
-                            $('.all_product_list')
-                                .append('<option value="'+ product.id +'">'
-                                + product.name + '</option>');
-                        });
-                    },
-                    error: function() {
-                        toastr.error("{{ translate('messages.failed_to_load_branches') }}");
-                    }
+                $.each(response, function(key, product) {
+                    $('.all_product_list')
+                        .append('<option value="'+ product.id +'">'
+                        + product.name + '</option>');
                 });
+            },
+            error: function() {
+                toastr.error("{{ translate('messages.failed_to_load_branches') }}");
             }
-        }
-    </script>
-
-<script>
+        });
+    }
+}
 
 // Product Selection and Variation Handler with Bundle Calculation
 $(document).ready(function() {
@@ -3663,94 +3419,6 @@ $(document).ready(function() {
     }
 });
 
-</script>
-{{--
-<script>
-
-
-function tab_section_change() {
-    const value = document.getElementById("bundle_offer_type").value;
-
-    // dono panels
-    const panels = [document.getElementById("panel1"), document.getElementById("panel2")];
-
-    // pehle sab hide karo
-    function hideAll(panel) {
-        panel.querySelectorAll(".bundle_div, .bogo_free_div, .buy_x_get_y_div, .mix_match_div")
-            .forEach(div => div.style.display = "none");
-    }
-
-    panels.forEach(panel => {
-        if (!panel) return;
-
-        // sab hide kardo
-        hideAll(panel);
-
-        // ab switch chalao
-        switch (value) {
-            case "bundle":
-                panel.querySelectorAll(".bundle_div").forEach(div => div.style.display = "block");
-                setupRoleSelect("bundle");
-                //   $('#availableProducts').hide();
-                break;
-
-            case "bogo_free":
-                panel.querySelectorAll(".bogo_free_div").forEach(div => div.style.display = "block");
-                setupRoleSelect("bogo_free");
-                    // $('#availableProducts').hide();
-                break;
-
-            case "buy_x_get_y":
-                panel.querySelectorAll(".buy_x_get_y_div").forEach(div => div.style.display = "block");
-                setupRoleSelect("buy_x_get_y");
-                    // $('#availableProducts').hide();
-                break;
-
-            case "mix_match":
-                panel.querySelectorAll(".mix_match_div").forEach(div => div.style.display = "block");
-                setupRoleSelect("mix_match");
-                    // $('#availableProducts').hide();
-                break;
-
-            default:
-                // agar koi value na ho to kuch bhi mat show karo
-                break;
-        }
-    });
-}
-
-/**
- * Product Role dropdown adjuster
- */
-function setupRoleSelect(type) {
-    document.querySelectorAll(".product-role-select").forEach(select => {
-        select.innerHTML = ""; // sab options reset kar do
-
-        if (type === "bogo_free" || type === "buy_x_get_y") {
-            // Paid aur Free dono options
-            select.innerHTML = `
-                <option value="paid_item" selected>Paid Item</option>
-                <option value="free_item">Free Item</option>
-            `;
-            select.style.display = "inline-block"; // show
-        } else {
-            // sirf Bundle Item
-            select.innerHTML = `
-                <option value="bundle_item" selected>Bundle Item</option>
-            `;
-            select.style.display = "inline-block"; // visible rahega
-        }
-    });
-}
-
-
-
-</script>
-
-
---}}
-
-<script>
 
 function tab_section_change() {
     const value = document.getElementById("bundle_offer_type").value;
