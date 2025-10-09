@@ -8299,4 +8299,5 @@ Smartly or Earn. ',
   'Product Brands' => 'Product Brands',
   'Product Condition' => 'Product Condition',
   'Product Attributes' => 'Product Attributes',
+  's' => 'S',
 );

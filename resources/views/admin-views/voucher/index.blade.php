@@ -326,7 +326,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="input-label" for="food_add_one">{{ translate('Food Add One') }}
+                            <label class="input-label" for="food_add_one">{{ translate('s') }}
                                 <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
                                     data-original-title="{{ translate('Segment') }}"></span>
                             </label>
@@ -340,16 +340,16 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <div class="form-group">
                             <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
                             <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
                         </div>
-                    </div>
-                    <div class="form-check mb-4">
+                    </div> --}}
+                    {{-- <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" id="is-halal-food">
                         <label class="form-check-label" for="is-halal-food">Is It Halal</label>
-                    </div>
+                    </div> --}}
                 </div>
                 <!--  Price Information one-->
                 <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_price_info_1_4">
@@ -469,38 +469,38 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <input class="form-check-input" type="checkbox" id="include_shipping">
+                                    {{-- <input class="form-check-input" type="checkbox" id="include_shipping">
                                     <label class="form-check-label" for="include_shipping">Include Shipping</label>
-                                </div>
+                                </div> --}}
 
                                 {{-- <div class="col-lg-12" id="food_variation_section"> --}}
-                                <div class="col-lg-12" >
-                                        <div class="card shadow--card-2 border-0">
-                                            <div class="card-header flex-wrap">
-                                                <h5 class="card-title">
-                                                    <span class="card-header-icon mr-2">
-                                                        <i class="tio-canvas-text"></i>
-                                                    </span>
-                                                    <span>{{ translate('messages.food_variations') }}</span>
-                                                </h5>
-                                                <a class="btn text--primary-2" id="add_new_option_button">
-                                                    {{ translate('add_new_variation') }}
-                                                    <i class="tio-add"></i>
-                                                </a>
+                                {{-- <div class="col-lg-12" >
+                                    <div class="card shadow--card-2 border-0">
+                                        <div class="card-header flex-wrap">
+                                            <h5 class="card-title">
+                                                <span class="card-header-icon mr-2">
+                                                    <i class="tio-canvas-text"></i>
+                                                </span>
+                                                <span>{{ translate('messages.food_variations') }}</span>
+                                            </h5>
+                                            <a class="btn text--primary-2" id="add_new_option_button">
+                                                {{ translate('add_new_variation') }}
+                                                <i class="tio-add"></i>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Empty Variation -->
+                                            <div id="empty-variation">
+                                                <div class="text-center">
+                                                    <img src="{{asset('/public/assets/admin/img/variation.png')}}" alt="">
+                                                    <div>{{translate('No variation added')}}</div>
+                                                </div>
                                             </div>
-                                            <div class="card-body">
-                                                <!-- Empty Variation -->
-                                                <div id="empty-variation">
-                                                    <div class="text-center">
-                                                        <img src="{{asset('/public/assets/admin/img/variation.png')}}" alt="">
-                                                        <div>{{translate('No variation added')}}</div>
-                                                    </div>
-                                                </div>
-                                                <div id="add_new_option">
-                                                </div>
+                                            <div id="add_new_option">
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
 
                             </div>
                         </div>
