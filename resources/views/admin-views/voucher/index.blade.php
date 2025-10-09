@@ -2823,11 +2823,62 @@
             console.log(response);
 
             // 🟢 WorkManagement (list items)
-            let workHtml = "";
-            $.each(response.work_management, function(index, item) {
-                workHtml += "<li>" + item.guid_title + "</li>";
-            });
-            $("#workList").html(workHtml);
+            // let workHtml = "";
+            // $.each(response.work_management, function(index, item) {
+            //     workHtml += "<li>" + item.guid_title + "</li>";
+            // });
+            // $("#workList").html(workHtml);
+
+            // 🟢 WorkManagement (show all details)
+          let workHtml = "";
+
+$.each(response.work_management, function(index, item) {
+    workHtml += `
+        <div class="work-item border p-4 mb-4 rounded-lg shadow">
+            <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
+
+            <div class="mb-3">
+                <strong>Purchase Process:</strong>
+                <ul class="list-disc list-inside text-gray-700">
+                    ${item.purchase_process.map(step => `<li>${step}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <strong>Payment Confirm:</strong>
+                <ul class="list-disc list-inside text-gray-700">
+                    ${item.payment_confirm.map(step => `<li>${step}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <strong>Voucher Deliver:</strong>
+                <ul class="list-disc list-inside text-gray-700">
+                    ${item.voucher_deliver.map(step => `<li>${step}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <strong>Redemption Process:</strong>
+                <ul class="list-disc list-inside text-gray-700">
+                    ${item.redemption_process.map(step => `<li>${step}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <strong>Account Management:</strong>
+                <ul class="list-disc list-inside text-gray-700">
+                    ${item.account_management.map(step => `<li>${step}</li>`).join('')}
+                </ul>
+            </div>
+        </div>
+    `;
+});
+
+$("#workList").html(workHtml);
+
+
+
 
             // 🟢 UsageTermManagement (checkboxes)
             let usageHtml = "";
@@ -2844,6 +2895,8 @@
                 `;
             });
             $("#usageTerms").html(usageHtml);
+
+
             },
             error: function(xhr, status, error) {
             console.error("Error:", error);

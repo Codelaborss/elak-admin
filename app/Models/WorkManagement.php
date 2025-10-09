@@ -19,4 +19,13 @@ class WorkManagement extends Model
             'account_management',
             'status',
         ];
+
+        protected $casts = [
+        'purchase_process' => 'array',
+        'payment_confirm' => 'array',
+        'voucher_deliver' => 'array',
+        'redemption_process' => 'array',
+        'account_management' => 'array',
+    ];
+
     }

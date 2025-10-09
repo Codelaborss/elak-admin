@@ -3,9 +3,8 @@
     <h3 class="h5 fw-semibold mb-4"> {{ translate('How It Works') }}</h3>
     <p class="text-muted">Instructions for using your voucher</p>
     <div class="card border shadow-sm">
-        <div class="card-body">
-            <ol id="workList" class="pl-3 mb-0">
-            </ol>
+        <div class="card-body" id="workList">
+
         </div>
     </div>
 </div>

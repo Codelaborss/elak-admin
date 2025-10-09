@@ -128,7 +128,7 @@ public function get_document(Request $request)
 
     // UsageTermManagement records
     $UsageTermManagement = UsageTermManagement::where('voucher_id', $request->store_id)->get();
-
+//   dd($UsageTermManagement);
     // Return both in JSON as array
     return response()->json([
         'work_management' => $WorkManagement,
