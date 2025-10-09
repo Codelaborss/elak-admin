@@ -2989,6 +2989,7 @@
                         category_id: category_id  // optional agar zaroori ho
                     },
                     success: function(response) {
+                        console.log(response);
                         $('.all_product_list')
                             .empty()
                             .append('<option value="">{{ translate("Select Product") }}</option>');
@@ -3273,20 +3274,7 @@
                         </div>
                     </div>
                     <hr style="border: 2px solid #333; margin: 20px 0;"/>
-                    <div class="price-summary">
-                        <div class="price-row">
-                            <span class="item-name">Original Total:</span>
-                            <span class="item-price">$${originalTotal.toFixed(2)}</span>
-                        </div>
-                        <div class="price-row savings-row">
-                            <span class="item-name">You Save:</span>
-                            <span class="item-price savings">${savings > 0 ? '-$' : '$'}${Math.abs(savings).toFixed(2)}</span>
-                        </div>
-                        <div class="price-row bundle-total-row">
-                            <span class="bundle-label">Bundle Total:</span>
-                            <span class="bundle-price">$${bundleTotal.toFixed(2)}</span>
-                        </div>
-                    </div>
+
                 `;
 
                 $('#priceBreakdown').html(displayHTML);
@@ -3404,12 +3392,12 @@
             $('#availableProducts').hide();
 
             // 9. Item totals ko reset karo
-            $('div[style*="Item Total"]').each(function() {
-                const parentDiv = $(this).closest('[id^="selectedProducts_"]');
-                const basePriceText = parentDiv.find('.product-price').first().text();
-                const basePrice = parseFloat(basePriceText.replace('Base Price: $', '').replace('$', '')) || 0;
-                $(this).html(`Item Total: $${basePrice.toFixed(2)}`);
-            });
+            // $('div[style*="Item Total"]').each(function() {
+            //     const parentDiv = $(this).closest('[id^="selectedProducts_"]');
+            //     const basePriceText = parentDiv.find('.product-price').first().text();
+            //     const basePrice = parseFloat(basePriceText.replace('Base Price: $', '').replace('$', '')) || 0;
+            //     $(this).html(`Item Total: $${basePrice.toFixed(2)}`);
+            // });
 
             // 10. "No products added yet" message wapis lao (agar hai to)
             const noProductsMsg = '<p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>';

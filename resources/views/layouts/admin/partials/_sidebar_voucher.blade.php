@@ -505,9 +505,9 @@
 
                     @if (\App\CentralLogics\Helpers::module_permission_check('category'))
                         <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/category*') ? 'active' : '' }}">
-                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('messages.categories') }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Voucher Csategories') }}">
                                 <i class="tio-category nav-icon"></i>
-                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.categories') }}</span>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('Voucher Csategories') }}</span>
                             </a>
                             <ul class="js-navbar-vertical-aside-submenu nav nav-sub"  style="display:{{ Request::is('admin/category*') ? 'block' : 'none' }}">
                                 <li class="nav-item @yield('main_category')  {{ request()->input('position') == 0 && Request::is('admin/category/add') ? 'active' : '' }}">
@@ -548,9 +548,9 @@
                       <!-- AddOn -->
                 @if (\App\CentralLogics\Helpers::module_permission_check('addon'))
                 <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/addon*') ? 'active' : '' }}">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('messages.addons') }}">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Product Addons') }}">
                         <i class="tio-add-circle-outlined nav-icon"></i>
-                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.addons') }}</span>
+                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('Product Addons') }}</span>
                     </a>
                     <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/addon*') ? 'block' : 'none' }}">
                         <li class="nav-item {{ Request::is('admin/addon/addon-category') ? 'active' : '' }}">
@@ -620,7 +620,7 @@
                             <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.attribute.add-new') }}" title="{{ translate('messages.attributes') }}">
                                 <i class="tio-apps nav-icon"></i>
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                    {{ translate('messages.attributes') }}
+                                    {{ translate('Product Attributes') }}
                                 </span>
                             </a>
                         </li>
@@ -629,7 +629,7 @@
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('Voucher Addon') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Food Unit') }}
+                                {{ translate('Product Unit') }}
                             </span>
                         </a>
                     </li>
@@ -637,7 +637,7 @@
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.VoucherType.add-new') }}" title="{{ translate('Voucher Type') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Food Type') }}
+                                {{ translate('Voucher Type') }}
                             </span>
                         </a>
                     </li>
@@ -651,7 +651,7 @@
                     </li>
 
                          <!-- Food -->
-                    @if (\App\CentralLogics\Helpers::module_permission_check('item'))
+                    {{-- @if (\App\CentralLogics\Helpers::module_permission_check('item'))
                     <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/item*') ? 'active' : '' }}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Food Setup') }}">
                             <i class="tio-premium-outlined nav-icon"></i>
@@ -670,14 +670,14 @@
                                     <span class="text-truncate">{{ translate('messages.list') }}</span>
                                 </a>
                             </li>
-                            {{-- @if (\App\CentralLogics\Helpers::get_mail_status('product_gallery')) --}}
+                            @if (\App\CentralLogics\Helpers::get_mail_status('product_gallery'))
                             <li class="nav-item {{  Request::is('admin/item/product-gallery') ? 'active' : '' }}">
                                 <a class="nav-link " href="{{ route('admin.item.product_gallery') }}" title="{{ translate('messages.Product_Gallery') }}">
                                     <span class="tio-circle nav-indicator-icon"></span>
                                     <span class="text-truncate">{{ translate('messages.Food_Gallery') }}</span>
                                 </a>
                             </li>
-                            {{-- @endif --}}
+                            @endif
                             @if (\App\CentralLogics\Helpers::get_mail_status('product_approval'))
                             <li class="nav-item {{  Request::is('admin/item/requested/item/view/*') || Request::is('admin/item/new/item/list') || (Request::is('admin/item/edit/*') && strpos(request()->fullUrl(), 'temp_product=1') !== false  ) ? 'active' : '' }}">
                                 <a class="nav-link " href="{{ route('admin.item.approval_list') }}" title="{{ translate('messages.New_Item_Request') }}">
@@ -706,7 +706,7 @@
                             </li>
                         </ul>
                     </li>
-                    @endif
+                    @endif --}}
 
                     {{-- voucher links --}}
                     @if (\App\CentralLogics\Helpers::module_permission_check('item'))
@@ -785,10 +785,10 @@
                     </li>
                    @endif --}}
                    <li class="navbar-vertical-aside-has-menu ">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="#" title="{{ translate('messages.units') }}">
+                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="#" title="{{ translate('Product Unit') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Common Condition') }}
+                                {{ translate('Product Condition') }}
                             </span>
                         </a>
                    </li>
@@ -796,7 +796,7 @@
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="#" title="{{ translate('messages.units') }}">
                             <i class="tio-ruler nav-icon"></i>
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
-                                {{ translate('Brands') }}
+                                {{ translate('Product Brands') }}
                             </span>
                         </a>
                    </li>

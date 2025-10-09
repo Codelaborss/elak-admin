@@ -176,6 +176,8 @@
                         </div>
                     </div>
                 </div>
+                @if(request()->name == "Food" || request()->name == "Product")
+
                 <div class="col-md-12">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -188,6 +190,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-2 align-items-end">
+                                  @if(request()->name == "Food")
                                 <div class="col-sm-6 col-lg-3">
                                     <div class="form-group mb-0">
                                         <label class="input-label" for="store_id">{{ translate('messages.store') }} <span
@@ -241,17 +244,19 @@
                                             data-placeholder="{{ translate('messages.Select_Condition') }}"
                                             class="js-data-example-ajax form-control"
                                             oninvalid="this.setCustomValidity('{{ translate('messages.Select_Condition') }}')">
-
                                         </select>
                                     </div>
                                 </div>
+                                @endif
+
+                             @if(request()->name == "Product")
                                 <div class="col-sm-6 col-lg-3" id="brand_input">
                                     <div class="form-group mb-0">
                                         <label class="input-label" for="brand_id">{{ translate('messages.Brand') }}<span
                                                 class="input-label-secondary"></span></label>
                                         <select name="brand_id" id="brand_id"
                                             data-placeholder="{{ translate('messages.Select_brand') }}"
-                                            class="js-data-example-ajax form-control"
+                                            class="js-data-example-ajax form-control" multiple
                                             oninvalid="this.setCustomValidity('{{ translate('messages.Select_brand') }}')">
 
                                         </select>
@@ -268,6 +273,8 @@
                                         </select>
                                     </div>
                                 </div>
+                            @endif
+                              @if(request()->name == "Food")
                                 <div class="col-sm-6 col-lg-3" id="veg_input">
                                     <div class="form-group mb-0">
                                         <label class="input-label"
@@ -283,7 +290,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                @if (Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+                                {{-- @dd(Config::get('module.current_module_type')) --}}
+                                @if (Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food'  || Config::get('module.current_module_type') == 'voucher')
 
                                     <div class="col-sm-6" id="nutrition">
                                         <label class="input-label" for="sub-categories">
@@ -359,7 +367,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                @if (Config::get('module.current_module_type') == 'pharmacy')
+                                @if (Config::get('module.current_module_type') == 'pharmacy' )
                                     <div class="col-sm-6 col-lg-3" id="is_prescription_required">
                                         <div class="form-check mb-sm-2 pb-sm-1">
                                             <input class="form-check-input" name="is_prescription_required"
@@ -369,8 +377,6 @@
                                             </label>
                                         </div>
                                     </div>
-
-
                                     <div class="col-sm-6" id="generic_name">
                                         <label class="input-label" for="sub-categories">
                                             {{ translate('generic_name') }}
@@ -393,9 +399,7 @@
                                         </div>
                                     </div>
                                 @endif
-
-
-                                @if (Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food')
+                                @if (Config::get('module.current_module_type') == 'grocery' || Config::get('module.current_module_type') == 'food' || Config::get('module.current_module_type') == 'voucher')
                                     <div class="col-sm-6 col-lg-3" id="halal">
                                         <div class="form-check mb-sm-2 pb-sm-1">
                                             <input class="form-check-input" name="is_halal" type="checkbox"
@@ -406,10 +410,13 @@
                                         </div>
                                     </div>
                                 @endif
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
+                   @endif
+                @if(request()->name == "Food")
                 <div class="col-md-6" id="addon_input">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -433,6 +440,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+                @if(request()->name == "Food")
                 <div class="col-md-6" id="time_input">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -464,6 +473,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+                @if(request()->name == "Food")
                 <div class="col-md-12">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -475,7 +486,7 @@
                         <div class="card-body">
                             <div class="row g-2">
                                 <div
-                                    class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' : '3' }} col-6">
+                                    class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6">
                                     <div class="form-group mb-0">
                                         <label class="input-label"
                                             for="exampleFormControlInput1">{{ translate('messages.price') }} <span
@@ -488,7 +499,7 @@
                                             placeholder="{{ translate('messages.Ex:') }} 100" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' : '3' }} col-6"
+                                <div class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6"
                                     id="stock_input">
                                     <div class="form-group mb-0">
                                         <label class="input-label"
@@ -497,8 +508,7 @@
                                             class="form-control" name="current_stock" min="0" id="quantity">
                                     </div>
                                 </div>
-                                <div
-                                    class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' : '3' }} col-6">
+                                <div class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6">
                                     <div class="form-group mb-0">
                                         <label class="input-label"
                                             for="exampleFormControlInput1">{{ translate('messages.discount_type') }}
@@ -521,7 +531,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' : '3' }} col-6">
+                                    class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6">
                                     <div class="form-group mb-0">
                                         <label class="input-label"
                                             for="exampleFormControlInput1">{{ translate('messages.discount') }}
@@ -539,7 +549,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endif
 
                 @if ($productWiseTax)
                     <div class="col-lg-12">
@@ -568,8 +578,7 @@
                     </div>
 
                 @endif
-
-
+                  @if(request()->name == "Food")
                 <div class="col-lg-12" id="food_variation_section">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header flex-wrap">
@@ -597,6 +606,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+                  @if(request()->name == "Food" || request()->name == "Product")
                 <div class="col-md-12" id="attribute_section">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -639,6 +650,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+                 @if(request()->name == "Food")
                 <div class="col-md-12">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -659,6 +672,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <div class="col-md-12">
                     <div class="btn--container justify-content-end">
                         <button type="reset" id="reset_btn"
@@ -878,6 +892,9 @@
                     console.log(module_data)
                     stock = module_data.stock;
                     module_type = data.type;
+
+
+                    // alert(module_data.nutrition);
                     if (stock) {
                         $('#stock_input').show();
                     } else {
@@ -916,9 +933,11 @@
                         $('#brand_input').hide();
                     }
                     combination_update();
-                    if (module_type == 'food') {
+                    if (module_type == 'food' || module_type == 'voucher') {
                         $('#food_variation_section').show();
+                        @if (request()->name == "Food")
                         $('#attribute_section').hide();
+                        @endif
                     } else {
                         $('#food_variation_section').hide();
                         $('#attribute_section').show();
