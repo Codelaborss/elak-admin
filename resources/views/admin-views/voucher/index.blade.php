@@ -326,7 +326,7 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="input-label" for="food_add_one">{{ translate('s') }}
+                            <label class="input-label" for="food_add_one">{{ translate('Product') }}
                                 <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
                                     data-original-title="{{ translate('Segment') }}"></span>
                             </label>
