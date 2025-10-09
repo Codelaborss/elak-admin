@@ -58,11 +58,6 @@
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
             <div class="row g-2">
-
-
-
-                @dd($product->images)
-
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
@@ -728,10 +723,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
             <div class="col-md-12">
                 <div class="btn--container justify-content-end">
                     <button type="reset" id="reset_btn"
