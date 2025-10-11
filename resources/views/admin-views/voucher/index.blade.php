@@ -1910,6 +1910,7 @@
             const managementSelection = document.querySelectorAll('#management_selection');
             const voucherCards = document.querySelectorAll('.voucher-card');
             const voucherCards2 = document.querySelectorAll('.voucher-card_2');
+             const allimages = document.getElementById('allimages');
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
                 getDataFromServer(primaryId);
@@ -1932,7 +1933,8 @@
                             document.getElementById('voucher_behavior'),
                             document.getElementById('usage_terms'),
                             document.getElementById('attributes'),
-                            document.getElementById('tags')
+                            document.getElementById('tags'),
+                            document.getElementById('allimages')
                         ];
 
                         elementsToHide.forEach(element => {
@@ -1952,7 +1954,8 @@
                             document.getElementById('voucher_behavior'),
                             document.getElementById('usage_terms'),
                             document.getElementById('attributes'),
-                            document.getElementById('tags')
+                            document.getElementById('tags'),
+
                         ];
 
                         elementsToShow.forEach(element => {
@@ -2010,6 +2013,8 @@
                 }
                 switch (hiddenBundel) {
                     case "simple":
+
+
                         switch (hidden_name) {
                             case "Delivery/Pickup": // Delivery/Pickup
                              // Before adding new one → clear both divs
@@ -2827,7 +2832,8 @@
                 'food_voucher_price_info_1_4',
                 'bundel_food_voucher_fields_1_3_1_4',
                 'bundel_food_voucher_price_info_1_3_1_4',
-                'Bundle_products_configuration'
+                'Bundle_products_configuration',
+                'allimages'
             ];
 
             // Add d-none to each element if it's visible
