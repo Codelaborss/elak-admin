@@ -21,7 +21,7 @@
         @php $i = 1; @endphp
         @foreach (\App\Models\VoucherType::orderBy('name')->get() as $voucherType)
             <div class="col-md-3">
-                <div class="voucher-card border rounded p-4 text-center h-100"
+                <div class="voucher-card border rounded py-4 text-center h-70 "
                     onclick="section_one('{{ $i }}' , '{{ $voucherType->id }}', '{{ $voucherType->name }}')"
                     data-value="{{ $voucherType->name }}">
                     <div class="display-4 mb-2">

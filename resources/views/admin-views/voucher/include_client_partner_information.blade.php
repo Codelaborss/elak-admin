@@ -1,7 +1,7 @@
 <!-- Client Information one-->
 <div class="section-card rounded p-4 mb-4 d-none " id="basic_info_main">
     <h3 class="h5 fw-semibold mb-4"> Client Information</h3>
-    <div class="row g-3 mb-3">
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label class="input-label"
@@ -11,20 +11,18 @@
             </div>
         </div>
         <div class="col-md-6">
-
-                <div class="form-group">
-                    <label class="input-label" for="select_client">{{ translate('Client  Name') }}
-                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Client  Name') }}"></span>
-                    </label>
-                    <select name="select_client[]" id="select_client" required class="form-control js-select2-custom Clients_select_new" data-placeholder="{{ translate('Select Client') }}" multiple>
-                        @foreach (\App\Models\Client::all() as $item)
-                        <option value="{{ $item->id }}" @if(collect(old('type', []))->contains($item->id)) selected @endif>
-                                {{ $item->name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-
+            <div class="form-group">
+                <label class="input-label" for="select_client">{{ translate('Client  Name') }}
+                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Client  Name') }}"></span>
+                </label>
+                <select name="select_client[]" id="select_client" required class="form-control js-select2-custom Clients_select_new" data-placeholder="{{ translate('Select Client') }}" multiple>
+                    @foreach (\App\Models\Client::all() as $item)
+                    <option value="{{ $item->id }}" @if(collect(old('type', []))->contains($item->id)) selected @endif>
+                            {{ $item->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -64,7 +62,7 @@
                         data-toggle="tooltip" data-placement="right"
                         data-original-title="{{ translate('messages.Required.')}}"> *
                         </span></label>
-                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}" onchange="get_product()"
+                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
                         class="js-data-example-ajax form-control">
                     </select>
                 </div>

@@ -23,6 +23,7 @@
              @include("admin-views.voucher.include_client_voucher_management")
 
 
+
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
                 @csrf
                 @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
@@ -34,7 +35,7 @@
 
                 {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
-                <!-- Voucher Details -->
+                <!-- Voucher Details   Delivery/Pickup  == Product -->
                 <div class="section-card rounded p-4 mb-4  d-none " id="Product_voucher_fields_1_3">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                     <div class="row g-3 mb-3">
@@ -44,39 +45,6 @@
                         </div>
                     </div>
                     <div class="row g-3">
-                        <div class="col-12">
-                            <div class=" h-100">
-                                <div class=" d-flex flex-wrap align-items-center">
-                                    <div class="w-100 d-flex flex-wrap __gap-15px">
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_image') }}
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            </label>
-                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
-                                        </div>
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_thumbnail') }}
-                                                @if(Config::get('module.current_module_type') == 'food')
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @else
-                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @endif
-                                            </label>
-                                            <label class="d-inline-block m-0 position-relative">
-                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
-                                                <div class="icon-file-group">
-                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none" accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                                                            <i class="tio-edit"></i>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="mb-3 col-12 ">
                             <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
                             <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
@@ -164,7 +132,400 @@
                         </div>
                     </div>
                 </div>
-                <!--  Price Information -->
+
+                 <!-- Voucher Details Delivery/Pickup  == Food-->
+                <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_fields_1_4">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+                    <div class="row g-3 mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="input-label" for="food_add_one">{{ translate('Product') }}
+                                <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                    data-original-title="{{ translate('Segment') }}"></span>
+                            </label>
+                            <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                @foreach (\App\Models\Item::whereNull('voucher_type')->get() as $item)
+                                <option value="{{ $item->id }}"
+                                    @if(collect(old('food_add_one', []))->contains($item->id)) selected @endif>
+                                        {{ $item->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{-- <div class="col-12">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div> --}}
+                    {{-- <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="is-halal-food">
+                        <label class="form-check-label" for="is-halal-food">Is It Halal</label>
+                    </div> --}}
+                </div>
+
+                   <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
+                <div class="section-card rounded p-4 mb-4 d-none " id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+                    {{-- Voucher Title --}}
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-medium">Valid Until</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    {{-- images  --}}
+                    <div class="row g-3">
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                    </div>
+                    {{-- Bundle Type Selection --}}
+                    <div class="col-12 col-md-12">
+                        <div class="form-group mb-0">
+                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
+                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" onchange="tab_section_change()">
+                                <option value="">Select Bundle Offer Type</option>
+                                <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
+                                    Fixed Bundle - Specific products at set price
+                                </option>
+                                <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                   Buy X Get Y - Buy products get different product free
+                                </option>
+                                {{-- <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                    BOGO Free - Buy one get one free
+                                </option> --}}
+                                {{-- <option value="buy_x_get_y" {{ old('bundle_offer_type') == 'buy_x_get_y' ? 'selected' : '' }}>
+                                    Buy X Get Y - Buy products get different product free
+                                </option> --}}
+                                <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
+                                    Mix & Match - Customer chooses from categories
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    {{-- panel1 --}}
+                    <div class="col-12 mt-5" id="panel1">
+                         <div class="row g-3 bundle_div" style="display:none;">
+                            {{-- <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                    <h4> FIXED BUNDLE</h4>
+                                    <p><strong>Description:</strong> Create a bundle with specific products at a fixed price. Customer gets exactly these products for the set price.</p>
+                                    <p><strong>Example:</strong> Phone + Case + Charger = $299 (instead of $335 individually)</p>
+                                    <p><strong>Pricing Method:</strong> fixed price</p>
+                                </div>
+                            </div> --}}
+                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                <div id="configContent"><h4> Bundle Configuration</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Bundle Fixed Price</label>
+                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <!-- Group Product Bundle Configuration -->
+                                <div class="p-3 bg-white mb-4">
+                                    <h4 class="mb-3"> Group Product Bundle</h4>
+                                    <!-- Bundle Products -->
+                                    <div class="row">
+
+                                        <div class="col-sm-12 col-lg-12">
+                                              <div class="form-group">
+                                                <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
+                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
+                                                </label>
+                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label class="form-label">Bundle Discount Type</label>
+                                            <select class="form-control" data-testid="select-bundle-discount-type">
+                                            <option>% Percentage Off</option>
+                                            <option>$ Fixed Amount Off</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label class="form-label">Discount Amount</label>
+                                            <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control"
+                                            placeholder="10"
+                                            data-testid="input-bundle-discount"
+                                            value="0"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 bogo_free_div" style="display:none;">
+                            {{-- <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                    <h4> BOGO FREE</h4>
+                                    <p><strong>Description:</strong> Buy one product, get another product completely free. Customer pays for the higher-priced item.</p>
+                                    <p><strong>Example:</strong> Buy Large Pizza ($15), get Medium Pizza free (save $12)</p>
+                                    <p><strong>Pricing Method:</strong> pay higher price</p>
+                                </div>
+                                </div>
+                                <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                    <div id="configContent"><h4> Bundle Configuration</h4>
+                                        <div class="form-group">
+                                            <p><strong>Instructions:</strong> Add products to bundle. First product will be "paid item", second will be "free item". Customer pays for higher-priced item.</p>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            <div class="card border-0 shadow-sm">
+                                <!-- BOGO Configuration -->
+                                <div class="p-3 bg-white mb-4">
+                                    <h4 class="mb-3"> BOGO Configuration</h4>
+                                    <div class="row">
+                                            <div class="col-sm-12 col-lg-12">
+                                            <div class="form-group">
+                                            <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
+                                                <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
+                                            </label>
+                                            <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6 mt-3">
+                                            <div class="form-group">
+                                                <label class="input-label"
+                                                    for="buy_quantity">{{ translate('Buy Quantity') }}
+                                                </label>
+                                                <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-3">
+                                            <div class="form-group">
+                                                <label class="input-label"
+                                                    for="get_quantity">{{ translate('Get Quantity') }}
+                                                </label>
+                                                <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 buy_x_get_y_div" style="display:none;">
+                            <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                    <h4> BUY X GET Y</h4>
+                                    <p><strong>Description:</strong> Buy specific products and get different products free or discounted.</p>
+                                    <p><strong>Example:</strong> Buy any Main Course, get free Drink or Dessert</p>
+                                    <p><strong>Pricing Method:</strong> conditional free</p>
+                                </div>
+                            </div>
+                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                <div id="configContent"><h4> Bundle Configuration</h4>
+                                    <div class="form-group">
+                                        <p><strong>Instructions:</strong> Add products customers must buy first, then add products they get free. Configure roles appropriately.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <!-- Buy X Get Y Configuration -->
+                                    <div class="p-3 bg-white mb-4">
+                                        <h4 class="mb-3"> Buy X Get Y Configuration</h4>
+                                        <!-- Buy Products -->
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="input-label" for="select_bogo">{{ translate('BOGO Product') }}
+                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
+                                                    </label>
+                                                    <select name="select_bogo[]" id="select_bogo" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                                    </select>
+                                                </div>
+                                           </div>
+                                            <!-- Buy Qty / Get Qty / Max Uses -->
+                                            <div class="col-md-4 mt-3">
+                                                <div class="form-group">
+                                                    <label class="input-label"
+                                                        for="buy_quantity">{{ translate('Buy Quantity') }}
+                                                    </label>
+                                                    <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mt-3">
+                                                <div class="form-group">
+                                                    <label class="input-label"
+                                                        for="get_quantity">{{ translate('Get Quantity') }}
+                                                    </label>
+                                                    <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mt-3">
+                                                <div class="form-group">
+                                                    <label class="input-label"
+                                                        for="max_quantity">{{ translate('Max Uses') }}
+                                                    </label>
+                                                    <input type="text" name="name" value="1" id="max_quantity"  class="form-control" placeholder="{{ translate('Max Uses') }}" >
+                                                </div>
+                                            </div>
+                                            <!-- Free Product -->
+                                            <div class="col-sm-12 col-lg-12">
+                                                 <div class="form-group">
+                                                    <label class="input-label" for="select_free_product">{{ translate('Free Product') }}
+                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Free Product') }}"></span>
+                                                    </label>
+                                                    <select name="select_free_product[]" id="select_free_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                                    </select>
+                                                </div>
+                                           </div>
+
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                        <div class="row g-3 mix_match_div" style="display:none;">
+                            {{-- <div id="bundleTypeDescription" class="bundle-type-description show">
+                                <div id="descriptionContent">
+                                <h4> MIX MATCH</h4>
+                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
+                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
+                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
+                                </div>
+                            </div> --}}
+                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Total Items Customer Must Choose</label>
+                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Bundle Price</label>
+                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <!-- Mix and Match Collection -->
+                                <div class="p-3 bg-white mb-4">
+                                    <h4 class="mb-3">🔀 Mix and Match Collection</h4>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-12">
+                                            <div class="form-group mb-0">
+                                                <label class="input-label"
+                                                    for="select_category_all">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
+                                                    data-toggle="tooltip" data-placement="right"
+                                                    data-original-title="{{ translate('messages.Required.')}}"> *
+                                                    </span></label>
+                                                    <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
+                                                    @foreach (\App\Models\Category::all() as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                            <div class="col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
+                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
+                                                </label>
+                                                <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- 3-column grid -->
+                                        <div class="col-md-4 mt-3">
+                                            <label class="form-label">Buy Quantity</label>
+                                            <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control"
+                                            placeholder="10"
+                                            data-testid="input-bundle-discount"
+                                            value="0"
+                                            >
+                                        </div>
+                                        <div class="col-md-4 mt-3">
+                                            <label class="form-label">Discount Amount</label>
+                                            <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control"
+                                            placeholder="10"
+                                            data-testid="input-bundle-discount"
+                                            value="0"
+                                            >
+                                        </div>
+                                        <div class="col-md-4 mt-3">
+                                            <label class="form-label">Max Uses Per Customer</label>
+                                            <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control"
+                                            placeholder="10"
+                                            data-testid="input-bundle-discount"
+                                            value="0"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Valid Until -->
+                    <div class="col-12 mt-3">
+                        <label class="form-label" for="validUntilDate">Valid Until</label>
+                        <input
+                        type="date"
+                        class="form-control"
+                        id="validUntilDate"
+                        placeholder="mm/dd/yyyy"
+                        data-testid="input-bundle-valid-until"
+                        >
+                    </div>
+                    {{-- tags --}}
+                    <div class="col-12 mt-3">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div>
+                </div>
+
+                  {{-- images --}}
+                <div class="section-card rounded p-4 mb-4 d-none"  id="allimages">
+                    <div class="row g-3">
+                        <div class="col-12" >
+                            @include("admin-views.voucher.include_images")
+                        </div>
+                    </div>
+                </div>
+
+                <!--  Price Information  Delivery/Pickup  == Product -->
                 <div class="section-card rounded p-4 mb-4 d-none " id="product_voucher_price_info_1_3">
                     <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
@@ -271,87 +632,7 @@
                     </div>
                 </div>
 
-                {{-- ==================== Delivery/Pickup  == Product ===================== --}}
-
-                {{-- ==================== Delivery/Pickup  == Food ===================== --}}
-
-                <!-- Voucher Details -->
-                <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_fields_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
-                    <div class="row g-3 mb-3">
-                        <div class="col-12">
-                            <label class="form-label fw-medium">Voucher Title</label>
-                            <input type="text" class="form-control" placeholder="Voucher Title">
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <div class=" h-100">
-                                <div class=" d-flex flex-wrap align-items-center">
-                                    <div class="w-100 d-flex flex-wrap __gap-15px">
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_image') }}
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            </label>
-                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
-                                        </div>
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_thumbnail') }}
-                                                @if(Config::get('module.current_module_type') == 'food')
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @else
-                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @endif
-                                            </label>
-                                            <label class="d-inline-block m-0 position-relative">
-                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
-                                                <div class="icon-file-group">
-                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
-                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                                                            <i class="tio-edit"></i>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3 col-12 ">
-                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="input-label" for="food_add_one">{{ translate('Product') }}
-                                <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
-                                    data-original-title="{{ translate('Segment') }}"></span>
-                            </label>
-                            <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                @foreach (\App\Models\Item::whereNull('voucher_type')->get() as $item)
-                                <option value="{{ $item->id }}"
-                                    @if(collect(old('food_add_one', []))->contains($item->id)) selected @endif>
-                                        {{ $item->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    {{-- <div class="col-12">
-                        <div class="form-group">
-                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
-                        </div>
-                    </div> --}}
-                    {{-- <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="is-halal-food">
-                        <label class="form-check-label" for="is-halal-food">Is It Halal</label>
-                    </div> --}}
-                </div>
-                <!--  Price Information one-->
+                <!--  Price Information one Delivery/Pickup  == Food-->
                 <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_price_info_1_4">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
@@ -506,398 +787,8 @@
                         </div>
                     </div>
                 </div>
-                {{-- ==================== Delivery/Pickup  == Food ===================== --}}
 
-                {{-- ====================   Bundle Delivery/Pickup  == Food and Product Bundle ===================== --}}
-
-                <!-- Voucher Details -->
-                <div class="section-card rounded p-4 mb-4 d-none " id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
-                    {{-- Voucher Title --}}
-                    <div class="row g-3 mb-3">
-                        <div class="col-6">
-                            <label class="form-label fw-medium">Voucher Title</label>
-                            <input type="text" class="form-control" placeholder="Voucher Title">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label fw-medium">Valid Until</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                    {{-- images  --}}
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <div class=" h-100">
-                                <div class=" d-flex flex-wrap align-items-center">
-                                    <div class="w-100 d-flex flex-wrap __gap-15px">
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_image') }}
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                            </label>
-                                            <div class="d-flex flex-wrap __gap-12px __new-coba" id="coba"></div>
-                                        </div>
-                                        <div class="flex-grow-1 mx-auto">
-                                            <label class="text-dark d-block mb-4 mb-xl-5">
-                                                {{ translate('messages.item_thumbnail') }}
-                                                @if(Config::get('module.current_module_type') == 'food')
-                                                <small class="">( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @else
-                                                <small class="text-danger">* ( {{ translate('messages.ratio') }} 1:1 )</small>
-                                                @endif
-                                            </label>
-                                            <label class="d-inline-block m-0 position-relative">
-                                                <img class="img--176 border" id="viewer" src="{{ asset('public/assets/admin/img/upload-img.png') }}" alt="thumbnail" />
-                                                <div class="icon-file-group">
-                                                    <div class="icon-file"><input type="file" name="image" id="customFileEg1" class="custom-file-input d-none"
-                                                    accept=".webp, .jpg, .png, .webp, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                                                            <i class="tio-edit"></i>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3 col-12 ">
-                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
-                        </div>
-                    </div>
-                    {{-- Bundle Type Selection --}}
-                    {{-- <div class="col-12 col-md-12">
-                        <div class="form-group mb-0">
-                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
-                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" onchange="tab_section_change()">
-                            <option value="">Select Bundle Offer Type</option>
-                            <option value="bundle"> Fixed Bundle - Specific products at set price</option>
-                            <option value="bogo_free"> BOGO Free - Buy one get one free</option>
-                            <option value="buy_x_get_y"> Buy X Get Y - Buy products get different product free</option>
-                            <option value="mix_match"> Mix & Match - Customer chooses from categories</option>
-                            </select>
-                        </div>
-                    </div> --}}
-                    {{-- Bundle Type Selection --}}
-                    <div class="col-12 col-md-12">
-                        <div class="form-group mb-0">
-                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
-                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" onchange="tab_section_change()">
-                                <option value="">Select Bundle Offer Type</option>
-                                <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
-                                    Fixed Bundle - Specific products at set price
-                                </option>
-                                <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
-                                    BOGO Free - Buy one get one free
-                                </option>
-                                <option value="buy_x_get_y" {{ old('bundle_offer_type') == 'buy_x_get_y' ? 'selected' : '' }}>
-                                    Buy X Get Y - Buy products get different product free
-                                </option>
-                                <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
-                                    Mix & Match - Customer chooses from categories
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    {{-- panel1 --}}
-                    <div class="col-12 mt-5" id="panel1">
-                         <div class="row g-3 bundle_div" style="display:none;">
-                            <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                    <h4> FIXED BUNDLE</h4>
-                                    <p><strong>Description:</strong> Create a bundle with specific products at a fixed price. Customer gets exactly these products for the set price.</p>
-                                    <p><strong>Example:</strong> Phone + Case + Charger = $299 (instead of $335 individually)</p>
-                                    <p><strong>Pricing Method:</strong> fixed price</p>
-                                </div>
-                            </div>
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4> Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Bundle Fixed Price</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Group Product Bundle Configuration -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3"> Group Product Bundle</h4>
-                                    <!-- Bundle Products -->
-                                    <div class="row">
-
-                                        <div class="col-sm-12 col-lg-12">
-                                              <div class="form-group">
-                                                <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
-                                                </label>
-                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Bundle Discount Type</label>
-                                            <select class="form-control" data-testid="select-bundle-discount-type">
-                                            <option>% Percentage Off</option>
-                                            <option>$ Fixed Amount Off</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Discount Amount</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-3 bogo_free_div" style="display:none;">
-                            <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                    <h4> BOGO FREE</h4>
-                                    <p><strong>Description:</strong> Buy one product, get another product completely free. Customer pays for the higher-priced item.</p>
-                                    <p><strong>Example:</strong> Buy Large Pizza ($15), get Medium Pizza free (save $12)</p>
-                                    <p><strong>Pricing Method:</strong> pay higher price</p>
-                                </div>
-                                </div>
-                                <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                    <div id="configContent"><h4> Bundle Configuration</h4>
-                                        <div class="form-group">
-                                            <p><strong>Instructions:</strong> Add products to bundle. First product will be "paid item", second will be "free item". Customer pays for higher-priced item.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card border-0 shadow-sm">
-                                    <!-- BOGO Configuration -->
-                                    <div class="p-3 bg-white mb-4">
-                                        <h4 class="mb-3"> BOGO Configuration</h4>
-                                        <div class="row">
-                                               <div class="col-sm-12 col-lg-12">
-                                              <div class="form-group">
-                                                <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                                </label>
-                                                <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                            <div class="col-md-6 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="buy_quantity">{{ translate('Buy Quantity') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="get_quantity">{{ translate('Get Quantity') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                        <div class="row g-3 buy_x_get_y_div" style="display:none;">
-                            <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                    <h4> BUY X GET Y</h4>
-                                    <p><strong>Description:</strong> Buy specific products and get different products free or discounted.</p>
-                                    <p><strong>Example:</strong> Buy any Main Course, get free Drink or Dessert</p>
-                                    <p><strong>Pricing Method:</strong> conditional free</p>
-                                </div>
-                            </div>
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4> Bundle Configuration</h4>
-                                    <div class="form-group">
-                                        <p><strong>Instructions:</strong> Add products customers must buy first, then add products they get free. Configure roles appropriately.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Buy X Get Y Configuration -->
-                                    <div class="p-3 bg-white mb-4">
-                                        <h4 class="mb-3"> Buy X Get Y Configuration</h4>
-                                        <!-- Buy Products -->
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="select_bogo">{{ translate('BOGO Product') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                                    </label>
-                                                    <select name="select_bogo[]" id="select_bogo" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                    </select>
-                                                </div>
-                                           </div>
-                                            <!-- Buy Qty / Get Qty / Max Uses -->
-                                            <div class="col-md-4 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="buy_quantity">{{ translate('Buy Quantity') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="get_quantity">{{ translate('Get Quantity') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="max_quantity">{{ translate('Max Uses') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="max_quantity"  class="form-control" placeholder="{{ translate('Max Uses') }}" >
-                                                </div>
-                                            </div>
-                                            <!-- Free Product -->
-                                            <div class="col-sm-12 col-lg-12">
-                                                 <div class="form-group">
-                                                    <label class="input-label" for="select_free_product">{{ translate('Free Product') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Free Product') }}"></span>
-                                                    </label>
-                                                    <select name="select_free_product[]" id="select_free_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                    </select>
-                                                </div>
-                                           </div>
-
-                                        </div>
-                                    </div>
-
-                            </div>
-                        </div>
-                        <div class="row g-3 mix_match_div" style="display:none;">
-                            <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                <h4> MIX MATCH</h4>
-                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
-                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
-                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
-                                </div>
-                            </div>
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Total Items Customer Must Choose</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Bundle Price</label>
-                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-
-                                    <!-- Mix and Match Collection -->
-                                    <div class="p-3 bg-white mb-4">
-                                        <h4 class="mb-3">🔀 Mix and Match Collection</h4>
-
-                                        <!-- Collection Category -->
-
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group mb-0">
-                                                    <label class="input-label"
-                                                        for="select_category_all">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
-                                                        data-toggle="tooltip" data-placement="right"
-                                                        data-original-title="{{ translate('messages.Required.')}}"> *
-                                                        </span></label>
-                                                      <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
-                                                        @foreach (\App\Models\Category::all() as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                             <div class="col-sm-12 col-lg-12">
-                                                 <div class="form-group">
-                                                    <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
-                                                    </label>
-                                                    <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                    </select>
-                                                </div>
-                                           </div>
-                                            <!-- 3-column grid -->
-                                            <div class="col-md-4 mt-3">
-                                                <label class="form-label">Buy Quantity</label>
-                                                <input
-                                                type="number"
-                                                step="0.01"
-                                                class="form-control"
-                                                placeholder="10"
-                                                data-testid="input-bundle-discount"
-                                                value="0"
-                                                >
-                                            </div>
-                                            <div class="col-md-4 mt-3">
-                                                <label class="form-label">Discount Amount</label>
-                                                <input
-                                                type="number"
-                                                step="0.01"
-                                                class="form-control"
-                                                placeholder="10"
-                                                data-testid="input-bundle-discount"
-                                                value="0"
-                                                >
-                                            </div>
-                                            <div class="col-md-4 mt-3">
-                                                <label class="form-label">Max Uses Per Customer</label>
-                                                <input
-                                                type="number"
-                                                step="0.01"
-                                                class="form-control"
-                                                placeholder="10"
-                                                data-testid="input-bundle-discount"
-                                                value="0"
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Valid Until -->
-                    <div class="col-12 mt-3">
-                        <label class="form-label" for="validUntilDate">Valid Until</label>
-                        <input
-                        type="date"
-                        class="form-control"
-                        id="validUntilDate"
-                        placeholder="mm/dd/yyyy"
-                        data-testid="input-bundle-valid-until"
-                        >
-                    </div>
-                    {{-- tags --}}
-                    <div class="col-12 mt-3">
-                        <div class="form-group">
-                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
-                        </div>
-                    </div>
-                </div>
-                <!--  Price Information one-->
+                <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
                 <div class="section-card rounded p-4 mb-4 d-none "id="bundel_food_voucher_price_info_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
@@ -1189,8 +1080,9 @@
                         </div>
                     </div>
                 </div>
-                    {{-- ====================   Bundle Delivery/Pickup  == Food and Product Bundle ===================== --}}
 
+
+                {{-- images --}}
                {{-- Bundle Products Configuration --}}
                 <div class=" section-card rounded p-4 mb-4   d-none"  id="Bundle_products_configuration">
                     <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
@@ -1360,6 +1252,7 @@
 
 
       @include("admin-views.voucher.include_model")
+
 
 @endsection
 
@@ -2068,10 +1961,12 @@
                     }
                 });
             }
-            function section_second(value_two) {
+            function section_second(value_two,id,_product_name) {
                 const hidden_value = document.getElementById('hidden_value').value;
                 const hidden_bundel = document.getElementById('hidden_bundel').value;
                 const hidden_name = document.getElementById('hidden_name').value;
+                get_product(_product_name);
+
 
                 // Convert to strings for proper comparison
                 const hiddenVal = String(hidden_value);
@@ -2084,6 +1979,7 @@
                 const how_it_work_main = document.getElementById('how_it_work_main');
                 const term_condition_main = document.getElementById('term_condition_main');
                 const review_submit_main = document.getElementById('review_submit_main');
+                const allimages = document.getElementById('allimages');
 
                 const bundle_rule = document.getElementById('bundle_rule');
                 const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
@@ -2096,6 +1992,9 @@
 
                 const bundel_food_voucher_fields_1_3_1_4 = document.getElementById('bundel_food_voucher_fields_1_3_1_4');
                 const bundel_food_voucher_price_info_1_3_1_4 = document.getElementById('bundel_food_voucher_price_info_1_3_1_4');
+
+
+
                 // Helper function to show elements
                 function showElements(elements) {
                     elements.forEach(el => {
@@ -2113,32 +2012,37 @@
                     case "simple":
                         switch (hidden_name) {
                             case "Delivery/Pickup": // Delivery/Pickup
+                             // Before adding new one → clear both divs
                                 switch (valueTwo) {
                                     case "5": // Shop + Delivery
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,Product_voucher_fields_1_3,product_voucher_price_info_1_3]);
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,Product_voucher_fields_1_3,product_voucher_price_info_1_3,allimages]);
                                         hideElements([bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4, food_voucher_fields_1_4, food_voucher_price_info_1_4]);
+
                                         // showShopFields();
                                         break;
 
                                     case "6": // Pharmacy + Delivery
-                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,food_voucher_fields_1_4,food_voucher_price_info_1_4]);
+                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,food_voucher_fields_1_4,food_voucher_price_info_1_4,allimages]);
                                         hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3,bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4]);
                                         // showPharmacyFields();
+
+
                                         break;
                                 }
                                 break;
 
                             case "In-Store": // In-Store
+
                                 switch (valueTwo) {
                                     case "5": // Shop + In-Store
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,allimages]);
                                           hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3,bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4]);
 
                                         // showShopFields();
                                         break;
 
                                     case "6": // Pharmacy + In-Store
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,allimages]);
                                           hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3,bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4]);
 
                                         // showPharmacyFields();
@@ -2155,13 +2059,13 @@
                             case "Delivery/Pickup": // Delivery/Pickup
                                 switch (valueTwo) {
                                     case "5": // Shop + Delivery
-                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,bundel_food_voucher_fields_1_3_1_4,bundel_food_voucher_price_info_1_3_1_4,Bundle_products_configuration]);
+                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,bundel_food_voucher_fields_1_3_1_4,bundel_food_voucher_price_info_1_3_1_4,Bundle_products_configuration,allimages]);
                                         hideElements([  Product_voucher_fields_1_3,product_voucher_price_info_1_3,food_voucher_fields_1_4,food_voucher_price_info_1_4]);
                                         // showShopFields();
                                         break;
 
                                     case "6": // Pharmacy + Delivery
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,bundel_food_voucher_fields_1_3_1_4,bundel_food_voucher_price_info_1_3_1_4,Bundle_products_configuration]);
+                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,bundel_food_voucher_fields_1_3_1_4,bundel_food_voucher_price_info_1_3_1_4,Bundle_products_configuration,allimages]);
                                         hideElements([  Product_voucher_fields_1_3,product_voucher_price_info_1_3,food_voucher_fields_1_4,food_voucher_price_info_1_4]);
                                         // showPharmacyFields();
                                         break;
@@ -2814,95 +2718,95 @@
     <script>
 
         function getDataFromServer(storeId) {
-        $.ajax({
-            url: "{{ route('admin.Voucher.get_document') }}",
-            type: "GET",
-            data: { store_id: storeId },
-            dataType: "json",
-            success: function(response) {
-            console.log(response);
+            $.ajax({
+                url: "{{ route('admin.Voucher.get_document') }}",
+                type: "GET",
+                data: { store_id: storeId },
+                dataType: "json",
+                success: function(response) {
+                console.log(response);
 
-            // 🟢 WorkManagement (list items)
-            // let workHtml = "";
-            // $.each(response.work_management, function(index, item) {
-            //     workHtml += "<li>" + item.guid_title + "</li>";
-            // });
-            // $("#workList").html(workHtml);
+                // 🟢 WorkManagement (list items)
+                // let workHtml = "";
+                // $.each(response.work_management, function(index, item) {
+                //     workHtml += "<li>" + item.guid_title + "</li>";
+                // });
+                // $("#workList").html(workHtml);
 
-            // 🟢 WorkManagement (show all details)
-          let workHtml = "";
+                // 🟢 WorkManagement (show all details)
+            let workHtml = "";
 
-$.each(response.work_management, function(index, item) {
-    workHtml += `
-        <div class="work-item border p-4 mb-4 rounded-lg shadow">
-            <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
+                $.each(response.work_management, function(index, item) {
+                    workHtml += `
+                        <div class="work-item border p-4 mb-4 rounded-lg shadow">
+                            <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
 
-            <div class="mb-3">
-                <strong>Purchase Process:</strong>
-                <ul class="list-disc list-inside text-gray-700">
-                    ${item.purchase_process.map(step => `<li>${step}</li>`).join('')}
-                </ul>
-            </div>
+                            <div class="mb-3">
+                                <strong>Purchase Process:</strong>
+                                <ul class="list-disc list-inside text-gray-700">
+                                    ${item.purchase_process.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
 
-            <div class="mb-3">
-                <strong>Payment Confirm:</strong>
-                <ul class="list-disc list-inside text-gray-700">
-                    ${item.payment_confirm.map(step => `<li>${step}</li>`).join('')}
-                </ul>
-            </div>
+                            <div class="mb-3">
+                                <strong>Payment Confirm:</strong>
+                                <ul class="list-disc list-inside text-gray-700">
+                                    ${item.payment_confirm.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
 
-            <div class="mb-3">
-                <strong>Voucher Deliver:</strong>
-                <ul class="list-disc list-inside text-gray-700">
-                    ${item.voucher_deliver.map(step => `<li>${step}</li>`).join('')}
-                </ul>
-            </div>
+                            <div class="mb-3">
+                                <strong>Voucher Deliver:</strong>
+                                <ul class="list-disc list-inside text-gray-700">
+                                    ${item.voucher_deliver.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
 
-            <div class="mb-3">
-                <strong>Redemption Process:</strong>
-                <ul class="list-disc list-inside text-gray-700">
-                    ${item.redemption_process.map(step => `<li>${step}</li>`).join('')}
-                </ul>
-            </div>
+                            <div class="mb-3">
+                                <strong>Redemption Process:</strong>
+                                <ul class="list-disc list-inside text-gray-700">
+                                    ${item.redemption_process.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
 
-            <div class="mb-3">
-                <strong>Account Management:</strong>
-                <ul class="list-disc list-inside text-gray-700">
-                    ${item.account_management.map(step => `<li>${step}</li>`).join('')}
-                </ul>
-            </div>
-        </div>
-    `;
-});
+                            <div class="mb-3">
+                                <strong>Account Management:</strong>
+                                <ul class="list-disc list-inside text-gray-700">
+                                    ${item.account_management.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                });
 
-$("#workList").html(workHtml);
-
-
+                $("#workList").html(workHtml);
 
 
-            // 🟢 UsageTermManagement (checkboxes)
-            let usageHtml = "";
-            $.each(response.usage_term_management, function(index, term) {
-                usageHtml += `
-                <div class="col-md-4 mb-3">
-                    <div class="border rounded p-5 d-flex align-items-center">
-                    <input class="form-check-input mr-2" type="checkbox" id="term${term.id}">
-                    <label class="form-check-label mb-0" for="term${term.id}">
-                        ${term.baseinfor_condition_title}
-                    </label>
+
+
+                // 🟢 UsageTermManagement (checkboxes)
+                let usageHtml = "";
+                $.each(response.usage_term_management, function(index, term) {
+                    usageHtml += `
+                    <div class="col-md-4 mb-3">
+                        <div class="border rounded p-5 d-flex align-items-center">
+                        <input class="form-check-input mr-2" type="checkbox" id="term${term.id}">
+                        <label class="form-check-label mb-0" for="term${term.id}">
+                            ${term.baseinfor_condition_title}
+                        </label>
+                        </div>
                     </div>
-                </div>
-                `;
+                    `;
+                });
+                $("#usageTerms").html(usageHtml);
+
+
+                },
+                error: function(xhr, status, error) {
+                console.error("Error:", error);
+                alert("Something went wrong!");
+                }
             });
-            $("#usageTerms").html(usageHtml);
-
-
-            },
-            error: function(xhr, status, error) {
-            console.error("Error:", error);
-            alert("Something went wrong!");
-            }
-        });
         }
 
         function bundle(type) {
@@ -2997,8 +2901,8 @@ $("#workList").html(workHtml);
                     response.all_ids.forEach(function(module) {
                         let card = `
                             <div class="col-md-3">
-                                <div class="voucher-card_2 border rounded p-4 text-center h-100"
-                                    onclick="section_second(${index})">
+                                <div class="voucher-card_2 border rounded py-4 text-center h-70" onclick="section_second(${index}, ${module.id}, '${module.module_name}')"
+>
                                         <div class="display-4 mb-2">
                                         <img src="${module.thumbnail}" alt="${module.module_name}" style="width:40px; height:auto;" />
                                     </div>
@@ -3027,9 +2931,10 @@ $("#workList").html(workHtml);
             $(this).addClass('selected');
         });
 
-        function get_product() {
+        function get_product(_product_name) {
             var category_id = $("#category_id").val();
             var store_id = $("#store_id").val();
+            var _product_name = _product_name;
 
             if (store_id == "") {
                 alert("Please select store");
@@ -3039,7 +2944,8 @@ $("#workList").html(workHtml);
                     type: "GET",
                     data: {
                         store_id: store_id,
-                        category_id: category_id  // optional agar zaroori ho
+                        category_id: category_id , // optional agar zaroori ho
+                        product_name: _product_name  // optional agar zaroori ho
                     },
                     success: function(response) {
                         console.log(response);

@@ -63,7 +63,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         // item route
         Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
             Route::get('add-new', 'ItemController@index')->name('add-new');
-            Route::post('get-data', 'ItemController@get_voucher_type')->name('voucherType.store');
+            Route::post('get-data', 'ItemController@get_voucher_type')->name('item_voucherType.store');
             Route::post('variant-combination', 'ItemController@variant_combination')->name('variant-combination');
             Route::post('store', 'ItemController@store')->name('store');
             Route::get('edit/{id}', 'ItemController@edit')->name('edit');
