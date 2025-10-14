@@ -1,5 +1,5 @@
 <!-- Client Information one-->
-<div class="section-card rounded p-4 mb-4 d-none " id="basic_info_main">
+<div class="section-card rounded p-4 mb-4  " id="basic_info_main">
     <h3 class="h5 fw-semibold mb-4"> Client Information</h3>
     <div class="row">
         <div class="col-md-6">
@@ -34,7 +34,7 @@
     </div>
 </div>
 <!-- Partner Information one-->
-<div class="section-card rounded p-4 mb-4 d-none " id="store_category_main">
+<div class="section-card rounded p-4 mb-4  " id="store_category_main">
     <h3 class="h5 fw-semibold mb-4"> {{ translate('Partner Information') }}</h3>
     {{-- Store & Category Info --}}
     <div class="col-md-12">

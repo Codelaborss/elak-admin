@@ -463,6 +463,7 @@ class VendorController extends Controller
 
     public function view(Request $request,$store_id, $tab=null, $sub_tab='cash')
     {
+        // dd("jvhbjdf");
         $filter= $request?->filter;
         $key = explode(' ', request()->search);
         $store = Store::findOrFail($store_id);
@@ -733,6 +734,8 @@ class VendorController extends Controller
         ->where(['approved'=>1])
 
         ->sum('amount');
+
+        // dd($stores)
 
         return view('admin-views.vendor.list', compact('stores', 'zone','type','total_store','active_stores','inactive_stores','recent_stores','total_transaction' ,'comission_earned','store_withdraws'));
     }

@@ -165,6 +165,7 @@
                         <th class="border-0">{{translate('messages.zone')}}</th>
                         <th class="text-uppercase border-0">{{translate('messages.featured')}}</th>
                         <th class="text-uppercase border-0">{{translate('messages.status')}}</th>
+                        {{-- <th class="text-uppercase border-0">{{translate('type')}}</th> --}}
                         <th class="text-center border-0">{{translate('messages.action')}}</th>
                     </tr>
                     </thead>
@@ -230,7 +231,9 @@
                                     <span class="badge badge-soft-danger">{{translate('messages.pending')}}</span>
                                 @endif
                             </td>
-
+                            {{-- <td>
+                                {{$store->food_and_product_type ?? ""}}
+                            </td> --}}
                             <td>
                                 <div class="btn--container justify-content-center">
                                     <a class="btn action-btn btn--warning btn-outline-warning"

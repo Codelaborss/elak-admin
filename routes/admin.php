@@ -327,7 +327,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
              Route::post('/status-toggle-bonus/{id}', 'GiftcardController@toggleStatus_bonus')->name('toggleStatus_bonus');
              Route::delete('delete-bonus/{id}', 'GiftcardController@delete_bonus')->name('delete_bonus');
              Route::get('edit-bonus/{id}', 'GiftcardController@edit_bonus')->name('edit_bonus');
-               Route::post('update-bonus/{id}', 'GiftcardController@update_bonus')->name('update_bonus');
+             Route::post('update-bonus/{id}', 'GiftcardController@update_bonus')->name('update_bonus');
         });
        // Gift Card
 
@@ -483,9 +483,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::put('order_refund_rejection/', 'OrderController@order_refund_rejection')->name('order_refund_rejection');
             Route::get('/{status}', 'OrderController@list')->name('refund_attr');
         });
-
-
-
 
         Route::group(['prefix' => 'business-settings', 'as' => 'business-settings.', 'middleware' => ['module:settings']], function () {
             Route::get('business-setup/{tab?}', 'BusinessSettingsController@business_index')->name('business-setup');

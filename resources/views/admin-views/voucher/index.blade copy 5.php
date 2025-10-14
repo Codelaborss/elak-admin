@@ -35,8 +35,149 @@
 
                 {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
+                <!-- Voucher Details   Delivery/Pickup  == Product -->
+                <div class="section-card rounded p-4 mb-4  d-none " id="Product_voucher_fields_1_3">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+                    <div class="row g-3 mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                    <label class="input-label" for="food_add_one">{{ translate('Usage Limit per visit') }}
+                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('Segment') }}"></span>
+                                    </label>
+                                    <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="unlimited">unlimited</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-medium">Maximum Purchase Quantity Limit</label>
+                            <input type="text" class="form-control" placeholder="Maximum Purchase Quantity Limit">
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="input-label" for="brand">{{ translate('Brand') }}
+                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('Brand') }}"></span>
+                                </label>
+                                <select name="brand[]" id="brand" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Brand') }}" >
+                                    @foreach (\App\Models\Brand::all() as $item)
+                                    <option value="{{ $item->id }}"
+                                        @if(collect(old('brand', []))->contains($item->id)) selected @endif>
+                                            {{ $item->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="input-label" for="Unit">{{ translate('Unit') }}
+                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('Unit') }}"></span>
+                                </label>
+                                <select name="Unit[]" id="Unit" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Unit') }}" >
+                                    @foreach (\App\Models\Unit::all() as $item)
+                                    <option value="{{ $item->id }}"
+                                        @if(collect(old('Unit', []))->contains($item->id)) selected @endif>
+                                            {{ $item->unit }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="is-halal-food">
+                        <label class="form-check-label" for="is-halal-food">Include Shipping</label>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <h3 class="h5 fw-semibold col-12">Time Schedule</h3>
+                        <div class="col-6 col-md-4">
+                            <label class="form-label fw-medium">Available time starts</label>
+                            <input type="time" class="form-control" >
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label class="form-label fw-medium">Available time ends</label>
+                            <input type="time" class="form-control" >
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label class="form-label fw-medium">Valid Until</label>
+                            <input type="date" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Voucher Details Delivery/Pickup  == Food-->
+                <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_fields_1_4">
+                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+                    <div class="row g-3 mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-medium">Voucher Title</label>
+                            <input type="text" class="form-control" placeholder="Voucher Title">
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="mb-3 col-12 ">
+                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="input-label" for="food_add_one">{{ translate('Product') }}
+                                <span class="form-label-secondary" data-toggle="tooltip" data-placement="right"
+                                    data-original-title="{{ translate('Segment') }}"></span>
+                            </label>
+                            <select name="food_add_one[]" id="food_add_one" required class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                @foreach (\App\Models\Item::whereNull('voucher_type')->get() as $item)
+                                <option value="{{ $item->id }}"
+                                    @if(collect(old('food_add_one', []))->contains($item->id)) selected @endif>
+                                        {{ $item->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{-- <div class="col-12">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                        </div>
+                    </div> --}}
+                    {{-- <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="is-halal-food">
+                        <label class="form-check-label" for="is-halal-food">Is It Halal</label>
+                    </div> --}}
+                </div>
+
                    <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
-                <div class="section-card rounded p-4 mb-4  " id="bundel_food_voucher_fields_1_3_1_4">
+                <div class="section-card rounded p-4 mb-4 d-none " id="bundel_food_voucher_fields_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                     {{-- Voucher Title --}}
                     <div class="row g-3 mb-3">
@@ -62,15 +203,18 @@
                             <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
                             <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" onchange="tab_section_change()">
                                 <option value="">Select Bundle Offer Type</option>
-                                <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
-                                    Simple
-                                </option>
                                 <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
                                     Fixed Bundle - Specific products at set price
                                 </option>
                                 <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
                                    Buy X Get Y - Buy products get different product free
                                 </option>
+                                {{-- <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                    BOGO Free - Buy one get one free
+                                </option> --}}
+                                {{-- <option value="buy_x_get_y" {{ old('bundle_offer_type') == 'buy_x_get_y' ? 'selected' : '' }}>
+                                    Buy X Get Y - Buy products get different product free
+                                </option> --}}
                                 <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
                                     Mix & Match - Customer chooses from categories
                                 </option>
@@ -373,7 +517,7 @@
                 </div>
 
                   {{-- images --}}
-                <div class="section-card rounded p-4 mb-4 "  id="allimages">
+                <div class="section-card rounded p-4 mb-4 d-none"  id="allimages">
                     <div class="row g-3">
                         <div class="col-12" >
                             @include("admin-views.voucher.include_images")
@@ -381,8 +525,271 @@
                     </div>
                 </div>
 
+                <!--  Price Information  Delivery/Pickup  == Product -->
+                <div class="section-card rounded p-4 mb-4 d-none " id="product_voucher_price_info_1_3">
+                    <h3 class="h5 fw-semibold mb-4">💰 {{ translate('Price Information') }}</h3>
+                    {{-- Price Information --}}
+                    <div class="col-md-12">
+                        <div class="row g-2">
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger" data-toggle="tooltip" data-placement="right"  data-original-title="{{ translate('messages.Required.')}}"> * </span></label>
+                                    <input type="number" min="0" max="999999999999.99" step="0.01"value="1" name="price" class="form-control" placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="exampleFormControlInput1">{{ translate('Total Stock') }} </label>
+                                    <input type="number" name="total_stock" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3" id="stock_input">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="total_stock">{{ translate('messages.total_stock') }}</label>
+                                    <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="exampleFormControlInput1">{{ translate('Offer Type') }} <span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> * </span>
+                                        <span  class="input-label-secondary text--title" data-toggle="tooltip"  data-placement="right" data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+                                    <select name="discount_type" id="discount_type"
+                                        class="form-control js-select2-custom">
+                                        <option value="percent">{{ translate('Direct discount') }}</option>
+                                        <option value="cash back">{{ translate('Cash Back') }} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="discount_type">{{ translate('messages.discount_type') }}
+                                        <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span>
+                                        <span class="input-label-secondary text--title" data-toggle="tooltip"
+                                            data-placement="right"
+                                            data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+
+                                    <!-- Dropdown: Only Percent & Fixed -->
+                                    <select name="discount_type" id="discount_type"
+                                        class="form-control js-select2-custom">
+                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                        <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="exampleFormControlInput1">{{ translate('discount Value') }} <span class="form-label-secondary text-danger" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> * </span></label>
+                                    <input type="number" min="0" max="9999999999999999999999" value="0" name="discount" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100">
+                                </div>
+                            </div>
+                            <!-- Attributes same-->
+                            <div class="col-12">
+                                <div class=" section " id="attributes">
+                                    <h3 class="h5 fw-semibold mb-4">🏷️ {{ translate('attribute') }}</h3>
+                                    <div class="row g-2">
+                                        <div class="col-md-12" id="attribute_section">
+                                            <div class="row g-2">
+                                                <div class="col-12">
+                                                    <div class="form-group mb-0">
+                                                        <label class="input-label" for="exampleFormControlSelect1">{{ translate('messages.attribute') }}<span class="input-label-secondary"></span></label>
+                                                        <select name="attribute_id[]" id="choice_attributes" class="form-control js-select2-custom" multiple="multiple">
+                                                            @foreach (\App\Models\Attribute::orderBy('name')->get() as $attribute)
+                                                                <option value="{{ $attribute['id'] }}">{{ $attribute['name'] }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <div class="customer_choice_options d-flex __gap-24px" id="customer_choice_options">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="variant_combination" id="variant_combination">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  Price Information one Delivery/Pickup  == Food-->
+                <div class="section-card rounded p-4 mb-4 d-none " id="food_voucher_price_info_1_4">
+                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
+                    {{-- Price Information --}}
+                    <div class="col-md-12">
+                        <div class="row g-2">
+                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"
+                                        data-toggle="tooltip" data-placement="right"
+                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span></label>
+                                    <input type="number" min="0" max="999999999999.99" step="0.01"
+                                        value="1" name="price" class="form-control"
+                                        placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-{{ Config::get('module.current_module_type') == 'food' ? '4' :'3' }} col-6" id="stock_input">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="total_stock">{{ translate('messages.total_stock') }}</label>
+                                    <input type="number" placeholder="{{ translate('messages.Ex:_10') }}" class="form-control" name="current_stock" min="0" id="quantity">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="discount_type">{{ translate('messages.discount_type') }}
+                                        <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                        </span>
+                                        <span class="input-label-secondary text--title" data-toggle="tooltip"
+                                            data-placement="right"
+                                            data-original-title="{{ translate('Admin_shares_the_same_percentage/amount_on_discount_as_he_takes_commissions_from_stores') }}">
+                                            <i class="tio-info-outined"></i>
+                                        </span>
+                                    </label>
+
+                                    <!-- Dropdown: Only Percent & Fixed -->
+                                    <select name="discount_type" id="discount_type"
+                                        class="form-control js-select2-custom">
+                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                        <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Separate Switch Button for Cash Back -->
+                            <div class="col-6 col-md-2">
+                                <div class="form-group mb-0">
+                                    <label class="input-label">{{ translate('Cash Back') }}</label>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" name="cash_back" class="custom-control-input" id="cash_back_switch">
+                                        <label class="custom-control-label" for="cash_back_switch"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('messages.discount') }}
+                                        <span id=symble> (%) </span>
+                                            <span class="form-label-secondary text-danger"
+                                            data-toggle="tooltip" data-placement="right"
+                                            data-original-title="{{ translate('messages.Required.')}}"> *
+                                            </span></label>
+                                        <input type="number" min="0" max="9999999999999999999999" value="0"
+                                            name="discount" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label"
+                                            for="exampleFormControlInput1">{{ translate('Valid Until') }}
+                                        </label>
+                                        <input type="date" name="valid_date" class="form-control" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <!-- Single slider example -->
+                                    <div class="form-group">
+                                    <label>Usage Limit per User: <span id="usageValue">20</span></label>
+                                    <input type="range" class="custom-range" id="usageRange" min="0" max="100" value="20">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                    <label>Maximum Purchase Limit: <span id="maxValue">50</span></label>
+                                    <input type="range" class="custom-range" id="maxRange" min="0" max="100" value="50">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                    <label>Current Stock Qty</label>
+                                    <input type="text" class="form-control" value="795">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                    <label id="orderRangeLabel">Order Range: 31 - 100</label>
+                                    <div class="position-relative w-100">
+                                        <div id="progressBar"
+                                            style="position:absolute; height:5px; background:#065c5c; top:50%; transform:translateY(-50%); border-radius:5px;">
+                                        </div>
+                                        <input type="range" class="custom-range" id="minRange" min="0" max="100" value="31" style="position:relative; z-index:2;">
+                                        <input type="range" class="custom-range" id="maxRangex" min="0" max="100" value="100" style="position:relative; z-index:2;">
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                    <label>Time Schedule</label>
+                                    <input type="datetime-local" class="form-control" value="795">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    {{-- <input class="form-check-input" type="checkbox" id="include_shipping">
+                                    <label class="form-check-label" for="include_shipping">Include Shipping</label>
+                                </div> --}}
+
+                                {{-- <div class="col-lg-12" id="food_variation_section"> --}}
+                                {{-- <div class="col-lg-12" >
+                                    <div class="card shadow--card-2 border-0">
+                                        <div class="card-header flex-wrap">
+                                            <h5 class="card-title">
+                                                <span class="card-header-icon mr-2">
+                                                    <i class="tio-canvas-text"></i>
+                                                </span>
+                                                <span>{{ translate('messages.food_variations') }}</span>
+                                            </h5>
+                                            <a class="btn text--primary-2" id="add_new_option_button">
+                                                {{ translate('add_new_variation') }}
+                                                <i class="tio-add"></i>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Empty Variation -->
+                                            <div id="empty-variation">
+                                                <div class="text-center">
+                                                    <img src="{{asset('/public/assets/admin/img/variation.png')}}" alt="">
+                                                    <div>{{translate('No variation added')}}</div>
+                                                </div>
+                                            </div>
+                                            <div id="add_new_option">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
-                <div class="section-card rounded p-4 mb-4  "id="bundel_food_voucher_price_info_1_3_1_4">
+                <div class="section-card rounded p-4 mb-4 d-none "id="bundel_food_voucher_price_info_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="row g-2">
@@ -677,7 +1084,7 @@
 
                 {{-- images --}}
                {{-- Bundle Products Configuration --}}
-                <div class=" section-card rounded p-4 mb-4   "  id="Bundle_products_configuration">
+                <div class=" section-card rounded p-4 mb-4   d-none"  id="Bundle_products_configuration">
                     <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
                     <div id="selectedProducts">
                         <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
@@ -802,7 +1209,7 @@
                 </div>
 
                 <!-- Section 6: Bundle Rules -->
-                <div class=" section-card rounded p-4 mb-4   " id="bundle_rule">
+                <div class=" section-card rounded p-4 mb-4   d-none" id="bundle_rule">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Bundle Rules & Limitations') }}</h3>
                     <div class="form-row">
                         <div class="form-group">
@@ -1513,40 +1920,10 @@
 
                 const managementSelection = document.querySelectorAll('#management_selection');
 
-
-
-                     // Get all elements
-                const basic_info_main = document.getElementById('basic_info_main');
-                const store_category_main = document.getElementById('store_category_main');
-                const how_it_work_main = document.getElementById('how_it_work_main');
-                const term_condition_main = document.getElementById('term_condition_main');
-                const review_submit_main = document.getElementById('review_submit_main');
-                const allimages = document.getElementById('allimages');
-
-                const bundle_rule = document.getElementById('bundle_rule');
-                const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
-
-                const Product_voucher_fields_1_3 = document.getElementById('Product_voucher_fields_1_3');
-                const product_voucher_price_info_1_3 = document.getElementById('product_voucher_price_info_1_3');
-
-                const food_voucher_fields_1_4 = document.getElementById('food_voucher_fields_1_4');
-                const food_voucher_price_info_1_4 = document.getElementById('food_voucher_price_info_1_4');
-
-                const bundel_food_voucher_fields_1_3_1_4 = document.getElementById('bundel_food_voucher_fields_1_3_1_4');
-                const bundel_food_voucher_price_info_1_3_1_4 = document.getElementById('bundel_food_voucher_price_info_1_3_1_4');
-
-
-
-
-
                 managementSelection.forEach(el => {
                     if (loopIndex === "1" || name === "Delivery/Pickup") {
                         submit_voucher_type(loopIndex, primaryId,name);
                         el.classList.remove('d-none');
-
-                              showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,Product_voucher_fields_1_3,product_voucher_price_info_1_3,allimages]);
-                            hideElements([bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4, food_voucher_fields_1_4, food_voucher_price_info_1_4]);
-
 
                         // Hide discount-specific sections
                         const elementsToHide = [
@@ -1598,6 +1975,26 @@
                 const hiddenVal = String(hidden_value);
                 const valueTwo = String(value_two);
                 const hiddenBundel = String(hidden_bundel);
+
+                // Get all elements
+                const basic_info_main = document.getElementById('basic_info_main');
+                const store_category_main = document.getElementById('store_category_main');
+                const how_it_work_main = document.getElementById('how_it_work_main');
+                const term_condition_main = document.getElementById('term_condition_main');
+                const review_submit_main = document.getElementById('review_submit_main');
+                const allimages = document.getElementById('allimages');
+
+                const bundle_rule = document.getElementById('bundle_rule');
+                const Bundle_products_configuration = document.getElementById('Bundle_products_configuration');
+
+                const Product_voucher_fields_1_3 = document.getElementById('Product_voucher_fields_1_3');
+                const product_voucher_price_info_1_3 = document.getElementById('product_voucher_price_info_1_3');
+
+                const food_voucher_fields_1_4 = document.getElementById('food_voucher_fields_1_4');
+                const food_voucher_price_info_1_4 = document.getElementById('food_voucher_price_info_1_4');
+
+                const bundel_food_voucher_fields_1_3_1_4 = document.getElementById('bundel_food_voucher_fields_1_3_1_4');
+                const bundel_food_voucher_price_info_1_3_1_4 = document.getElementById('bundel_food_voucher_price_info_1_3_1_4');
 
 
 
@@ -2872,10 +3269,6 @@
 
                 // ab switch chalao
                 switch (value) {
-                    case "simple":
-                        panel.querySelectorAll(".simple_div").forEach(div => div.style.display = "block");
-                        setupRoleSelect("simple");
-                        break;
                     case "bundle":
                         panel.querySelectorAll(".bundle_div").forEach(div => div.style.display = "block");
                         setupRoleSelect("bundle");
