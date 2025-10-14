@@ -82,14 +82,56 @@
                     {{-- panel1 --}}
                     <div class="col-12 mt-5" id="panel1">
                          <div class="row g-3 bundle_div" style="display:none;">
-                            {{-- <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                    <h4> FIXED BUNDLE</h4>
-                                    <p><strong>Description:</strong> Create a bundle with specific products at a fixed price. Customer gets exactly these products for the set price.</p>
-                                    <p><strong>Example:</strong> Phone + Case + Charger = $299 (instead of $335 individually)</p>
-                                    <p><strong>Pricing Method:</strong> fixed price</p>
+                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                <div id="configContent"><h4> Bundle Configuration</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Bundle Fixed Price</label>
+                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div> --}}
+                            </div>
+                            <div class="card border-0 shadow-sm">
+                                <!-- Group Product Bundle Configuration -->
+                                <div class="p-3 bg-white mb-4">
+                                    <h4 class="mb-3"> Group Product Bundle</h4>
+                                    <!-- Bundle Products -->
+                                    <div class="row">
+
+                                        <div class="col-sm-12 col-lg-12">
+                                              <div class="form-group">
+                                                <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
+                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
+                                                </label>
+                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label class="form-label">Bundle Discount Type</label>
+                                            <select class="form-control" data-testid="select-bundle-discount-type">
+                                            <option>% Percentage Off</option>
+                                            <option>$ Fixed Amount Off</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label class="form-label">Discount Amount</label>
+                                            <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control"
+                                            placeholder="10"
+                                            data-testid="input-bundle-discount"
+                                            value="0"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row g-3 simple_div" style="display:none;">
                             <div id="bundleConfigSection" class="bundle-config-section show my-4">
                                 <div id="configContent"><h4> Bundle Configuration</h4>
                                     <div class="form-row">
@@ -140,21 +182,6 @@
                             </div>
                         </div>
                         <div class="row g-3 bogo_free_div" style="display:none;">
-                            {{-- <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                    <h4> BOGO FREE</h4>
-                                    <p><strong>Description:</strong> Buy one product, get another product completely free. Customer pays for the higher-priced item.</p>
-                                    <p><strong>Example:</strong> Buy Large Pizza ($15), get Medium Pizza free (save $12)</p>
-                                    <p><strong>Pricing Method:</strong> pay higher price</p>
-                                </div>
-                                </div>
-                                <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                    <div id="configContent"><h4> Bundle Configuration</h4>
-                                        <div class="form-group">
-                                            <p><strong>Instructions:</strong> Add products to bundle. First product will be "paid item", second will be "free item". Customer pays for higher-priced item.</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             <div class="card border-0 shadow-sm">
                                 <!-- BOGO Configuration -->
                                 <div class="p-3 bg-white mb-4">
@@ -263,14 +290,6 @@
                             </div>
                         </div>
                         <div class="row g-3 mix_match_div" style="display:none;">
-                            {{-- <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                <h4> MIX MATCH</h4>
-                                <p><strong>Description:</strong> Customer chooses specific number of items from different categories for a bundle price.</p>
-                                <p><strong>Example:</strong> Choose 3 from Snacks + 2 from Drinks = $20</p>
-                                <p><strong>Pricing Method:</strong> fixed bundle price</p>
-                                </div>
-                            </div> --}}
                             <div id="bundleConfigSection" class="bundle-config-section show my-4">
                                 <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
                                     <div class="form-row">
@@ -541,6 +560,71 @@
                                     </div>
                             </div>
                             <div class="row g-3 bundle_div" style="display:none;">
+                                <div class="card border-0 shadow-sm">
+                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
+                                    <!-- Group Product Bundle Section -->
+                                    <div class="mb-4">
+                                        <h5 class="text-muted mb-3"> Group Product Bundle Pricing</h5>
+                                        <div class="p-3 bg-white border rounded">
+                                            <!-- Grid System -->
+                                            <div class="row g-3">
+                                                <!-- Individual Items Total -->
+                                                <div class="col-md-6">
+                                                <label class="form-label">Individual Items Total</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="79.99"
+                                                    step="0.01"
+                                                    data-testid="input-bundle-total-price"
+                                                    >
+                                                </div>
+                                                </div>
+
+                                                <!-- Bundle Discount (%) -->
+                                                <div class="col-md-6">
+                                                <label class="form-label">Bundle Discount (%)</label>
+                                                <input
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="15"
+                                                    step="1"
+                                                    data-testid="input-group-bundle-discount"
+                                                >
+                                                </div>
+                                            </div>
+
+                                            <!-- Bundle Summary -->
+                                            <div class="mt-4 p-3 bg-light border rounded">
+                                                <p class="small fw-bold mb-1"> Bundle Summary:</p>
+                                                <p class="small text-muted mb-1">
+                                                Please enter a valid total price for group bundle
+                                                </p>
+                                                <p class="small mb-0">
+                                                Individual Total: <span class="fw-semibold">$</span> |
+                                                Bundle Price: <span class="fw-semibold text-primary">$0.00</span> |
+                                                You Save: <span class="fw-semibold text-success">$0.00</span>
+                                                </p>
+                                            </div>
+
+                                            <!-- Available Bundles -->
+                                            <div class="mt-4">
+                                                <label class="form-label">Available Bundles</label>
+                                                <input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="25"
+                                                data-testid="input-bundle-quantity"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Group Product Bundle Section -->
+                                </div>
+                            </div>
+                            <div class="row g-3 simple_div" style="display:none;">
                                 <div class="card border-0 shadow-sm">
                                     <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
                                     <!-- Group Product Bundle Section -->
@@ -2510,8 +2594,7 @@
                     response.all_ids.forEach(function(module) {
                         let card = `
                             <div class="col-md-3">
-                                <div class="voucher-card_2 border rounded py-4 text-center h-70" onclick="section_second(${index}, ${module.id}, '${module.module_name}')"
->
+                                <div class="voucher-card_2 border rounded py-4 text-center h-70" onclick="section_second(${index}, ${module.id}, '${module.module_name}')">
                                         <div class="display-4 mb-2">
                                         <img src="${module.thumbnail}" alt="${module.module_name}" style="width:40px; height:auto;" />
                                     </div>
@@ -2860,7 +2943,7 @@
 
             // pehle sab hide karo
             function hideAll(panel) {
-                panel.querySelectorAll(".bundle_div, .bogo_free_div, .buy_x_get_y_div, .mix_match_div")
+                panel.querySelectorAll(".bundle_div, .bogo_free_div, .buy_x_get_y_div, .mix_match_div,.simple_div")
                     .forEach(div => div.style.display = "none");
             }
 
