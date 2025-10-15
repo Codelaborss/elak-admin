@@ -766,7 +766,7 @@
                     <div id="selectedProducts">
                         <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
                     </div>
-                    <button type="button" class="btn btn-primary" id="addProductBtn">+ Add Product to Bundle</button>
+                    <button type="button" class="btn btn--primary" id="addProductBtn">+ Add Product to Bundle</button>
                     <!-- Available Products to Choose From -->
                     <div id="availableProducts" style="display: none;">
                         <h3 class="mt-3">Available Products:</h3>
@@ -1676,7 +1676,7 @@
                 const hidden_value = document.getElementById('hidden_value').value;
                 const hidden_bundel = document.getElementById('hidden_bundel').value;
                 const hidden_name = document.getElementById('hidden_name').value;
-                get_product(_product_name);
+                // get_product(_product_name);
 
 
                 // Convert to strings for proper comparison
@@ -2432,7 +2432,7 @@
 
                 $.each(response.work_management, function(index, item) {
                     workHtml += `
-                        <div class="work-item border p-4 mb-4 rounded-lg ">
+                        <div class="work-item  mb-4 rounded-lg ">
                             <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
 
                             <div class="mb-3">
@@ -2472,11 +2472,7 @@
                         </div>
                     `;
                 });
-
                 $("#workList").html(workHtml);
-
-
-
 
                 // 🟢 UsageTermManagement (checkboxes)
                 let usageHtml = "";
@@ -2493,7 +2489,6 @@
                     `;
                 });
                 $("#usageTerms").html(usageHtml);
-
 
                 },
                 error: function(xhr, status, error) {

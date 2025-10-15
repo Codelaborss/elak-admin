@@ -2,7 +2,7 @@
 <div class="section-card rounded p-4 mb-4 section3 two_four_complete" id="how_it_work_main">
     <h3 class="h5 fw-semibold mb-4"> {{ translate('How It Works') }}</h3>
     <p class="text-muted">Instructions for using your voucher</p>
-    <div class="card border shadow-sm">
+    <div class="card ">
         <div class="card-body" id="workList">
 
         </div>

@@ -113,8 +113,8 @@ class VoucherController extends Controller
     public function get_product(Request $request)
     {
         // dd($request->all());
-        $branches = Item::get()
-        ->orderby('created_at')
+        $branches = Item::
+        orderby('created_at')
         ->select('id', 'name')
         ->get();
         // $branches = Item::where('food_and_product_type', $request->product_name)
