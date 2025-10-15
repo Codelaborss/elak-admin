@@ -99,7 +99,7 @@
                                     <!-- Bundle Products -->
                                     <div class="row">
 
-                                        <div class="col-sm-12 col-lg-12">
+                                        {{-- <div class="col-sm-12 col-lg-12">
                                               <div class="form-group">
                                                 <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
                                                     <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
@@ -108,7 +108,7 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-6 mt-3">
                                             <label class="form-label">Bundle Discount Type</label>
                                             <select class="form-control" data-testid="select-bundle-discount-type">
@@ -149,7 +149,7 @@
                                     <!-- Bundle Products -->
                                     <div class="row">
 
-                                        <div class="col-sm-12 col-lg-12">
+                                        {{-- <div class="col-sm-12 col-lg-12">
                                               <div class="form-group">
                                                 <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
                                                     <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
@@ -158,7 +158,7 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-6 mt-3">
                                             <label class="form-label">Bundle Discount Type</label>
                                             <select class="form-control" data-testid="select-bundle-discount-type">
@@ -187,16 +187,16 @@
                                 <div class="p-3 bg-white mb-4">
                                     <h4 class="mb-3"> BOGO Configuration</h4>
                                     <div class="row">
-                                            <div class="col-sm-12 col-lg-12">
+                                        {{-- <div class="col-sm-12 col-lg-12">
                                             <div class="form-group">
-                                            <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
-                                                <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                            </label>
-                                            <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                                <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
+                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
+                                                </label>
+                                                <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
 
-                                            </select>
-                                        </div>
-                                    </div>
+                                                </select>
+                                            </div>
+                                        </div> --}}
                                         <div class="col-md-6 mt-3">
                                             <div class="form-group">
                                                 <label class="input-label"
@@ -323,15 +323,15 @@
                                                 </select>
                                             </div>
                                         </div>
-                                            <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group">
+                                        {{-- <div class="col-sm-12 col-lg-12">
+                                            <div class="form-group">
                                                 <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
                                                     <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
                                                 </label>
                                                 <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <!-- 3-column grid -->
                                         <div class="col-md-4 mt-3">
                                             <label class="form-label">Buy Quantity</label>
@@ -772,7 +772,7 @@
                         <h3 class="mt-3">Available Products:</h3>
                         <div class="row">
                      <?php $i = 1; ?>
-                        @foreach (\App\Models\Item::all() as $item)
+                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food', 'Product'])->get()  as $item)
                             @php(
                                 // Decode variations JSON to an array
                                 $variations = json_decode($item->variations, true)
@@ -781,7 +781,7 @@
                             <div class="product-card col-12 " data-id="{{ $i }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}">
                                 <div class="product-header">
                                     <div class="product-info">
-                                        <div class="product-name">{{ $item->name }}</div>
+                                        <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
                                         <div class="product-price">${{ $item->price }}</div>
                                     </div>
                                     <button type="button" class="btn btn-primary select-product-btn">Select</button>
@@ -792,7 +792,7 @@
                                 <div class="product-card selected col-12 mx-2">
                                     <div class="product-header">
                                         <div class="product-info">
-                                            <div class="product-name">{{ $item->name }}</div>
+                                            <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
                                             <div class="product-price">Base Price: ${{ $item->price }}</div>
                                         </div>
                                         <div class="product-actions">
@@ -886,7 +886,7 @@
                 </div>
 
                 <!-- Section 6: Bundle Rules -->
-                <div class=" section-card rounded p-4 mb-4   " id="bundle_rule">
+                <div class=" section-card rounded p-4 mb-4  d-none " id="bundle_rule">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Bundle Rules & Limitations') }}</h3>
                     <div class="form-row">
                         <div class="form-group">
@@ -1591,6 +1591,7 @@
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
                 getDataFromServer(primaryId);
+                  get_product();
                 // Set hidden input value
                 document.getElementById('hidden_value').value = loopIndex;
                 document.getElementById('hidden_name').value = name;
@@ -2408,6 +2409,7 @@
     </script>
 
     <script>
+        getDataFromServer(4)
 
         function getDataFromServer(storeId) {
             $.ajax({
@@ -2430,7 +2432,7 @@
 
                 $.each(response.work_management, function(index, item) {
                     workHtml += `
-                        <div class="work-item border p-4 mb-4 rounded-lg shadow">
+                        <div class="work-item border p-4 mb-4 rounded-lg ">
                             <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
 
                             <div class="mb-3">
@@ -2623,10 +2625,10 @@
             $(this).addClass('selected');
         });
 
-        function get_product(_product_name) {
+        function get_product() {
             var category_id = $("#category_id").val();
             var store_id = $("#store_id").val();
-            var _product_name = _product_name;
+            // var _product_name = _product_name;
 
             if (store_id == "") {
                 alert("Please select store");
@@ -2637,7 +2639,7 @@
                     data: {
                         store_id: store_id,
                         category_id: category_id , // optional agar zaroori ho
-                        product_name: _product_name  // optional agar zaroori ho
+                        // product_name: _product_name  // optional agar zaroori ho
                     },
                     success: function(response) {
                         console.log(response);
