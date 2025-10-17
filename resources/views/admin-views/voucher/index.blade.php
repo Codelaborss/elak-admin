@@ -49,6 +49,13 @@
                             <input type="date" class="form-control">
                         </div>
                     </div>
+                         {{-- images --}}
+                    <div class="row g-3">
+                        <div class="col-12" >
+                            @include("admin-views.voucher.include_images")
+                        </div>
+                    </div>
+
                     {{-- images  --}}
                     <div class="row g-3">
                         <div class="mb-3 col-12 ">
@@ -82,56 +89,6 @@
                     {{-- panel1 --}}
                     <div class="col-12 mt-5" id="panel1">
                          <div class="row g-3 bundle_div" style="display:none;">
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4> Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Bundle Fixed Price</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Group Product Bundle Configuration -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3"> Group Product Bundle</h4>
-                                    <!-- Bundle Products -->
-                                    <div class="row">
-
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                              <div class="form-group">
-                                                <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
-                                                </label>
-                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Bundle Discount Type</label>
-                                            <select class="form-control" data-testid="select-bundle-discount-type">
-                                            <option>% Percentage Off</option>
-                                            <option>$ Fixed Amount Off</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Discount Amount</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="row g-3 simple_div" style="display:none;">
                             <div id="bundleConfigSection" class="bundle-config-section show my-4">
                                 <div id="configContent"><h4> Bundle Configuration</h4>
                                     <div class="form-row">
@@ -217,78 +174,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-3 buy_x_get_y_div" style="display:none;">
-                            <div id="bundleTypeDescription" class="bundle-type-description show">
-                                <div id="descriptionContent">
-                                    <h4> BUY X GET Y</h4>
-                                    <p><strong>Description:</strong> Buy specific products and get different products free or discounted.</p>
-                                    <p><strong>Example:</strong> Buy any Main Course, get free Drink or Dessert</p>
-                                    <p><strong>Pricing Method:</strong> conditional free</p>
-                                </div>
-                            </div>
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4> Bundle Configuration</h4>
-                                    <div class="form-group">
-                                        <p><strong>Instructions:</strong> Add products customers must buy first, then add products they get free. Configure roles appropriately.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Buy X Get Y Configuration -->
-                                    <div class="p-3 bg-white mb-4">
-                                        <h4 class="mb-3"> Buy X Get Y Configuration</h4>
-                                        <!-- Buy Products -->
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="select_bogo">{{ translate('BOGO Product') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                                    </label>
-                                                    <select name="select_bogo[]" id="select_bogo" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                    </select>
-                                                </div>
-                                           </div>
-                                            <!-- Buy Qty / Get Qty / Max Uses -->
-                                            <div class="col-md-4 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="buy_quantity">{{ translate('Buy Quantity') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="get_quantity">{{ translate('Get Quantity') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mt-3">
-                                                <div class="form-group">
-                                                    <label class="input-label"
-                                                        for="max_quantity">{{ translate('Max Uses') }}
-                                                    </label>
-                                                    <input type="text" name="name" value="1" id="max_quantity"  class="form-control" placeholder="{{ translate('Max Uses') }}" >
-                                                </div>
-                                            </div>
-                                            <!-- Free Product -->
-                                            <div class="col-sm-12 col-lg-12">
-                                                 <div class="form-group">
-                                                    <label class="input-label" for="select_free_product">{{ translate('Free Product') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Free Product') }}"></span>
-                                                    </label>
-                                                    <select name="select_free_product[]" id="select_free_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                    </select>
-                                                </div>
-                                           </div>
 
-                                        </div>
-                                    </div>
-
-                            </div>
-                        </div>
                         <div class="row g-3 mix_match_div" style="display:none;">
                             <div id="bundleConfigSection" class="bundle-config-section show my-4">
                                 <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
@@ -391,16 +277,138 @@
                     </div>
                 </div>
 
-                  {{-- images --}}
-                <div class="section-card rounded p-4 mb-4 "  id="allimages">
-                    <div class="row g-3">
-                        <div class="col-12" >
-                            @include("admin-views.voucher.include_images")
+
+
+
+
+
+                {{-- images --}}
+               {{-- Bundle Products Configuration --}}
+                <div class=" section-card rounded p-4 mb-4   "  id="Bundle_products_configuration">
+                    <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
+                    <div id="selectedProducts">
+                        <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
+                    </div>
+                    <button type="button" class="btn btn--primary" id="addProductBtn">+ Add Product to Bundle</button>
+                    <!-- Available Products to Choose From -->
+                    <div id="availableProducts" style="display: none;">
+                        <h3 class="mt-3">Available Products:</h3>
+                        <div class="row">
+                     <?php $i = 1; ?>
+                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food', 'Product'])->get()  as $item)
+                            @php(
+                                // Decode variations JSON to an array
+                                $variations = json_decode($item->variations, true)
+                            )
+
+                            <div class="product-card col-12 " data-id="{{ $i }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}">
+                                <div class="product-header">
+                                    <div class="product-info">
+                                        <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
+                                        <div class="product-price">${{ $item->price }}</div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                                </div>
+                            </div>
+
+                            <div id="selectedProducts_{{$item->id}}" class="d-none col-12  mx-2">
+                                <div class="product-card selected col-12 mx-2">
+                                    <div class="product-header">
+                                        <div class="product-info">
+                                            <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
+                                            <div class="product-price">Base Price: ${{ $item->price }}</div>
+                                        </div>
+                                        <div class="product-actions">
+                                            <select class="form-control product-role-select" data-index="{{ $i }}" style="width: auto;">
+                                                <option value="paid_item" selected>Paid Item</option>
+                                                <option value="free_item">Free Item</option>
+                                                  <option value="bundle_item" >Bundle Item</option>
+                                            </select>
+                                            <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $i }}">Remove</button>
+                                        </div>
+                                    </div>
+                                    {{-- ✅ Variations Section --}}
+                                        @if(!empty($variations))
+                                            <div class="variations-section">
+                                                <div class="variation-group">
+                                                    <div class="variation-title">Available Variations:</div>
+                                                    <div class="variation-options">
+                                                        @foreach ($variations as $variation)
+                                                            <div class="variation-option"
+                                                                data-index="{{ $i }}"
+                                                                data-type="{{ $variation['type'] ?? 'default' }}"
+                                                                data-value="{{ $variation['type'] ?? '' }}"
+                                                                data-price="{{ $variation['price'] ?? 0 }}">
+                                                                {{ ucfirst($variation['type'] ?? 'Option') }} (${{ $variation['price'] ?? 0 }})
+                                                                @if(isset($variation['stock']))
+                                                                    <small>— Stock: {{ $variation['stock'] }}</small>
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @php(
+                                        // Decode variations JSON to an array
+                                            $addonIds = json_decode($item->add_ons, true)
+
+                                                )
+                                    {{-- Add-ons example (optional) --}}
+                                   @if(!empty($addonIds))
+                                            <div class="addons-section">
+                                                <div class="variation-title">Available Add-ons:</div>
+
+                                                @foreach ($addonIds as $addonId)
+                                                  @php(
+                                                    // Fetch addon details from the AddOn model
+                                                        $addon = \App\Models\AddOn::find($addonId)
+                                                )
+
+
+                                                    @if($addon)
+                                                        <div class="addon-item">
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                    class="addon-checkbox"
+                                                                    data-index="{{ $i }}"
+                                                                    data-addon="{{ $addon->id }}"
+                                                                    data-price="{{ $addon->price }}">
+                                                                {{ $addon->name }} (+${{ $addon->price }})
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
+
+                                    <div style="margin-top: 15px; font-weight: bold; color: #38a169;">
+                                        Item Total: ${{ $item->price }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php $i++; ?>
+                        @endforeach
+
+                    </div>
+                    </div>
+
+
+                    <div class="container mt-5">
+                        <div class="form-container">
+                            <!-- Price Calculator -->
+                            <div class="price-calculator" id="priceCalculator" style="display: none;">
+                                <h3> Bundle Price Calculation</h3>
+                                <div id="priceBreakdown"></div>
+                            </div>
+
                         </div>
                     </div>
+
                 </div>
 
-                <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
+                   <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
                 <div class="section-card rounded p-4 mb-4  "id="bundel_food_voucher_price_info_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
@@ -492,139 +500,7 @@
                                     <!-- /BOGO Section -->
                                 </div>
                             </div>
-                            <div class="row g-3 buy_x_get_y_div" style="display:none;">
-                                    <div class="card border-0 shadow-sm">
-                                        <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                        <!-- Buy X Get Y Section -->
-                                        <div class="mb-4">
-                                            <h5 class="text-muted mb-3"> Buy X Get Y Pricing</h5>
-                                            <div class="p-3 bg-white border rounded">
-                                                <!-- Grid System -->
-                                                <div class="row g-3">
-                                                    <!-- Price per Item (Buy) -->
-                                                    <div class="col-md-4">
-                                                    <label class="form-label">Price per Item (Buy)</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="15.99"
-                                                        step="0.01"
-                                                        data-testid="input-buy-x-price"
-                                                        >
-                                                    </div>
-                                                    </div>
-
-                                                    <!-- Free Item Value -->
-                                                    <div class="col-md-4">
-                                                    <label class="form-label">Free Item Value</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="9.99"
-                                                        step="0.01"
-                                                        data-testid="input-free-item-value"
-                                                        >
-                                                    </div>
-                                                    </div>
-
-                                                    <!-- Available Offers -->
-                                                    <div class="col-md-4">
-                                                    <label class="form-label">Available Offers</label>
-                                                    <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="100"
-                                                        data-testid="input-buy-x-get-y-stock"
-                                                    >
-                                                    </div>
-                                                </div>
-                                                <!-- Deal Summary -->
-                                                <div class="mt-4 p-3 bg-light border rounded">
-                                                    <p class="small fw-bold mb-1"> Deal Summary:</p>
-                                                    <p class="small text-muted mb-1">
-                                                    Please enter a valid price for Buy X Get Y offer
-                                                    </p>
-                                                    <p class="small mb-0">
-                                                    Total Value: <span class="fw-semibold">$</span> |
-                                                    Customer Pays: <span class="fw-semibold">$0.00</span> |
-                                                    Savings: <span class="fw-semibold text-success">$0.00</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /Buy X Get Y Section -->
-                                    </div>
-                            </div>
                             <div class="row g-3 bundle_div" style="display:none;">
-                                <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- Group Product Bundle Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> Group Product Bundle Pricing</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Individual Items Total -->
-                                                <div class="col-md-6">
-                                                <label class="form-label">Individual Items Total</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="79.99"
-                                                    step="0.01"
-                                                    data-testid="input-bundle-total-price"
-                                                    >
-                                                </div>
-                                                </div>
-
-                                                <!-- Bundle Discount (%) -->
-                                                <div class="col-md-6">
-                                                <label class="form-label">Bundle Discount (%)</label>
-                                                <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="15"
-                                                    step="1"
-                                                    data-testid="input-group-bundle-discount"
-                                                >
-                                                </div>
-                                            </div>
-
-                                            <!-- Bundle Summary -->
-                                            <div class="mt-4 p-3 bg-light border rounded">
-                                                <p class="small fw-bold mb-1"> Bundle Summary:</p>
-                                                <p class="small text-muted mb-1">
-                                                Please enter a valid total price for group bundle
-                                                </p>
-                                                <p class="small mb-0">
-                                                Individual Total: <span class="fw-semibold">$</span> |
-                                                Bundle Price: <span class="fw-semibold text-primary">$0.00</span> |
-                                                You Save: <span class="fw-semibold text-success">$0.00</span>
-                                                </p>
-                                            </div>
-
-                                            <!-- Available Bundles -->
-                                            <div class="mt-4">
-                                                <label class="form-label">Available Bundles</label>
-                                                <input
-                                                type="number"
-                                                class="form-control"
-                                                placeholder="25"
-                                                data-testid="input-bundle-quantity"
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /Group Product Bundle Section -->
-                                </div>
-                            </div>
-                            <div class="row g-3 simple_div" style="display:none;">
                                 <div class="card border-0 shadow-sm">
                                     <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
                                     <!-- Group Product Bundle Section -->
@@ -756,133 +632,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                {{-- images --}}
-               {{-- Bundle Products Configuration --}}
-                <div class=" section-card rounded p-4 mb-4   "  id="Bundle_products_configuration">
-                    <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
-                    <div id="selectedProducts">
-                        <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
-                    </div>
-                    <button type="button" class="btn btn--primary" id="addProductBtn">+ Add Product to Bundle</button>
-                    <!-- Available Products to Choose From -->
-                    <div id="availableProducts" style="display: none;">
-                        <h3 class="mt-3">Available Products:</h3>
-                        <div class="row">
-                     <?php $i = 1; ?>
-                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food', 'Product'])->get()  as $item)
-                            @php(
-                                // Decode variations JSON to an array
-                                $variations = json_decode($item->variations, true)
-                            )
-
-                            <div class="product-card col-12 " data-id="{{ $i }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}">
-                                <div class="product-header">
-                                    <div class="product-info">
-                                        <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
-                                        <div class="product-price">${{ $item->price }}</div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary select-product-btn">Select</button>
-                                </div>
-                            </div>
-
-                            <div id="selectedProducts_{{$item->id}}" class="d-none col-12 col-md-5 mx-2">
-                                <div class="product-card selected col-12 mx-2">
-                                    <div class="product-header">
-                                        <div class="product-info">
-                                            <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
-                                            <div class="product-price">Base Price: ${{ $item->price }}</div>
-                                        </div>
-                                        <div class="product-actions">
-                                            <select class="form-control product-role-select" data-index="{{ $i }}" style="width: auto;">
-                                                <option value="paid_item" selected>Paid Item</option>
-                                                <option value="free_item">Free Item</option>
-                                                  <option value="bundle_item" >Bundle Item</option>
-                                            </select>
-                                            <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $i }}">Remove</button>
-                                        </div>
-                                    </div>
-                                    {{-- ✅ Variations Section --}}
-                                        @if(!empty($variations))
-                                            <div class="variations-section">
-                                                <div class="variation-group">
-                                                    <div class="variation-title">Available Variations:</div>
-                                                    <div class="variation-options">
-                                                        @foreach ($variations as $variation)
-                                                            <div class="variation-option"
-                                                                data-index="{{ $i }}"
-                                                                data-type="{{ $variation['type'] ?? 'default' }}"
-                                                                data-value="{{ $variation['type'] ?? '' }}"
-                                                                data-price="{{ $variation['price'] ?? 0 }}">
-                                                                {{ ucfirst($variation['type'] ?? 'Option') }} (${{ $variation['price'] ?? 0 }})
-                                                                @if(isset($variation['stock']))
-                                                                    <small>— Stock: {{ $variation['stock'] }}</small>
-                                                                @endif
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        @php(
-                                        // Decode variations JSON to an array
-                                            $addonIds = json_decode($item->add_ons, true)
-
-                                                )
-                                    {{-- Add-ons example (optional) --}}
-                                   @if(!empty($addonIds))
-                                            <div class="addons-section">
-                                                <div class="variation-title">Available Add-ons:</div>
-
-                                                @foreach ($addonIds as $addonId)
-                                                  @php(
-                                                    // Fetch addon details from the AddOn model
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                )
-
-
-                                                    @if($addon)
-                                                        <div class="addon-item">
-                                                            <label>
-                                                                <input type="checkbox"
-                                                                    class="addon-checkbox"
-                                                                    data-index="{{ $i }}"
-                                                                    data-addon="{{ $addon->id }}"
-                                                                    data-price="{{ $addon->price }}">
-                                                                {{ $addon->name }} (+${{ $addon->price }})
-                                                            </label>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        @endif
-
-                                    <div style="margin-top: 15px; font-weight: bold; color: #38a169;">
-                                        Item Total: ${{ $item->price }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <?php $i++; ?>
-                        @endforeach
-
-                    </div>
-                    </div>
-
-
-                    <div class="container mt-5">
-                        <div class="form-container">
-                            <!-- Price Calculator -->
-                            <div class="price-calculator" id="priceCalculator" style="display: none;">
-                                <h3> Bundle Price Calculation</h3>
-                                <div id="priceBreakdown"></div>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
 
                 <!-- Section 6: Bundle Rules -->
@@ -1672,197 +1421,7 @@
                     }
                 });
             }
-            function section_second(value_two,id,_product_name) {
-                const hidden_value = document.getElementById('hidden_value').value;
-                const hidden_bundel = document.getElementById('hidden_bundel').value;
-                const hidden_name = document.getElementById('hidden_name').value;
-                // get_product(_product_name);
 
-
-                // Convert to strings for proper comparison
-                const hiddenVal = String(hidden_value);
-                const valueTwo = String(value_two);
-                const hiddenBundel = String(hidden_bundel);
-
-
-
-                // Helper function to show elements
-                function showElements(elements) {
-                    elements.forEach(el => {
-                        if (el) el.classList.remove('d-none');
-                    });
-                }
-
-                // Helper function to hide elements
-                function hideElements(elements) {
-                    elements.forEach(el => {
-                        if (el) el.classList.add('d-none');
-                    });
-                }
-                switch (hiddenBundel) {
-                    case "simple":
-
-
-                        switch (hidden_name) {
-                            case "Delivery/Pickup": // Delivery/Pickup
-                             // Before adding new one → clear both divs
-                                switch (valueTwo) {
-                                    case "5": // Shop + Delivery
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,Product_voucher_fields_1_3,product_voucher_price_info_1_3,allimages]);
-                                        hideElements([bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4, food_voucher_fields_1_4, food_voucher_price_info_1_4]);
-
-                                        // showShopFields();
-                                        break;
-
-                                    case "6": // Pharmacy + Delivery
-                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,food_voucher_fields_1_4,food_voucher_price_info_1_4,allimages]);
-                                        hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3,bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4]);
-                                        // showPharmacyFields();
-
-
-                                        break;
-                                }
-                                break;
-
-                            case "In-Store": // In-Store
-
-                                switch (valueTwo) {
-                                    case "5": // Shop + In-Store
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,allimages]);
-                                          hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3,bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4]);
-
-                                        // showShopFields();
-                                        break;
-
-                                    case "6": // Pharmacy + In-Store
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,allimages]);
-                                          hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3,bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4]);
-
-                                        // showPharmacyFields();
-                                        break;
-
-
-                                }
-                                break;
-                        }
-                        break;
-
-                    case "bundle":
-                      switch (hidden_name) {
-                            case "Delivery/Pickup": // Delivery/Pickup
-                                switch (valueTwo) {
-                                    case "5": // Shop + Delivery
-                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,bundel_food_voucher_fields_1_3_1_4,bundel_food_voucher_price_info_1_3_1_4,Bundle_products_configuration,allimages]);
-                                        hideElements([  Product_voucher_fields_1_3,product_voucher_price_info_1_3,food_voucher_fields_1_4,food_voucher_price_info_1_4]);
-                                        // showShopFields();
-                                        break;
-
-                                    case "6": // Pharmacy + Delivery
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,bundel_food_voucher_fields_1_3_1_4,bundel_food_voucher_price_info_1_3_1_4,Bundle_products_configuration,allimages]);
-                                        hideElements([  Product_voucher_fields_1_3,product_voucher_price_info_1_3,food_voucher_fields_1_4,food_voucher_price_info_1_4]);
-                                        // showPharmacyFields();
-                                        break;
-
-                                }
-                                break;
-
-                            case "In-Store": // In-Store
-                                switch (valueTwo) {
-                                    case "5": // Shop + In-Store
-                                         showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-
-                                        // showShopFields();
-                                        break;
-
-                                    case "6": // Pharmacy + In-Store
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-
-                                        // showPharmacyFields();
-                                        break;
-
-
-                                }
-                                break;
-                            }
-                        break;
-                    case "Flat discount":
-                        switch (hidden_name) {
-                            case "Delivery/Pickup": // Delivery/Pickup
-                                switch (valueTwo) {
-                                    case "5": // Shop + Delivery
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-                                        hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3, food_voucher_fields_1_4, food_voucher_price_info_1_4,Bundle_products_configuration]);
-                                        showShopFields();
-                                        break;
-
-                                    case "6": // Pharmacy + Delivery
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-                                        hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3, food_voucher_fields_1_4, food_voucher_price_info_1_4,Bundle_products_configuration]);
-                                        // showPharmacyFields();
-                                        break;
-
-
-                                }
-                                break;
-
-                            case "In-Store": // In-Store
-                                switch (valueTwo) {
-                                    case "5": // Shop + In-Store
-                                    showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-
-                                        // showShopFields();
-                                        break;
-
-                                    case "6": // Pharmacy + In-Store
-                                        showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-
-                                        // showPharmacyFields();
-                                        break;
-
-
-                                }
-                                break;
-                            }
-                        break;
-                    case "Gift":
-                      switch (hidden_name) {
-                        case "Delivery/Pickup": // Delivery/Pickup
-                            switch (valueTwo) {
-                                case "5": // Shop + Delivery
-                                showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-                                    // hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3, food_voucher_fields_1_4, food_voucher_price_info_1_4]);
-                                    // showShopFields();
-                                    break;
-
-                                case "6": // Pharmacy + Delivery
-                                    showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-                                    // hideElements([Product_voucher_fields_1_3, product_voucher_price_info_1_3, food_voucher_fields_1_4, food_voucher_price_info_1_4]);
-                                    // showPharmacyFields();
-                                    break;
-
-
-                            }
-                            break;
-
-                        case "In-Store": // In-Store
-                            switch (valueTwo) {
-                                case "5": // Shop + In-Store
-                                    showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-
-                                    break;
-
-                                case "6": // Pharmacy + In-Store
-                                    showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main]);
-
-                                    break;
-
-                            }
-                            break;
-                     }
-                break;
-
-                }
-            }
             // DOMContentLoaded event listener for initialization
             document.addEventListener("DOMContentLoaded", function () {
                 const managementSelection = document.querySelectorAll('#management_selection');
