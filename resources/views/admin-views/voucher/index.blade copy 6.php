@@ -8,22 +8,6 @@
     <link href="{{ asset('public/assets/admin/css/tags-input.min.css') }}" rel="stylesheet">
 @endpush
 
-<style>
-#selectedItemsSection .badge {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-}
-
-#selectedItemsSection {
-    animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
-
 @section('content')
   <link rel="stylesheet" href="{{asset('public/assets/admin/css/voucher.css')}}">
   <link rel="stylesheet" href="{{asset('assets/admin/css/voucher.css')}}">
@@ -71,6 +55,7 @@
                             @include("admin-views.voucher.include_images")
                         </div>
                     </div>
+
                     {{-- images  --}}
                     <div class="row g-3">
                         <div class="mb-3 col-12 ">
@@ -99,6 +84,8 @@
                             </select>
                         </div>
                     </div>
+
+
                     {{-- panel1 --}}
                     <div class="col-12 mt-5" id="panel1">
                          <div class="row g-3 bundle_div" style="display:none;">
@@ -289,6 +276,13 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
+                {{-- images --}}
                {{-- Bundle Products Configuration --}}
                 <div class=" section-card rounded p-4 mb-4   "  id="Bundle_products_configuration">
                     <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
@@ -301,80 +295,120 @@
                         <h3 class="mt-3">Available Products:</h3>
                         <div class="row">
                             <div class="col-sm-12 col-lg-12">
-                                <div class="form-group">
-                                    <label class="input-label" for="select_pro">
-                                        {{ translate('Bundle Products') }}
+                                    <div class="form-group">
+                                    <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
+                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
                                     </label>
+                                    <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
+                                          @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food', 'Product'])->get()  as $item)
+                                              <option value="{{ $item->id }}">{{ $item->name }}</option>
 
-                                    <select name="select_pro" id="select_pro" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}">
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
+                                          @endforeach
                                     </select>
                                 </div>
+                            </div>
 
-                                {{-- Product selection area --}}
-                                <div id="productDetails" class="mt-3"></div>
+                         <?php $i = 1; ?>
+                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food', 'Product'])->get()  as $item)
+                            @php(
+                                // Decode variations JSON to an array
+                                $variations = json_decode($item->variations, true)
+                            )
 
-                                {{-- Selected items display section --}}
-                                <div id="selectedItemsSection" class="mt-4" style="display: none;">
-                                    <div class="card p-3 shadow-sm bg-light">
-                                        <h5 class="mb-3">Selected Configuration</h5>
+                            <div class="product-card col-12 " data-id="{{ $i }}" data-name="{{ $item->name }}" data-price="{{ $item->price }}">
+                                <div class="product-header">
+                                    <div class="product-info">
+                                        <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
+                                        <div class="product-price">${{ $item->price }}</div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary select-product-btn">Select</button>
+                                </div>
+                            </div>
 
-                                        <div id="selectedProductInfo" class="mb-2"></div>
-
-                                        <div id="selectedVariationInfo" class="mb-2" style="display: none;">
-                                            <strong>Selected Variation:</strong>
-                                            <div id="selectedVariationDetails" class="ml-3"></div>
+                            <div id="selectedProducts_{{$item->id}}" class="d-none col-12  mx-2">
+                                <div class="product-card selected col-12 mx-2">
+                                    <div class="product-header">
+                                        <div class="product-info">
+                                            <div class="product-name">{{ $item->name }} ({{$item->food_and_product_type}})</div>
+                                            <div class="product-price">Base Price: ${{ $item->price }}</div>
                                         </div>
-
-                                        <div id="selectedAddonsInfo" class="mb-2" style="display: none;">
-                                            <strong>Selected Add-ons:</strong>
-                                            <div id="selectedAddonsDetails" class="ml-3"></div>
+                                        <div class="product-actions">
+                                            <select class="form-control product-role-select" data-index="{{ $i }}" style="width: auto;">
+                                                <option value="paid_item" selected>Paid Item</option>
+                                                <option value="free_item">Free Item</option>
+                                                  <option value="bundle_item" >Bundle Item</option>
+                                            </select>
+                                            <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $i }}">Remove</button>
                                         </div>
+                                    </div>
+                                    {{-- ✅ Variations Section --}}
+                                        @if(!empty($variations))
+                                            <div class="variations-section">
+                                                <div class="variation-group">
+                                                    <div class="variation-title">Available Variations:</div>
+                                                    <div class="variation-options">
+                                                        @foreach ($variations as $variation)
+                                                            <div class="variation-option"
+                                                                data-index="{{ $i }}"
+                                                                data-type="{{ $variation['type'] ?? 'default' }}"
+                                                                data-value="{{ $variation['type'] ?? '' }}"
+                                                                data-price="{{ $variation['price'] ?? 0 }}">
+                                                                {{ ucfirst($variation['type'] ?? 'Option') }} (${{ $variation['price'] ?? 0 }})
+                                                                @if(isset($variation['stock']))
+                                                                    <small>— Stock: {{ $variation['stock'] }}</small>
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @php(
+                                        // Decode variations JSON to an array
+                                            $addonIds = json_decode($item->add_ons, true)
 
-                                        <hr>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <strong>Final Total:</strong>
-                                            <h5 class="text-success mb-0" id="finalTotalPrice">$0.00</h5>
-                                        </div>
+                                                )
+                                    {{-- Add-ons example (optional) --}}
+                                   @if(!empty($addonIds))
+                                            <div class="addons-section">
+                                                <div class="variation-title">Available Add-ons:</div>
+
+                                                @foreach ($addonIds as $addonId)
+                                                  @php(
+                                                    // Fetch addon details from the AddOn model
+                                                        $addon = \App\Models\AddOn::find($addonId)
+                                                )
+
+
+                                                    @if($addon)
+                                                        <div class="addon-item">
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                    class="addon-checkbox"
+                                                                    data-index="{{ $i }}"
+                                                                    data-addon="{{ $addon->id }}"
+                                                                    data-price="{{ $addon->price }}">
+                                                                {{ $addon->name }} (+${{ $addon->price }})
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
+
+                                    <div style="margin-top: 15px; font-weight: bold; color: #38a169;">
+                                        Item Total: ${{ $item->price }}
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <?php $i++; ?>
+                        @endforeach
+
                     </div>
+                    </div>
+
+
                     <div class="container mt-5">
                         <div class="form-container">
                             <!-- Price Calculator -->
@@ -382,8 +416,10 @@
                                 <h3> Bundle Price Calculation</h3>
                                 <div id="priceBreakdown"></div>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
 
                    <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
@@ -394,8 +430,7 @@
                         <div class="col-6 col-md-3">
                             <div class="form-group mb-0">
                                 <label class="input-label"  for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
-                                <input type="number" min="0" id="price" max="999999999999.99" step="0.01" value="1" name="price" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
-                                <input type="hidden"  id="price_hidden"name="price_hidden" >
+                                <input type="number" min="0" max="999999999999.99" step="0.01" value="1" name="price" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
@@ -430,7 +465,7 @@
                                         for="exampleFormControlInput1">{{ translate('Discount Value') }}
                                     </label>
                                     <input type="number" min="0" max="9999999999999999999999" value="0"
-                                        name="discount" id="discount" class="form-control"
+                                        name="discount" class="form-control"
                                         placeholder="{{ translate('messages.Ex:') }} 100">
                             </div>
                         </div>
@@ -668,269 +703,6 @@
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
-
-
-<script>
-$(document).ready(function() {
-    $('#select_pro').select2({
-        width: '100%',
-        placeholder: 'Select a Product'
-    });
-
-    const price = document.querySelectorAll('#price');
-    const discount_type = document.querySelector('#discount_type').value;
-//    const discount_type = $('#select2-discount_type-container').text().trim(); // "percent" or "fixed"
-    const discount = parseFloat($('#discount').val()) || 0; // get discount value
-
-
-    let currentBasePrice = 0;
-    let currentProductName = '';
-
-    // When user selects a product
-    $('#select_pro').on('change', function () {
-        let selected = $(this).find('option:selected');
-        currentProductName = selected.data('name');
-        currentBasePrice = selected.data('price') || 0;
-        let variations = selected.data('variations') || [];
-        let addons = selected.data('addons') || [];
-
-
-
-        // Reset selected items section
-        $('#selectedItemsSection').hide();
-        $('#selectedVariationInfo').hide();
-        $('#selectedAddonsInfo').hide();
-
-        let html = `<div class="card p-3 shadow-sm">
-            <h5>${currentProductName}</h5>
-            <p class="text-muted mb-3">Base Price: $${currentBasePrice}</p>`;
-
-        // Show variations
-        if (variations && variations.length > 0) {
-            html += `<div class="mt-2">
-                <strong>Available Variations:</strong><br>`;
-            variations.forEach((v, i) => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox"
-                               name="variation"
-                               value="${v.type || ''}"
-                               data-price="${v.price || 0}"
-                               data-type="${v.type || 'Option'}">
-                        ${v.type || 'Option'} - $${v.price || 0}
-                        ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-        // Show addons
-        if (addons && addons.length > 0) {
-            html += `<div class="mt-3">
-                <strong>Available Add-ons:</strong><br>`;
-            addons.forEach(addon => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox"
-                               name="addons[]"
-                               value="${addon.id}"
-                               data-price="${addon.price || 0}"
-                               data-name="${addon.name}">
-                        ${addon.name} (+$${addon.price || 0})
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-        html += `</div>`;
-
-        $('#productDetails').html(html);
-
-        // Update selected items when variation/addon changes
-        updateSelectedItems();
-    });
-
-    // Update selected items display
-    function updateSelectedItems() {
-        $(document).on('change', 'input[name="variation"], input[name="addons[]"]', function() {
-            let total = parseFloat(currentBasePrice);
-
-            // Show selected items section
-            $('#selectedItemsSection').show();
-
-            // Display product info
-            $('#selectedProductInfo').html(`
-                <strong>Product:</strong> ${currentProductName}<br>
-                <strong>Base Price:</strong> $${currentBasePrice}
-            `);
-
-            // Handle selected variation
-            let selectedVariation = $('input[name="variation"]:checked');
-            if (selectedVariation.length) {
-                let varPrice = parseFloat(selectedVariation.data('price')) || 0;
-                let varType = selectedVariation.data('type');
-                total += varPrice;
-
-                $('#selectedVariationInfo').show();
-                $('#selectedVariationDetails').html(`
-                    <span class="badge badge-info">${varType} (+$${varPrice})</span>
-                `);
-            } else {
-                $('#selectedVariationInfo').hide();
-            }
-
-            // Handle selected addons
-            let selectedAddons = [];
-            $('input[name="addons[]"]:checked').each(function() {
-                let addonPrice = parseFloat($(this).data('price')) || 0;
-                let addonName = $(this).data('name');
-                total += addonPrice;
-                selectedAddons.push({
-                    name: addonName,
-                    price: addonPrice
-                });
-            });
-
-            if (selectedAddons.length > 0) {
-                $('#selectedAddonsInfo').show();
-                let addonsHTML = '';
-                selectedAddons.forEach(addon => {
-                    addonsHTML += `<span class="badge badge-success mr-1">${addon.name} (+$${addon.price})</span>`;
-                });
-                $('#selectedAddonsDetails').html(addonsHTML);
-            } else {
-                $('#selectedAddonsInfo').hide();
-            }
-
-            // Update final total
-            $('#finalTotalPrice').text('$' + total.toFixed(2));
-            $('#price').val(total.toFixed(2));
-            $('#price_hidden').val(total.toFixed(2));
-
-
-            //     if(discount_type == "percent"){
-            //             discount
-            //     }else{
-
-
-            //     }
-
-            // Get values
-
-            // let total = parseFloat($('#total').val()) || 0; // your original total
-
-            // Apply discount
-            // let finalTotal = total.toFixed(2);
-
-            // if (discount_type === "percent") {
-            //     // Subtract percentage from total
-            //     finalTotal = total - (total * (discount / 100));
-            // } else {
-            //     // Subtract fixed amount
-            //     finalTotal = total - discount;
-            // }
-
-            // // Ensure final total doesn't go below 0
-            // if (finalTotal < 0) finalTotal = 0;
-
-            // // Update final total on page
-            // $('#finalTotalPrice').text('$' + finalTotal.toFixed(2));
-
-
-
-            // alert(finalTotal.toFixed(2));
-
-
-            // Call discount calculation if needed
-            all_value(total, select2_discount_type_container, discount);
-        });
-    }
-
-    // Price Discount Calculation Function
-    function all_value(originalPrice, discountType, discountValue) {
-        originalPrice = parseFloat(originalPrice) || 0;
-        discountValue = parseFloat(discountValue) || 0;
-
-        let discountAmount = 0;
-        let finalPrice = originalPrice;
-
-        if (discountType === 'percent' || discountType === 'Percent (%)') {
-            discountAmount = (originalPrice * discountValue) / 100;
-        } else if (discountType === 'fixed' || discountType === 'Fixed ($)') {
-            discountAmount = discountValue;
-        }
-
-        finalPrice = originalPrice - discountAmount;
-
-        if (finalPrice < 0) {
-            finalPrice = 0;
-        }
-
-        return {
-            originalPrice: originalPrice.toFixed(2),
-            discountType: discountType,
-            discountValue: discountValue,
-            discountAmount: discountAmount.toFixed(2),
-            finalPrice: finalPrice.toFixed(2),
-            savedAmount: discountAmount.toFixed(2)
-        };
-    }
-});
-</script>
-
-
-<script>
-
-$(function() {
-    function updateFinalTotal() {
-        let price_hidden = parseFloat($('#price_hidden').val()) || 0;
-        let discount = parseFloat($('#discount').val()) || 0;
-        let type = $('#discount_type').val();
-
-        let finalTotal = price_hidden;
-
-        // Validation
-        if (type === "percent" && discount > 100) {
-            alert("Discount percentage cannot exceed 100%");
-              $('#discount').val(''); // clear input
-            return;
-        }
-        if (type !== "percent" && discount > price_hidden) {
-            alert(`Your total value is ${price_hidden}, but you entered ${discount}`);
-              $('#discount').val(''); // clear input
-            return;
-        }
-
-        // Apply discount
-        if (type === "percent") {
-            finalTotal -= price_hidden * (discount / 100);
-        } else {
-            finalTotal -= discount;
-        }
-
-        // Prevent negative
-        finalTotal = Math.max(finalTotal, 0);
-
-        // Update UI
-        $('#finalTotalPrice').text(`$${finalTotal.toFixed(2)}`);
-        $('#price').val(finalTotal.toFixed(2));
-    }
-
-    // Trigger update on input, change, or enter
-    $('#discount, #discount_type, #price').on('input change keypress', function(e) {
-        if (e.type === 'keypress' && e.which !== 13) return;
-        e.preventDefault();
-        updateFinalTotal();
-    });
-});
-
-
-</script>
-
-
-
-
-
 
     <script>
        const buttons = document.querySelectorAll("#btn-group .btns");
