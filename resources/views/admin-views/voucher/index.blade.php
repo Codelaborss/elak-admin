@@ -343,7 +343,7 @@
                                 </div>
 
                                 {{-- Product selection area --}}
-                                <div id="productDetails" class="mt-3"></div>
+                                <div id="productDetails" class="mt-3 row "></div>
 
                                 {{-- Selected items display section --}}
                                 <div id="selectedItemsSection" class="mt-4" style="display: none;">
@@ -408,7 +408,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3" id="discount_input_hide">
                             <div class="form-group mb-0">
                                 <label class="input-label"
                                     for="discount_type">{{ translate('Discount Type') }}
@@ -421,7 +421,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3" id="discount_value_input_hide">
                                 <div class="form-group mb-0">
                                     <label class="input-label"
                                         for="exampleFormControlInput1">{{ translate('Discount Value') }}
@@ -929,7 +929,8 @@
 
 
 <script>
- $(document).ready(function() {
+
+$(document).ready(function() {
     // Initialize Select2
     $('#select_pro').select2({
         width: '100%',
@@ -940,11 +941,9 @@
     let selectedProductsArray = [];
     let productCounter = 0;
 
-    // On page load, check if mix_match is already selected
+    // On page load, check bundle type
     let bundleType = $('#bundle_offer_type').val();
-    if (bundleType === 'mix_match') {
-        $('#price_input_hide').addClass('d-none');
-    }
+    updateFieldsVisibility(bundleType);
 
     // When "Add Product to Bundle" button is clicked
     $('#addProductBtn').on('click', function() {
@@ -967,19 +966,42 @@
 
         // CONDITION 1: Simple type - only 1 product allowed
         if (bundleOfferType === 'simple') {
-            // Clear previous products immediately (no animation for better UX)
+            // Clear previous products immediately
             $('#productDetails .card').remove();
             selectedProductsArray = [];
-            productCounter = 0; // Reset counter
+            productCounter = 0;
 
             // Reset price calculator
             $('#priceCalculator').hide();
             $('#price').val('0.00');
             $('#price_hidden').val('0.00');
         }
-        // CONDITION 2: Bundle type - check for duplicates
-        else {
-            // Check if product is already selected (only for bundle type)
+        // CONDITION 2: Bundle - check for duplicates
+        else if (bundleOfferType === 'bundle') {
+            // Check if product is already selected
+            if (selectedProductsArray.includes(productId)) {
+                alert(`"${productName}" is already added to the bundle!`);
+                $('#select_pro').val('').trigger('change');
+                return;
+            }
+        }
+        // CONDITION 4: BOGO_FREE - only 2 products allowed
+        else if (bundleOfferType === 'bogo_free') {
+            // Check if already 2 products are selected
+            if (selectedProductsArray.length >= 2) {
+                alert('BOGO offer allows only 2 products! Please remove one product to add another.');
+                $('#select_pro').val('').trigger('change');
+                return;
+            }
+            // Check if product is already selected
+            if (selectedProductsArray.includes(productId)) {
+                alert(`"${productName}" is already added to the bundle!`);
+                $('#select_pro').val('').trigger('change');
+                return;
+            }
+        }
+        // CONDITION 3: Mix & Match - check for duplicates
+        else if (bundleOfferType === 'mix_match') {
             if (selectedProductsArray.includes(productId)) {
                 alert(`"${productName}" is already added to the bundle!`);
                 $('#select_pro').val('').trigger('change');
@@ -992,7 +1014,7 @@
 
         // Create product card with variations and addons
         let html = `
-        <div class="card p-3 shadow-sm mb-3" data-product-temp-id="${productCounter}" data-product-id="${productId}">
+        <div class="card p-3 shadow-sm mb-3  col-12 col-md-6" data-product-temp-id="${productCounter}" data-product-id="${productId}">
             <div class="d-flex justify-content-between align-items-start">
                 <h5>${productName}</h5>
                 <button type="button" class="btn btn-danger btn-sm remove-product-btn" data-temp-id="${productCounter}" data-product-id="${productId}">
@@ -1123,6 +1145,7 @@
 
     // Update overall bundle total
     function updateBundleTotal() {
+        let bundleType = $('#bundle_offer_type').val();
         let bundleTotal = 0;
         let productCount = 0;
         let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
@@ -1156,7 +1179,7 @@
                 addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
             });
 
-            // Calculate per-item price (total divided by quantity)
+            // Calculate per-item price
             let perItemPrice = productTotal / quantity;
 
             // Add to breakdown with details
@@ -1218,9 +1241,16 @@
             $('#selectedProducts p').show();
         }
 
-        // Update hidden price fields
-        $('#price').val(finalTotal.toFixed(2));
-        $('#price_hidden').val(bundleTotal.toFixed(2));
+        // Update hidden price fields based on bundle type
+        if (bundleType === 'bogo_free' || bundleType === 'mix_match') {
+            // For BOGO and Mix & Match, use final total (with discount)
+            $('#price').val(finalTotal.toFixed(2));
+            $('#price_hidden').val(finalTotal.toFixed(2));
+        } else {
+            // For Simple and Bundle, use original logic
+            $('#price').val(finalTotal.toFixed(2));
+            $('#price_hidden').val(bundleTotal.toFixed(2));
+        }
     }
 
     // Update when discount changes
@@ -1245,49 +1275,51 @@
         updateBundleTotal();
     });
 
+    // Function to update field visibility based on bundle type
+    function updateFieldsVisibility(bundleType) {
+        if (bundleType === 'mix_match') {
+            // CONDITION 3: Hide price, show discount fields
+            $('#price_input_hide').addClass('d-none');
+            $('#discount_input_hide').removeClass('d-none');
+            $('#discount_value_input_hide').removeClass('d-none');
+        } else if (bundleType === 'bogo_free') {
+            // CONDITION 4: Hide price, hide discount fields for BOGO
+            $('#price_input_hide').addClass('d-none');
+            $('#discount_input_hide').addClass('d-none');
+            $('#discount_value_input_hide').addClass('d-none');
+        } else if (bundleType === 'simple' || bundleType === 'bundle') {
+            // CONDITION 1 & 2: Show all fields
+            $('#price_input_hide').removeClass('d-none');
+            $('#discount_input_hide').removeClass('d-none');
+            $('#discount_value_input_hide').removeClass('d-none');
+        } else {
+            // Default: Show all fields
+            $('#price_input_hide').removeClass('d-none');
+            $('#discount_input_hide').removeClass('d-none');
+            $('#discount_value_input_hide').removeClass('d-none');
+        }
+    }
+
     // Handle bundle type changes
     $('#bundle_offer_type').on('change', function() {
         let bundleType = $(this).val();
 
-        // Hide/Show price field based on bundle type
-        if (bundleType === 'mix_match') {
-            // Hide price field for mix_match
-            $('#price_input_hide').addClass('d-none');
+        // Update field visibility
+        updateFieldsVisibility(bundleType);
 
-            // Clear all products
-            $('#productDetails .card').fadeOut(300, function() {
-                $(this).remove();
-                $('#selectedProducts p').show();
-            });
-            selectedProductsArray = [];
-            productCounter = 0;
+        // Clear all products for any type change
+        $('#productDetails .card').fadeOut(300, function() {
+            $(this).remove();
+            $('#selectedProducts p').show();
+        });
+        selectedProductsArray = [];
+        productCounter = 0;
 
-            // Reset price calculator
-            $('#priceCalculator').hide();
-            $('#price').val('0.00');
-            $('#price_hidden').val('0.00');
-
-            // alert('Mix & Match selected. All product selections have been reset.');
-        } else if (bundleType === 'simple') {
-            // Show price field
-            $('#price_input_hide').removeClass('d-none');
-
-            // Clear all products for simple type
-            $('#productDetails .card').fadeOut(300, function() {
-                $(this).remove();
-                $('#selectedProducts p').show();
-            });
-            selectedProductsArray = [];
-            productCounter = 0;
-
-            // Reset price calculator
-            $('#priceCalculator').hide();
-            $('#price').val('0.00');
-            $('#price_hidden').val('0.00');
-        } else {
-            // Show price field for bundle and bogo_free
-            $('#price_input_hide').removeClass('d-none');
-        }
+        // Reset price calculator
+        $('#priceCalculator').hide();
+        $('#price').val('0.00');
+        $('#price_hidden').val('0.00');
+        $('#discount').val('0');
     });
 
     // Reset when fixed price option is selected
