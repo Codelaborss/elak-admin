@@ -388,7 +388,7 @@
                     <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                     {{-- Price Information --}}
                     <div class="row g-2">
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-3" id="price_input_hide">
                             <div class="form-group mb-0">
                                 <label class="input-label"  for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
                                 <input type="number" min="0" id="price" max="999999999999.99" step="0.01" value="1" name="price" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
@@ -929,7 +929,7 @@
 
 
 <script>
-$(document).ready(function() {
+ $(document).ready(function() {
     // Initialize Select2
     $('#select_pro').select2({
         width: '100%',
@@ -939,6 +939,12 @@ $(document).ready(function() {
     // Store selected products
     let selectedProductsArray = [];
     let productCounter = 0;
+
+    // On page load, check if mix_match is already selected
+    let bundleType = $('#bundle_offer_type').val();
+    if (bundleType === 'mix_match') {
+        $('#price_input_hide').addClass('d-none');
+    }
 
     // When "Add Product to Bundle" button is clicked
     $('#addProductBtn').on('click', function() {
@@ -1239,12 +1245,15 @@ $(document).ready(function() {
         updateBundleTotal();
     });
 
-    // Clear products when bundle type changes to simple
+    // Handle bundle type changes
     $('#bundle_offer_type').on('change', function() {
         let bundleType = $(this).val();
 
-        // Only reset when changing TO simple type
-        if (bundleType === 'simple') {
+        // Hide/Show price field based on bundle type
+        if (bundleType === 'mix_match') {
+            // Hide price field for mix_match
+            $('#price_input_hide').addClass('d-none');
+
             // Clear all products
             $('#productDetails .card').fadeOut(300, function() {
                 $(this).remove();
@@ -1257,12 +1266,33 @@ $(document).ready(function() {
             $('#priceCalculator').hide();
             $('#price').val('0.00');
             $('#price_hidden').val('0.00');
+
+            // alert('Mix & Match selected. All product selections have been reset.');
+        } else if (bundleType === 'simple') {
+            // Show price field
+            $('#price_input_hide').removeClass('d-none');
+
+            // Clear all products for simple type
+            $('#productDetails .card').fadeOut(300, function() {
+                $(this).remove();
+                $('#selectedProducts p').show();
+            });
+            selectedProductsArray = [];
+            productCounter = 0;
+
+            // Reset price calculator
+            $('#priceCalculator').hide();
+            $('#price').val('0.00');
+            $('#price_hidden').val('0.00');
+        } else {
+            // Show price field for bundle and bogo_free
+            $('#price_input_hide').removeClass('d-none');
         }
     });
 
     // Reset when fixed price option is selected
     $('#price_type, input[name="price_type"]').on('change', function() {
-        let priceType = $(this).val();
+        let priceType = $(this).val() || $('input[name="price_type"]:checked').val();
 
         // If fixed price is selected, reset all products
         if (priceType === 'fixed') {
