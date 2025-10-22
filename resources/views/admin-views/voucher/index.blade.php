@@ -937,6 +937,9 @@ $(document).ready(function() {
         placeholder: 'Select a Product'
     });
 
+            // Add Product Button Click Handler
+
+
     // Store selected products
     let selectedProductsArray = [];
     let productCounter = 0;
@@ -947,7 +950,32 @@ $(document).ready(function() {
 
     // When "Add Product to Bundle" button is clicked
     $('#addProductBtn').on('click', function() {
-        $('#availableProducts').slideToggle();
+
+        // const addProductBtn = document.getElementById('addProductBtn');
+        // if (addProductBtn) {
+            // addProductBtn.addEventListener('click', function() {
+                const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+                const availableProducts = document.getElementById('availableProducts');
+
+                // Check if bundle offer type is selected
+                if (!bundleOfferType || bundleOfferType === "") {
+                    alert("Please select a bundle offer type first!");
+                    return;
+                }else{
+                    $('#availableProducts').slideToggle();
+                }
+
+                // Toggle available products visibility
+                if (availableProducts) {
+                    if (availableProducts.style.display === "none" || !availableProducts.style.display) {
+                        availableProducts.style.display = "block";
+                    } else {
+                        availableProducts.style.display = "none";
+                    }
+                }
+            // });
+        // }
+
     });
 
     // When user selects a product
