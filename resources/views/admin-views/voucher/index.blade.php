@@ -1062,7 +1062,7 @@ $(document).ready(function() {
             variations.forEach((v, i) => {
                 html += `
                     <label class="d-block small mt-1">
-                        <input type="radio"
+                        <input type="checkbox"
                             name="variation_${productCounter}"
                             class="variation-checkbox"
                             value="${v.type || ''}"
@@ -2126,7 +2126,7 @@ $(document).ready(function() {
                                         </label>
                                         <div class="resturant-type-group px-0">
                                             <label class="form-check form--check mr-2 mr-md-4">
-                                                <input class="form-check-input show_min_max" data-count="`+count+`" type="radio" value="multi"
+                                                <input class="form-check-input show_min_max" data-count="`+count+`" type="checkbox" value="multi"
                                                 name="options[` + count + `][type]" id="type` + count +
                     `" checked
                                                 >
@@ -2136,7 +2136,7 @@ $(document).ready(function() {
                 </label>
 
                 <label class="form-check form--check mr-2 mr-md-4">
-                    <input class="form-check-input hide_min_max" data-count="`+count+`" type="radio" value="single"
+                    <input class="form-check-input hide_min_max" data-count="`+count+`" type="checkbox" value="single"
                     name="options[` + count + `][type]" id="type` + count +
                     `"
                                                 >
