@@ -8301,4 +8301,5 @@ Smartly or Earn. ',
   'Product Attributes' => 'Product Attributes',
   's' => 'S',
   'Select a Product' => 'Select a Product',
+  'Required Quantity' => 'Required Quantity',
 );

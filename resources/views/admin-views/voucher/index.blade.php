@@ -481,6 +481,13 @@
                                 <input type="hidden"  id="price_hidden"name="price_hidden" >
                             </div>
                         </div>
+                          <div class="col-6 col-md-3 d-none" id="required_qty">
+                            <div class="form-group mb-0">
+                                <label class="input-label"  for="exampleFormControlInput1">{{ translate('Required Quantity') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
+                                <input type="number" min="0" id="required_qty" max="999999999999.99" step="0.01" value="1" name="required_qty" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
+                            </div>
+                        </div>
+
                         <div class="col-6 col-md-3">
                             <div class="form-group mb-0">
                                 <label class="input-label"
@@ -947,7 +954,7 @@ $(document).ready(function() {
             variations.forEach((v, index) => {
                 html += `
                     <label class="d-block small mt-1">
-                        <input type="radio" name="bogo_variation_${section}_${counter}" class="bogo-variation-radio"
+                        <input type="checkbox" name="bogo_variation_${section}_${counter}" class="bogo-variation-checkbox"
                             value="${v.type || ''}" data-price="${v.price || 0}" data-type="${v.type || 'Option'}">
                         ${v.type || 'Option'} - $${v.price || 0}
                         ${v.stock ? ` (Stock: ${v.stock})` : ''}
@@ -1024,7 +1031,7 @@ $(document).ready(function() {
             let productTotal = basePrice;
 
             // Add variation price
-            let selectedVariation = $(this).find('.bogo-variation-radio:checked');
+            let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
             let variationText = '';
             if (selectedVariation.length) {
                 let varPrice = parseFloat(selectedVariation.data('price')) || 0;
@@ -1074,7 +1081,7 @@ $(document).ready(function() {
             let productTotal = basePrice;
 
             // Add variation price
-            let selectedVariation = $(this).find('.bogo-variation-radio:checked');
+            let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
             let variationText = '';
             if (selectedVariation.length) {
                 let varPrice = parseFloat(selectedVariation.data('price')) || 0;
@@ -1170,7 +1177,7 @@ $(document).ready(function() {
     }
 
     // ==================== BOGO EVENT LISTENERS ====================
-    $(document).on('change', '.bogo-variation-radio, .bogo-addon-checkbox, .bogo-product-quantity', function() {
+    $(document).on('change', '.bogo-variation-checkbox, .bogo-addon-checkbox, .bogo-product-quantity', function() {
         updateBogoTotal();
     });
 
@@ -1336,17 +1343,21 @@ $(document).ready(function() {
         if (bundleType === 'mix_match') {
             $('#price_input_hide').addClass('d-none');
             $('#discount_input_hide').removeClass('d-none');
+            $('#required_qty').removeClass('d-none');
             $('#discount_value_input_hide').removeClass('d-none');
         } else if (bundleType === 'bogo_free') {
             $('#price_input_hide').addClass('d-none');
             $('#discount_input_hide').addClass('d-none');
+             $('#required_qty').addClass('d-none');
             $('#discount_value_input_hide').addClass('d-none');
         } else if (bundleType === 'simple' || bundleType === 'bundle') {
             $('#price_input_hide').removeClass('d-none');
+               $('#required_qty').addClass('d-none');
             $('#discount_input_hide').removeClass('d-none');
             $('#discount_value_input_hide').removeClass('d-none');
         } else {
             $('#price_input_hide').removeClass('d-none');
+               $('#required_qty').addClass('d-none');
             $('#discount_input_hide').removeClass('d-none');
             $('#discount_value_input_hide').removeClass('d-none');
         }
