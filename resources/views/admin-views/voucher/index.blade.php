@@ -38,21 +38,17 @@
             {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
              @include("admin-views.voucher.include_client_voucher_management")
 
-
-
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
                 @csrf
                 @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
                 @php($language = $language->value ?? null)
                 @php($defaultLang = str_replace('_', '-', app()->getLocale()))
-
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.include_client_partner_information")
 
-                {{-- ==================== Delivery/Pickup  == Product ===================== --}}
 
                    <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
-                <div class="section-card rounded p-4 mb-4  " id="bundel_food_voucher_fields_1_3_1_4">
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                     {{-- Voucher Title --}}
                     <div class="row g-3 mb-3">
@@ -291,7 +287,7 @@
                 </div>
 
                {{-- Bundle Products Configuration --}}
-                <div class=" section-card rounded p-4 mb-4   "  id="Bundle_products_configuration">
+                <div class=" section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
                     <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
                     <div id="selectedProducts">
                         <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
@@ -610,16 +606,13 @@
                     </div>
                 </div>
 
-
                  @include("admin-views.voucher.include_voucher")
 
             </form>
         </div>
       </div>
 
-
       @include("admin-views.voucher.include_model")
-
 
 @endsection
 
@@ -631,830 +624,139 @@
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
 
-
-
-
-{{-- <script>
-
-    $(document).ready(function() {
-    // Initialize Select2
-    $('#select_pro').select2({
-        width: '100%',
-        placeholder: 'Select a Product'
-    });
-
-    // Store selected products
-    let selectedProductsArray = [];
-    let productCounter = 0;
-
-    // When "Add Product to Bundle" button is clicked
-    $('#addProductBtn').on('click', function() {
-        $('#availableProducts').slideToggle();
-    });
-
-    // When user selects a product
-    $('#select_pro').on('change', function() {
-        let selected = $(this).find('option:selected');
-        let productId = selected.val();
-        let productName = selected.data('name');
-        let basePrice = parseFloat(selected.data('price')) || 0;
-        let variations = selected.data('variations') || [];
-        let addons = selected.data('addons') || [];
-
-        if (!productId) return;
-
-        // Get bundle offer type
-        let bundleOfferType = $('#bundle_offer_type').val();
-
-        // CONDITION 1: Simple type - only 1 product allowed
-        if (bundleOfferType === 'simple') {
-            // Clear previous products
-            $('#productDetails .card').fadeOut(300, function() {
-                $(this).remove();
-            });
-            selectedProductsArray = [];
-        }
-        // CONDITION 2: Bundle type - check for duplicates
-        else {
-            // Check if product is already selected (only for bundle type)
-            if (selectedProductsArray.includes(productId)) {
-                alert(`"${productName}" is already added to the bundle!`);
-                $('#select_pro').val('').trigger('change');
-                return;
-            }
-        }
-
-        // Add to selected products array
-        selectedProductsArray.push(productId);
-
-        // Create product card with variations and addons
-        let html = `
-        <div class="card p-3 shadow-sm mb-3" data-product-temp-id="${productCounter}" data-product-id="${productId}">
-            <div class="d-flex justify-content-between align-items-start">
-                <h5>${productName}</h5>
-                <button type="button" class="btn btn-danger btn-sm remove-product-btn" data-temp-id="${productCounter}" data-product-id="${productId}">
-                    <i class="fa fa-trash"></i> Remove
-                </button>
-            </div>
-            <p class="text-muted mb-2">Base Price: ${basePrice}</p>
-            <input type="hidden" class="product-id" value="${productId}">
-            <input type="hidden" class="product-name" value="${productName}">
-            <input type="hidden" class="product-base-price" value="${basePrice}">
-        `;
-
-        // Add variations section
-        if (variations && variations.length > 0) {
-            html += `<div class="mt-2">
-                <strong>Variations:</strong><br>`;
-            variations.forEach((v, i) => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="radio"
-                            name="variation_${productCounter}"
-                            class="variation-checkbox"
-                            value="${v.type || ''}"
-                            data-price="${v.price || 0}"
-                            data-type="${v.type || 'Option'}">
-                        ${v.type || 'Option'} - $${v.price || 0}
-                        ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-        // Add addons section
-        if (addons && addons.length > 0) {
-            html += `<div class="mt-3">
-                <strong>Add-ons:</strong><br>`;
-            addons.forEach(addon => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox"
-                            class="addon-checkbox"
-                            value="${addon.id}"
-                            data-price="${addon.price || 0}"
-                            data-name="${addon.name}">
-                        ${addon.name} (+$${addon.price || 0})
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-        // Add quantity selector
-        html += `
-            <div class="mt-3">
-                <label><strong>Quantity:</strong></label>
-                <input type="number" class="form-control product-quantity" value="1" min="1" style="width: 100px;">
-            </div>
-        `;
-
-        // Product total
-        html += `
-            <div class="mt-3 p-2 bg-light border rounded">
-                <strong>Product Total: </strong>
-                <span class="product-total text-success">$${basePrice.toFixed(2)}</span>
-            </div>
-        </div>`;
-
-        $('#productDetails').append(html);
-        productCounter++;
-
-        // Clear selection
-        $('#select_pro').val('').trigger('change');
-
-        // Update calculations when variations/addons/quantity change
-        updateProductCalculations();
-    });
-
-    // Function to update product calculations
-    function updateProductCalculations() {
-        $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
-            let productCard = $(this).closest('.card');
-            let basePrice = parseFloat(productCard.find('.product-base-price').val()) || 0;
-            let quantity = parseInt(productCard.find('.product-quantity').val()) || 1;
-            let total = basePrice;
-
-            // Add variation price
-            let selectedVariation = productCard.find('.variation-checkbox:checked');
-            if (selectedVariation.length) {
-                total += parseFloat(selectedVariation.data('price')) || 0;
-            }
-
-            // Add addon prices
-            productCard.find('.addon-checkbox:checked').each(function() {
-                total += parseFloat($(this).data('price')) || 0;
-            });
-
-            // Multiply by quantity
-            total = total * quantity;
-
-            // Update product total
-            productCard.find('.product-total').text('$' + total.toFixed(2));
-
-            // Update overall bundle calculation
-            updateBundleTotal();
-        });
-    }
-
-    // Remove product from bundle
-    $(document).on('click', '.remove-product-btn', function() {
-        let tempId = $(this).data('temp-id');
-        let productId = $(this).data('product-id');
-
-        // Remove from selected products array
-        selectedProductsArray = selectedProductsArray.filter(id => id !== productId);
-
-        $(`[data-product-temp-id="${tempId}"]`).fadeOut(300, function() {
-            $(this).remove();
-            updateBundleTotal();
-
-            // If no products left, show placeholder
-            if ($('#productDetails .card').length === 0) {
-                $('#selectedProducts p').show();
-            }
-        });
-    });
-
-    // Update overall bundle total
-    function updateBundleTotal() {
-        let bundleTotal = 0;
-        let productCount = 0;
-        let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
-
-        $('#productDetails .card').each(function() {
-            let productName = $(this).find('.product-name').val();
-            let productTotal = parseFloat($(this).find('.product-total').text().replace('$', '')) || 0;
-            let quantity = parseInt($(this).find('.product-quantity').val()) || 1;
-
-            bundleTotal += productTotal;
-            productCount++;
-
-            // Add to breakdown
-            breakdownHTML += `
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>${productName} (x${quantity})</span>
-                    <strong>$${productTotal.toFixed(2)}</strong>
-                </li>`;
-        });
-
-        // Apply discount if any
-        let discount = parseFloat($('#discount').val()) || 0;
-        let discountType = $('#discount_type').val();
-        let discountAmount = 0;
-
-        if (discountType === 'percent') {
-            discountAmount = (bundleTotal * discount) / 100;
-        } else {
-            discountAmount = discount;
-        }
-
-        let finalTotal = Math.max(bundleTotal - discountAmount, 0);
-
-        breakdownHTML += `
-            <li class="list-group-item">
-                <strong>Subtotal: </strong>$${bundleTotal.toFixed(2)}
-            </li>`;
-
-        if (discountAmount > 0) {
-            breakdownHTML += `
-                <li class="list-group-item text-danger">
-                    <strong>Discount (${discountType === 'percent' ? discount + '%' : '$' + discount}): </strong>
-                    -$${discountAmount.toFixed(2)}
-                </li>`;
-        }
-
-        breakdownHTML += `
-            <li class="list-group-item bg-success text-white">
-                <strong>Final Bundle Total: </strong>
-                <strong>$${finalTotal.toFixed(2)}</strong>
-            </li>
-        </ul>`;
-
-        // Update price calculator
-        if (productCount > 0) {
-            $('#priceCalculator').show();
-            $('#priceBreakdown').html(breakdownHTML);
-            $('#selectedProducts p').hide();
-        } else {
-            $('#priceCalculator').hide();
-            $('#selectedProducts p').show();
-        }
-
-        // Update hidden price field
-        $('#price').val(finalTotal.toFixed(2));
-        $('#price_hidden').val(bundleTotal.toFixed(2));
-    }
-
-    // Update when discount changes
-    $('#discount, #discount_type').on('change input', function() {
-        let discount = parseFloat($('#discount').val()) || 0;
-        let discountType = $('#discount_type').val();
-        let bundleTotal = parseFloat($('#price_hidden').val()) || 0;
-
-        // Validation
-        if (discountType === 'percent' && discount > 100) {
-            alert('Discount percentage cannot exceed 100%');
-            $('#discount').val(0);
-            return;
-        }
-
-        if (discountType !== 'percent' && discount > bundleTotal) {
-            alert(`Discount amount ($${discount}) cannot exceed bundle total ($${bundleTotal})`);
-            $('#discount').val(0);
-            return;
-        }
-
-        updateBundleTotal();
-    });
-
-    // Clear products when bundle type changes
-    $('#bundle_offer_type').on('change', function() {
-        let bundleType = $(this).val();
-
-        // Clear all products when switching types
-        $('#productDetails .card').fadeOut(300, function() {
-            $(this).remove();
-        });
-        selectedProductsArray = [];
-        productCounter = 0;
-        updateBundleTotal();
-
-        // Show appropriate message
-        // if (bundleType === 'simple') {
-        //     alert('Simple mode: Only 1 product can be selected at a time.');
-        // }
-    });
-});
-</script> --}}
-
-
-<script>
-
-$(document).ready(function() {
-    // Initialize Select2
-    $('#select_pro').select2({
-        width: '100%',
-        placeholder: 'Select a Product'
-    });
-
-            // Add Product Button Click Handler
-
-
-    // Store selected products
-    let selectedProductsArray = [];
-    let productCounter = 0;
-
-    // On page load, check bundle type
-    let bundleType = $('#bundle_offer_type').val();
-    updateFieldsVisibility(bundleType);
-
-    // When "Add Product to Bundle" button is clicked
-    $('#addProductBtn').on('click', function() {
-
-        // const addProductBtn = document.getElementById('addProductBtn');
-        // if (addProductBtn) {
-            // addProductBtn.addEventListener('click', function() {
-                const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
-                const availableProducts = document.getElementById('availableProducts');
-
-                // Check if bundle offer type is selected
-                if (!bundleOfferType || bundleOfferType === "") {
-                    alert("Please select a bundle offer type first!");
-                    return;
-                }else{
-                    $('#availableProducts').slideToggle();
-                }
-
-                // Toggle available products visibility
-                if (availableProducts) {
-                    if (availableProducts.style.display === "none" || !availableProducts.style.display) {
-                        availableProducts.style.display = "block";
-                    } else {
-                        availableProducts.style.display = "none";
-                    }
-                }
-            // });
-        // }
-
-    });
-
-    // When user selects a product
-    $('#select_pro').on('change', function() {
-        let selected = $(this).find('option:selected');
-        let productId = selected.val();
-        let productName = selected.data('name');
-        let basePrice = parseFloat(selected.data('price')) || 0;
-        let variations = selected.data('variations') || [];
-        let addons = selected.data('addons') || [];
-
-        if (!productId) return;
-
-        // Get bundle offer type
-        let bundleOfferType = $('#bundle_offer_type').val();
-
-        // CONDITION 1: Simple type - only 1 product allowed
-        if (bundleOfferType === 'simple') {
-            // Clear previous products immediately
-            $('#productDetails .card').remove();
-            selectedProductsArray = [];
-            productCounter = 0;
-
-            // Reset price calculator
-            $('#priceCalculator').hide();
-            $('#price').val('0.00');
-            $('#price_hidden').val('0.00');
-        }
-        // CONDITION 2: Bundle - check for duplicates
-        else if (bundleOfferType === 'bundle') {
-            // Check if product is already selected
-            if (selectedProductsArray.includes(productId)) {
-                alert(`"${productName}" is already added to the bundle!`);
-                $('#select_pro').val('').trigger('change');
-                return;
-            }
-        }
-        // CONDITION 4: BOGO_FREE - only 2 products allowed
-        else if (bundleOfferType === 'bogo_free') {
-            // Check if already 2 products are selected
-            if (selectedProductsArray.length >= 2) {
-                alert('BOGO offer allows only 2 products! Please remove one product to add another.');
-                $('#select_pro').val('').trigger('change');
-                return;
-            }
-            // Check if product is already selected
-            if (selectedProductsArray.includes(productId)) {
-                alert(`"${productName}" is already added to the bundle!`);
-                $('#select_pro').val('').trigger('change');
-                return;
-            }
-        }
-        // CONDITION 3: Mix & Match - check for duplicates
-        else if (bundleOfferType === 'mix_match') {
-            if (selectedProductsArray.includes(productId)) {
-                alert(`"${productName}" is already added to the bundle!`);
-                $('#select_pro').val('').trigger('change');
-                return;
-            }
-        }
-
-        // Add to selected products array
-        selectedProductsArray.push(productId);
-
-        // Create product card with variations and addons
-        let html = `
-        <div class="card p-3 shadow-sm mb-3  col-12 col-md-6" data-product-temp-id="${productCounter}" data-product-id="${productId}">
-            <div class="d-flex justify-content-between align-items-start">
-                <h5>${productName}</h5>
-                <button type="button" class="btn btn-danger btn-sm remove-product-btn" data-temp-id="${productCounter}" data-product-id="${productId}">
-                    <i class="fa fa-trash"></i> Remove
-                </button>
-            </div>
-            <p class="text-muted mb-2">Base Price: $${basePrice.toFixed(2)}</p>
-            <input type="hidden" class="product-id" value="${productId}">
-            <input type="hidden" class="product-name" value="${productName}">
-            <input type="hidden" class="product-base-price" value="${basePrice}">
-        `;
-
-        // Add variations section
-        if (variations && variations.length > 0) {
-            html += `<div class="mt-2">
-                <strong>Variations:</strong><br>`;
-            variations.forEach((v, i) => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox"
-                            name="variation_${productCounter}"
-                            class="variation-checkbox"
-                            value="${v.type || ''}"
-                            data-price="${v.price || 0}"
-                            data-type="${v.type || 'Option'}">
-                        ${v.type || 'Option'} - $${v.price || 0}
-                        ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-        // Add addons section
-        if (addons && addons.length > 0) {
-            html += `<div class="mt-3">
-                <strong>Add-ons:</strong><br>`;
-            addons.forEach(addon => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox"
-                            class="addon-checkbox"
-                            value="${addon.id}"
-                            data-price="${addon.price || 0}"
-                            data-name="${addon.name}">
-                        ${addon.name} (+$${addon.price || 0})
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-        // Add quantity selector
-        html += `
-            <div class="mt-3">
-                <label><strong>Quantity:</strong></label>
-                <input type="number" class="form-control product-quantity" value="1" min="1" style="width: 100px;">
-            </div>
-        `;
-
-        // Product total
-        html += `
-            <div class="mt-3 p-2 bg-light border rounded">
-                <strong>Product Total: </strong>
-                <span class="product-total text-success font-weight-bold" style="font-size: 1.2em;">$${basePrice.toFixed(2)}</span>
-            </div>
-        </div>`;
-
-        $('#productDetails').append(html);
-        productCounter++;
-
-        // Clear selection
-        $('#select_pro').val('').trigger('change');
-
-        // Hide placeholder if products exist
-        $('#selectedProducts p').hide();
-
-        // Update calculations immediately
-        updateBundleTotal();
-    });
-
-    // Function to update product calculations
-    $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
-        let productCard = $(this).closest('.card');
-        let basePrice = parseFloat(productCard.find('.product-base-price').val()) || 0;
-        let quantity = parseInt(productCard.find('.product-quantity').val()) || 1;
-        let total = basePrice;
-
-        // Add variation price
-        let selectedVariation = productCard.find('.variation-checkbox:checked');
-        if (selectedVariation.length) {
-            total += parseFloat(selectedVariation.data('price')) || 0;
-        }
-
-        // Add addon prices
-        productCard.find('.addon-checkbox:checked').each(function() {
-            total += parseFloat($(this).data('price')) || 0;
-        });
-
-        // Multiply by quantity
-        total = total * quantity;
-
-        // Update product total with animation
-        productCard.find('.product-total').fadeOut(200, function() {
-            $(this).text('$' + total.toFixed(2)).fadeIn(200);
-        });
-
-        // Update overall bundle calculation
-        updateBundleTotal();
-    });
-
-    // Remove product from bundle
-    $(document).on('click', '.remove-product-btn', function() {
-        let tempId = $(this).data('temp-id');
-        let productId = $(this).data('product-id');
-
-        // Remove from selected products array
-        selectedProductsArray = selectedProductsArray.filter(id => id !== productId);
-
-        $(`[data-product-temp-id="${tempId}"]`).fadeOut(300, function() {
-            $(this).remove();
-            updateBundleTotal();
-
-            // If no products left, show placeholder
-            if ($('#productDetails .card').length === 0) {
-                $('#selectedProducts p').show();
-            }
-        });
-    });
-
-    // Update overall bundle total
-    function updateBundleTotal() {
-        let bundleType = $('#bundle_offer_type').val();
-        let bundleTotal = 0;
-        let productCount = 0;
-        let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
-
-        $('#productDetails .card').each(function() {
-            let productName = $(this).find('.product-name').val();
-            let basePrice = parseFloat($(this).find('.product-base-price').val()) || 0;
-            let productTotal = parseFloat($(this).find('.product-total').text().replace('$', '')) || 0;
-            let quantity = parseInt($(this).find('.product-quantity').val()) || 1;
-
-            bundleTotal += productTotal;
-            productCount++;
-
-            // Get selected variation
-            let selectedVariation = $(this).find('.variation-checkbox:checked');
-            let variationText = '';
-            let variationPrice = 0;
-            if (selectedVariation.length) {
-                let varType = selectedVariation.data('type');
-                variationPrice = parseFloat(selectedVariation.data('price')) || 0;
-                variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${variationPrice.toFixed(2)})</div>`;
-            }
-
-            // Get selected addons
-            let addonsText = '';
-            let addonsTotal = 0;
-            $(this).find('.addon-checkbox:checked').each(function() {
-                let addonName = $(this).data('name');
-                let addonPrice = parseFloat($(this).data('price')) || 0;
-                addonsTotal += addonPrice;
-                addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
-            });
-
-            // Calculate per-item price
-            let perItemPrice = productTotal / quantity;
-
-            // Add to breakdown with details
-            breakdownHTML += `
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="flex-grow-1">
-                            <strong>${productName}</strong> (x${quantity})
-                            <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
-                            ${variationText}
-                            ${addonsText}
-                            ${quantity > 1 ? `<div class="small text-info mt-1">Per item: $${perItemPrice.toFixed(2)}</div>` : ''}
-                        </div>
-                        <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
-                    </div>
-                </li>`;
-        });
-
-        // Apply discount if any
-        let discount = parseFloat($('#discount').val()) || 0;
-        let discountType = $('#discount_type').val();
-        let discountAmount = 0;
-
-        if (discountType === 'percent') {
-            discountAmount = (bundleTotal * discount) / 100;
-        } else {
-            discountAmount = discount;
-        }
-
-        let finalTotal = Math.max(bundleTotal - discountAmount, 0);
-
-        breakdownHTML += `
-            <li class="list-group-item">
-                <strong>Subtotal: </strong><span class="text-primary">$${bundleTotal.toFixed(2)}</span>
-            </li>`;
-
-        if (discountAmount > 0) {
-            breakdownHTML += `
-                <li class="list-group-item text-danger">
-                    <strong>Discount (${discountType === 'percent' ? discount + '%' : '$' + discount}): </strong>
-                    -$${discountAmount.toFixed(2)}
-                </li>`;
-        }
-
-        breakdownHTML += `
-            <li class="list-group-item bg-success text-white">
-                <strong>Final Bundle Total: </strong>
-                <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
-            </li>
-        </ul>`;
-
-        // Update price calculator
-        if (productCount > 0) {
-            $('#priceCalculator').show();
-            $('#priceBreakdown').html(breakdownHTML);
-            $('#selectedProducts p').hide();
-        } else {
-            $('#priceCalculator').hide();
-            $('#selectedProducts p').show();
-        }
-
-        // Update hidden price fields based on bundle type
-        if (bundleType === 'bogo_free' || bundleType === 'mix_match') {
-            // For BOGO and Mix & Match, use final total (with discount)
-            $('#price').val(finalTotal.toFixed(2));
-            $('#price_hidden').val(finalTotal.toFixed(2));
-        } else {
-            // For Simple and Bundle, use original logic
-            $('#price').val(finalTotal.toFixed(2));
-            $('#price_hidden').val(bundleTotal.toFixed(2));
-        }
-    }
-
-    // Update when discount changes
-    $('#discount, #discount_type').on('change input', function() {
-        let discount = parseFloat($('#discount').val()) || 0;
-        let discountType = $('#discount_type').val();
-        let bundleTotal = parseFloat($('#price_hidden').val()) || 0;
-
-        // Validation
-        if (discountType === 'percent' && discount > 100) {
-            alert('Discount percentage cannot exceed 100%');
-            $('#discount').val(0);
-            return;
-        }
-
-        if (discountType !== 'percent' && discount > bundleTotal) {
-            alert(`Discount amount ($${discount}) cannot exceed bundle total ($${bundleTotal})`);
-            $('#discount').val(0);
-            return;
-        }
-
-        updateBundleTotal();
-    });
-
-    // Function to update field visibility based on bundle type
-    function updateFieldsVisibility(bundleType) {
-        if (bundleType === 'mix_match') {
-            // CONDITION 3: Hide price, show discount fields
-            $('#price_input_hide').addClass('d-none');
-            $('#discount_input_hide').removeClass('d-none');
-            $('#discount_value_input_hide').removeClass('d-none');
-        } else if (bundleType === 'bogo_free') {
-            // CONDITION 4: Hide price, hide discount fields for BOGO
-            $('#price_input_hide').addClass('d-none');
-            $('#discount_input_hide').addClass('d-none');
-            $('#discount_value_input_hide').addClass('d-none');
-        } else if (bundleType === 'simple' || bundleType === 'bundle') {
-            // CONDITION 1 & 2: Show all fields
-            $('#price_input_hide').removeClass('d-none');
-            $('#discount_input_hide').removeClass('d-none');
-            $('#discount_value_input_hide').removeClass('d-none');
-        } else {
-            // Default: Show all fields
-            $('#price_input_hide').removeClass('d-none');
-            $('#discount_input_hide').removeClass('d-none');
-            $('#discount_value_input_hide').removeClass('d-none');
-        }
-    }
-
-    // Handle bundle type changes
-    $('#bundle_offer_type').on('change', function() {
-        let bundleType = $(this).val();
-
-        // Update field visibility
-        updateFieldsVisibility(bundleType);
-
-        // Clear all products for any type change
-        $('#productDetails .card').fadeOut(300, function() {
-            $(this).remove();
-            $('#selectedProducts p').show();
-        });
-        selectedProductsArray = [];
-        productCounter = 0;
-
-        // Reset price calculator
-        $('#priceCalculator').hide();
-        $('#price').val('0.00');
-        $('#price_hidden').val('0.00');
-        $('#discount').val('0');
-    });
-
-    // Reset when fixed price option is selected
-    $('#price_type, input[name="price_type"]').on('change', function() {
-        let priceType = $(this).val() || $('input[name="price_type"]:checked').val();
-
-        // If fixed price is selected, reset all products
-        if (priceType === 'fixed') {
-            // Clear all products
-            $('#productDetails .card').fadeOut(300, function() {
-                $(this).remove();
-                $('#selectedProducts p').show();
-            });
-            selectedProductsArray = [];
-            productCounter = 0;
-
-            // Reset price calculator
-            $('#priceCalculator').hide();
-            $('#price').val('0.00');
-            $('#price_hidden').val('0.00');
-
-            // Show message
-            alert('Fixed price selected. All product selections have been reset.');
-        }
-    });
-});
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{--
-
     <script>
         $(document).ready(function() {
+            // Initialize Select2
             $('#select_pro').select2({
                 width: '100%',
                 placeholder: 'Select a Product'
             });
-            const price = document.querySelectorAll('#price');
-            const discount_type = document.querySelector('#discount_type').value;
-        //    const discount_type = $('#select2-discount_type-container').text().trim(); // "percent" or "fixed"
-            const discount = parseFloat($('#discount').val()) || 0; // get discount value
+                    // Add Product Button Click Handler
+            // Store selected products
+            let selectedProductsArray = [];
+            let productCounter = 0;
 
-            let currentBasePrice = 0;
-            let currentProductName = '';
+            // On page load, check bundle type
+            let bundleType = $('#bundle_offer_type').val();
+            updateFieldsVisibility(bundleType);
+
+            // When "Add Product to Bundle" button is clicked
+            $('#addProductBtn').on('click', function() {
+
+                // const addProductBtn = document.getElementById('addProductBtn');
+                // if (addProductBtn) {
+                    // addProductBtn.addEventListener('click', function() {
+                        const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
+                        const availableProducts = document.getElementById('availableProducts');
+
+                        // Check if bundle offer type is selected
+                        if (!bundleOfferType || bundleOfferType === "") {
+                            alert("Please select a bundle offer type first!");
+                            return;
+                        }else{
+                            $('#availableProducts').slideToggle();
+                        }
+
+                        // Toggle available products visibility
+                        if (availableProducts) {
+                            if (availableProducts.style.display === "none" || !availableProducts.style.display) {
+                                availableProducts.style.display = "block";
+                            } else {
+                                availableProducts.style.display = "none";
+                            }
+                        }
+                    // });
+                // }
+
+            });
+
             // When user selects a product
-            $('#select_pro').on('change', function () {
+            $('#select_pro').on('change', function() {
                 let selected = $(this).find('option:selected');
-                currentProductName = selected.data('name');
-                currentBasePrice = selected.data('price') || 0;
+                let productId = selected.val();
+                let productName = selected.data('name');
+                let basePrice = parseFloat(selected.data('price')) || 0;
                 let variations = selected.data('variations') || [];
                 let addons = selected.data('addons') || [];
 
+                if (!productId) return;
 
+                // Get bundle offer type
+                let bundleOfferType = $('#bundle_offer_type').val();
 
-                // Reset selected items section
-                $('#selectedItemsSection').hide();
-                $('#selectedVariationInfo').hide();
-                $('#selectedAddonsInfo').hide();
+                // CONDITION 1: Simple type - only 1 product allowed
+                if (bundleOfferType === 'simple') {
+                    // Clear previous products immediately
+                    $('#productDetails .card').remove();
+                    selectedProductsArray = [];
+                    productCounter = 0;
 
-                let html = `<div class="card p-3 shadow-sm">
-                    <h5>${currentProductName}</h5>
-                    <p class="text-muted mb-3">Base Price: $${currentBasePrice}</p>`;
+                    // Reset price calculator
+                    $('#priceCalculator').hide();
+                    $('#price').val('0.00');
+                    $('#price_hidden').val('0.00');
+                }
+                // CONDITION 2: Bundle - check for duplicates
+                else if (bundleOfferType === 'bundle') {
+                    // Check if product is already selected
+                    if (selectedProductsArray.includes(productId)) {
+                        alert(`"${productName}" is already added to the bundle!`);
+                        $('#select_pro').val('').trigger('change');
+                        return;
+                    }
+                }
+                // CONDITION 4: BOGO_FREE - only 2 products allowed
+                else if (bundleOfferType === 'bogo_free') {
+                    // Check if already 2 products are selected
+                    if (selectedProductsArray.length >= 2) {
+                        alert('BOGO offer allows only 2 products! Please remove one product to add another.');
+                        $('#select_pro').val('').trigger('change');
+                        return;
+                    }
+                    // Check if product is already selected
+                    if (selectedProductsArray.includes(productId)) {
+                        alert(`"${productName}" is already added to the bundle!`);
+                        $('#select_pro').val('').trigger('change');
+                        return;
+                    }
+                }
+                // CONDITION 3: Mix & Match - check for duplicates
+                else if (bundleOfferType === 'mix_match') {
+                    if (selectedProductsArray.includes(productId)) {
+                        alert(`"${productName}" is already added to the bundle!`);
+                        $('#select_pro').val('').trigger('change');
+                        return;
+                    }
+                }
 
-                // Show variations
+                // Add to selected products array
+                selectedProductsArray.push(productId);
+
+                // Create product card with variations and addons
+                let html = `
+                <div class="card p-3 shadow-sm mb-3  col-12 col-md-6" data-product-temp-id="${productCounter}" data-product-id="${productId}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5>${productName}</h5>
+                        <button type="button" class="btn btn-danger btn-sm remove-product-btn" data-temp-id="${productCounter}" data-product-id="${productId}">
+                            <i class="fa fa-trash"></i> Remove
+                        </button>
+                    </div>
+                    <p class="text-muted mb-2">Base Price: $${basePrice.toFixed(2)}</p>
+                    <input type="hidden" class="product-id" value="${productId}">
+                    <input type="hidden" class="product-name" value="${productName}">
+                    <input type="hidden" class="product-base-price" value="${basePrice}">
+                `;
+
+                // Add variations section
                 if (variations && variations.length > 0) {
                     html += `<div class="mt-2">
-                        <strong>Available Variations:</strong><br>`;
+                        <strong>Variations:</strong><br>`;
                     variations.forEach((v, i) => {
                         html += `
                             <label class="d-block small mt-1">
                                 <input type="checkbox"
-                                    name="variation"
+                                    name="variation_${productCounter}"
+                                    class="variation-checkbox"
                                     value="${v.type || ''}"
                                     data-price="${v.price || 0}"
                                     data-type="${v.type || 'Option'}">
@@ -1465,15 +767,15 @@ $(document).ready(function() {
                     html += `</div>`;
                 }
 
-                // Show addons
+                // Add addons section
                 if (addons && addons.length > 0) {
                     html += `<div class="mt-3">
-                        <strong>Available Add-ons:</strong><br>`;
+                        <strong>Add-ons:</strong><br>`;
                     addons.forEach(addon => {
                         html += `
                             <label class="d-block small mt-1">
                                 <input type="checkbox"
-                                    name="addons[]"
+                                    class="addon-checkbox"
                                     value="${addon.id}"
                                     data-price="${addon.price || 0}"
                                     data-name="${addon.name}">
@@ -1483,196 +785,288 @@ $(document).ready(function() {
                     html += `</div>`;
                 }
 
-                html += `</div>`;
+                // Add quantity selector
+                html += `
+                    <div class="mt-3">
+                        <label><strong>Quantity:</strong></label>
+                        <input type="number" class="form-control product-quantity" value="1" min="1" style="width: 100px;">
+                    </div>
+                `;
 
-                $('#productDetails').html(html);
+                // Product total
+                html += `
+                    <div class="mt-3 p-2 bg-light border rounded">
+                        <strong>Product Total: </strong>
+                        <span class="product-total text-success font-weight-bold" style="font-size: 1.2em;">$${basePrice.toFixed(2)}</span>
+                    </div>
+                </div>`;
 
-                // Update selected items when variation/addon changes
-                updateSelectedItems();
+                $('#productDetails').append(html);
+                productCounter++;
+
+                // Clear selection
+                $('#select_pro').val('').trigger('change');
+
+                // Hide placeholder if products exist
+                $('#selectedProducts p').hide();
+
+                // Update calculations immediately
+                updateBundleTotal();
             });
 
-            // Update selected items display
-            function updateSelectedItems() {
-                $(document).on('change', 'input[name="variation"], input[name="addons[]"]', function() {
-                    let total = parseFloat(currentBasePrice);
+            // Function to update product calculations
+            $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
+                let productCard = $(this).closest('.card');
+                let basePrice = parseFloat(productCard.find('.product-base-price').val()) || 0;
+                let quantity = parseInt(productCard.find('.product-quantity').val()) || 1;
+                let total = basePrice;
 
-                    // Show selected items section
-                    $('#selectedItemsSection').show();
+                // Add variation price
+                let selectedVariation = productCard.find('.variation-checkbox:checked');
+                if (selectedVariation.length) {
+                    total += parseFloat(selectedVariation.data('price')) || 0;
+                }
 
-                    // Display product info
-                    $('#selectedProductInfo').html(`
-                        <strong>Product:</strong> ${currentProductName}<br>
-                        <strong>Base Price:</strong> $${currentBasePrice}
-                    `);
+                // Add addon prices
+                productCard.find('.addon-checkbox:checked').each(function() {
+                    total += parseFloat($(this).data('price')) || 0;
+                });
 
-                    // Handle selected variation
-                    let selectedVariation = $('input[name="variation"]:checked');
+                // Multiply by quantity
+                total = total * quantity;
+
+                // Update product total with animation
+                productCard.find('.product-total').fadeOut(200, function() {
+                    $(this).text('$' + total.toFixed(2)).fadeIn(200);
+                });
+
+                // Update overall bundle calculation
+                updateBundleTotal();
+            });
+
+            // Remove product from bundle
+            $(document).on('click', '.remove-product-btn', function() {
+                let tempId = $(this).data('temp-id');
+                let productId = $(this).data('product-id');
+
+                // Remove from selected products array
+                selectedProductsArray = selectedProductsArray.filter(id => id !== productId);
+
+                $(`[data-product-temp-id="${tempId}"]`).fadeOut(300, function() {
+                    $(this).remove();
+                    updateBundleTotal();
+
+                    // If no products left, show placeholder
+                    if ($('#productDetails .card').length === 0) {
+                        $('#selectedProducts p').show();
+                    }
+                });
+            });
+
+            // Update overall bundle total
+            function updateBundleTotal() {
+                let bundleType = $('#bundle_offer_type').val();
+                let bundleTotal = 0;
+                let productCount = 0;
+                let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
+
+                $('#productDetails .card').each(function() {
+                    let productName = $(this).find('.product-name').val();
+                    let basePrice = parseFloat($(this).find('.product-base-price').val()) || 0;
+                    let productTotal = parseFloat($(this).find('.product-total').text().replace('$', '')) || 0;
+                    let quantity = parseInt($(this).find('.product-quantity').val()) || 1;
+
+                    bundleTotal += productTotal;
+                    productCount++;
+
+                    // Get selected variation
+                    let selectedVariation = $(this).find('.variation-checkbox:checked');
+                    let variationText = '';
+                    let variationPrice = 0;
                     if (selectedVariation.length) {
-                        let varPrice = parseFloat(selectedVariation.data('price')) || 0;
                         let varType = selectedVariation.data('type');
-                        total += varPrice;
-
-                        $('#selectedVariationInfo').show();
-                        $('#selectedVariationDetails').html(`
-                            <span class="badge badge-info">${varType} (+$${varPrice})</span>
-                        `);
-                    } else {
-                        $('#selectedVariationInfo').hide();
+                        variationPrice = parseFloat(selectedVariation.data('price')) || 0;
+                        variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${variationPrice.toFixed(2)})</div>`;
                     }
 
-                    // Handle selected addons
-                    let selectedAddons = [];
-                    $('input[name="addons[]"]:checked').each(function() {
-                        let addonPrice = parseFloat($(this).data('price')) || 0;
+                    // Get selected addons
+                    let addonsText = '';
+                    let addonsTotal = 0;
+                    $(this).find('.addon-checkbox:checked').each(function() {
                         let addonName = $(this).data('name');
-                        total += addonPrice;
-                        selectedAddons.push({
-                            name: addonName,
-                            price: addonPrice
-                        });
+                        let addonPrice = parseFloat($(this).data('price')) || 0;
+                        addonsTotal += addonPrice;
+                        addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
                     });
 
-                    if (selectedAddons.length > 0) {
-                        $('#selectedAddonsInfo').show();
-                        let addonsHTML = '';
-                        selectedAddons.forEach(addon => {
-                            addonsHTML += `<span class="badge badge-success mr-1">${addon.name} (+$${addon.price})</span>`;
-                        });
-                        $('#selectedAddonsDetails').html(addonsHTML);
-                    } else {
-                        $('#selectedAddonsInfo').hide();
-                    }
+                    // Calculate per-item price
+                    let perItemPrice = productTotal / quantity;
 
-                    // Update final total
-                    $('#finalTotalPrice').text('$' + total.toFixed(2));
-                    $('#price').val(total.toFixed(2));
-                    $('#price_hidden').val(total.toFixed(2));
-
-
-                    //     if(discount_type == "percent"){
-                    //             discount
-                    //     }else{
-
-
-                    //     }
-
-                    // Get values
-
-                    // let total = parseFloat($('#total').val()) || 0; // your original total
-
-                    // Apply discount
-                    // let finalTotal = total.toFixed(2);
-
-                    // if (discount_type === "percent") {
-                    //     // Subtract percentage from total
-                    //     finalTotal = total - (total * (discount / 100));
-                    // } else {
-                    //     // Subtract fixed amount
-                    //     finalTotal = total - discount;
-                    // }
-
-                    // // Ensure final total doesn't go below 0
-                    // if (finalTotal < 0) finalTotal = 0;
-
-                    // // Update final total on page
-                    // $('#finalTotalPrice').text('$' + finalTotal.toFixed(2));
-
-
-
-                    // alert(finalTotal.toFixed(2));
-
-
-                    // Call discount calculation if needed
-                    all_value(total, select2_discount_type_container, discount);
+                    // Add to breakdown with details
+                    breakdownHTML += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <strong>${productName}</strong> (x${quantity})
+                                    <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                    ${variationText}
+                                    ${addonsText}
+                                    ${quantity > 1 ? `<div class="small text-info mt-1">Per item: $${perItemPrice.toFixed(2)}</div>` : ''}
+                                </div>
+                                <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                            </div>
+                        </li>`;
                 });
-            }
 
-            // Price Discount Calculation Function
-            function all_value(originalPrice, discountType, discountValue) {
-                originalPrice = parseFloat(originalPrice) || 0;
-                discountValue = parseFloat(discountValue) || 0;
-
-                let discountAmount = 0;
-                let finalPrice = originalPrice;
-
-                if (discountType === 'percent' || discountType === 'Percent (%)') {
-                    discountAmount = (originalPrice * discountValue) / 100;
-                } else if (discountType === 'fixed' || discountType === 'Fixed ($)') {
-                    discountAmount = discountValue;
-                }
-
-                finalPrice = originalPrice - discountAmount;
-
-                if (finalPrice < 0) {
-                    finalPrice = 0;
-                }
-
-                return {
-                    originalPrice: originalPrice.toFixed(2),
-                    discountType: discountType,
-                    discountValue: discountValue,
-                    discountAmount: discountAmount.toFixed(2),
-                    finalPrice: finalPrice.toFixed(2),
-                    savedAmount: discountAmount.toFixed(2)
-                };
-            }
-        });
-    </script>
-
-
-    <script>
-
-        $(function() {
-            function updateFinalTotal() {
-                let price_hidden = parseFloat($('#price_hidden').val()) || 0;
+                // Apply discount if any
                 let discount = parseFloat($('#discount').val()) || 0;
-                let type = $('#discount_type').val();
+                let discountType = $('#discount_type').val();
+                let discountAmount = 0;
 
-                let finalTotal = price_hidden;
+                if (discountType === 'percent') {
+                    discountAmount = (bundleTotal * discount) / 100;
+                } else {
+                    discountAmount = discount;
+                }
+
+                let finalTotal = Math.max(bundleTotal - discountAmount, 0);
+
+                breakdownHTML += `
+                    <li class="list-group-item">
+                        <strong>Subtotal: </strong><span class="text-primary">$${bundleTotal.toFixed(2)}</span>
+                    </li>`;
+
+                if (discountAmount > 0) {
+                    breakdownHTML += `
+                        <li class="list-group-item text-danger">
+                            <strong>Discount (${discountType === 'percent' ? discount + '%' : '$' + discount}): </strong>
+                            -$${discountAmount.toFixed(2)}
+                        </li>`;
+                }
+
+                breakdownHTML += `
+                    <li class="list-group-item bg-success text-white">
+                        <strong>Final Bundle Total: </strong>
+                        <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
+                    </li>
+                </ul>`;
+
+                // Update price calculator
+                if (productCount > 0) {
+                    $('#priceCalculator').show();
+                    $('#priceBreakdown').html(breakdownHTML);
+                    $('#selectedProducts p').hide();
+                } else {
+                    $('#priceCalculator').hide();
+                    $('#selectedProducts p').show();
+                }
+
+                // Update hidden price fields based on bundle type
+                if (bundleType === 'bogo_free' || bundleType === 'mix_match') {
+                    // For BOGO and Mix & Match, use final total (with discount)
+                    $('#price').val(finalTotal.toFixed(2));
+                    $('#price_hidden').val(finalTotal.toFixed(2));
+                } else {
+                    // For Simple and Bundle, use original logic
+                    $('#price').val(finalTotal.toFixed(2));
+                    $('#price_hidden').val(bundleTotal.toFixed(2));
+                }
+            }
+
+            // Update when discount changes
+            $('#discount, #discount_type').on('change input', function() {
+                let discount = parseFloat($('#discount').val()) || 0;
+                let discountType = $('#discount_type').val();
+                let bundleTotal = parseFloat($('#price_hidden').val()) || 0;
 
                 // Validation
-                if (type === "percent" && discount > 100) {
-                    alert("Discount percentage cannot exceed 100%");
-                    $('#discount').val(''); // clear input
-                    return;
-                }
-                if (type !== "percent" && discount > price_hidden) {
-                    alert(`Your total value is ${price_hidden}, but you entered ${discount}`);
-                    $('#discount').val(''); // clear input
+                if (discountType === 'percent' && discount > 100) {
+                    alert('Discount percentage cannot exceed 100%');
+                    $('#discount').val(0);
                     return;
                 }
 
-                // Apply discount
-                if (type === "percent") {
-                    finalTotal -= price_hidden * (discount / 100);
+                if (discountType !== 'percent' && discount > bundleTotal) {
+                    alert(`Discount amount ($${discount}) cannot exceed bundle total ($${bundleTotal})`);
+                    $('#discount').val(0);
+                    return;
+                }
+
+                updateBundleTotal();
+            });
+
+            // Function to update field visibility based on bundle type
+            function updateFieldsVisibility(bundleType) {
+                if (bundleType === 'mix_match') {
+                    // CONDITION 3: Hide price, show discount fields
+                    $('#price_input_hide').addClass('d-none');
+                    $('#discount_input_hide').removeClass('d-none');
+                    $('#discount_value_input_hide').removeClass('d-none');
+                } else if (bundleType === 'bogo_free') {
+                    // CONDITION 4: Hide price, hide discount fields for BOGO
+                    $('#price_input_hide').addClass('d-none');
+                    $('#discount_input_hide').addClass('d-none');
+                    $('#discount_value_input_hide').addClass('d-none');
+                } else if (bundleType === 'simple' || bundleType === 'bundle') {
+                    // CONDITION 1 & 2: Show all fields
+                    $('#price_input_hide').removeClass('d-none');
+                    $('#discount_input_hide').removeClass('d-none');
+                    $('#discount_value_input_hide').removeClass('d-none');
                 } else {
-                    finalTotal -= discount;
+                    // Default: Show all fields
+                    $('#price_input_hide').removeClass('d-none');
+                    $('#discount_input_hide').removeClass('d-none');
+                    $('#discount_value_input_hide').removeClass('d-none');
                 }
-
-                // Prevent negative
-                finalTotal = Math.max(finalTotal, 0);
-
-                // Update UI
-                $('#finalTotalPrice').text(`$${finalTotal.toFixed(2)}`);
-                $('#price').val(finalTotal.toFixed(2));
             }
 
-            // Trigger update on input, change, or enter
-            $('#discount, #discount_type, #price').on('input change keypress', function(e) {
-                if (e.type === 'keypress' && e.which !== 13) return;
-                e.preventDefault();
-                updateFinalTotal();
+            // Handle bundle type changes
+            $('#bundle_offer_type').on('change', function() {
+                let bundleType = $(this).val();
+
+                // Update field visibility
+                updateFieldsVisibility(bundleType);
+
+                // Clear all products for any type change
+                $('#productDetails .card').fadeOut(300, function() {
+                    $(this).remove();
+                    $('#selectedProducts p').show();
+                });
+                selectedProductsArray = [];
+                productCounter = 0;
+
+                // Reset price calculator
+                $('#priceCalculator').hide();
+                $('#price').val('0.00');
+                $('#price_hidden').val('0.00');
+                $('#discount').val('0');
+            });
+
+            // Reset when fixed price option is selected
+            $('#price_type, input[name="price_type"]').on('change', function() {
+                let priceType = $(this).val() || $('input[name="price_type"]:checked').val();
+
+                // If fixed price is selected, reset all products
+                if (priceType === 'fixed') {
+                    // Clear all products
+                    $('#productDetails .card').fadeOut(300, function() {
+                        $(this).remove();
+                        $('#selectedProducts p').show();
+                    });
+                    selectedProductsArray = [];
+                    productCounter = 0;
+
+                    // Reset price calculator
+                    $('#priceCalculator').hide();
+                    $('#price').val('0.00');
+                    $('#price_hidden').val('0.00');
+
+                    // Show message
+                    alert('Fixed price selected. All product selections have been reset.');
+                }
             });
         });
-
-    </script> --}}
-
-
-
-
-
-
-
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -1689,8 +1083,6 @@ $(document).ready(function() {
                 document.getElementById('hidden_name').value = name;
 
                 const managementSelection = document.querySelectorAll('#management_selection');
-
-
 
                      // Get all elements
                 const basic_info_main = document.getElementById('basic_info_main');
@@ -1712,10 +1104,6 @@ $(document).ready(function() {
                 const bundel_food_voucher_fields_1_3_1_4 = document.getElementById('bundel_food_voucher_fields_1_3_1_4');
                 const bundel_food_voucher_price_info_1_3_1_4 = document.getElementById('bundel_food_voucher_price_info_1_3_1_4');
 
-
-
-
-
                 managementSelection.forEach(el => {
                     if (loopIndex === "1" || name === "Delivery/Pickup") {
                         submit_voucher_type(loopIndex, primaryId,name);
@@ -1723,8 +1111,6 @@ $(document).ready(function() {
 
                               showElements([basic_info_main, store_category_main, how_it_work_main, term_condition_main, review_submit_main,Product_voucher_fields_1_3,product_voucher_price_info_1_3,allimages]);
                             hideElements([bundel_food_voucher_fields_1_3_1_4, bundel_food_voucher_price_info_1_3_1_4, food_voucher_fields_1_4, food_voucher_price_info_1_4]);
-
-
                         // Hide discount-specific sections
                         const elementsToHide = [
                             document.getElementById('basic_info'),
@@ -2050,37 +1436,6 @@ $(document).ready(function() {
         }
 
     </script>
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let selectedBundleProducts = [];
-            let bundleProductCounter = 1;
-            // Add Product Button Click Handler
-            const addProductBtn = document.getElementById('addProductBtn');
-            if (addProductBtn) {
-                addProductBtn.addEventListener('click', function() {
-                    const bundleOfferType = document.getElementById('bundle_offer_type')?.value;
-                    const availableProducts = document.getElementById('availableProducts');
-
-                    // Check if bundle offer type is selected
-                    if (!bundleOfferType || bundleOfferType === "") {
-                        alert("Please select a bundle offer type first!");
-                        return;
-                    }
-
-                    // Toggle available products visibility
-                    if (availableProducts) {
-                        if (availableProducts.style.display === "none" || !availableProducts.style.display) {
-                            availableProducts.style.display = "block";
-                        } else {
-                            availableProducts.style.display = "none";
-                        }
-                    }
-                });
-            }
-        });
-
-    </script> --}}
 
     <script>
         "use strict";
@@ -2629,9 +1984,7 @@ $(document).ready(function() {
                 }
             });
         })
-    </script>
-      {{-- findBranch --}}
-    <script>
+          //   findBranch
         function findBranch(storeId) {
             if (!storeId) {
                 $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
@@ -2654,6 +2007,5 @@ $(document).ready(function() {
             });
         }
     </script>
-
 
 @endpush
