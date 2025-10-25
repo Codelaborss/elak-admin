@@ -875,110 +875,115 @@ $(document).ready(function() {
     function createProductCard(productId, productName, basePrice, variations, addons, counter) {
         let html = `
         <div class="card p-3 shadow-sm mb-3 col-12 col-md-6" data-product-temp-id="${counter}" data-product-id="${productId}">
-          <div class="d-flex justify-content-between align-items-start">
+
+
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
+
+                <!-- Product Name -->
+                <div class="">
                 <h5 class="mb-0">${productName}</h5>
-
-                <div class="d-flex align-items-center gap-2">
-                    <div class=" p-2 bg-light border rounded text-nowrap">
-                        <strong>Product Total: </strong>
-                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-                            $${basePrice.toFixed(2)}
-                        </span>
+                <!-- Variations -->
+                ${variations && variations.length > 0 ? `
+                    <div class="variations">
+                        <strong>Variations:</strong>
+                        ${variations.map(v => `
+                            <label class="ms-2 small">
+                                <input
+                                    type="checkbox"
+                                    name="variation_${counter}"
+                                    class="variation-checkbox"
+                                    value="${v.type || ''}"
+                                    data-price="${v.price || 0}"
+                                    data-type="${v.type || 'Option'}"
+                                >
+                                ${v.type || 'Option'} - $${v.price || 0}
+                                ${v.stock ? ` (Stock: ${v.stock})` : ''}
+                            </label>
+                        `).join('')}
                     </div>
-
-                    <button
-                        type="button"
-                        class="btn btn-danger btn-sm remove-product-btn"
-                        data-temp-id="${counter}"
-                        data-product-id="${productId}"
-                    >
-                        <i class="fa fa-trash"></i>
-                    </button>
+                ` : ''}
+               </div>
+                <!-- Product Total -->
+                <div class="p-2 text-nowrap">
+                    <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+                        $${basePrice.toFixed(2)}
+                    </span>
                 </div>
+
+                <!-- Delete Button -->
+                <button
+                    type="button"
+                    class="btn btn-danger btn-sm remove-product-btn"
+                    data-temp-id="${counter}"
+                    data-product-id="${productId}"
+                >
+                    <i class="fa fa-trash"></i>
+                </button>
             </div>
 
-            <p class="text-muted mb-0">Base Price: $${basePrice.toFixed(2)}</p>
             <input type="hidden" class="product-id" value="${productId}">
             <input type="hidden" class="product-name" value="${productName}">
             <input type="hidden" class="product-base-price" value="${basePrice}">
         `;
-
-        // Add variations
-        if (variations && variations.length > 0) {
-            html += `<div class="mt-2"><strong>Variations:</strong><br>`;
-            variations.forEach((v) => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox" name="variation_${counter}" class="variation-checkbox"
-                            value="${v.type || ''}" data-price="${v.price || 0}" data-type="${v.type || 'Option'}">
-                        ${v.type || 'Option'} - $${v.price || 0}
-                        ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                    </label>`;
-            });
-
-
-            html += `</div>`;
-        }
-
-
-        // Add quantity
-        // html += `
-        //     <div class="mt-3 p-2 bg-light border rounded">
-        //         <strong>Product Total: </strong>
-        //         <span class="product-total text-success font-weight-bold" style="font-size: 1.2em;">$${basePrice.toFixed(2)}</span>
-        //     </div>
-        // </div>`;
 
         return html;
     }
 
     // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
     function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
-        let html = `
+        const variationsHtml = (variations && variations.length)
+            ? `<div class="mt-2">
+                    <strong>Variations:</strong>
+                    ${variations.map((v, index) => `
+                        <label class="d-block small mt-1">
+                            <input
+                                type="checkbox"
+                                name="bogo_variation_${section}_${counter}_${index}"
+                                class="bogo-variation-checkbox"
+                                value="${v.type || ''}"
+                                data-price="${v.price || 0}"
+                                data-type="${v.type || 'Option'}"
+                            >
+                            ${v.type || 'Option'} - $${(v.price || 0).toFixed(2)}
+                            ${v.stock ? ` (Stock: ${v.stock})` : ''}
+                        </label>
+                    `).join('')}
+            </div>`
+            : '';
+
+        const html = `
         <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
-            <div class="d-flex justify-content-between align-items-start">
-                  <h5>Product ${section}: ${productName}</h5>
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
 
-                <div class="d-flex align-items-center gap-2">
-                    <div class=" p-2 bg-light border rounded text-nowrap">
-                        <strong>Product Total: </strong>
-                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-                            $${basePrice.toFixed(2)}
-                        </span>
-                    </div>
-
-                   <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
-                    data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
-                    <i class="fa fa-trash"></i> Remove
-                   </button>
+                <!-- Product Name + Info -->
+                <div class="me-3 flex-grow-1">
+                    <h5 class="mb-1">Product ${section}: ${productName}</h5>
+                    ${variationsHtml}
                 </div>
 
+                <!-- Product Total -->
+                <div class="p-2 text-nowrap">
+                    <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+                        $${basePrice.toFixed(2)}
+                    </span>
+                </div>
+
+                <!-- Delete Button -->
+                <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
+                    data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
+                    <i class="fa fa-trash"></i>
+                </button>
             </div>
-            <p class="text-muted mb-2">Base Price: $${basePrice.toFixed(2)}</p>
+
             <input type="hidden" class="bogo-product-id" value="${productId}">
             <input type="hidden" class="bogo-product-name" value="${productName}">
             <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
+        </div>
         `;
-
-        // Add variations with unique naming
-        if (variations && variations.length > 0) {
-            html += `<div class="mt-2"><strong>Variations:</strong><br>`;
-            variations.forEach((v, index) => {
-                html += `
-                    <label class="d-block small mt-1">
-                        <input type="checkbox" name="bogo_variation_${section}_${counter}" class="bogo-variation-checkbox"
-                            value="${v.type || ''}" data-price="${v.price || 0}" data-type="${v.type || 'Option'}">
-                        ${v.type || 'Option'} - $${v.price || 0}
-                        ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                    </label>`;
-            });
-            html += `</div>`;
-        }
-
-
 
         return html;
     }
+
 
     // ==================== REMOVE BOGO PRODUCT ====================
     $(document).on('click', '.remove-bogo-product-btn', function() {
@@ -1131,20 +1136,20 @@ $(document).ready(function() {
                 <strong>Subtotal: </strong><span class="text-primary">$${subtotal.toFixed(2)}</span>
             </li>`;
 
-        if (discount > 0) {
-            breakdownHTML += `
-                <li class="list-group-item text-success">
-                    <strong>BOGO Discount (Buy 1 Get 1 Free): </strong>
-                    <span>-$${discount.toFixed(2)}</span>
-                </li>`;
-        }
+        // if (discount > 0) {
+        //     breakdownHTML += `
+        //         <li class="list-group-item text-success">
+        //             <strong>BOGO Discount (Buy 1 Get 1 Free): </strong>
+        //             <span>-$${discount.toFixed(2)}</span>
+        //         </li>`;
+        // }
 
-        breakdownHTML += `
-            <li class="list-group-item bg-success text-white">
-                <strong>Final Bundle Total: </strong>
-                <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
-            </li>
-        </ul>`;
+        // breakdownHTML += `
+        //     <li class="list-group-item bg-success text-white">
+        //         <strong>Final Bundle Total: </strong>
+        //         <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
+        //     </li>
+        // </ul>`;
 
         // Show price calculator if at least one product is selected
         let hasProducts = $('#productDetails_section_a .card').length > 0 || $('#productDetails_section_b .card').length > 0;
