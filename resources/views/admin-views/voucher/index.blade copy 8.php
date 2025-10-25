@@ -339,7 +339,7 @@
                                 </div>
 
                                 {{-- Product selection area --}}
-                                <div id="productDetails" class="mt-3 row mx-1"></div>
+                                <div id="productDetails" class="mt-3 row "></div>
 
                                 {{-- Selected items display section --}}
                                 <div id="selectedItemsSection" class="mt-4" style="display: none;">
@@ -411,7 +411,7 @@
                                         @endforeach
                                     </select>
                                   </div>
-                                  <div id="productDetails_section_a" class="mt-3 row mx-1"></div>
+                                  <div id="productDetails_section_a" class="mt-3 row "></div>
                             </div>
                             <div class="col-6 ">
                                   <h3 class="mt-3">Available Products B:</h3>
@@ -454,11 +454,11 @@
                                         @endforeach
                                     </select>
                                   </div>
-                                  <div id="productDetails_section_b" class="mt-3 row mx-1"></div>
+                                  <div id="productDetails_section_b" class="mt-3 row "></div>
                             </div>
                         </div>
                      </div>
-                    <div class="container mt-5 p-1">
+                    <div class="container mt-5">
                         <div class="form-container">
                             <!-- Price Calculator -->
                             <div class="price-calculator" id="priceCalculator" style="display: none;">
@@ -875,29 +875,13 @@ $(document).ready(function() {
     function createProductCard(productId, productName, basePrice, variations, addons, counter) {
         let html = `
         <div class="card p-3 shadow-sm mb-3 col-12 col-md-6" data-product-temp-id="${counter}" data-product-id="${productId}">
-          <div class="d-flex justify-content-between align-items-start">
-                <h5 class="mb-0">${productName}</h5>
-
-                <div class="d-flex align-items-center gap-2">
-                    <div class=" p-2 bg-light border rounded text-nowrap">
-                        <strong>Product Total: </strong>
-                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-                            $${basePrice.toFixed(2)}
-                        </span>
-                    </div>
-
-                    <button
-                        type="button"
-                        class="btn btn-danger btn-sm remove-product-btn"
-                        data-temp-id="${counter}"
-                        data-product-id="${productId}"
-                    >
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div>
+            <div class="d-flex justify-content-between align-items-start">
+                <h5>${productName}</h5>
+                <button type="button" class="btn btn-danger btn-sm remove-product-btn" data-temp-id="${counter}" data-product-id="${productId}">
+                    <i class="fa fa-trash"></i> Remove
+                </button>
             </div>
-
-            <p class="text-muted mb-0">Base Price: $${basePrice.toFixed(2)}</p>
+            <p class="text-muted mb-2">Base Price: $${basePrice.toFixed(2)}</p>
             <input type="hidden" class="product-id" value="${productId}">
             <input type="hidden" class="product-name" value="${productName}">
             <input type="hidden" class="product-base-price" value="${basePrice}">
@@ -915,19 +899,34 @@ $(document).ready(function() {
                         ${v.stock ? ` (Stock: ${v.stock})` : ''}
                     </label>`;
             });
-
-
             html += `</div>`;
         }
 
+        // Add addons
+        if (addons && addons.length > 0) {
+            html += `<div class="mt-3"><strong>Add-ons:</strong><br>`;
+            addons.forEach(addon => {
+                html += `
+                    <label class="d-block small mt-1">
+                        <input type="checkbox" class="addon-checkbox" value="${addon.id}"
+                            data-price="${addon.price || 0}" data-name="${addon.name}">
+                        ${addon.name} (+$${addon.price || 0})
+                    </label>`;
+            });
+            html += `</div>`;
+        }
 
         // Add quantity
-        // html += `
-        //     <div class="mt-3 p-2 bg-light border rounded">
-        //         <strong>Product Total: </strong>
-        //         <span class="product-total text-success font-weight-bold" style="font-size: 1.2em;">$${basePrice.toFixed(2)}</span>
-        //     </div>
-        // </div>`;
+        html += `
+            <div class="mt-3">
+                <label><strong>Quantity:</strong></label>
+                <input type="number" class="form-control product-quantity" value="1" min="1" style="width: 100px;">
+            </div>
+            <div class="mt-3 p-2 bg-light border rounded">
+                <strong>Product Total: </strong>
+                <span class="product-total text-success font-weight-bold" style="font-size: 1.2em;">$${basePrice.toFixed(2)}</span>
+            </div>
+        </div>`;
 
         return html;
     }
@@ -937,22 +936,11 @@ $(document).ready(function() {
         let html = `
         <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
             <div class="d-flex justify-content-between align-items-start">
-                  <h5>Product ${section}: ${productName}</h5>
-
-                <div class="d-flex align-items-center gap-2">
-                    <div class=" p-2 bg-light border rounded text-nowrap">
-                        <strong>Product Total: </strong>
-                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-                            $${basePrice.toFixed(2)}
-                        </span>
-                    </div>
-
-                   <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
+                <h5>Product ${section}: ${productName}</h5>
+                <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
                     data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
                     <i class="fa fa-trash"></i> Remove
-                   </button>
-                </div>
-
+                </button>
             </div>
             <p class="text-muted mb-2">Base Price: $${basePrice.toFixed(2)}</p>
             <input type="hidden" class="bogo-product-id" value="${productId}">
@@ -975,7 +963,34 @@ $(document).ready(function() {
             html += `</div>`;
         }
 
+        // Add addons
+        {{-- if (addons && addons.length > 0) {
+            html += `<div class="mt-3"><strong>Add-ons:</strong><br>`;
+            addons.forEach(addon => {
+                html += `
+                    <label class="d-block small mt-1">
+                        <input type="checkbox" class="bogo-addon-checkbox" value="${addon.id}"
+                            data-price="${addon.price || 0}" data-name="${addon.name}">
+                        ${addon.name} (+$${addon.price || 0})
+                    </label>`;
+            });
+            html += `</div>`;
+        } --}}
 
+        // Add quantity selector for BOGO
+        html += `
+            <div class="mt-3">
+                <label><strong>Quantity:</strong></label>
+                <input type="number" class="form-control bogo-product-quantity" value="1" min="1" style="width: 100px;">
+            </div>
+        `;
+
+        html += `
+            <div class="mt-3 p-2 bg-light border rounded">
+                <strong>Product Total: </strong>
+                <span class="bogo-product-total text-success font-weight-bold" style="font-size: 1.2em;">$${basePrice.toFixed(2)}</span>
+            </div>
+        </div>`;
 
         return html;
     }
