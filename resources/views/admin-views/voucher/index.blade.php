@@ -934,7 +934,7 @@ $(document).ready(function() {
         const variationsHtml = (variations && variations.length)
             ? `<div class="mt-2">
                     <strong>Variations:</strong>
-                    ${variations.map((v, index) => `
+                    ${variations.map((v, index) => `~
                         <label class="d-block small mt-1">
                             <input
                                 type="checkbox"

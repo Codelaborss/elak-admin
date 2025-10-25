@@ -272,9 +272,19 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('status/{id}', 'VoucherTypeController@status')->name('status');
         });
        // Voucher Type
+           // Gift Occasions
+        Route::group(['prefix' => 'GiftOccasions', 'as' => 'GiftOccasions.'], function () {
+            Route::get('add-new', 'GiftOccasionsController@index')->name('add-new');
+            Route::get('list', 'GiftOccasionsController@list')->name('list');
+            Route::post('store', 'GiftOccasionsController@store')->name('store');
+            Route::get('edit/{id}', 'GiftOccasionsController@edit')->name('edit');
+            Route::post('update/{id}', 'GiftOccasionsController@update')->name('update');
+            Route::delete('delete/{id}', 'GiftOccasionsController@delete')->name('delete');
+            Route::post('status/{id}', 'GiftOccasionsController@status')->name('status');
+        });
+        // Gift Occasions
 
-
-             // Management Types
+        // Management Types
         Route::group(['prefix' => 'ManagementType', 'as' => 'ManagementType.'], function () {
             Route::get('add-new', 'ManagementTypeController@index')->name('add-new');
             Route::get('list', 'ManagementTypeController@list')->name('list');

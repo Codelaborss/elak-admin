@@ -8302,4 +8302,5 @@ Smartly or Earn. ',
   's' => 'S',
   'Select a Product' => 'Select a Product',
   'Required Quantity' => 'Required Quantity',
+  'The title field is required.' => 'The title field is required.',
 );

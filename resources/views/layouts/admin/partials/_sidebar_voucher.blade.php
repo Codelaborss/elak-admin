@@ -1045,12 +1045,12 @@
                         <span class="text-truncate"> Segments list</span>
                     </a>
                 </li>
-                {{-- <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.segments.add-new') }}" title="">
+                <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.GiftOccasions.add-new') }}" title="">
                         <span class="tio-add-circle nav-icon"></span>
-                        <span class="text-truncate"> Create new Segment</span>
+                        <span class="text-truncate"> Gift Occasions</span>
                     </a>
-                </li> --}}
+                </li>
                 <li class="nav-item py-5">
 
                 </li>
