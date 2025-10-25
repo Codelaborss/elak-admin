@@ -1051,6 +1051,18 @@
                         <span class="text-truncate"> Gift Occasions</span>
                     </a>
                 </li>
+                <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.MessageTemplate.add-new') }}" title="">
+                        <span class="tio-add-circle nav-icon"></span>
+                        <span class="text-truncate"> Message Template</span>
+                    </a>
+                </li>
+                <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.DeliveryOption.add-new') }}" title="">
+                        <span class="tio-add-circle nav-icon"></span>
+                        <span class="text-truncate"> Delivery Option</span>
+                    </a>
+                </li>
                 <li class="nav-item py-5">
 
                 </li>

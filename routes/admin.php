@@ -283,6 +283,28 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('status/{id}', 'GiftOccasionsController@status')->name('status');
         });
         // Gift Occasions
+           // MessageTemplate
+        Route::group(['prefix' => 'MessageTemplate', 'as' => 'MessageTemplate.'], function () {
+            Route::get('add-new', 'MessageTemplateController@index')->name('add-new');
+            Route::get('list', 'MessageTemplateController@list')->name('list');
+            Route::post('store', 'MessageTemplateController@store')->name('store');
+            Route::get('edit/{id}', 'MessageTemplateController@edit')->name('edit');
+            Route::post('update/{id}', 'MessageTemplateController@update')->name('update');
+            Route::delete('delete/{id}', 'MessageTemplateController@delete')->name('delete');
+            Route::post('status/{id}', 'MessageTemplateController@status')->name('status');
+        });
+        // MessageTemplate
+           // DeliveryOption
+        Route::group(['prefix' => 'DeliveryOption', 'as' => 'DeliveryOption.'], function () {
+            Route::get('add-new', 'DeliveryOptionController@index')->name('add-new');
+            Route::get('list', 'DeliveryOptionController@list')->name('list');
+            Route::post('store', 'DeliveryOptionController@store')->name('store');
+            Route::get('edit/{id}', 'DeliveryOptionController@edit')->name('edit');
+            Route::post('update/{id}', 'DeliveryOptionController@update')->name('update');
+            Route::delete('delete/{id}', 'DeliveryOptionController@delete')->name('delete');
+            Route::post('status/{id}', 'DeliveryOptionController@status')->name('status');
+        });
+        // DeliveryOption
 
         // Management Types
         Route::group(['prefix' => 'ManagementType', 'as' => 'ManagementType.'], function () {
