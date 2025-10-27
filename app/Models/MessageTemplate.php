@@ -10,5 +10,5 @@ class MessageTemplate extends Model
     use HasFactory;
         protected $table = 'message_templates';
 
-    protected $fillable = ['title', 'icon','status','des'];
+    protected $fillable = ['title', 'icon','status','sub_title'];
 }

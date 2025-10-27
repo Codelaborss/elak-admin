@@ -10,5 +10,5 @@ class DeliveryOption extends Model
     use HasFactory;
        protected $table = 'delivery_options';
 
-    protected $fillable = ['title', 'icon','status','des'];
+    protected $fillable = ['title', 'icon','status','sub_title'];
 }

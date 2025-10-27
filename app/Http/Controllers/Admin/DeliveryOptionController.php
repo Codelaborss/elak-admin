@@ -37,12 +37,12 @@ class DeliveryOptionController extends Controller
     {
          $request->validate([
             'title' => 'required|max:100',
-            'des' => 'required|max:1000',
+            'sub_title' => 'required|max:1000',
              'icon' => 'required',
         ]);
         $DeliveryOption = new DeliveryOption();
         $DeliveryOption->title = $request->title;
-        $DeliveryOption->des = $request->des;
+        $DeliveryOption->sub_title = $request->sub_title;
         $DeliveryOption->status = "active";
 
             //  Logo Upload
@@ -78,13 +78,13 @@ class DeliveryOptionController extends Controller
     {
          $request->validate([
             'title' => 'required|max:100',
-            'des' => 'required|max:1000',
+            'sub_title' => 'required|max:1000',
         ]);
 
         $DeliveryOption = DeliveryOption::findOrFail($id);
 
         $DeliveryOption->title = $request->title;
-        $DeliveryOption->des = $request->des;
+        $DeliveryOption->sub_title = $request->sub_title;
             //  icon Upload
     if ($request->hasFile('icon')) {
         if ($DeliveryOption->icon && file_exists(public_path($DeliveryOption->icon))) {

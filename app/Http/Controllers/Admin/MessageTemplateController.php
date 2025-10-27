@@ -38,12 +38,12 @@ class MessageTemplateController extends Controller
     {
          $request->validate([
             'title' => 'required|max:100',
-            'des' => 'required|max:1000',
+            'sub_title' => 'required|max:1000',
              'icon' => 'required',
         ]);
         $MessageTemplate = new MessageTemplate();
         $MessageTemplate->title = $request->title;
-        $MessageTemplate->des = $request->des;
+        $MessageTemplate->sub_title = $request->sub_title;
         $MessageTemplate->status = "active";
 
             //  Logo Upload
@@ -84,7 +84,7 @@ class MessageTemplateController extends Controller
         $MessageTemplate = MessageTemplate::findOrFail($id);
 
         $MessageTemplate->title = $request->title;
-        $MessageTemplate->des = $request->des;
+        $MessageTemplate->sub_title = $request->sub_title;
             //  icon Upload
     if ($request->hasFile('icon')) {
         if ($MessageTemplate->icon && file_exists(public_path($MessageTemplate->icon))) {

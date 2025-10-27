@@ -119,14 +119,23 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                  <div class="col-6 ">
+                                   <div class="col-6 ">
+                                        <div class="lang_form" id="default-form">
+                                            <div class="form-group">
+                                                <label class="input-label"
+                                                    for="sub_title">  Sub Title
+                                                </label>
+                                                <input type="text" name="sub_title" id="sub_title" class="form-control"  placeholder="Enter Sub Title" value="{{$MessageTemplate->sub_title}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                  {{-- <div class="col-6 ">
                                         <div class="form-group mb-0">
                                               <label class="input-label"
                                                   for="exampleFormControlInput1">des</label>
                                               <textarea type="text" name="des" placeholder="des" class="form-control min-h-90px ckeditor">{{$MessageTemplate->des}}</textarea>
                                           </div>
-                                    </div>
+                                    </div> --}}
 
 
                                 </div>

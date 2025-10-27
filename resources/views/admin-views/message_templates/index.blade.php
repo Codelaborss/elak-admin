@@ -106,13 +106,25 @@
                                             </div>
                                         </div>
                                     </div>
+                                         <div class="col-6 ">
+                                        <div class="lang_form" id="default-form">
+                                            <div class="form-group">
+                                                <label class="input-label"
+                                                    for="sub_title">  Sub Title
+                                                </label>
+                                                <input type="text" name="sub_title" id="sub_title" class="form-control"  placeholder="Enter Sub Title">
+                                            </div>
+
+                                        </div>
+                                    </div>
+{{--
                                     <div class="col-6 ">
                                         <div class="form-group mb-0">
                                               <label class="input-label"
                                                   for="exampleFormControlInput1">des</label>
                                               <textarea type="text" name="des" placeholder="des" class="form-control min-h-90px ckeditor"></textarea>
                                           </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             @endif
                             <div class="btn--container justify-content-end mt-5">
@@ -158,6 +170,7 @@
                             <tr class="text-center">
                                 <th class="border-0">{{translate('sl')}}</th>
                                 <th class="border-0">Title</th>
+                                <th class="border-0">Sub Title</th>
                                 <th class="border-0">Logo</th>
                                 <th class="border-0">Status</th>
                                 <th class="border-0">Action</th>
@@ -180,6 +193,11 @@
                                 <td class="text-center">
                                     <span title="{{ $item->title }}" class="font-size-sm text-body mr-3">
                                         {{ Str::limit($item->title, 20, '...') }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span title="{{ $item->sub_title }}" class="font-size-sm text-body mr-3">
+                                        {{ Str::limit($item->sub_title, 20, '...') }}
                                     </span>
                                 </td>
 
