@@ -197,8 +197,8 @@
                                 </td>
                                 {{-- Client Name --}}
                                 <td class="text-center">
-                                    <span title="{{ $item->des }}" class="font-size-sm text-body mr-3">
-                                        {{ Str::limit($item->des, 20, '...') }}
+                                    <span title="{{ $item->sub_title }}" class="font-size-sm text-body mr-3">
+                                        {{ Str::limit($item->sub_title, 20, '...') }}
                                     </span>
                                 </td>
 
