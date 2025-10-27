@@ -22,6 +22,78 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Custom toggle style */
+.form-switch .form-check-input {
+  width: 2.5em;
+  height: 1.3em;
+  background-color: #ccc;
+  border-radius: 1em;
+  position: relative;
+  appearance: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-switch .form-check-input::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 1em;
+  height: 1em;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: #0d6efd;
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translateX(1.2em);
+}
+
+.template-card {
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  background-color: #fff;
+}
+
+.template-card:hover {
+  border-color: #0d6efd;
+  background-color: #f8f9fa;
+}
+
+.template-card.selected {
+  border: 2px solid #0d6efd;
+  background-color: #e7f1ff;
+  box-shadow: 0 0 5px rgba(13,110,253,0.3);
+}
+
+
+</style>
+<style>
+/* Normal button look */
+.type-option {
+    border: 2px solid #007bff;
+    color: #007bff;
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+/* When active (radio checked) */
+.type-option.active {
+    background-color: #007bff !important;
+    color: white !important;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Optional: little hover feedback */
+.type-option:hover {
+    background-color: #e6f0ff;
+}
 </style>
 
 @section('content')
@@ -46,237 +118,360 @@
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.include_client_partner_information")
 
-
-                   <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
+                   <!-- Occasions-->
                 <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
-                    {{-- Voucher Title --}}
-                    <div class="row g-3 mb-3">
-                        <div class="col-6">
-                            <label class="form-label fw-medium">Voucher Title</label>
-                            <input type="text" class="form-control" placeholder="Voucher Title">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label fw-medium">Valid Until</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                         {{-- images --}}
-                    <div class="row g-3">
-                        <div class="col-12" >
-                            @include("admin-views.voucher.include_images")
-                        </div>
-                    </div>
-                    {{-- images  --}}
-                    <div class="row g-3">
-                        <div class="mb-3 col-12 ">
-                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
-                        </div>
-                    </div>
-                    {{-- Bundle Type Selection --}}
-                    <div class="col-12 col-md-12">
-                        <div class="form-group mb-0">
-                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
-                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
-                                <option value="">Select Bundle Offer Type</option>
-                                <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
-                                    Simple
-                                </option>
-                                <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
-                                    Fixed Bundle - Specific products at set price
-                                </option>
-                                <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
-                                   Buy X Get Y - Buy products get different product free
-                                </option>
-                                <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
-                                    Mix & Match - Customer chooses from categories
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    {{-- panel1 --}}
-                    <div class="col-12 mt-5" id="panel1">
-                         <div class="row g-3 bundle_div" style="display:none;">
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4> Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Bundle Fixed Price</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Group Product Bundle Configuration -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3"> Group Product Bundle</h4>
-                                    <!-- Bundle Products -->
-                                    <div class="row">
-
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                              <div class="form-group">
-                                                <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
-                                                </label>
-                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Bundle Discount Type</label>
-                                            <select class="form-control" data-testid="select-bundle-discount-type">
-                                            <option>% Percentage Off</option>
-                                            <option>$ Fixed Amount Off</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Discount Amount</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-3 bogo_free_div" style="display:none;">
-                            <div class="card border-0 shadow-sm">
-                                <!-- BOGO Configuration -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3"> BOGO Configuration</h4>
-                                    <div class="row">
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                            <div class="form-group">
-                                                <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                                </label>
-                                                <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6 mt-3">
-                                            <div class="form-group">
-                                                <label class="input-label"
-                                                    for="buy_quantity">{{ translate('Buy Quantity') }}
-                                                </label>
-                                                <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <div class="form-group">
-                                                <label class="input-label"
-                                                    for="get_quantity">{{ translate('Get Quantity') }}
-                                                </label>
-                                                <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mix_match_div" style="display:none;">
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Total Items Customer Must Choose</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Bundle Price</label>
-                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Mix and Match Collection -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3">🔀 Mix and Match Collection</h4>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-lg-12">
-                                            <div class="form-group mb-0">
-                                                <label class="input-label"
-                                                    for="select_category_all">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
-                                                    data-toggle="tooltip" data-placement="right"
-                                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                                    </span></label>
-                                                    <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
-                                                    @foreach (\App\Models\Category::all() as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                            <div class="form-group">
-                                                <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
-                                                </label>
-                                                <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <!-- 3-column grid -->
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Buy Quantity</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Discount Amount</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Max Uses Per Customer</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Valid Until -->
+                    <h3 class="h5 fw-semibold mb-4">Occasions</h3>
+                    {{-- tags --}}
                     <div class="col-12 mt-3">
-                        <label class="form-label" for="validUntilDate">Valid Until</label>
-                        <input
-                        type="date"
-                        class="form-control"
-                        id="validUntilDate"
-                        placeholder="mm/dd/yyyy"
-                        data-testid="input-bundle-valid-until"
-                        >
+                          <p class="text-muted mb-3">Select occasions for this gift card</p>
+                         <div class="form-group mb-0">
+                                <label class="input-label"
+                                    for="select_category_all">{{ translate('Occasions') }}</label>
+                                    <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
+                                    @foreach (\App\Models\GiftOccasions::all() as $item)
+                                        <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                     </div>
+                </div>
+                   <!-- Recipient Info Form Fields-->
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                      <h3 class="h5 fw-semibold mb-4">Recipient Info Form Fields</h3>
+                    <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <p class="text-muted mb-4">Select which fields will appear on the recipient info form</p>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th width="40%">Field Name</th>
+                                        <th width="30%" class="text-center">Show Field</th>
+                                        <th width="30%" class="text-center">Mark as Required</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Sender Name</strong>
+                                            <small class="d-block text-muted">Who is sending the gift card</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_sender_name" name="form_fields[]" value="sender_name" data-target="req_sender_name">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_sender_name" name="required_fields[]" value="sender_name" disabled>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Sender Email</strong>
+                                            <small class="d-block text-muted">Sender's email address</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_sender_email" name="form_fields[]" value="sender_email" data-target="req_sender_email">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_sender_email" name="required_fields[]" value="sender_email" disabled>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Recipient Name</strong>
+                                            <small class="d-block text-muted">Who will receive the gift card</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_name" name="form_fields[]" value="recipient_name" checked data-target="req_recipient_name">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_recipient_name" name="required_fields[]" value="recipient_name" checked>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Recipient Email</strong>
+                                            <small class="d-block text-muted">Where to send the gift card</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_email" name="form_fields[]" value="recipient_email" checked data-target="req_recipient_email">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_recipient_email" name="required_fields[]" value="recipient_email" checked>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Recipient Phone</strong>
+                                            <small class="d-block text-muted">Phone number for WhatsApp delivery</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_phone" name="form_fields[]" value="recipient_phone" data-target="req_recipient_phone">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_recipient_phone" name="required_fields[]" value="recipient_phone" disabled>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Personal Message</strong>
+                                            <small class="d-block text-muted">Custom message from sender</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_message" name="form_fields[]" value="message" data-target="req_message">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_message" name="required_fields[]" value="message" disabled>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Scheduled Delivery Date</strong>
+                                            <small class="d-block text-muted">When to send the gift card</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_delivery_date" name="form_fields[]" value="delivery_date" data-target="req_delivery_date">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_delivery_date" name="required_fields[]" value="delivery_date" disabled>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Recipient Address</strong>
+                                            <small class="d-block text-muted">Physical address (for physical cards)</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_address" name="form_fields[]" value="recipient_address" data-target="req_recipient_address">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block">
+                                                <input class="form-check-input" type="checkbox" id="req_recipient_address" name="required_fields[]" value="recipient_address" disabled>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> Enable "Show Field" first, then you can mark it as required. Recipient Name and Email are enabled by default.
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+                   <!-- Message Template Style-->
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4">Message Template Style</h3>
+                     <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <p class="text-muted mb-3">Select one message template style for this gift card</p>
+                            <div class="row g-3">
+                                @foreach (\App\Models\MessageTemplate::all() as $item)
+                                    @php(
+                                    $id = 'template_' . $item->id
+                                    )
+                                    <div class="col-md-6">
+                                    <input type="radio" class="btn-check template-radio" name="message_template_style" id="{{ $id }}" value="{{ $item->id }}">
+                                    <label class="template-card border rounded p-3 w-100 d-block" for="{{ $id }}">
+                                        <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
+                                        <strong class="ms-2">{{ $item->title }}</strong>
+                                        <small class="d-block text-muted mt-1">{{ $item->sub_title }}</small>
+                                    </label>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <!-- Delivery Options-->
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4">Delivery Options</h3>
+                    {{-- tags --}}
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Select how gift cards will be delivered to recipients</p>
+
+                          <div class="row">
+                            @foreach (\App\Models\DeliveryOption::all() as $item)
+                                @php(
+                                    $id = 'delivery_' . $item->id
+                                    )
+                                <div class="col-md-6 mb-3">
+                                    <div class="card border-primary h-100">
+                                        <div class="card-body">
+                                            <div class="form-check form-switch">
+                                                <input
+                                                    class="form-check-input delivery-option"
+                                                    type="checkbox"
+                                                    id="{{ $id }}"
+                                                    name="delivery_options[]"
+                                                    value="{{ $item->slug ?? $item->id }}"
+                                                    {{ $loop->first ? 'checked' : '' }}
+                                                >
+                                                <label class="form-check-label" for="{{ $id }}">
+                                                    <h6 class="mb-1">
+                                                        <i class="fas fa-envelope text-primary me-2"></i>{{ $item->title }}
+                                                    </h6>
+                                                    <small class="text-muted">{{ $item->sub_title }}</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+
+                           <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Note:</strong> At least one delivery option must be selected. Email is enabled by default.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <!-- How It Works-->
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4">How It Works</h3>
+                    {{-- tags --}}
+                      <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Explain redemption process</p>
+                                <div class="mb-3">
+                                    <label for="redemption_process" class="form-label">Redemption Process</label>
+                                    <textarea class="form-control" id="redemption_process" name="redemption_process" rows="6"
+                                            placeholder="Step by step instructions on how to redeem this voucher...">{{ old('redemption_process') }}</textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+                </div>
+                {{-- Amount Configuration --}}
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4"> Amount Configuration</h3>
+                     <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Amount Type <span class="text-danger">*</span></label>
+                               <div class="row g-2" id="amountTypeGroup">
+                                    <div class="col-md-4">
+                                        <input type="radio" class="btn-check" name="type" id="type_fixed" value="fixed" {{ old('type', 'fixed') == 'fixed' ? 'checked' : '' }}>
+                                        <label class="btn border type-option " for="type_fixed">
+                                            <i class="fas fa-list"></i> Fixed Amounts
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <input type="radio" class="btn-check" name="type" id="type_range" value="range" {{ old('type') == 'range' ? 'checked' : '' }}>
+                                        <label class="btn border type-option " for="type_range">
+                                            <i class="fas fa-arrows-alt-h"></i> Range
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check form-switch form-switch-lg">
+                                    <input class="form-check-input" type="checkbox" id="custom_enabled" name="custom_enabled" value="1" {{ old('custom_enabled') ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="custom_enabled">
+                                        <strong>Enable Custom Amount</strong>
+                                        <small class="d-block text-muted">Allow customers to enter their own amount</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Fixed Amounts Section -->
+                            <div id="fixedAmountsSection" style="display: none;">
+                                <label class="form-label">Fixed Amount Options <span class="text-danger">*</span></label>
+                                <div id="fixedAmountsContainer">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
+                                        <button type="button" class="btn btn-danger remove-amount" style="display: none;">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary border" id="addAmountBtn">
+                                    <i class="fas fa-plus"></i> Add Another Amount
+                                </button>
+                            </div>
+
+                            <!-- Range Amounts Section -->
+                            <div id="rangeAmountsSection" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="min_amount" class="form-label">Minimum Amount <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control @error('min_amount') is-invalid @enderror"
+                                                id="min_amount" name="min_amount" step="0.01" min="0" value="{{ old('min_amount') }}" placeholder="10.00">
+                                        </div>
+                                        @error('min_amount')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="max_amount" class="form-label">Maximum Amount <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control @error('max_amount') is-invalid @enderror"
+                                                id="max_amount" name="max_amount" step="0.01" min="0" value="{{ old('max_amount') }}" placeholder="1000.00">
+                                        </div>
+                                        @error('max_amount')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Bonus Configuration --}}
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4"> Bonus Configuration</h3>
                     {{-- tags --}}
                     <div class="col-12 mt-3">
                         <div class="form-group">
@@ -285,425 +480,28 @@
                         </div>
                     </div>
                 </div>
-
-               {{-- Bundle Products Configuration --}}
-                <div class=" section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
-                    <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
-                    <div id="selectedProducts">
-                        <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
-                    </div>
-                    <button type="button" class="btn btn--primary" id="addProductBtn">+ Add Product to Bundle</button>
-                    <!-- Available Products to Choose From -->
-                    <div id="availableProducts" style="display: none;">
-                        <h3 class="mt-3">Available Products:</h3>
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-12">
-                                <div class="form-group">
-                                    <select name="select_pro" id="select_pro" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                {{-- Product selection area --}}
-                                <div id="productDetails" class="mt-3 row mx-1"></div>
-
-                                {{-- Selected items display section --}}
-                                <div id="selectedItemsSection" class="mt-4" style="display: none;">
-                                    <div class="card p-3 shadow-sm bg-light">
-                                        <h5 class="mb-3">Selected Configuration</h5>
-
-                                        <div id="selectedProductInfo" class="mb-2"></div>
-
-                                        <div id="selectedVariationInfo" class="mb-2" style="display: none;">
-                                            <strong>Selected Variation:</strong>
-                                            <div id="selectedVariationDetails" class="ml-3"></div>
-                                        </div>
-
-                                        <div id="selectedAddonsInfo" class="mb-2" style="display: none;">
-                                            <strong>Selected Add-ons:</strong>
-                                            <div id="selectedAddonsDetails" class="ml-3"></div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <strong>Final Total:</strong>
-                                            <h5 class="text-success mb-0" id="finalTotalPrice">$0.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div id="availableProducts_get_x_buy_y" class="mt-3 rounded" style="display: none;">
-                         <div class="row">
-                             <div class="col-6 " style="border-right: 1px solid rgb(223 219 219)">
-                                <h3 class="mt-3">Available Products A:</h3>
-                                  <div class="form-group">
-                                    <select name="select_pro1" id="select_pro1" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                  </div>
-                                  <div id="productDetails_section_a" class="mt-3 row mx-1"></div>
-                            </div>
-                            <div class="col-6 ">
-                                  <h3 class="mt-3">Available Products B:</h3>
-                                  <div class="form-group">
-                                    <select name="select_pro2" id="select_pro2" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                  </div>
-                                  <div id="productDetails_section_b" class="mt-3 row mx-1"></div>
-                            </div>
-                        </div>
-                     </div>
-                    <div class="container mt-5 p-1">
-                        <div class="form-container">
-                            <!-- Price Calculator -->
-                            <div class="price-calculator" id="priceCalculator" style="display: none;">
-                                <h3> Bundle Price Calculation</h3>
-                                <div id="priceBreakdown"></div>
-                            </div>
+                {{-- Terms & Conditions --}}
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
+                    {{-- tags --}}
+                    <div class="col-12 mt-3">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
                         </div>
                     </div>
                 </div>
-
-                   <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
-                <div class="section-card rounded p-4 mb-4  "id="bundel_food_voucher_price_info_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
-                    {{-- Price Information --}}
-                    <div class="row g-2">
-                        <div class="col-6 col-md-3" id="price_input_hide">
-                            <div class="form-group mb-0">
-                                <label class="input-label"  for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
-                                <input type="number" min="0" id="price" max="999999999999.99" step="0.01" value="1" name="price" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
-                                <input type="hidden"  id="price_hidden"name="price_hidden" >
-                            </div>
-                        </div>
-                          <div class="col-6 col-md-3 d-none" id="required_qty">
-                            <div class="form-group mb-0">
-                                <label class="input-label"  for="exampleFormControlInput1">{{ translate('Required Quantity') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
-                                <input type="number" min="0" id="required_qty" max="999999999999.99" step="0.01" value="1" name="required_qty" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-md-3">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="offer_type">{{ translate('Offer Type') }}
-                                </label>
-                                <!-- Dropdown: Only Percent & Fixed -->
-                                <select name="offer_type" id="offer_type"
-                                    class="form-control js-select2-custom">
-                                    <option value="direct discount">{{ translate('Direct Discount') }} </option>
-                                    <option value="cash back">{{ translate('Cash back') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3" id="discount_input_hide">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="discount_type">{{ translate('Discount Type') }}
-                                </label>
-                                <!-- Dropdown: Only Percent & Fixed -->
-                                <select name="discount_type" id="discount_type"
-                                    class="form-control js-select2-custom">
-                                    <option value="percent">{{ translate('messages.percent') }} (%)</option>
-                                    <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3" id="discount_value_input_hide">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('Discount Value') }}
-                                    </label>
-                                    <input type="number" min="0" max="9999999999999999999999" value="0"
-                                        name="discount" id="discount" class="form-control"
-                                        placeholder="{{ translate('messages.Ex:') }} 100">
-                            </div>
-                        </div>
-                        <!-- Example divs to show/hide panel2 -->
-                        <div class="col-12 mt-4" id="panel2">
-                            <div class="row g-3 bogo_free_div" style="display:none;">
-                                <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- BOGO Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> BOGO Pricing Settings</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <p class="small text-muted mb-3">
-                                                For BOGO offers, set the regular price for one item.
-                                                The system will automatically apply the free item.
-                                            </p>
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Regular Item Price -->
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Regular Item Price</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="29.99"
-                                                        step="0.01"
-                                                        data-testid="input-bogo-price"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <!-- Total Available Sets -->
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Total Available Sets</label>
-                                                    <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="50"
-                                                        data-testid="input-bogo-stock"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /BOGO Section -->
-                                </div>
-                            </div>
-                            <div class="row g-3 bundle_div" style="display:none;">
-                                <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- Group Product Bundle Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> Group Product Bundle Pricing</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Individual Items Total -->
-                                                <div class="col-md-6">
-                                                <label class="form-label">Individual Items Total</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="79.99"
-                                                    step="0.01"
-                                                    data-testid="input-bundle-total-price"
-                                                    >
-                                                </div>
-                                                </div>
-
-                                                <!-- Bundle Discount (%) -->
-                                                <div class="col-md-6">
-                                                <label class="form-label">Bundle Discount (%)</label>
-                                                <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="15"
-                                                    step="1"
-                                                    data-testid="input-group-bundle-discount"
-                                                >
-                                                </div>
-                                            </div>
-
-                                            <!-- Bundle Summary -->
-                                            <div class="mt-4 p-3 bg-light border rounded">
-                                                <p class="small fw-bold mb-1"> Bundle Summary:</p>
-                                                <p class="small text-muted mb-1">
-                                                Please enter a valid total price for group bundle
-                                                </p>
-                                                <p class="small mb-0">
-                                                Individual Total: <span class="fw-semibold">$</span> |
-                                                Bundle Price: <span class="fw-semibold text-primary">$0.00</span> |
-                                                You Save: <span class="fw-semibold text-success">$0.00</span>
-                                                </p>
-                                            </div>
-
-                                            <!-- Available Bundles -->
-                                            <div class="mt-4">
-                                                <label class="form-label">Available Bundles</label>
-                                                <input
-                                                type="number"
-                                                class="form-control"
-                                                placeholder="25"
-                                                data-testid="input-bundle-quantity"
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /Group Product Bundle Section -->
-                                </div>
-                            </div>
-                            <div class="row g-3 mix_match_div" style="display:none;">
-                                <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- Mix & Match Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> Mix and Match Pricing</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Regular Price Each -->
-                                                <div class="col-md-4">
-                                                    <label class="form-label">Regular Price Each</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="24.99"
-                                                        step="0.01"
-                                                        data-testid="input-mix-match-regular-price"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <!-- Mix & Match Discount -->
-                                                <div class="col-md-4">
-                                                    <label class="form-label">Mix &amp; Match Discount</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="5.00"
-                                                        step="0.01"
-                                                        data-testid="input-mix-match-discount"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <!-- Required Quantity -->
-                                                <div class="col-md-4">
-                                                    <label class="form-label">Required Quantity</label>
-                                                    <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="3"
-                                                        data-testid="input-mix-match-quantity"
-                                                    >
-                                                </div>
-                                            </div>
-                                            <!-- Mix & Match Summary -->
-                                            <div class="mt-4 p-3 bg-light border rounded">
-                                                <p class="small fw-bold mb-1">Mix & Match Summary:</p>
-                                                <p class="small text-muted mb-1">
-                                                Please enter a valid price per item for mix &amp; match
-                                                </p>
-                                                <p class="small mb-0">
-                                                Regular Price (1 items): <span class="fw-semibold">$</span> |
-                                                Mix &amp; Match Price: <span class="fw-semibold text-primary">$0.00</span> |
-                                                You Save: <span class="fw-semibold text-success">$0.00</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /Mix & Match Section -->
-                                </div>
-                            </div>
+                {{-- Review & Summary --}}
+                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                    <h3 class="h5 fw-semibold mb-4"> Review & Summary</h3>
+                    {{-- tags --}}
+                    <div class="col-12 mt-3">
+                        <div class="form-group">
+                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
                         </div>
                     </div>
                 </div>
-
-                 @include("admin-views.voucher.include_voucher")
 
             </form>
         </div>
@@ -720,6 +518,163 @@
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
+
+    {{-- <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const typeOptions = document.querySelectorAll('.type-option input[type="radio"]');
+
+    function updateActiveState() {
+        document.querySelectorAll('.type-option').forEach(div => div.classList.remove('active'));
+        const selected = document.querySelector('.type-option input[type="radio"]:checked');
+        if (selected) selected.closest('.type-option').classList.add('active');
+    }
+
+    typeOptions.forEach(input => {
+        input.addEventListener('change', updateActiveState);
+    });
+
+    // Initialize on page load (for old() / preselected)
+    updateActiveState();
+});
+</script> --}}
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const options = document.querySelectorAll('.type-option');
+    const radios = document.querySelectorAll('input[name="type"]');
+
+    function updateActive() {
+        options.forEach(opt => opt.classList.remove('active'));
+        const checked = document.querySelector('input[name="type"]:checked');
+        if (checked) {
+            const label = document.querySelector(`label[for="${checked.id}"]`);
+            if (label) label.classList.add('active');
+        }
+    }
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', updateActive);
+    });
+
+    // Initialize on load (for old() / pre-selected value)
+    updateActive();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const typeSelect = document.querySelectorAll('input[name="type"]');
+    const fixedSection = document.getElementById('fixedAmountsSection');
+    const rangeSection = document.getElementById('rangeAmountsSection');
+    const addAmountBtn = document.getElementById('addAmountBtn');
+    const fixedContainer = document.getElementById('fixedAmountsContainer');
+
+    // 🔹 Toggle between Fixed and Range sections
+    function toggleSections() {
+        const selectedType = document.querySelector('input[name="type"]:checked')?.value;
+        fixedSection.style.display = selectedType === 'fixed' ? 'block' : 'none';
+        rangeSection.style.display = selectedType === 'range' ? 'block' : 'none';
+    }
+
+    typeSelect.forEach(radio => {
+        radio.addEventListener('change', toggleSections);
+    });
+    toggleSections(); // Initial setup
+
+    // 🔹 Add new fixed amount input
+    addAmountBtn.addEventListener('click', function() {
+        const newField = document.createElement('div');
+        newField.className = 'input-group mb-2';
+        newField.innerHTML = `
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
+            <button type="button" class="btn btn-danger remove-amount">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        fixedContainer.appendChild(newField);
+
+        // Remove field
+        newField.querySelector('.remove-amount').addEventListener('click', function() {
+            newField.remove();
+        });
+    });
+
+    // 🔹 Make first fixed input's remove button visible only after adding more
+    const observer = new MutationObserver(() => {
+        const allRemoveBtns = fixedContainer.querySelectorAll('.remove-amount');
+        allRemoveBtns.forEach((btn, i) => {
+            btn.style.display = (i === 0 && allRemoveBtns.length === 1) ? 'none' : 'inline-block';
+        });
+    });
+    observer.observe(fixedContainer, { childList: true, subtree: false });
+});
+</script>
+
+
+
+
+<script>
+   // Form field toggle functionality
+    document.querySelectorAll('.field-toggle').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const targetId = this.getAttribute('data-target');
+            const requiredToggle = document.getElementById(targetId);
+
+            if (this.checked) {
+                // Enable the "Mark as Required" toggle when field is shown
+                requiredToggle.disabled = false;
+            } else {
+                // Disable and uncheck the "Mark as Required" toggle when field is hidden
+                requiredToggle.disabled = true;
+                requiredToggle.checked = false;
+            }
+        });
+    });
+
+
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const radios = document.querySelectorAll('.template-radio');
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', function () {
+      document.querySelectorAll('.template-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      const label = document.querySelector('label[for="' + this.id + '"]');
+      label.classList.add('selected');
+    });
+  });
+});
+
+
+
+
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const options = document.querySelectorAll('.delivery-option');
+
+    options.forEach(opt => {
+        opt.addEventListener('change', function() {
+            const checkedOptions = document.querySelectorAll('.delivery-option:checked');
+
+            // agar user last checked ko uncheck kar raha hai → prevent it
+            if (checkedOptions.length === 0) {
+                this.checked = true;
+                alert('At least one delivery option must remain selected.');
+            }
+        });
+    });
+});
+</script>
+
+
+
 
   <script>
 

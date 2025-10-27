@@ -22,8 +22,6 @@
         @foreach (\App\Models\VoucherType::orderBy('name')->get() as $voucherType)
             <div class="col-md-3">
                 <div class="voucher-card border rounded py-4 text-center h-70
-                    {{-- {{ Request::is('vouchers/delivery_page') && $voucherType->name == 'Gift' ? 'selected' : '' }} --}}
-                    {{-- {{ Request::is('vouchers/instore_page') && $voucherType->name == 'In-Store' ? 'selected' : '' }} --}}
                     {{-- {{ $i == 1 ? 'selected' : '' }}     --}}
                     {{ ($i == 1 && (Request::is('admin/Voucher/add-new') && $voucherType->name == 'Delivery/Pickup')) ? 'selected' : '' }}
                     {{-- {{ ($i == 2 && (Request::is('admin/Voucher/add-new') && $voucherType->name == 'Flat discount')) ? 'selected' : '' }} --}}
