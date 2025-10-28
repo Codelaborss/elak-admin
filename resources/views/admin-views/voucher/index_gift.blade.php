@@ -352,7 +352,8 @@
                                                 >
                                                 <label class="form-check-label" for="{{ $id }}">
                                                     <h6 class="mb-1">
-                                                        <i class="fas fa-envelope text-primary me-2"></i>{{ $item->title }}
+                                                      <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
+                                                    {{ $item->title }}
                                                     </h6>
                                                     <small class="text-muted">{{ $item->sub_title }}</small>
                                                 </label>
@@ -472,33 +473,132 @@
                 {{-- Bonus Configuration --}}
                 <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> Bonus Configuration</h3>
-                    {{-- tags --}}
-                    <div class="col-12 mt-3">
-                        <div class="form-group">
-                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <input type="hidden" name="bonus_enabled" value="1">
+                            <input type="hidden" name="bonus_type" value="percentage">
+
+                            <p class="text-muted mb-3">Set bonus percentage based on top-up amount ranges</p>
+
+                            <div id="bonusTiersContainer">
+                                <div class="bonus-tier-item border rounded p-3 mb-3">
+                                    <div class="row g-2">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Min Amount ($)</label>
+                                            <input type="number" class="form-control" name="bonus_tiers[0][min_amount]" step="0.01" min="0" placeholder="0" value="0">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Max Amount ($)</label>
+                                            <input type="number" class="form-control" name="bonus_tiers[0][max_amount]" step="0.01" min="0" placeholder="100">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Bonus (%)</label>
+                                            <input type="number" class="form-control" name="bonus_tiers[0][bonus_percentage]" step="0.01" min="0" placeholder="5">
+                                        </div>
+                                        <div class="col-md-1 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger remove-bonus-tier" style="display: none;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="addBonusTierBtn">
+                                <i class="fas fa-plus"></i> Add Another Tier
+                            </button>
+
+                            <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Example:</strong> $0-$100 = 5% bonus, $101-$500 = 10% bonus, $501+ = 15% bonus
+                            </div>
                         </div>
                     </div>
                 </div>
                 {{-- Terms & Conditions --}}
                 <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
-                    {{-- tags --}}
-                    <div class="col-12 mt-3">
-                        <div class="form-group">
-                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <p class="text-muted mb-4">Define usage terms and restrictions</p>
+
+                            <div class="mb-3">
+                                <label for="validity_days" class="form-label">Validity Period (Days) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control @error('validity_days') is-invalid @enderror"
+                                    id="validity_days" name="validity_days" value="{{ old('validity_days', 365) }}" required min="1" placeholder="365">
+                                <small class="text-muted">Number of days the gift card will be valid from purchase date</small>
+                                @error('validity_days')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="usage_restrictions" class="form-label">Usage Restrictions</label>
+                                <textarea class="form-control" id="usage_restrictions" name="usage_restrictions" rows="3"
+                                        placeholder="e.g., Valid only on weekdays, Not valid with other offers...">{{ old('usage_restrictions') }}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="blackout_dates_search" class="form-label">Blackout Dates</label>
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control form-control-lg" id="blackout_dates_search"
+                                        placeholder="Search and add blackout dates..." autocomplete="off">
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end w-100" id="blackoutDatesDropdown">
+                                        <li><a class="dropdown-item" href="#" data-value="Dec 25" data-display="December 25 (Christmas)">
+                                            <i class="fas fa-tree text-success me-2"></i> December 25 (Christmas)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Jan 1" data-display="January 1 (New Year)">
+                                            <i class="fas fa-champagne-glasses text-warning me-2"></i> January 1 (New Year)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Dec 31" data-display="December 31 (New Year's Eve)">
+                                            <i class="fas fa-glass-cheers text-info me-2"></i> December 31 (New Year's Eve)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Feb 14" data-display="February 14 (Valentine's Day)">
+                                            <i class="fas fa-heart text-danger me-2"></i> February 14 (Valentine's Day)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Jul 4" data-display="July 4 (Independence Day)">
+                                            <i class="fas fa-flag-usa text-primary me-2"></i> July 4 (Independence Day)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Oct 31" data-display="October 31 (Halloween)">
+                                            <i class="fas fa-ghost text-warning me-2"></i> October 31 (Halloween)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Nov 25" data-display="November 25 (Thanksgiving)">
+                                            <i class="fas fa-turkey text-warning me-2"></i> November 25 (Thanksgiving)
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#" data-value="Dec 24" data-display="December 24 (Christmas Eve)">
+                                            <i class="fas fa-gifts text-danger me-2"></i> December 24 (Christmas Eve)
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div id="blackoutDatesTags" class="d-flex flex-wrap gap-2 mb-2"></div>
+                                <small class="text-muted">Select premade dates or events when gift cards cannot be redeemed</small>
+                            </div>
                         </div>
                     </div>
                 </div>
                 {{-- Review & Summary --}}
                 <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
                     <h3 class="h5 fw-semibold mb-4"> Review & Summary</h3>
-                    {{-- tags --}}
-                    <div class="col-12 mt-3">
-                        <div class="form-group">
-                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <p class="text-muted mb-4">Review all information before saving</p>
+                            <div class="p-2 " style="background:#005555;color:white">
+                                <h6  style="color:white"><i class="fas fa-info-circle"></i> Partner Summary</h6>
+                                <div id="reviewSummary">
+                                    <p class="mb-1"><strong>Partner:</strong> <span id="reviewPartnerName">Not specified</span></p>
+                                    <p class="mb-1"><strong>Branches:</strong> <span id="reviewBranches">Not specified</span></p>
+                                </div>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="confirm_review" name="confirm_review" value="1">
+                                <label class="form-check-label" for="confirm_review">
+                                    <strong>I confirm all information is correct</strong>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -519,161 +619,159 @@
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
 
-    {{-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const typeOptions = document.querySelectorAll('.type-option input[type="radio"]');
+    <script>
+        // Add bonus tier functionality
+        const addBonusTierBtn = document.getElementById('addBonusTierBtn');
+        const bonusTiersContainer = document.getElementById('bonusTiersContainer');
+        let bonusTierIndex = 1;
 
-    function updateActiveState() {
-        document.querySelectorAll('.type-option').forEach(div => div.classList.remove('active'));
-        const selected = document.querySelector('.type-option input[type="radio"]:checked');
-        if (selected) selected.closest('.type-option').classList.add('active');
-    }
+        addBonusTierBtn.addEventListener('click', function() {
+            const newTier = document.createElement('div');
+            newTier.className = 'bonus-tier-item border rounded p-3 mb-3';
+            newTier.innerHTML = `
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <label class="form-label">Min Amount ($)</label>
+                        <input type="number" class="form-control" name="bonus_tiers[${bonusTierIndex}][min_amount]" step="0.01" min="0" placeholder="0">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Max Amount ($)</label>
+                        <input type="number" class="form-control" name="bonus_tiers[${bonusTierIndex}][max_amount]" step="0.01" min="0" placeholder="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Bonus (%)</label>
+                        <input type="number" class="form-control" name="bonus_tiers[${bonusTierIndex}][bonus_percentage]" step="0.01" min="0" placeholder="5">
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-bonus-tier">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            bonusTiersContainer.appendChild(newTier);
+            bonusTierIndex++;
 
-    typeOptions.forEach(input => {
-        input.addEventListener('change', updateActiveState);
-    });
-
-    // Initialize on page load (for old() / preselected)
-    updateActiveState();
-});
-</script> --}}
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const options = document.querySelectorAll('.type-option');
-    const radios = document.querySelectorAll('input[name="type"]');
-
-    function updateActive() {
-        options.forEach(opt => opt.classList.remove('active'));
-        const checked = document.querySelector('input[name="type"]:checked');
-        if (checked) {
-            const label = document.querySelector(`label[for="${checked.id}"]`);
-            if (label) label.classList.add('active');
-        }
-    }
-
-    radios.forEach(radio => {
-        radio.addEventListener('change', updateActive);
-    });
-
-    // Initialize on load (for old() / pre-selected value)
-    updateActive();
-});
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const typeSelect = document.querySelectorAll('input[name="type"]');
-    const fixedSection = document.getElementById('fixedAmountsSection');
-    const rangeSection = document.getElementById('rangeAmountsSection');
-    const addAmountBtn = document.getElementById('addAmountBtn');
-    const fixedContainer = document.getElementById('fixedAmountsContainer');
-
-    // 🔹 Toggle between Fixed and Range sections
-    function toggleSections() {
-        const selectedType = document.querySelector('input[name="type"]:checked')?.value;
-        fixedSection.style.display = selectedType === 'fixed' ? 'block' : 'none';
-        rangeSection.style.display = selectedType === 'range' ? 'block' : 'none';
-    }
-
-    typeSelect.forEach(radio => {
-        radio.addEventListener('change', toggleSections);
-    });
-    toggleSections(); // Initial setup
-
-    // 🔹 Add new fixed amount input
-    addAmountBtn.addEventListener('click', function() {
-        const newField = document.createElement('div');
-        newField.className = 'input-group mb-2';
-        newField.innerHTML = `
-            <span class="input-group-text">$</span>
-            <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
-            <button type="button" class="btn btn-danger remove-amount">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-        fixedContainer.appendChild(newField);
-
-        // Remove field
-        newField.querySelector('.remove-amount').addEventListener('click', function() {
-            newField.remove();
+            newTier.querySelector('.remove-bonus-tier').addEventListener('click', function() {
+                newTier.remove();
+            });
         });
-    });
 
-    // 🔹 Make first fixed input's remove button visible only after adding more
-    const observer = new MutationObserver(() => {
-        const allRemoveBtns = fixedContainer.querySelectorAll('.remove-amount');
-        allRemoveBtns.forEach((btn, i) => {
-            btn.style.display = (i === 0 && allRemoveBtns.length === 1) ? 'none' : 'inline-block';
-        });
-    });
-    observer.observe(fixedContainer, { childList: true, subtree: false });
-});
-</script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = document.querySelectorAll('.type-option');
+            const radios = document.querySelectorAll('input[name="type"]');
 
-
-
-
-<script>
-   // Form field toggle functionality
-    document.querySelectorAll('.field-toggle').forEach(toggle => {
-        toggle.addEventListener('change', function() {
-            const targetId = this.getAttribute('data-target');
-            const requiredToggle = document.getElementById(targetId);
-
-            if (this.checked) {
-                // Enable the "Mark as Required" toggle when field is shown
-                requiredToggle.disabled = false;
-            } else {
-                // Disable and uncheck the "Mark as Required" toggle when field is hidden
-                requiredToggle.disabled = true;
-                requiredToggle.checked = false;
+            function updateActive() {
+                options.forEach(opt => opt.classList.remove('active'));
+                const checked = document.querySelector('input[name="type"]:checked');
+                if (checked) {
+                    const label = document.querySelector(`label[for="${checked.id}"]`);
+                    if (label) label.classList.add('active');
+                }
             }
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', updateActive);
+            });
+
+            // Initialize on load (for old() / pre-selected value)
+            updateActive();
         });
-    });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeSelect = document.querySelectorAll('input[name="type"]');
+            const fixedSection = document.getElementById('fixedAmountsSection');
+            const rangeSection = document.getElementById('rangeAmountsSection');
+            const addAmountBtn = document.getElementById('addAmountBtn');
+            const fixedContainer = document.getElementById('fixedAmountsContainer');
 
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const radios = document.querySelectorAll('.template-radio');
-
-  radios.forEach(radio => {
-    radio.addEventListener('change', function () {
-      document.querySelectorAll('.template-card').forEach(card => {
-        card.classList.remove('selected');
-      });
-      const label = document.querySelector('label[for="' + this.id + '"]');
-      label.classList.add('selected');
-    });
-  });
-});
-
-
-
-
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const options = document.querySelectorAll('.delivery-option');
-
-    options.forEach(opt => {
-        opt.addEventListener('change', function() {
-            const checkedOptions = document.querySelectorAll('.delivery-option:checked');
-
-            // agar user last checked ko uncheck kar raha hai → prevent it
-            if (checkedOptions.length === 0) {
-                this.checked = true;
-                alert('At least one delivery option must remain selected.');
+            // 🔹 Toggle between Fixed and Range sections
+            function toggleSections() {
+                const selectedType = document.querySelector('input[name="type"]:checked')?.value;
+                fixedSection.style.display = selectedType === 'fixed' ? 'block' : 'none';
+                rangeSection.style.display = selectedType === 'range' ? 'block' : 'none';
             }
+
+            typeSelect.forEach(radio => {
+                radio.addEventListener('change', toggleSections);
+            });
+            toggleSections(); // Initial setup
+
+            // 🔹 Add new fixed amount input
+            addAmountBtn.addEventListener('click', function() {
+                const newField = document.createElement('div');
+                newField.className = 'input-group mb-2';
+                newField.innerHTML = `
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
+                    <button type="button" class="btn btn-danger remove-amount">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                fixedContainer.appendChild(newField);
+
+                // Remove field
+                newField.querySelector('.remove-amount').addEventListener('click', function() {
+                    newField.remove();
+                });
+            });
+
+            // 🔹 Make first fixed input's remove button visible only after adding more
+            const observer = new MutationObserver(() => {
+                const allRemoveBtns = fixedContainer.querySelectorAll('.remove-amount');
+                allRemoveBtns.forEach((btn, i) => {
+                    btn.style.display = (i === 0 && allRemoveBtns.length === 1) ? 'none' : 'inline-block';
+                });
+            });
+            observer.observe(fixedContainer, { childList: true, subtree: false });
         });
-    });
-});
-</script>
+    // Form field toggle functionality
+        document.querySelectorAll('.field-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const targetId = this.getAttribute('data-target');
+                const requiredToggle = document.getElementById(targetId);
 
+                if (this.checked) {
+                    // Enable the "Mark as Required" toggle when field is shown
+                    requiredToggle.disabled = false;
+                } else {
+                    // Disable and uncheck the "Mark as Required" toggle when field is hidden
+                    requiredToggle.disabled = true;
+                    requiredToggle.checked = false;
+                }
+            });
+        });
 
+        document.addEventListener('DOMContentLoaded', function () {
+        const radios = document.querySelectorAll('.template-radio');
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            const label = document.querySelector('label[for="' + this.id + '"]');
+            label.classList.add('selected');
+            });
+        });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const options = document.querySelectorAll('.delivery-option');
+
+            options.forEach(opt => {
+                opt.addEventListener('change', function() {
+                    const checkedOptions = document.querySelectorAll('.delivery-option:checked');
+
+                    // agar user last checked ko uncheck kar raha hai → prevent it
+                    if (checkedOptions.length === 0) {
+                        this.checked = true;
+                        alert('At least one delivery option must remain selected.');
+                    }
+                });
+            });
+        });
+    </script>
 
 
   <script>
