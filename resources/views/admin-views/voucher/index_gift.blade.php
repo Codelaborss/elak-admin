@@ -118,491 +118,499 @@
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.include_client_partner_information")
 
-                   <!-- Occasions-->
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Occasions</h3>
-                    {{-- tags --}}
-                    <div class="col-12 mt-3">
-                          <p class="text-muted mb-3">Select occasions for this gift card</p>
-                         <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="select_category_all">{{ translate('Occasions') }}</label>
-                                    <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
-                                    @foreach (\App\Models\GiftOccasions::all() as $item)
-                                        <option value="{{ $item->id }}">{{ $item->title }}</option>
-                                    @endforeach
-                                </select>
+                    <!-- Occasions-->
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4">Occasions</h3>
+                        {{-- tags --}}
+                        <div class="col-12 mt-3">
+                            <p class="text-muted mb-3">Select occasions for this gift card</p>
+                            <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="select_category_all">{{ translate('Occasions') }}</label>
+                                        <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
+                                        @foreach (\App\Models\GiftOccasions::all() as $item)
+                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+                    </div>
+                    <!-- Recipient Info Form Fields-->
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4">Recipient Info Form Fields</h3>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Select which fields will appear on the recipient info form</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th width="40%">Field Name</th>
+                                                <th width="30%" class="text-center">Show Field</th>
+                                                <th width="30%" class="text-center">Mark as Required</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <strong>Sender Name</strong>
+                                                    <small class="d-block text-muted">Who is sending the gift card</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_sender_name" name="form_fields[]" value="sender_name" data-target="req_sender_name">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_sender_name" name="required_fields[]" value="sender_name" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Sender Email</strong>
+                                                    <small class="d-block text-muted">Sender's email address</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_sender_email" name="form_fields[]" value="sender_email" data-target="req_sender_email">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_sender_email" name="required_fields[]" value="sender_email" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Recipient Name</strong>
+                                                    <small class="d-block text-muted">Who will receive the gift card</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_name" name="form_fields[]" value="recipient_name" checked data-target="req_recipient_name">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_recipient_name" name="required_fields[]" value="recipient_name" checked>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Recipient Email</strong>
+                                                    <small class="d-block text-muted">Where to send the gift card</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_email" name="form_fields[]" value="recipient_email" checked data-target="req_recipient_email">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_recipient_email" name="required_fields[]" value="recipient_email" checked>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Recipient Phone</strong>
+                                                    <small class="d-block text-muted">Phone number for WhatsApp delivery</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_phone" name="form_fields[]" value="recipient_phone" data-target="req_recipient_phone">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_recipient_phone" name="required_fields[]" value="recipient_phone" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Personal Message</strong>
+                                                    <small class="d-block text-muted">Custom message from sender</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_message" name="form_fields[]" value="message" data-target="req_message">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_message" name="required_fields[]" value="message" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Scheduled Delivery Date</strong>
+                                                    <small class="d-block text-muted">When to send the gift card</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_delivery_date" name="form_fields[]" value="delivery_date" data-target="req_delivery_date">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_delivery_date" name="required_fields[]" value="delivery_date" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>Recipient Address</strong>
+                                                    <small class="d-block text-muted">Physical address (for physical cards)</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_address" name="form_fields[]" value="recipient_address" data-target="req_recipient_address">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block">
+                                                        <input class="form-check-input" type="checkbox" id="req_recipient_address" name="required_fields[]" value="recipient_address" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Note:</strong> Enable "Show Field" first, then you can mark it as required. Recipient Name and Email are enabled by default.
+                                </div>
                             </div>
-                    </div>
-                </div>
-                   <!-- Recipient Info Form Fields-->
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                      <h3 class="h5 fw-semibold mb-4">Recipient Info Form Fields</h3>
-                    <div class="card shadow-sm mb-4">
-                    <div class="card-body">
-                        <p class="text-muted mb-4">Select which fields will appear on the recipient info form</p>
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th width="40%">Field Name</th>
-                                        <th width="30%" class="text-center">Show Field</th>
-                                        <th width="30%" class="text-center">Mark as Required</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong>Sender Name</strong>
-                                            <small class="d-block text-muted">Who is sending the gift card</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_sender_name" name="form_fields[]" value="sender_name" data-target="req_sender_name">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_sender_name" name="required_fields[]" value="sender_name" disabled>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Sender Email</strong>
-                                            <small class="d-block text-muted">Sender's email address</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_sender_email" name="form_fields[]" value="sender_email" data-target="req_sender_email">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_sender_email" name="required_fields[]" value="sender_email" disabled>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Recipient Name</strong>
-                                            <small class="d-block text-muted">Who will receive the gift card</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_name" name="form_fields[]" value="recipient_name" checked data-target="req_recipient_name">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_recipient_name" name="required_fields[]" value="recipient_name" checked>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Recipient Email</strong>
-                                            <small class="d-block text-muted">Where to send the gift card</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_email" name="form_fields[]" value="recipient_email" checked data-target="req_recipient_email">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_recipient_email" name="required_fields[]" value="recipient_email" checked>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Recipient Phone</strong>
-                                            <small class="d-block text-muted">Phone number for WhatsApp delivery</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_phone" name="form_fields[]" value="recipient_phone" data-target="req_recipient_phone">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_recipient_phone" name="required_fields[]" value="recipient_phone" disabled>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Personal Message</strong>
-                                            <small class="d-block text-muted">Custom message from sender</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_message" name="form_fields[]" value="message" data-target="req_message">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_message" name="required_fields[]" value="message" disabled>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Scheduled Delivery Date</strong>
-                                            <small class="d-block text-muted">When to send the gift card</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_delivery_date" name="form_fields[]" value="delivery_date" data-target="req_delivery_date">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_delivery_date" name="required_fields[]" value="delivery_date" disabled>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>Recipient Address</strong>
-                                            <small class="d-block text-muted">Physical address (for physical cards)</small>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_address" name="form_fields[]" value="recipient_address" data-target="req_recipient_address">
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-switch d-inline-block">
-                                                <input class="form-check-input" type="checkbox" id="req_recipient_address" name="required_fields[]" value="recipient_address" disabled>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>Note:</strong> Enable "Show Field" first, then you can mark it as required. Recipient Name and Email are enabled by default.
                         </div>
                     </div>
-                </div>
+                    <!-- Message Template Style-->
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4">Message Template Style</h3>
+                        <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Select one message template style for this gift card</p>
+                                <div class="row g-3">
+                                    @foreach (\App\Models\MessageTemplate::all() as $item)
+                                        @php(
+                                        $id = 'template_' . $item->id
+                                        )
+                                        <div class="col-md-6">
+                                        <input type="radio" class="btn-check template-radio" name="message_template_style" id="{{ $id }}" value="{{ $item->id }}">
+                                        <label class="template-card border rounded p-3 w-100 d-block" for="{{ $id }}">
+                                            <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
+                                            <strong class="ms-2">{{ $item->title }}</strong>
+                                            <small class="d-block text-muted mt-1">{{ $item->sub_title }}</small>
+                                        </label>
+                                        </div>
+                                    @endforeach
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Delivery Options-->
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4">Delivery Options</h3>
+                        {{-- tags --}}
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-3">Select how gift cards will be delivered to recipients</p>
 
-                </div>
-                   <!-- Message Template Style-->
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Message Template Style</h3>
-                     <div class="card shadow-sm mb-4">
-                    <div class="card-body">
-                        <p class="text-muted mb-3">Select one message template style for this gift card</p>
-                            <div class="row g-3">
-                                @foreach (\App\Models\MessageTemplate::all() as $item)
+                            <div class="row">
+                                @foreach (\App\Models\DeliveryOption::all() as $item)
                                     @php(
-                                    $id = 'template_' . $item->id
-                                    )
-                                    <div class="col-md-6">
-                                    <input type="radio" class="btn-check template-radio" name="message_template_style" id="{{ $id }}" value="{{ $item->id }}">
-                                    <label class="template-card border rounded p-3 w-100 d-block" for="{{ $id }}">
-                                        <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
-                                        <strong class="ms-2">{{ $item->title }}</strong>
-                                        <small class="d-block text-muted mt-1">{{ $item->sub_title }}</small>
-                                    </label>
+                                        $id = 'delivery_' . $item->id
+                                        )
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card border-primary h-100">
+                                            <div class="card-body">
+                                                <div class="form-check form-switch">
+                                                    <input
+                                                        class="form-check-input delivery-option"
+                                                        type="checkbox"
+                                                        id="{{ $id }}"
+                                                        name="delivery_options[]"
+                                                        value="{{ $item->slug ?? $item->id }}"
+                                                        {{ $loop->first ? 'checked' : '' }}
+                                                    >
+                                                    <label class="form-check-label" for="{{ $id }}">
+                                                        <h6 class="mb-1">
+                                                        <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
+                                                        {{ $item->title }}
+                                                        </h6>
+                                                        <small class="text-muted">{{ $item->sub_title }}</small>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
-
                             </div>
-                        </div>
-                    </div>
-                </div>
-                   <!-- Delivery Options-->
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Delivery Options</h3>
-                    {{-- tags --}}
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <p class="text-muted mb-3">Select how gift cards will be delivered to recipients</p>
 
-                          <div class="row">
-                            @foreach (\App\Models\DeliveryOption::all() as $item)
-                                @php(
-                                    $id = 'delivery_' . $item->id
-                                    )
-                                <div class="col-md-6 mb-3">
-                                    <div class="card border-primary h-100">
-                                        <div class="card-body">
-                                            <div class="form-check form-switch">
-                                                <input
-                                                    class="form-check-input delivery-option"
-                                                    type="checkbox"
-                                                    id="{{ $id }}"
-                                                    name="delivery_options[]"
-                                                    value="{{ $item->slug ?? $item->id }}"
-                                                    {{ $loop->first ? 'checked' : '' }}
-                                                >
-                                                <label class="form-check-label" for="{{ $id }}">
-                                                    <h6 class="mb-1">
-                                                      <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
-                                                    {{ $item->title }}
-                                                    </h6>
-                                                    <small class="text-muted">{{ $item->sub_title }}</small>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                            <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Note:</strong> At least one delivery option must be selected. Email is enabled by default.
                                 </div>
-                            @endforeach
-                        </div>
-
-
-                           <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
-                                <i class="fas fa-info-circle"></i>
-                                <strong>Note:</strong> At least one delivery option must be selected. Email is enabled by default.
                             </div>
                         </div>
                     </div>
-                </div>
-                   <!-- How It Works-->
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">How It Works</h3>
-                    {{-- tags --}}
-                      <div class="card shadow-sm mb-4">
+                    <!-- How It Works-->
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4">How It Works</h3>
+                        {{-- tags --}}
+                        <div class="card ">
+                            <div class="card-body" id="workList">
+
+                            </div>
+                        </div>
+                        <div class="card shadow-sm mb-4">
+                                <div class="card-body">
+                                    <p class="text-muted mb-4">Explain redemption process</p>
+                                    <div class="mb-3">
+                                        <label for="redemption_process" class="form-label">Redemption Process</label>
+                                        <textarea class="form-control" id="redemption_process" name="redemption_process" rows="6"
+                                                placeholder="Step by step instructions on how to redeem this voucher...">{{ old('redemption_process') }}</textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                    </div>
+                    {{-- Amount Configuration --}}
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4"> Amount Configuration</h3>
+                        <div class="card shadow-sm mb-4">
                             <div class="card-body">
-                                <p class="text-muted mb-4">Explain redemption process</p>
                                 <div class="mb-3">
-                                    <label for="redemption_process" class="form-label">Redemption Process</label>
-                                    <textarea class="form-control" id="redemption_process" name="redemption_process" rows="6"
-                                            placeholder="Step by step instructions on how to redeem this voucher...">{{ old('redemption_process') }}</textarea>
+                                    <label class="form-label">Amount Type <span class="text-danger">*</span></label>
+                                <div class="row g-2" id="amountTypeGroup">
+                                        <div class="col-md-4">
+                                            <input type="radio" class="btn-check" name="type" id="type_fixed" value="fixed" {{ old('type', 'fixed') == 'fixed' ? 'checked' : '' }}>
+                                            <label class="btn border type-option " for="type_fixed">
+                                                <i class="fas fa-list"></i> Fixed Amounts
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <input type="radio" class="btn-check" name="type" id="type_range" value="range" {{ old('type') == 'range' ? 'checked' : '' }}>
+                                            <label class="btn border type-option " for="type_range">
+                                                <i class="fas fa-arrows-alt-h"></i> Range
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
 
-                            </div>
-                        </div>
-
-                </div>
-                {{-- Amount Configuration --}}
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4"> Amount Configuration</h3>
-                     <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label">Amount Type <span class="text-danger">*</span></label>
-                               <div class="row g-2" id="amountTypeGroup">
-                                    <div class="col-md-4">
-                                        <input type="radio" class="btn-check" name="type" id="type_fixed" value="fixed" {{ old('type', 'fixed') == 'fixed' ? 'checked' : '' }}>
-                                        <label class="btn border type-option " for="type_fixed">
-                                            <i class="fas fa-list"></i> Fixed Amounts
-                                        </label>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <input type="radio" class="btn-check" name="type" id="type_range" value="range" {{ old('type') == 'range' ? 'checked' : '' }}>
-                                        <label class="btn border type-option " for="type_range">
-                                            <i class="fas fa-arrows-alt-h"></i> Range
+                                <div class="mb-3">
+                                    <div class="form-check form-switch form-switch-lg">
+                                        <input class="form-check-input" type="checkbox" id="custom_enabled" name="custom_enabled" value="1" {{ old('custom_enabled') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="custom_enabled">
+                                            <strong>Enable Custom Amount</strong>
+                                            <small class="d-block text-muted">Allow customers to enter their own amount</small>
                                         </label>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <div class="form-check form-switch form-switch-lg">
-                                    <input class="form-check-input" type="checkbox" id="custom_enabled" name="custom_enabled" value="1" {{ old('custom_enabled') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="custom_enabled">
-                                        <strong>Enable Custom Amount</strong>
-                                        <small class="d-block text-muted">Allow customers to enter their own amount</small>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Fixed Amounts Section -->
-                            <div id="fixedAmountsSection" style="display: none;">
-                                <label class="form-label">Fixed Amount Options <span class="text-danger">*</span></label>
-                                <div id="fixedAmountsContainer">
-                                    <div class="input-group mb-2">
-                                        <span class="input-group-text">$</span>
-                                        <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
-                                        <button type="button" class="btn btn-danger remove-amount" style="display: none;">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary border" id="addAmountBtn">
-                                    <i class="fas fa-plus"></i> Add Another Amount
-                                </button>
-                            </div>
-
-                            <!-- Range Amounts Section -->
-                            <div id="rangeAmountsSection" style="display: none;">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="min_amount" class="form-label">Minimum Amount <span class="text-danger">*</span></label>
-                                        <div class="input-group">
+                                <!-- Fixed Amounts Section -->
+                                <div id="fixedAmountsSection" style="display: none;">
+                                    <label class="form-label">Fixed Amount Options <span class="text-danger">*</span></label>
+                                    <div id="fixedAmountsContainer">
+                                        <div class="input-group mb-2">
                                             <span class="input-group-text">$</span>
-                                            <input type="number" class="form-control @error('min_amount') is-invalid @enderror"
-                                                id="min_amount" name="min_amount" step="0.01" min="0" value="{{ old('min_amount') }}" placeholder="10.00">
-                                        </div>
-                                        @error('min_amount')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="max_amount" class="form-label">Maximum Amount <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" class="form-control @error('max_amount') is-invalid @enderror"
-                                                id="max_amount" name="max_amount" step="0.01" min="0" value="{{ old('max_amount') }}" placeholder="1000.00">
-                                        </div>
-                                        @error('max_amount')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- Bonus Configuration --}}
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4"> Bonus Configuration</h3>
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <input type="hidden" name="bonus_enabled" value="1">
-                            <input type="hidden" name="bonus_type" value="percentage">
-
-                            <p class="text-muted mb-3">Set bonus percentage based on top-up amount ranges</p>
-
-                            <div id="bonusTiersContainer">
-                                <div class="bonus-tier-item border rounded p-3 mb-3">
-                                    <div class="row g-2">
-                                        <div class="col-md-4">
-                                            <label class="form-label">Min Amount ($)</label>
-                                            <input type="number" class="form-control" name="bonus_tiers[0][min_amount]" step="0.01" min="0" placeholder="0" value="0">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Max Amount ($)</label>
-                                            <input type="number" class="form-control" name="bonus_tiers[0][max_amount]" step="0.01" min="0" placeholder="100">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label">Bonus (%)</label>
-                                            <input type="number" class="form-control" name="bonus_tiers[0][bonus_percentage]" step="0.01" min="0" placeholder="5">
-                                        </div>
-                                        <div class="col-md-1 d-flex align-items-end">
-                                            <button type="button" class="btn btn-danger remove-bonus-tier" style="display: none;">
+                                            <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
+                                            <button type="button" class="btn btn-danger remove-amount" style="display: none;">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn btn-sm btn-outline-secondary" id="addBonusTierBtn">
-                                <i class="fas fa-plus"></i> Add Another Tier
-                            </button>
-
-                            <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
-                                <i class="fas fa-info-circle"></i>
-                                <strong>Example:</strong> $0-$100 = 5% bonus, $101-$500 = 10% bonus, $501+ = 15% bonus
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- Terms & Conditions --}}
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <p class="text-muted mb-4">Define usage terms and restrictions</p>
-
-                            <div class="mb-3">
-                                <label for="validity_days" class="form-label">Validity Period (Days) <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control @error('validity_days') is-invalid @enderror"
-                                    id="validity_days" name="validity_days" value="{{ old('validity_days', 365) }}" required min="1" placeholder="365">
-                                <small class="text-muted">Number of days the gift card will be valid from purchase date</small>
-                                @error('validity_days')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="usage_restrictions" class="form-label">Usage Restrictions</label>
-                                <textarea class="form-control" id="usage_restrictions" name="usage_restrictions" rows="3"
-                                        placeholder="e.g., Valid only on weekdays, Not valid with other offers...">{{ old('usage_restrictions') }}</textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="blackout_dates_search" class="form-label">Blackout Dates</label>
-                                <div class="input-group mb-2">
-                                    <input type="text" class="form-control form-control-lg" id="blackout_dates_search"
-                                        placeholder="Search and add blackout dates..." autocomplete="off">
-                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                        <i class="fas fa-chevron-down"></i>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary border" id="addAmountBtn">
+                                        <i class="fas fa-plus"></i> Add Another Amount
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end w-100" id="blackoutDatesDropdown">
-                                        <li><a class="dropdown-item" href="#" data-value="Dec 25" data-display="December 25 (Christmas)">
-                                            <i class="fas fa-tree text-success me-2"></i> December 25 (Christmas)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Jan 1" data-display="January 1 (New Year)">
-                                            <i class="fas fa-champagne-glasses text-warning me-2"></i> January 1 (New Year)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Dec 31" data-display="December 31 (New Year's Eve)">
-                                            <i class="fas fa-glass-cheers text-info me-2"></i> December 31 (New Year's Eve)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Feb 14" data-display="February 14 (Valentine's Day)">
-                                            <i class="fas fa-heart text-danger me-2"></i> February 14 (Valentine's Day)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Jul 4" data-display="July 4 (Independence Day)">
-                                            <i class="fas fa-flag-usa text-primary me-2"></i> July 4 (Independence Day)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Oct 31" data-display="October 31 (Halloween)">
-                                            <i class="fas fa-ghost text-warning me-2"></i> October 31 (Halloween)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Nov 25" data-display="November 25 (Thanksgiving)">
-                                            <i class="fas fa-turkey text-warning me-2"></i> November 25 (Thanksgiving)
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="Dec 24" data-display="December 24 (Christmas Eve)">
-                                            <i class="fas fa-gifts text-danger me-2"></i> December 24 (Christmas Eve)
-                                        </a></li>
-                                    </ul>
                                 </div>
-                                <div id="blackoutDatesTags" class="d-flex flex-wrap gap-2 mb-2"></div>
-                                <small class="text-muted">Select premade dates or events when gift cards cannot be redeemed</small>
+
+                                <!-- Range Amounts Section -->
+                                <div id="rangeAmountsSection" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="min_amount" class="form-label">Minimum Amount <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" class="form-control @error('min_amount') is-invalid @enderror"
+                                                    id="min_amount" name="min_amount" step="0.01" min="0" value="{{ old('min_amount') }}" placeholder="10.00">
+                                            </div>
+                                            @error('min_amount')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="max_amount" class="form-label">Maximum Amount <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" class="form-control @error('max_amount') is-invalid @enderror"
+                                                    id="max_amount" name="max_amount" step="0.01" min="0" value="{{ old('max_amount') }}" placeholder="1000.00">
+                                            </div>
+                                            @error('max_amount')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {{-- Review & Summary --}}
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4"> Review & Summary</h3>
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <p class="text-muted mb-4">Review all information before saving</p>
-                            <div class="p-2 " style="background:#005555;color:white">
-                                <h6  style="color:white"><i class="fas fa-info-circle"></i> Partner Summary</h6>
-                                <div id="reviewSummary">
-                                    <p class="mb-1"><strong>Partner:</strong> <span id="reviewPartnerName">Not specified</span></p>
-                                    <p class="mb-1"><strong>Branches:</strong> <span id="reviewBranches">Not specified</span></p>
-                                </div>
-                            </div>
+                    {{-- Bonus Configuration --}}
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4"> Bonus Configuration</h3>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <input type="hidden" name="bonus_enabled" value="1">
+                                <input type="hidden" name="bonus_type" value="percentage">
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="confirm_review" name="confirm_review" value="1">
-                                <label class="form-check-label" for="confirm_review">
-                                    <strong>I confirm all information is correct</strong>
-                                </label>
+                                <p class="text-muted mb-3">Set bonus percentage based on top-up amount ranges</p>
+
+                                <div id="bonusTiersContainer">
+                                    <div class="bonus-tier-item border rounded p-3 mb-3">
+                                        <div class="row g-2">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Min Amount ($)</label>
+                                                <input type="number" class="form-control" name="bonus_tiers[0][min_amount]" step="0.01" min="0" placeholder="0" value="0">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Max Amount ($)</label>
+                                                <input type="number" class="form-control" name="bonus_tiers[0][max_amount]" step="0.01" min="0" placeholder="100">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">Bonus (%)</label>
+                                                <input type="number" class="form-control" name="bonus_tiers[0][bonus_percentage]" step="0.01" min="0" placeholder="5">
+                                            </div>
+                                            <div class="col-md-1 d-flex align-items-end">
+                                                <button type="button" class="btn btn-danger remove-bonus-tier" style="display: none;">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-sm btn-outline-secondary" id="addBonusTierBtn">
+                                    <i class="fas fa-plus"></i> Add Another Tier
+                                </button>
+
+                                <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Example:</strong> $0-$100 = 5% bonus, $101-$500 = 10% bonus, $501+ = 15% bonus
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    {{-- Terms & Conditions --}}
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
+                        <div class="card border shadow-sm mt-3">
+                            <div class="card-body">
+                                <div id="usageTerms" class="row">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Define usage terms and restrictions</p>
 
+                                <div class="mb-3">
+                                    <label for="validity_days" class="form-label">Validity Period (Days) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control @error('validity_days') is-invalid @enderror"
+                                        id="validity_days" name="validity_days" value="{{ old('validity_days', 365) }}" required min="1" placeholder="365">
+                                    <small class="text-muted">Number of days the gift card will be valid from purchase date</small>
+                                    @error('validity_days')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="usage_restrictions" class="form-label">Usage Restrictions</label>
+                                    <textarea class="form-control" id="usage_restrictions" name="usage_restrictions" rows="3"
+                                            placeholder="e.g., Valid only on weekdays, Not valid with other offers...">{{ old('usage_restrictions') }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="blackout_dates_search" class="form-label">Blackout Dates</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control form-control-lg" id="blackout_dates_search"
+                                            placeholder="Search and add blackout dates..." autocomplete="off">
+                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end w-100" id="blackoutDatesDropdown">
+                                            <li><a class="dropdown-item" href="#" data-value="Dec 25" data-display="December 25 (Christmas)">
+                                                <i class="fas fa-tree text-success me-2"></i> December 25 (Christmas)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Jan 1" data-display="January 1 (New Year)">
+                                                <i class="fas fa-champagne-glasses text-warning me-2"></i> January 1 (New Year)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Dec 31" data-display="December 31 (New Year's Eve)">
+                                                <i class="fas fa-glass-cheers text-info me-2"></i> December 31 (New Year's Eve)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Feb 14" data-display="February 14 (Valentine's Day)">
+                                                <i class="fas fa-heart text-danger me-2"></i> February 14 (Valentine's Day)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Jul 4" data-display="July 4 (Independence Day)">
+                                                <i class="fas fa-flag-usa text-primary me-2"></i> July 4 (Independence Day)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Oct 31" data-display="October 31 (Halloween)">
+                                                <i class="fas fa-ghost text-warning me-2"></i> October 31 (Halloween)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Nov 25" data-display="November 25 (Thanksgiving)">
+                                                <i class="fas fa-turkey text-warning me-2"></i> November 25 (Thanksgiving)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Dec 24" data-display="December 24 (Christmas Eve)">
+                                                <i class="fas fa-gifts text-danger me-2"></i> December 24 (Christmas Eve)
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="blackoutDatesTags" class="d-flex flex-wrap gap-2 mb-2"></div>
+                                    <small class="text-muted">Select premade dates or events when gift cards cannot be redeemed</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Review & Summary --}}
+                    <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4"> Review & Summary</h3>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Review all information before saving</p>
+                                <div class="p-2 " style="background:#005555;color:white">
+                                    <h6  style="color:white"><i class="fas fa-info-circle"></i> Partner Summary</h6>
+                                    <div id="reviewSummary">
+                                        <p class="mb-1"><strong>Partner:</strong> <span id="reviewPartnerName">Not specified</span></p>
+                                        <p class="mb-1"><strong>Branches:</strong> <span id="reviewBranches">Not specified</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="confirm_review" name="confirm_review" value="1">
+                                    <label class="form-check-label" for="confirm_review">
+                                        <strong>I confirm all information is correct</strong>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </form>
         </div>
       </div>
@@ -1616,8 +1624,8 @@ $(document).ready(function() {
 
                 $.each(response.work_management, function(index, item) {
                     workHtml += `
-                        <div class="work-item  mb-4 rounded-lg ">
-                            <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
+                        <div class="work-item  mb-4 rounded-lg mb-2">
+                            <h3 class="font-bold text-lg mb-2 text-start">${item.guid_title}</h3>
 
                             <div class="mb-3">
                                 <strong>Purchase Process:</strong>

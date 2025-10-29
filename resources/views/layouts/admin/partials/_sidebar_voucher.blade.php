@@ -774,6 +774,60 @@
 
 
 
+                       <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/GiftOccasions*') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Gift Management') }}">
+                                <i class="tio-premium-outlined nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('GiftOccasions Setup') }}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/GiftOccasions*') ? 'block' : 'none' }}">
+
+                                <li class="nav-item {{ Request::is('admin/GiftOccasions/add-new') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.GiftOccasions.add-new') }}" title="{{ translate('Gift Occasions') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('Gift Occasions') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/MessageTemplate/add-new') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.MessageTemplate.add-new') }}" title="{{ translate('Message Template') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('Message Template') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/DeliveryOption/add-new') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.DeliveryOption.add-new') }}" title="{{ translate('Delivery Option') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('Delivery Option') }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+
+
+                      {{-- <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.GiftOccasions.add-new') }}" title="">
+                        <span class="tio-add-circle nav-icon"></span>
+                        <span class="text-truncate"> Gift Occasions</span>
+                    </a>
+                </li>
+                <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.MessageTemplate.add-new') }}" title="">
+                        <span class="tio-add-circle nav-icon"></span>
+                        <span class="text-truncate"> Message Template</span>
+                    </a>
+                </li>
+                <li class="navbar-vertical-aside-has-menu ">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.DeliveryOption.add-new') }}" title="">
+                        <span class="tio-add-circle nav-icon"></span>
+                        <span class="text-truncate"> Delivery Option</span>
+                    </a>
+                </li> --}}
+
+
+
+
                     {{-- @if (\App\CentralLogics\Helpers::module_permission_check('unit'))
                     <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/unit*') ? 'active' : '' }}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.unit.index') }}" title="{{ translate('messages.units') }}">
@@ -1045,24 +1099,7 @@
                         <span class="text-truncate"> Segments list</span>
                     </a>
                 </li>
-                <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.GiftOccasions.add-new') }}" title="">
-                        <span class="tio-add-circle nav-icon"></span>
-                        <span class="text-truncate"> Gift Occasions</span>
-                    </a>
-                </li>
-                <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.MessageTemplate.add-new') }}" title="">
-                        <span class="tio-add-circle nav-icon"></span>
-                        <span class="text-truncate"> Message Template</span>
-                    </a>
-                </li>
-                <li class="navbar-vertical-aside-has-menu ">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.DeliveryOption.add-new') }}" title="">
-                        <span class="tio-add-circle nav-icon"></span>
-                        <span class="text-truncate"> Delivery Option</span>
-                    </a>
-                </li>
+
                 <li class="nav-item py-5">
 
                 </li>

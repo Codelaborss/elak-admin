@@ -46,662 +46,671 @@
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.include_client_partner_information")
 
-
                    <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
-                <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
-                    {{-- Voucher Title --}}
-                    <div class="row g-3 mb-3">
-                        <div class="col-6">
-                            <label class="form-label fw-medium">Voucher Title</label>
-                            <input type="text" class="form-control" placeholder="Voucher Title">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label fw-medium">Valid Until</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                         {{-- images --}}
-                    <div class="row g-3">
-                        <div class="col-12" >
-                            @include("admin-views.voucher.include_images")
-                        </div>
-                    </div>
-                    {{-- images  --}}
-                    <div class="row g-3">
-                        <div class="mb-3 col-12 ">
-                            <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                            <textarea type="text" name="description[]" class="form-control min-h-90px ckeditor"></textarea>
-                        </div>
-                    </div>
-                    {{-- Bundle Type Selection --}}
-                    <div class="col-12 col-md-12">
-                        <div class="form-group mb-0">
-                            <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
-                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
-                                <option value="">Select Bundle Offer Type</option>
-                                <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
-                                    Simple
-                                </option>
-                                <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
-                                    Fixed Bundle - Specific products at set price
-                                </option>
-                                <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
-                                   Buy X Get Y - Buy products get different product free
-                                </option>
-                                <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
-                                    Mix & Match - Customer chooses from categories
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    {{-- panel1 --}}
-                    <div class="col-12 mt-5" id="panel1">
-                         <div class="row g-3 bundle_div" style="display:none;">
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4> Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Bundle Fixed Price</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                        <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
+                        {{-- Voucher Title --}}
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <label class="form-label fw-medium">Voucher Title</label>
+                                <input type="text" name="voucher_title" class="form-control" placeholder="Voucher Title">
                             </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Group Product Bundle Configuration -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3"> Group Product Bundle</h4>
-                                    <!-- Bundle Products -->
-                                    <div class="row">
-
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                              <div class="form-group">
-                                                <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
-                                                </label>
-                                                <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Bundle Discount Type</label>
-                                            <select class="form-control" data-testid="select-bundle-discount-type">
-                                            <option>% Percentage Off</option>
-                                            <option>$ Fixed Amount Off</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <label class="form-label">Discount Amount</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-6">
+                                <label class="form-label fw-medium">Valid Until</label>
+                                <input type="date" name="valid_until" class="form-control">
                             </div>
                         </div>
-                        <div class="row g-3 bogo_free_div" style="display:none;">
-                            <div class="card border-0 shadow-sm">
-                                <!-- BOGO Configuration -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3"> BOGO Configuration</h4>
-                                    <div class="row">
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                            <div class="form-group">
-                                                <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                                </label>
-                                                <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6 mt-3">
-                                            <div class="form-group">
-                                                <label class="input-label"
-                                                    for="buy_quantity">{{ translate('Buy Quantity') }}
-                                                </label>
-                                                <input type="text" name="name" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <div class="form-group">
-                                                <label class="input-label"
-                                                    for="get_quantity">{{ translate('Get Quantity') }}
-                                                </label>
-                                                <input type="text" name="name" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            {{-- images --}}
+                        <div class="row g-3">
+                            <div class="col-12" >
+                                @include("admin-views.voucher.include_images")
                             </div>
                         </div>
-
-                        <div class="row g-3 mix_match_div" style="display:none;">
-                            <div id="bundleConfigSection" class="bundle-config-section show my-4">
-                                <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label>Total Items Customer Must Choose</label>
-                                            <input type="number" id="totalItemsToChoose" class="form-control" min="2" value="5">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Bundle Price</label>
-                                            <input type="number" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-0 shadow-sm">
-                                <!-- Mix and Match Collection -->
-                                <div class="p-3 bg-white mb-4">
-                                    <h4 class="mb-3">🔀 Mix and Match Collection</h4>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-lg-12">
-                                            <div class="form-group mb-0">
-                                                <label class="input-label"
-                                                    for="select_category_all">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
-                                                    data-toggle="tooltip" data-placement="right"
-                                                    data-original-title="{{ translate('messages.Required.')}}"> *
-                                                    </span></label>
-                                                    <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
-                                                    @foreach (\App\Models\Category::all() as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-sm-12 col-lg-12">
-                                            <div class="form-group">
-                                                <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
-                                                    <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
-                                                </label>
-                                                <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <!-- 3-column grid -->
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Buy Quantity</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Discount Amount</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                        <div class="col-md-4 mt-3">
-                                            <label class="form-label">Max Uses Per Customer</label>
-                                            <input
-                                            type="number"
-                                            step="0.01"
-                                            class="form-control"
-                                            placeholder="10"
-                                            data-testid="input-bundle-discount"
-                                            value="0"
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
+                        {{-- images  --}}
+                        <div class="row g-3">
+                            <div class="mb-3 col-12 ">
+                                <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                                <textarea type="text" name="description" class="form-control min-h-90px ckeditor"></textarea>
                             </div>
                         </div>
-                    </div>
-                    <!-- Valid Until -->
-                    <div class="col-12 mt-3">
-                        <label class="form-label" for="validUntilDate">Valid Until</label>
-                        <input
-                        type="date"
-                        class="form-control"
-                        id="validUntilDate"
-                        placeholder="mm/dd/yyyy"
-                        data-testid="input-bundle-valid-until"
-                        >
-                    </div>
-                    {{-- tags --}}
-                    <div class="col-12 mt-3">
-                        <div class="form-group">
-                            <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                            <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
-                        </div>
-                    </div>
-                </div>
-
-               {{-- Bundle Products Configuration --}}
-                <div class=" section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
-                    <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
-                    <div id="selectedProducts">
-                        <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
-                    </div>
-                    <button type="button" class="btn btn--primary" id="addProductBtn">+ Add Product to Bundle</button>
-                    <!-- Available Products to Choose From -->
-                    <div id="availableProducts" style="display: none;">
-                        <h3 class="mt-3">Available Products:</h3>
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-12">
-                                <div class="form-group">
-                                    <select name="select_pro" id="select_pro" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                {{-- Product selection area --}}
-                                <div id="productDetails" class="mt-3 row mx-1"></div>
-
-                                {{-- Selected items display section --}}
-                                <div id="selectedItemsSection" class="mt-4" style="display: none;">
-                                    <div class="card p-3 shadow-sm bg-light">
-                                        <h5 class="mb-3">Selected Configuration</h5>
-
-                                        <div id="selectedProductInfo" class="mb-2"></div>
-
-                                        <div id="selectedVariationInfo" class="mb-2" style="display: none;">
-                                            <strong>Selected Variation:</strong>
-                                            <div id="selectedVariationDetails" class="ml-3"></div>
-                                        </div>
-
-                                        <div id="selectedAddonsInfo" class="mb-2" style="display: none;">
-                                            <strong>Selected Add-ons:</strong>
-                                            <div id="selectedAddonsDetails" class="ml-3"></div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <strong>Final Total:</strong>
-                                            <h5 class="text-success mb-0" id="finalTotalPrice">$0.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div id="availableProducts_get_x_buy_y" class="mt-3 rounded" style="display: none;">
-                         <div class="row">
-                             <div class="col-6 " style="border-right: 1px solid rgb(223 219 219)">
-                                <h3 class="mt-3">Available Products A:</h3>
-                                  <div class="form-group">
-                                    <select name="select_pro1" id="select_pro1" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                  </div>
-                                  <div id="productDetails_section_a" class="mt-3 row mx-1"></div>
-                            </div>
-                            <div class="col-6 ">
-                                  <h3 class="mt-3">Available Products B:</h3>
-                                  <div class="form-group">
-                                    <select name="select_pro2" id="select_pro2" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
-                                        <option value="" disabled selected>{{ translate('Select a Product') }}</option>
-                                        @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
-                                            @php(
-                                                $variations = json_decode($item->variations, true) ?? []
-                                            )
-                                            @php(
-                                                $addonIds = json_decode($item->add_ons, true) ?? []
-                                            )
-                                            @php(
-                                                $addonDetails = []
-                                            )
-                                            @if(!empty($addonIds))
-                                                @foreach($addonIds as $addonId)
-                                                    @php(
-                                                        $addon = \App\Models\AddOn::find($addonId)
-                                                    )
-                                                    @if($addon)
-                                                        @php(
-                                                            $addonDetails[] = [
-                                                                'id' => $addon->id,
-                                                                'name' => $addon->name,
-                                                                'price' => $addon->price
-                                                            ]
-                                                        )
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                            <option value="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-price="{{ $item->price }}"
-                                                    data-variations='@json($variations)'
-                                                    data-addons='@json($addonDetails)'>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                  </div>
-                                  <div id="productDetails_section_b" class="mt-3 row mx-1"></div>
-                            </div>
-                        </div>
-                     </div>
-                    <div class="container mt-5 p-1">
-                        <div class="form-container">
-                            <!-- Price Calculator -->
-                            <div class="price-calculator" id="priceCalculator" style="display: none;">
-                                <h3> Bundle Price Calculation</h3>
-                                <div id="priceBreakdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                   <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
-                <div class="section-card rounded p-4 mb-4  "id="bundel_food_voucher_price_info_1_3_1_4">
-                    <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
-                    {{-- Price Information --}}
-                    <div class="row g-2">
-                        <div class="col-6 col-md-3" id="price_input_hide">
+                        {{-- Bundle Type Selection --}}
+                        <div class="col-12 col-md-12">
                             <div class="form-group mb-0">
-                                <label class="input-label"  for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
-                                <input type="number" min="0" id="price" max="999999999999.99" step="0.01" value="1" name="price" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
-                                <input type="hidden"  id="price_hidden"name="price_hidden" >
-                            </div>
-                        </div>
-                          <div class="col-6 col-md-3 d-none" id="required_qty">
-                            <div class="form-group mb-0">
-                                <label class="input-label"  for="exampleFormControlInput1">{{ translate('Required Quantity') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
-                                <input type="number" min="0" id="required_qty" max="999999999999.99" step="0.01" value="1" name="required_qty" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-md-3">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="offer_type">{{ translate('Offer Type') }}
-                                </label>
-                                <!-- Dropdown: Only Percent & Fixed -->
-                                <select name="offer_type" id="offer_type"
-                                    class="form-control js-select2-custom">
-                                    <option value="direct discount">{{ translate('Direct Discount') }} </option>
-                                    <option value="cash back">{{ translate('Cash back') }}</option>
+                                <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
+                                <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
+                                    <option value="">Select Bundle Offer Type</option>
+                                    <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
+                                        Simple
+                                    </option>
+                                    <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
+                                        Fixed Bundle - Specific products at set price
+                                    </option>
+                                    <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                    Buy X Get Y - Buy products get different product free
+                                    </option>
+                                    <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
+                                        Mix & Match - Customer chooses from categories
+                                    </option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6 col-md-3" id="discount_input_hide">
-                            <div class="form-group mb-0">
-                                <label class="input-label"
-                                    for="discount_type">{{ translate('Discount Type') }}
-                                </label>
-                                <!-- Dropdown: Only Percent & Fixed -->
-                                <select name="discount_type" id="discount_type"
-                                    class="form-control js-select2-custom">
-                                    <option value="percent">{{ translate('messages.percent') }} (%)</option>
-                                    <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3" id="discount_value_input_hide">
-                                <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="exampleFormControlInput1">{{ translate('Discount Value') }}
-                                    </label>
-                                    <input type="number" min="0" max="9999999999999999999999" value="0"
-                                        name="discount" id="discount" class="form-control"
-                                        placeholder="{{ translate('messages.Ex:') }} 100">
-                            </div>
-                        </div>
-                        <!-- Example divs to show/hide panel2 -->
-                        <div class="col-12 mt-4" id="panel2">
-                            <div class="row g-3 bogo_free_div" style="display:none;">
-                                <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- BOGO Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> BOGO Pricing Settings</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <p class="small text-muted mb-3">
-                                                For BOGO offers, set the regular price for one item.
-                                                The system will automatically apply the free item.
-                                            </p>
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Regular Item Price -->
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Regular Item Price</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="29.99"
-                                                        step="0.01"
-                                                        data-testid="input-bogo-price"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <!-- Total Available Sets -->
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Total Available Sets</label>
-                                                    <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="50"
-                                                        data-testid="input-bogo-stock"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /BOGO Section -->
-                                </div>
-                            </div>
+                        {{-- panel1 --}}
+                        <div class="col-12 mt-5" id="panel1">
                             <div class="row g-3 bundle_div" style="display:none;">
+                                <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                    <div id="configContent"><h4> Bundle Configuration</h4>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Bundle Fixed Price</label>
+                                                <input type="number" name="bundle_fixed_price" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- Group Product Bundle Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> Group Product Bundle Pricing</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Individual Items Total -->
-                                                <div class="col-md-6">
-                                                <label class="form-label">Individual Items Total</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="79.99"
-                                                    step="0.01"
-                                                    data-testid="input-bundle-total-price"
-                                                    >
-                                                </div>
-                                                </div>
+                                    <!-- Group Product Bundle Configuration -->
+                                    <div class="p-3 bg-white mb-4">
+                                        <h4 class="mb-3"> Group Product Bundle</h4>
+                                        <!-- Bundle Products -->
+                                        <div class="row">
 
-                                                <!-- Bundle Discount (%) -->
-                                                <div class="col-md-6">
-                                                <label class="form-label">Bundle Discount (%)</label>
-                                                <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="15"
-                                                    step="1"
-                                                    data-testid="input-group-bundle-discount"
-                                                >
+                                            {{-- <div class="col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
+                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
+                                                    </label>
+                                                    <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
+
+                                                    </select>
                                                 </div>
+                                            </div> --}}
+                                            <div class="col-md-6 mt-3">
+                                                <label class="form-label">Bundle Discount Type</label>
+                                                <select class="form-control" name="bundle_discount_type" data-testid="select-bundle-discount-type">
+                                                <option>% Percentage Off</option>
+                                                <option>$ Fixed Amount Off</option>
+                                                </select>
                                             </div>
-
-                                            <!-- Bundle Summary -->
-                                            <div class="mt-4 p-3 bg-light border rounded">
-                                                <p class="small fw-bold mb-1"> Bundle Summary:</p>
-                                                <p class="small text-muted mb-1">
-                                                Please enter a valid total price for group bundle
-                                                </p>
-                                                <p class="small mb-0">
-                                                Individual Total: <span class="fw-semibold">$</span> |
-                                                Bundle Price: <span class="fw-semibold text-primary">$0.00</span> |
-                                                You Save: <span class="fw-semibold text-success">$0.00</span>
-                                                </p>
-                                            </div>
-
-                                            <!-- Available Bundles -->
-                                            <div class="mt-4">
-                                                <label class="form-label">Available Bundles</label>
+                                            <div class="col-md-6 mt-3">
+                                                <label class="form-label">Discount Amount</label>
                                                 <input
                                                 type="number"
+                                                step="0.01"
+                                                name="discount_account"
                                                 class="form-control"
-                                                placeholder="25"
-                                                data-testid="input-bundle-quantity"
+                                                placeholder="10"
+                                                data-testid="input-bundle-discount"
+                                                value="0"
                                                 >
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /Group Product Bundle Section -->
                                 </div>
                             </div>
-                            <div class="row g-3 mix_match_div" style="display:none;">
+                            <div class="row g-3 bogo_free_div" style="display:none;">
                                 <div class="card border-0 shadow-sm">
-                                    <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
-                                    <!-- Mix & Match Section -->
-                                    <div class="mb-4">
-                                        <h5 class="text-muted mb-3"> Mix and Match Pricing</h5>
-                                        <div class="p-3 bg-white border rounded">
-                                            <!-- Grid System -->
-                                            <div class="row g-3">
-                                                <!-- Regular Price Each -->
-                                                <div class="col-md-4">
-                                                    <label class="form-label">Regular Price Each</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="24.99"
-                                                        step="0.01"
-                                                        data-testid="input-mix-match-regular-price"
-                                                        >
-                                                    </div>
+                                    <!-- BOGO Configuration -->
+                                    <div class="p-3 bg-white mb-4">
+                                        <h4 class="mb-3"> BOGO Configuration</h4>
+                                        <div class="row">
+                                            {{-- <div class="col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
+                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
+                                                    </label>
+                                                    <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+
+                                                    </select>
                                                 </div>
-                                                <!-- Mix & Match Discount -->
-                                                <div class="col-md-4">
-                                                    <label class="form-label">Mix &amp; Match Discount</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">$</span>
-                                                        <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="5.00"
-                                                        step="0.01"
-                                                        data-testid="input-mix-match-discount"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <!-- Required Quantity -->
-                                                <div class="col-md-4">
-                                                    <label class="form-label">Required Quantity</label>
-                                                    <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        placeholder="3"
-                                                        data-testid="input-mix-match-quantity"
-                                                    >
+                                            </div> --}}
+                                            <div class="col-md-6 mt-3">
+                                                <div class="form-group">
+                                                    <label class="input-label"
+                                                        for="buy_quantity">{{ translate('Buy Quantity') }}
+                                                    </label>
+                                                    <input type="text" name="buy_quantity" value="1" id="buy_quantity"  class="form-control" placeholder="{{ translate('Buy Quantity') }}" >
                                                 </div>
                                             </div>
-                                            <!-- Mix & Match Summary -->
-                                            <div class="mt-4 p-3 bg-light border rounded">
-                                                <p class="small fw-bold mb-1">Mix & Match Summary:</p>
-                                                <p class="small text-muted mb-1">
-                                                Please enter a valid price per item for mix &amp; match
-                                                </p>
-                                                <p class="small mb-0">
-                                                Regular Price (1 items): <span class="fw-semibold">$</span> |
-                                                Mix &amp; Match Price: <span class="fw-semibold text-primary">$0.00</span> |
-                                                You Save: <span class="fw-semibold text-success">$0.00</span>
-                                                </p>
+                                            <div class="col-md-6 mt-3">
+                                                <div class="form-group">
+                                                    <label class="input-label"
+                                                        for="get_quantity">{{ translate('Get Quantity') }}
+                                                    </label>
+                                                    <input type="text" name="get_quantity" value="1" id="get_quantity"  class="form-control" placeholder="{{ translate('Get Quantity') }}" >
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /Mix & Match Section -->
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mix_match_div" style="display:none;">
+                                <div id="bundleConfigSection" class="bundle-config-section show my-4">
+                                    <div id="configContent"><h4>⚙️ Bundle Configuration</h4>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Total Items Customer Must Choose</label>
+                                                <input type="number" name="total_item" id="totalItemsToChoose" class="form-control" min="2" value="5">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bundle Price</label>
+                                                <input type="number" name="bundle_price" id="mixMatchPrice" class="form-control" step="0.01" placeholder="Total price for selection">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card border-0 shadow-sm">
+                                    <!-- Mix and Match Collection -->
+                                    <div class="p-3 bg-white mb-4">
+                                        <h4 class="mb-3">🔀 Mix and Match Collection</h4>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-12">
+                                                <div class="form-group mb-0">
+                                                    <label class="input-label"
+                                                        for="select_category_all">{{ translate('Collection Category') }}<span class="form-label-secondary text-danger"
+                                                        data-toggle="tooltip" data-placement="right"
+                                                        data-original-title="{{ translate('messages.Required.')}}"> *
+                                                        </span></label>
+                                                        <select name="select_category_all" name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
+                                                        @foreach (\App\Models\Category::all() as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
+                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
+                                                    </label>
+                                                    <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
+                                                    </select>
+                                                </div>
+                                            </div> --}}
+                                            <!-- 3-column grid -->
+                                            <div class="col-md-4 mt-3">
+                                                <label class="form-label">Buy Quantity</label>
+                                                <input
+                                                type="number"
+                                                step="0.01"
+                                                name="buy_quantity"
+                                                class="form-control"
+                                                placeholder="10"
+                                                data-testid="input-bundle-discount"
+                                                value="0"
+                                                >
+                                            </div>
+                                            <div class="col-md-4 mt-3">
+                                                <label class="form-label">Discount Amount</label>
+                                                <input
+                                                type="number"
+                                                step="0.01"
+                                                name="discount_amount"
+                                                class="form-control"
+                                                placeholder="10"
+                                                data-testid="input-bundle-discount"
+                                                value="0"
+                                                >
+                                            </div>
+                                            <div class="col-md-4 mt-3">
+                                                <label class="form-label">Max Uses Per Customer</label>
+                                                <input
+                                                type="number"
+                                                step="0.01"
+                                                name="max_user_per_customer"
+                                                class="form-control"
+                                                placeholder="10"
+                                                data-testid="input-bundle-discount"
+                                                value="0"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Valid Until -->
+                        <div class="col-12 mt-3">
+                            <label class="form-label" for="validUntilDate">Valid Until</label>
+                            <input
+                            type="date"
+                            class="form-control"
+                            id="validUntilDate"
+                            name="validUntilDate"
+                            placeholder="mm/dd/yyyy"
+                            data-testid="input-bundle-valid-until"
+                            >
+                        </div>
+                        {{-- tags --}}
+                        <div class="col-12 mt-3">
+                            <div class="form-group">
+                                <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                                <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                            </div>
+                        </div>
+                    </div>
+
+                   {{-- Bundle Products Configuration --}}
+                    <div class=" section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
+                        <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
+                        <div id="selectedProducts">
+                            <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
+                        </div>
+                        <button type="button" class="btn btn--primary" id="addProductBtn">+ Add Product to Bundle</button>
+                        <!-- Available Products to Choose From -->
+                        <div id="availableProducts" style="display: none;">
+                            <h3 class="mt-3">Available Products:</h3>
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <select name="select_pro" id="select_pro" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
+                                            <option value="" disabled selected>{{ translate('Select a Product') }}</option>
+                                            @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
+                                                @php(
+                                                    $variations = json_decode($item->variations, true) ?? []
+                                                )
+                                                @php(
+                                                    $addonIds = json_decode($item->add_ons, true) ?? []
+                                                )
+                                                @php(
+                                                    $addonDetails = []
+                                                )
+                                                @if(!empty($addonIds))
+                                                    @foreach($addonIds as $addonId)
+                                                        @php(
+                                                            $addon = \App\Models\AddOn::find($addonId)
+                                                        )
+                                                        @if($addon)
+                                                            @php(
+                                                                $addonDetails[] = [
+                                                                    'id' => $addon->id,
+                                                                    'name' => $addon->name,
+                                                                    'price' => $addon->price
+                                                                ]
+                                                            )
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                                <option value="{{ $item->id }}"
+                                                        data-name="{{ $item->name }}"
+                                                        data-price="{{ $item->price }}"
+                                                        data-variations='@json($variations)'
+                                                        data-addons='@json($addonDetails)'>
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{-- Product selection area --}}
+                                    <div id="productDetails" class="mt-3 row mx-1"></div>
+
+                                    {{-- Selected items display section --}}
+                                    <div id="selectedItemsSection" class="mt-4" style="display: none;">
+                                        <div class="card p-3 shadow-sm bg-light">
+                                            <h5 class="mb-3">Selected Configuration</h5>
+
+                                            <div id="selectedProductInfo" class="mb-2"></div>
+
+                                            <div id="selectedVariationInfo" class="mb-2" style="display: none;">
+                                                <strong>Selected Variation:</strong>
+                                                <div id="selectedVariationDetails" class="ml-3"></div>
+                                            </div>
+
+                                            <div id="selectedAddonsInfo" class="mb-2" style="display: none;">
+                                                <strong>Selected Add-ons:</strong>
+                                                <div id="selectedAddonsDetails" class="ml-3"></div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <strong>Final Total:</strong>
+                                                <h5 class="text-success mb-0" id="finalTotalPrice">$0.00</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="availableProducts_get_x_buy_y" class="mt-3 rounded" style="display: none;">
+                            <div class="row">
+                                <div class="col-6 " style="border-right: 1px solid rgb(223 219 219)">
+                                    <h3 class="mt-3">Available Products A:</h3>
+                                    <div class="form-group">
+                                        <select name="select_pro1" id="select_pro1" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
+                                            <option value="" disabled selected>{{ translate('Select a Product') }}</option>
+                                            @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
+                                                @php(
+                                                    $variations = json_decode($item->variations, true) ?? []
+                                                )
+                                                @php(
+                                                    $addonIds = json_decode($item->add_ons, true) ?? []
+                                                )
+                                                @php(
+                                                    $addonDetails = []
+                                                )
+                                                @if(!empty($addonIds))
+                                                    @foreach($addonIds as $addonId)
+                                                        @php(
+                                                            $addon = \App\Models\AddOn::find($addonId)
+                                                        )
+                                                        @if($addon)
+                                                            @php(
+                                                                $addonDetails[] = [
+                                                                    'id' => $addon->id,
+                                                                    'name' => $addon->name,
+                                                                    'price' => $addon->price
+                                                                ]
+                                                            )
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                                <option value="{{ $item->id }}"
+                                                        data-name="{{ $item->name }}"
+                                                        data-price="{{ $item->price }}"
+                                                        data-variations='@json($variations)'
+                                                        data-addons='@json($addonDetails)'>
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div id="productDetails_section_a" class="mt-3 row mx-1"></div>
+                                </div>
+                                <div class="col-6 ">
+                                    <h3 class="mt-3">Available Products B:</h3>
+                                    <div class="form-group">
+                                        <select name="select_pro2" id="select_pro2" class="form-control js-select2-custom" data-placeholder="{{ translate('Select Product') }}" >
+                                            <option value="" disabled selected>{{ translate('Select a Product') }}</option>
+                                            @foreach (\App\Models\Item::whereIn('food_and_product_type', ['Food','Product'])->get() as $item)
+                                                @php(
+                                                    $variations = json_decode($item->variations, true) ?? []
+                                                )
+                                                @php(
+                                                    $addonIds = json_decode($item->add_ons, true) ?? []
+                                                )
+                                                @php(
+                                                    $addonDetails = []
+                                                )
+                                                @if(!empty($addonIds))
+                                                    @foreach($addonIds as $addonId)
+                                                        @php(
+                                                            $addon = \App\Models\AddOn::find($addonId)
+                                                        )
+                                                        @if($addon)
+                                                            @php(
+                                                                $addonDetails[] = [
+                                                                    'id' => $addon->id,
+                                                                    'name' => $addon->name,
+                                                                    'price' => $addon->price
+                                                                ]
+                                                            )
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                                <option value="{{ $item->id }}"
+                                                        data-name="{{ $item->name }}"
+                                                        data-price="{{ $item->price }}"
+                                                        data-variations='@json($variations)'
+                                                        data-addons='@json($addonDetails)'>
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div id="productDetails_section_b" class="mt-3 row mx-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container mt-5 p-1">
+                            <div class="form-container">
+                                <!-- Price Calculator -->
+                                <div class="price-calculator" id="priceCalculator" style="display: none;">
+                                    <h3> Bundle Price Calculation</h3>
+                                    <div id="priceBreakdown"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                   <!--  Price Information one  Bundle Delivery/Pickup  == Food and Product Bundle-->
+                    <div class="section-card rounded p-4 mb-4  "id="bundel_food_voucher_price_info_1_3_1_4">
+                        <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
+                        {{-- Price Information --}}
+                        <div class="row g-2">
+                            <div class="col-6 col-md-3" id="price_input_hide">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"  for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
+                                    <input type="number" min="0" id="price" max="999999999999.99" step="0.01" value="1" name="price" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                    <input type="hidden"  id="price_hidden"name="price_hidden" >
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 d-none" id="required_qty">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"  for="exampleFormControlInput1">{{ translate('Required Quantity') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
+                                    <input type="number" min="0" id="required_qty" max="999999999999.99" step="0.01" value="1" name="required_qty" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"
+                                        for="offer_type">{{ translate('Offer Type') }}
+                                    </label>
+                                    <!-- Dropdown: Only Percent & Fixed -->
+                                    <select name="offer_type" id="offer_type" class="form-control js-select2-custom">
+                                        <option value="direct discount">{{ translate('Direct Discount') }} </option>
+                                        <option value="cash back">{{ translate('Cash back') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3" id="discount_input_hide">
+                                <div class="form-group mb-0">
+                                    <label class="input-label" for="discount_type">{{ translate('Discount Type') }}
+                                    </label>
+                                    <!-- Dropdown: Only Percent & Fixed -->
+                                    <select name="discount_type" id="discount_type"
+                                        class="form-control js-select2-custom">
+                                        <option value="percent">{{ translate('messages.percent') }} (%)</option>
+                                        <option value="fixed">{{ translate('Fixed') }} ({{ \App\CentralLogics\Helpers::currency_symbol() }})</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3" id="discount_value_input_hide">
+                                    <div class="form-group mb-0">
+                                        <label class="input-label" for="exampleFormControlInput1">{{ translate('Discount Value') }}
+                                        </label>
+                                        <input type="number" min="0" max="9999999999999999999999" value="0"
+                                            name="discount" id="discount" class="form-control"
+                                            placeholder="{{ translate('messages.Ex:') }} 100">
+                                </div>
+                            </div>
+                            <!-- Example divs to show/hide panel2 -->
+                            <div class="col-12 mt-4" id="panel2">
+                                <div class="row g-3 bogo_free_div" style="display:none;">
+                                    <div class="card border-0 shadow-sm">
+                                        <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
+                                        <!-- BOGO Section -->
+                                        <div class="mb-4">
+                                            <h5 class="text-muted mb-3"> BOGO Pricing Settings</h5>
+                                            <div class="p-3 bg-white border rounded">
+                                                <p class="small text-muted mb-3">
+                                                    For BOGO offers, set the regular price for one item.
+                                                    The system will automatically apply the free item.
+                                                </p>
+                                                <!-- Grid System -->
+                                                <div class="row g-3">
+                                                    <!-- Regular Item Price -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Regular Item Price</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input
+                                                            type="number"
+                                                            name="regular_item_price"
+                                                            class="form-control"
+                                                            placeholder="29.99"
+                                                            step="0.01"
+                                                            data-testid="input-bogo-price"
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <!-- Total Available Sets -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Total Available Sets</label>
+                                                        <input
+                                                            type="number"
+                                                            name="total_available_sets"
+                                                            class="form-control"
+                                                            placeholder="50"
+                                                            data-testid="input-bogo-stock"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /BOGO Section -->
+                                    </div>
+                                </div>
+                                <div class="row g-3 bundle_div" style="display:none;">
+                                    <div class="card border-0 shadow-sm">
+                                        <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
+                                        <!-- Group Product Bundle Section -->
+                                        <div class="mb-4">
+                                            <h5 class="text-muted mb-3"> Group Product Bundle Pricing</h5>
+                                            <div class="p-3 bg-white border rounded">
+                                                <!-- Grid System -->
+                                                <div class="row g-3">
+                                                    <!-- Individual Items Total -->
+                                                    <div class="col-md-6">
+                                                    <label class="form-label">Individual Items Total</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input
+                                                        type="number"
+                                                        name="Individual_price"
+                                                        class="form-control"
+                                                        placeholder="79.99"
+                                                        step="0.01"
+                                                        data-testid="input-bundle-total-price"
+                                                        >
+                                                    </div>
+                                                    </div>
+
+                                                    <!-- Bundle Discount (%) -->
+                                                    <div class="col-md-6">
+                                                    <label class="form-label">Bundle Discount (%)</label>
+                                                    <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="15"
+                                                        name="Individual_discount"
+                                                        step="1"
+                                                        data-testid="input-group-bundle-discount"
+                                                    >
+                                                    </div>
+                                                </div>
+
+                                                <!-- Bundle Summary -->
+                                                <div class="mt-4 p-3 bg-light border rounded">
+                                                    <p class="small fw-bold mb-1"> Bundle Summary:</p>
+                                                    <p class="small text-muted mb-1">
+                                                    Please enter a valid total price for group bundle
+                                                    </p>
+                                                    <p class="small mb-0">
+                                                    Individual Total: <span class="fw-semibold">$</span> |
+                                                    Bundle Price: <span class="fw-semibold text-primary">$0.00</span> |
+                                                    You Save: <span class="fw-semibold text-success">$0.00</span>
+                                                    </p>
+                                                </div>
+
+                                                <!-- Available Bundles -->
+                                                <div class="mt-4">
+                                                    <label class="form-label">Available Bundles</label>
+                                                    <input
+                                                    type="number"
+                                                    name="available_bundle"
+                                                    class="form-control"
+                                                    placeholder="25"
+                                                    data-testid="input-bundle-quantity"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Group Product Bundle Section -->
+                                    </div>
+                                </div>
+                                <div class="row g-3 mix_match_div" style="display:none;">
+                                    <div class="card border-0 shadow-sm">
+                                        <h4 class="card-title mb-4"> Bundle Pricing Configuration</h4>
+                                        <!-- Mix & Match Section -->
+                                        <div class="mb-4">
+                                            <h5 class="text-muted mb-3"> Mix and Match Pricing</h5>
+                                            <div class="p-3 bg-white border rounded">
+                                                <!-- Grid System -->
+                                                <div class="row g-3">
+                                                    <!-- Regular Price Each -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Regular Price Each</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input
+                                                            type="number"
+                                                            name="regular_price_each"
+                                                            class="form-control"
+                                                            placeholder="24.99"
+                                                            step="0.01"
+                                                            data-testid="input-mix-match-regular-price"
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <!-- Mix & Match Discount -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Mix &amp; Match Discount</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input
+                                                            type="number"
+                                                            name="mix_match_discount"
+                                                            class="form-control"
+                                                            placeholder="5.00"
+                                                            step="0.01"
+                                                            data-testid="input-mix-match-discount"
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <!-- Required Quantity -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Required Quantity</label>
+                                                        <input
+                                                            type="number"
+                                                            name="required_quantity"
+                                                            class="form-control"
+                                                            placeholder="3"
+                                                            data-testid="input-mix-match-quantity"
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <!-- Mix & Match Summary -->
+                                                <div class="mt-4 p-3 bg-light border rounded">
+                                                    <p class="small fw-bold mb-1">Mix & Match Summary:</p>
+                                                    <p class="small text-muted mb-1">
+                                                    Please enter a valid price per item for mix &amp; match
+                                                    </p>
+                                                    <p class="small mb-0">
+                                                    Regular Price (1 items): <span class="fw-semibold">$</span> |
+                                                    Mix &amp; Match Price: <span class="fw-semibold text-primary">$0.00</span> |
+                                                    You Save: <span class="fw-semibold text-success">$0.00</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /Mix & Match Section -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                  @include("admin-views.voucher.include_voucher")
 
@@ -781,7 +790,6 @@ $(document).ready(function() {
         let basePrice = parseFloat(selected.data('price')) || 0;
         let variations = selected.data('variations') || [];
         let addons = selected.data('addons') || [];
-
         if (!productId) return;
 
         let bundleOfferType = $('#bundle_offer_type').val();
@@ -808,7 +816,10 @@ $(document).ready(function() {
         productCounter++;
         $('#select_pro').val('').trigger('change');
         $('#selectedProducts p').hide();
-        updateBundleTotal();
+        if(bundleOfferType !="mix_match")  {
+
+            updateBundleTotal();
+        }
     });
 
     // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
@@ -838,7 +849,7 @@ $(document).ready(function() {
 
         bogoCounterA++;
         $('#select_pro1').val('').trigger('change');
-        updateBogoTotal();
+        // updateBogoTotal();
     });
 
     // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
@@ -868,7 +879,7 @@ $(document).ready(function() {
 
         bogoCounterB++;
         $('#select_pro2').val('').trigger('change');
-        updateBogoTotal();
+        // updateBogoTotal();
     });
 
     // ==================== CREATE PRODUCT CARD (REGULAR) ====================
@@ -2096,59 +2107,59 @@ $(document).ready(function() {
             }
         });
 
-        $('#category_id').select2({
-            ajax: {
-                url: '{{ url('/') }}/admin/item/get-categories?parent_id=0',
-                data: function(params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page,
-                        module_id:{{Config::get('module.current_module_id')}},
-                    };
-                },
-                processResults: function(data) {
-                    return {
-                        results: data
-                    };
-                },
-                __port: function(params, success, failure) {
-                    let $request = $.ajax(params);
+        // $('#category_id').select2({
+        //     ajax: {
+        //         url: '{{ url('/') }}/admin/item/get-categories?parent_id=0',
+        //         data: function(params) {
+        //             return {
+        //                 q: params.term, // search term
+        //                 page: params.page,
+        //                 module_id:{{Config::get('module.current_module_id')}},
+        //             };
+        //         },
+        //         processResults: function(data) {
+        //             return {
+        //                 results: data
+        //             };
+        //         },
+        //         __port: function(params, success, failure) {
+        //             let $request = $.ajax(params);
 
-                    $request.then(success);
-                    $request.fail(failure);
+        //             $request.then(success);
+        //             $request.fail(failure);
 
-                    return $request;
-                }
-            }
-        });
+        //             return $request;
+        //         }
+        //     }
+        // });
 
-        $('#sub-categories').select2({
-            ajax: {
-                url: '{{ url('/') }}/admin/item/get-categories',
-                data: function(params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page,
-                        module_id:{{Config::get('module.current_module_id')}},
-                        parent_id: parent_category_id,
-                        sub_category: true
-                    };
-                },
-                processResults: function(data) {
-                    return {
-                        results: data
-                    };
-                },
-                __port: function(params, success, failure) {
-                    let $request = $.ajax(params);
+        // $('#sub-categories').select2({
+        //     ajax: {
+        //         url: '{{ url('/') }}/admin/item/get-categories',
+        //         data: function(params) {
+        //             return {
+        //                 q: params.term, // search term
+        //                 page: params.page,
+        //                 module_id:{{Config::get('module.current_module_id')}},
+        //                 parent_id: parent_category_id,
+        //                 sub_category: true
+        //             };
+        //         },
+        //         processResults: function(data) {
+        //             return {
+        //                 results: data
+        //             };
+        //         },
+        //         __port: function(params, success, failure) {
+        //             let $request = $.ajax(params);
 
-                    $request.then(success);
-                    $request.fail(failure);
+        //             $request.then(success);
+        //             $request.fail(failure);
 
-                    return $request;
-                }
-            }
-        });
+        //             return $request;
+        //         }
+        //     }
+        // });
 
         $('#choice_attributes').on('change', function() {
             if (module_id == 0) {
