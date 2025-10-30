@@ -76,6 +76,18 @@ class VoucherController extends Controller
 
     }
 
+  public function getSubcategories(Request $request)
+    {
+        $category_ids = $request->input('category_ids', []); // Array of IDs
+
+        // Example: get all subcategories where category_id in array
+        $subcategories = Category::whereIn('category_id', $category_ids)
+            ->select('id', 'name')
+            ->get();
+
+        return response()->json($subcategories);
+    }
+
     public function index_git(Request $request)
     {
 

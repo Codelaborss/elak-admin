@@ -2107,31 +2107,31 @@ $(document).ready(function() {
             }
         });
 
-        // $('#category_id').select2({
-        //     ajax: {
-        //         url: '{{ url('/') }}/admin/item/get-categories?parent_id=0',
-        //         data: function(params) {
-        //             return {
-        //                 q: params.term, // search term
-        //                 page: params.page,
-        //                 module_id:{{Config::get('module.current_module_id')}},
-        //             };
-        //         },
-        //         processResults: function(data) {
-        //             return {
-        //                 results: data
-        //             };
-        //         },
-        //         __port: function(params, success, failure) {
-        //             let $request = $.ajax(params);
+        $('#category_id').select2({
+            ajax: {
+                url: '{{ url('/') }}/admin/item/get-categories?parent_id=0',
+                data: function(params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page,
+                        module_id:{{Config::get('module.current_module_id')}},
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: data
+                    };
+                },
+                __port: function(params, success, failure) {
+                    let $request = $.ajax(params);
 
-        //             $request.then(success);
-        //             $request.fail(failure);
+                    $request.then(success);
+                    $request.fail(failure);
 
-        //             return $request;
-        //         }
-        //     }
-        // });
+                    return $request;
+                }
+            }
+        });
 
         // $('#sub-categories').select2({
         //     ajax: {

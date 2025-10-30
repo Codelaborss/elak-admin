@@ -114,6 +114,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
         Route::group(['prefix' => 'Voucher', 'as' => 'Voucher.', 'middleware' => ['module:Voucher']], function () {
             Route::get('add-new', 'VoucherController@index')->name('add-new');
+
+              Route::get('get-subcategories', 'VoucherController@getSubcategories')->name('getSubcategories');
               Route::get('add-gift', 'VoucherController@index_git')->name('add-gift');
             Route::post('get-data', 'VoucherController@get_voucher_type')->name('voucherType.store');
             Route::post('variant-combination', 'VoucherController@variant_combination')->name('variant-combination');

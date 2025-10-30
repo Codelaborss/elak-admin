@@ -62,16 +62,16 @@
                         data-toggle="tooltip" data-placement="right"
                         data-original-title="{{ translate('messages.Required.')}}"> *
                         </span></label>
-                    <select name="category_id" id="category_id" data-placeholder="{{ translate('messages.select_category') }}"
-                        class="js-data-example-ajax form-control">
+                    <select name="category_id" id="category_id" onchange="multples_category()" data-placeholder="{{ translate('messages.select_category') }}"
+                        class="js-data-example-ajax form-control" multiple>
                     </select>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-4">
                 <div class="form-group mb-0">
                     <label class="input-label"  for="sub-categories">{{ translate('messages.sub_category') }}<span class="input-label-secondary"  title="{{ translate('messages.category_required_warning') }}"><img  src="{{ asset('/public/assets/admin/img/info-circle.svg') }}" alt="{{ translate('messages.category_required_warning') }}"></span> </label>
-                    <select name="sub_category_id" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
-                        id="sub-categories">
+                    <select name="sub_category_id" onchange="multples_sub_category()" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
+                        id="sub-categories" multiple>
                     </select>
                 </div>
             </div>
@@ -85,3 +85,46 @@
         </div>
     </div>
 </div>
+
+
+<script>
+
+function multiples_category() {
+    // Multiple select ka value array hoti hai
+    var category_ids = $('#category_id').val(); // e.g. [1, 2, 3]
+    console.log("Selected category IDs:", category_ids);
+
+    if (!category_ids || category_ids.length === 0) {
+        alert("Please select at least one category!");
+        return;
+    }
+
+    // AJAX request
+    $.ajax({
+        url: "{{ route('admin.Voucher.getSubcategories') }}",
+        type: "GET",
+        data: { category_ids: category_ids }, // Send array of IDs
+        traditional: true, // 👈 Important: jQuery ko array bhejne ke liye
+        dataType: "json",
+        success: function(response) {
+            console.log("Subcategories:", response);
+
+            // Example: show all subcategories in another multiple select
+            let options = '';
+            response.forEach(function(item) {
+                options += `<option value="${item.id}">${item.name}</option>`;
+            });
+            $('#subcategory_id').html(options);
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", error);
+        }
+    });
+}
+
+function multples_sub_category(){
+
+    alert("multples_sub_category");
+}
+
+</script>
