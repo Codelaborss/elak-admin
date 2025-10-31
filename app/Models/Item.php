@@ -47,7 +47,23 @@ class Item extends Model
         'is_halal' => 'integer',
         'voucher_type' => 'string',
         'food_and_product_type' => 'string',
+        'app_name' => 'string',
+        'client_id' => 'text',
+        'segment_ids' => 'text',
+        'sub_category_ids' => 'text',
+        'branch_ids' => 'text',
+        'voucher_title' => 'string',
+        'valid_until' => 'string',
+        'voucher_ids' => 'text',
+        'bundle_type' => 'string',
+        'tags_ids' => 'text',
+        'how_and_condition_ids' => 'text',
+        'term_and_condition_ids' => 'text',
+        'product' => 'text',
+        'product_b' => 'text',
+        'required_quantity' => 'string',
     ];
+
 
     protected $appends = ['unit_type', 'image_full_url', 'images_full_url'];
 

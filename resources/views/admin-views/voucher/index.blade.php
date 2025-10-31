@@ -1571,51 +1571,104 @@ $(document).ready(function() {
                 // $("#workList").html(workHtml);
 
                 // 🟢 WorkManagement (show all details)
-            let workHtml = "";
+                    let workHtml = "";
 
-                $.each(response.work_management, function(index, item) {
-                    workHtml += `
-                        <div class="work-item  mb-4 rounded-lg ">
-                            <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
+                    $.each(response.work_management, function(index, item) {
+                        workHtml += `
+                            <div class="work-item mb-4 rounded-lg border p-4">
+                                <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
 
-                            <div class="mb-3">
-                                <strong>Purchase Process:</strong>
-                                <ul class="list-disc list-inside text-gray-700">
-                                    ${item.purchase_process.map(step => `<li>${step}</li>`).join('')}
-                                </ul>
+                                <div class="mb-3">
+                                    <strong>Purchase Process:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.purchase_process.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox"
+                                                        data-item-id="${item.id}"
+                                                        data-section="purchase_process"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Payment Confirm:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.payment_confirm.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox"
+                                                        data-item-id="${item.id}"
+                                                        data-section="payment_confirm"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Voucher Deliver:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.voucher_deliver.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox"
+                                                        data-item-id="${item.id}"
+                                                        data-section="voucher_deliver"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Redemption Process:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.redemption_process.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox"
+                                                        data-item-id="${item.id}"
+                                                        data-section="redemption_process"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Account Management:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.account_management.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox"
+                                                        data-item-id="${item.id}"
+                                                        data-section="account_management"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
                             </div>
+                        `;
+                    });
 
-                            <div class="mb-3">
-                                <strong>Payment Confirm:</strong>
-                                <ul class="list-disc list-inside text-gray-700">
-                                    ${item.payment_confirm.map(step => `<li>${step}</li>`).join('')}
-                                </ul>
-                            </div>
+                    $("#workList").html(workHtml);
 
-                            <div class="mb-3">
-                                <strong>Voucher Deliver:</strong>
-                                <ul class="list-disc list-inside text-gray-700">
-                                    ${item.voucher_deliver.map(step => `<li>${step}</li>`).join('')}
-                                </ul>
-                            </div>
 
-                            <div class="mb-3">
-                                <strong>Redemption Process:</strong>
-                                <ul class="list-disc list-inside text-gray-700">
-                                    ${item.redemption_process.map(step => `<li>${step}</li>`).join('')}
-                                </ul>
-                            </div>
-
-                            <div class="mb-3">
-                                <strong>Account Management:</strong>
-                                <ul class="list-disc list-inside text-gray-700">
-                                    ${item.account_management.map(step => `<li>${step}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
-                    `;
-                });
-                $("#workList").html(workHtml);
 
                 // 🟢 UsageTermManagement (checkboxes)
                 let usageHtml = "";
@@ -2220,46 +2273,84 @@ $(document).ready(function() {
         }
 
         $('#item_form').on('submit', function(e) {
-            $('#submitButton').attr('disabled', true);
             e.preventDefault();
+            $('#submitButton').attr('disabled', true);
+
             let formData = new FormData(this);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.post({
+
+            $.ajax({
                 url: '{{ route('admin.Voucher.store') }}',
-                data: $('#item_form').serialize(),
+                type: 'POST',
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 beforeSend: function() {
                     $('#loading').show();
                 },
                 success: function(data) {
                     $('#loading').hide();
                     if (data.errors) {
-                        for (let i = 0; i < data.errors.length; i++) {
-                            toastr.error(data.errors[i].message, {
-                                CloseButton: true,
-                                ProgressBar: true
-                            });
-                        }
+                        data.errors.forEach(err =>
+                            toastr.error(err.message, { CloseButton: true, ProgressBar: true })
+                        );
                     } else {
                         toastr.success("{{ translate('messages.product_added_successfully') }}", {
                             CloseButton: true,
                             ProgressBar: true
                         });
-                        setTimeout(function() {
-                            location.href =
-                                "{{ route('admin.Voucher.list') }}";
-                        }, 1000);
+                        setTimeout(() => location.href = "{{ route('admin.Voucher.list') }}", 1000);
                     }
                 }
             });
         });
+
+
+        // $('#item_form').on('submit', function(e) {
+        //     $('#submitButton').attr('disabled', true);
+        //     e.preventDefault();
+        //    // let formData = new FormData(this);
+        //      let formData = new FormData(this);
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.post({
+        //         url: '{{ route('admin.Voucher.store') }}',
+        //         data: $('#item_form').serialize(),
+        //         data: formData,
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //         beforeSend: function() {
+        //             $('#loading').show();
+        //         },
+        //         success: function(data) {
+        //             $('#loading').hide();
+        //             if (data.errors) {
+        //                 for (let i = 0; i < data.errors.length; i++) {
+        //                     toastr.error(data.errors[i].message, {
+        //                         CloseButton: true,
+        //                         ProgressBar: true
+        //                     });
+        //                 }
+        //             } else {
+        //                 toastr.success("{{ translate('messages.product_added_successfully') }}", {
+        //                     CloseButton: true,
+        //                     ProgressBar: true
+        //                 });
+        //                 setTimeout(function() {
+        //                     location.href =
+        //                         "{{ route('admin.Voucher.list') }}";
+        //                 }, 1000);
+        //             }
+        //         }
+        //     });
+        // });
 
         $(function() {
             $("#coba").spartanMultiImagePicker({

@@ -115,7 +115,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'Voucher', 'as' => 'Voucher.', 'middleware' => ['module:Voucher']], function () {
             Route::get('add-new', 'VoucherController@index')->name('add-new');
 
-              Route::get('get-subcategories', 'VoucherController@getSubcategories')->name('getSubcategories');
+
               Route::get('add-gift', 'VoucherController@index_git')->name('add-gift');
             Route::post('get-data', 'VoucherController@get_voucher_type')->name('voucherType.store');
             Route::post('variant-combination', 'VoucherController@variant_combination')->name('variant-combination');
@@ -143,6 +143,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::get('product-gallery', 'VoucherController@product_gallery')->name('product_gallery');
 
             //ajax request
+             Route::get('get-subcategories', 'VoucherController@getSubcategories')->name('getSubcategories');
             Route::get('get-categories', 'VoucherController@get_categories')->name('get-categories');
             Route::get('get-Vouchers', 'VoucherController@get_Vouchers')->name('getVouchers');
             Route::get('get-Vouchers-flashsale', 'VoucherController@get_Vouchers_flashsale')->name('getVouchers-flashsale');

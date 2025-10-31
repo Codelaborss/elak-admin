@@ -62,7 +62,7 @@ class VoucherController extends Controller
                 'module_name' => $item->name,
                 'desc' => $item->desc,
                 'thumbnail' => $item->logo
-                ? asset('/' . $item->logo)   // ✅ e.g. //shop.png
+                ? asset('/' . $item->logo)
                 : asset('/default.png'),
             ];
         });
@@ -78,13 +78,13 @@ class VoucherController extends Controller
 
   public function getSubcategories(Request $request)
     {
-        $category_ids = $request->input('category_ids', []); // Array of IDs
-
+        // dd($request->all());
+        $category_ids = $request->input('category_ids_all', []); // Array of IDs
         // Example: get all subcategories where category_id in array
-        $subcategories = Category::whereIn('category_id', $category_ids)
-            ->select('id', 'name')
+        $subcategories = Category::whereIn('parent_id', $category_ids)
+            ->select('id', 'name','image','parent_id')
             ->get();
-
+        // dd($subcategories);
         return response()->json($subcategories);
     }
 
@@ -172,6 +172,7 @@ public function get_document(Request $request)
     public function store(Request $request)
     {
 
+        dd($request->all());
         $validator = Validator::make($request->all(), [
             'name.0' => 'required',
             'name.*' => 'max:191',
