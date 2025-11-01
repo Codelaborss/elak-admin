@@ -48,7 +48,7 @@
                                 data-original-title="{{ translate('messages.Required.') }}"> *
                             </span>
                         </label>
-                        <select name="store_id" id="store_id"
+                        <select name="store_id" id="store_id" onchange="multiples_category_by_store_id()"
                             data-placeholder="{{ translate('messages.select_store') }}"
                             class="js-data-example-ajax form-control"
                             onchange="findBranch(this.value)">
@@ -88,53 +88,92 @@
 
 
  <script>
-        function multiples_category() {
-            var category_ids_all = $('#category_id').val();
+    function multiples_category() {
+        var category_ids_all = $('#category_id').val();
 
-            console.log("Selected category IDs:", category_ids_all);
+        console.log("Selected category IDs:", category_ids_all);
 
-            if (!category_ids_all || category_ids_all.length === 0) {
-                alert("Please select at least one category!");
-                return;
-            }
+        if (!category_ids_all || category_ids_all.length === 0) {
+            alert("Please select at least one category!");
+            return;
+        }
 
-            $.ajax({
-                url: "{{ route('admin.Voucher.getSubcategories') }}",
-                type: "GET",
-                data: { category_ids_all: category_ids_all },
-                traditional: false, // ✅ array bhejne ke liye sahi setting
-                dataType: "json",
-                success: function(response) {
-                    console.log("Subcategories Response:", response);
+        $.ajax({
+            url: "{{ route('admin.Voucher.getSubcategories') }}",
+            type: "GET",
+            data: { category_ids_all: category_ids_all },
+            traditional: false, // ✅ array bhejne ke liye sahi setting
+            dataType: "json",
+            success: function(response) {
+                console.log("Subcategories Response:", response);
 
-                    if (!Array.isArray(response) || response.length === 0) {
-                        $('#sub-categories_game').html('<option disabled>No subcategories found</option>');
-                        return;
-                    }
-
-                    // Build option list dynamically
-                    let options = '';
-                    response.forEach(function(item) {
-                        options += `<option value="${item.id}">
-                                        ${item.name}
-                                    </option>`;
-                    });
-
-                    // Put options in the select box
-                    $('#sub-categories_game').html(options);
-
-                    // Agar Select2 use ho raha hai to refresh karna zaroori hai
-                    $('#sub-categories_game').trigger('change');
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
+                if (!Array.isArray(response) || response.length === 0) {
+                    $('#sub-categories_game').html('<option disabled>No subcategories found</option>');
+                    return;
                 }
-            });
+
+                // Build option list dynamically
+                let options = '';
+                response.forEach(function(item) {
+                    options += `<option value="${item.id}">
+                                    ${item.name}
+                                </option>`;
+                });
+
+                // Put options in the select box
+                $('#sub-categories_game').html(options);
+
+                // Agar Select2 use ho raha hai to refresh karna zaroori hai
+                $('#sub-categories_game').trigger('change');
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+            }
+        });
+    }
+
+    function multiples_category_by_store_id() {
+        var store_id = $('#store_id').val();
+
+        console.log("Selected Store IDs:", store_id);
+
+        if (!store_id || store_id.length === 0) {
+            alert("Please select at least one Store!");
+            return;
         }
 
-        function multples_sub_category(){
+        $.ajax({
+            url: "{{ route('admin.Voucher.getCategoty') }}",
+            type: "GET",
+            data: { store_id: store_id },
+            traditional: false, // ✅ array bhejne ke liye sahi setting
+            dataType: "json",
+            success: function(response) {
+                console.log("Categoy Response:", response);
 
-            // alert("multples_sub_category");
-        }
+                if (!Array.isArray(response) || response.length === 0) {
+                    $('#sub-categories_game').html('<option disabled>No Categoy found</option>');
+                    return;
+                }
 
-        </script>
+                // Build option list dynamically
+                let options = '';
+                response.forEach(function(item) {
+                    options += `<option value="${item.id}">
+                                    ${item.name}
+                                </option>`;
+                });
+
+                // Put options in the select box
+                $('#sub-categories_game').html(options);
+
+                // Agar Select2 use ho raha hai to refresh karna zaroori hai
+                $('#sub-categories_game').trigger('change');
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+            }
+        });
+    }
+
+</script>

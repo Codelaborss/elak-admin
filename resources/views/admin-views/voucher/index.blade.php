@@ -270,7 +270,7 @@
                             </div>
                         </div>
                         <!-- Valid Until -->
-                        <div class="col-12 mt-3">
+                        {{-- <div class="col-12 mt-3">
                             <label class="form-label" for="validUntilDate">Valid Until</label>
                             <input
                             type="date"
@@ -280,7 +280,7 @@
                             placeholder="mm/dd/yyyy"
                             data-testid="input-bundle-valid-until"
                             >
-                        </div>
+                        </div> --}}
                         {{-- tags --}}
                         <div class="col-12 mt-3">
                             <div class="form-group">
@@ -1669,91 +1669,28 @@ $(document).ready(function() {
                     $("#workList").html(workHtml);
 
 
+                let usageHtml = "";
 
-                // 🟢 UsageTermManagement (checkboxes)
-                    let usageHtml = "";
+                $.each(response.usage_term_management, function (index, term) {
+                    usageHtml += `
+                        <div class="usage-item border rounded-lg mb-4 p-4 col-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <input
+                                    class="form-check-input step-checkbox"
+                                    name="term_and_condition[]"
+                                    type="checkbox"
+                                    value="${term.id}"
+                                    id="term${term.id}">
 
-            $.each(response.usage_term_management, function(index, term) {
-                usageHtml += `
-                <div class="usage-item border rounded-lg mb-4 p-4 col-6 ">
-                    <div class="flex items-center gap-2 mb-2">
-                        <input class="form-check-input step-checkbox" type="checkbox" value="${term.id}" id="term${term.id}">
-                        <h3 class="font-bold text-lg">${term.baseinfor_condition_title}</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">${term.baseinfor_description ?? ''}</p>
+                                <label for="term${term.id}" class="font-bold text-lg cursor-pointer m-0">
+                                    ${term.baseinfor_condition_title}
+                                </label>
+                            </div>
+                        </div>
+                    `;
+                });
 
-                    <!-- Time & Day Config -->
-                    <div class="mb-3">
-                        <strong>Time & Day Configuration:</strong>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li><strong>Days:</strong> ${(term.timeandday_config_days || []).join(', ')}</li>
-                            <li><strong>From:</strong> ${term.timeandday_config_time_range_from ?? ''}</li>
-                            <li><strong>To:</strong> ${term.timeandday_config_time_range_to ?? ''}</li>
-                            <li><strong>Valid From:</strong> ${term.timeandday_config_valid_from_date ?? ''}</li>
-                            <li><strong>Valid Until:</strong> ${term.timeandday_config_valid_until_date ?? ''}</li>
-                        </ul>
-                    </div>
-
-                    <!-- Holiday Occasions -->
-                    <div class="mb-3">
-                        <strong>Holiday & Occasions:</strong>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li><strong>Holiday Restrictions:</strong> ${(term.holiday_occasions_holiday_restrictions || []).join(', ')}</li>
-                            <li><strong>Blackout Dates:</strong> ${term.holiday_occasions_customer_blackout_dates ?? ''}</li>
-                            <li><strong>Special Occasions:</strong> ${(term.holiday_occasions_special_occasions || []).join(', ')}</li>
-                        </ul>
-                    </div>
-
-                    <!-- Usage Limits -->
-                    <div class="mb-3">
-                        <strong>Usage Limits:</strong>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li><strong>Limit Per User:</strong> ${term.usage_limits_limit_per_user ?? ''}</li>
-                            <li><strong>Period:</strong> ${term.usage_limits_period ?? ''}</li>
-                            <li><strong>Min Purchase Account:</strong> ${term.usage_limits_min_purch_account ?? ''}</li>
-                            <li><strong>Max Discount Amount:</strong> ${term.usage_limits_max_discount_amount ?? ''}</li>
-                            <li><strong>Advance Booking Required:</strong> ${term.usage_limits_advance_booking_required ?? ''}</li>
-                            <li><strong>Group Size Required:</strong> ${term.usage_limits_group_size_required ?? ''}</li>
-                        </ul>
-                    </div>
-
-                    <!-- Location Availability -->
-                    <div class="mb-3">
-                        <strong>Location & Availability:</strong>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li><strong>Venue Types:</strong> ${(term.location_availability_venue_types || []).join(', ')}</li>
-                            <li><strong>Specific Branch:</strong> ${term.location_availability_specific_branch ?? ''}</li>
-                            <li><strong>City:</strong> ${term.location_availability_city ?? ''}</li>
-                            <li><strong>Delivery Radius:</strong> ${term.location_availability_delivery_radius ?? ''}</li>
-                        </ul>
-                    </div>
-
-                    <!-- Customer Membership -->
-                    <div class="mb-3">
-                        <strong>Customer Membership:</strong>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li><strong>Customer Type:</strong> ${term.customer_membership_customer_type ?? ''}</li>
-                            <li><strong>Age Restriction:</strong> ${term.customer_membership_age_restriction ?? ''}</li>
-                            <li><strong>Min Membership Duration:</strong> ${term.customer_membership_min_membership_radius ?? ''}</li>
-                        </ul>
-                    </div>
-
-                    <!-- Restriction Policies -->
-                    <div class="mb-3">
-                        <strong>Restriction Policies:</strong>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li><strong>Restriction Type:</strong> ${(term.restriction_polices_restriction_type || []).join(', ')}</li>
-                            <li><strong>Cancellation Policy:</strong> ${term.restriction_polices_cancellation_policy ?? ''}</li>
-                            <li><strong>Excluded Product:</strong> ${term.restriction_polices_excluded_product ?? ''}</li>
-                            <li><strong>Surcharge Account:</strong> ${term.restriction_polices_surchange_account ?? ''}</li>
-                            <li><strong>Surcharge Apple:</strong> ${term.restriction_polices_surchange_apple ?? ''}</li>
-                        </ul>
-                    </div>
-                </div>
-                `;
-            });
-
-            $("#usageTerms").html(usageHtml);
+                $("#usageTerms").html(usageHtml);
 
 
                 },

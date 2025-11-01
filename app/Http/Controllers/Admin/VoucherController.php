@@ -88,6 +88,18 @@ class VoucherController extends Controller
         return response()->json($subcategories);
     }
 
+  public function getCategoty(Request $request)
+    {
+        // dd($request->all());
+        $category_ids = $request->category_ids_all; // Array of IDs
+        // Example: get all subcategories where category_id in array
+        $subcategories = Category::whereIn('id', $category_ids)
+            ->select('id', 'name','image','parent_id')
+            ->get();
+        // dd($subcategories);
+        return response()->json($subcategories);
+    }
+
     public function index_git(Request $request)
     {
 
@@ -440,20 +452,44 @@ class VoucherController extends Controller
 
         $item->food_variations = json_encode($food_variations);
         $item->variations = json_encode($variations);
-        $item->price = $request->price;
+        $item->price = $request->price; //
         $item->image =  $request->has('image') ? Helpers::upload('product/', 'png', $request->file('image')) : $newFileNamethumb ?? null;
         $item->available_time_starts = $request->available_time_starts ?? '00:00:00';
         $item->available_time_ends = $request->available_time_ends ?? '23:59:59';
         $item->discount = $request->discount_type == 'amount' ? $request->discount : $request->discount;
-        $item->discount_type = $request->discount_type;
+        $item->discount_type = $request->discount_type; //
         $item->unit_id = $request->unit;
         $item->attributes = $request->has('attribute_id') ? json_encode($request->attribute_id) : json_encode([]);
         $item->add_ons = $request->has('addon_ids') ? json_encode($request->addon_ids) : json_encode([]);
-        $item->store_id = $request->store_id;
+        $item->store_id = $request->store_id; //
         $item->maximum_cart_quantity = $request->maximum_cart_quantity;
         $item->veg = $request->veg;
         $item->module_id = Config::get('module.current_module_id');
         $module_type = Config::get('module.current_module_type');
+
+
+        $item->veg = $request->veg;
+
+        $item->voucher_type =$request->voucher_type;
+        $item->required_quantity =$request->required_quantity;
+        $item->app_name =$request->app_name;
+        $item->client_id =$request->client_id;
+        $item->segment_ids =$request->segment_ids;
+        $item->sub_category_ids =$request->sub_category_ids;
+        $item->branch_ids =$request->branch_ids;
+        $item->voucher_title =$request->voucher_title;
+        $item->valid_until =$request->valid_until;
+        $item->voucher_ids =$request->voucher_ids;
+        $item->bundle_type =$request->bundle_type;
+        $item->tags_ids =$request->tags_ids;
+        $item->how_and_condition_ids =$request->how_and_condition_ids;
+        $item->term_and_condition_ids =$request->term_and_condition_ids;
+        $item->product =$request->product;
+        $item->product_b =$request->product_b;
+
+
+
+
         if ($module_type == 'grocery') {
             $item->organic = $request->organic ?? 0;
         }
