@@ -1630,6 +1630,104 @@
                 // 🟢 WorkManagement (show all details)
                 // resources/views/admin-views/voucher/index.blade.php
 
+                   let workHtml = "";
+
+                    $.each(response.work_management, function(index, item) {
+                        workHtml += `
+                            <div class="work-item mb-4 rounded-lg border p-4">
+                                <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
+
+                                <div class="mb-3">
+                                    <strong>Purchase Process:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.purchase_process.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
+                                                        data-item-id="${item.id}"
+                                                        data-section="purchase_process"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Payment Confirm:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.payment_confirm.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
+                                                        data-item-id="${item.id}"
+                                                        data-section="payment_confirm"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Voucher Deliver:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.voucher_deliver.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
+                                                        data-item-id="${item.id}"
+                                                        data-section="voucher_deliver"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Redemption Process:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.redemption_process.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
+                                                        data-item-id="${item.id}"
+                                                        data-section="redemption_process"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Account Management:</strong>
+                                    <ul class="list-disc list-inside text-gray-700">
+                                        ${item.account_management.map((step, i) => `
+                                            <li>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
+                                                        data-item-id="${item.id}"
+                                                        data-section="account_management"
+                                                        value="${i}">
+                                                    <span>${step}</span>
+                                                </label>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    $("#workList").html(workHtml);
+
+
                 // 🟢 UsageTermManagement (checkboxes)
                 let usageHtml = "";
                 $.each(response.usage_term_management, function(index, term) {

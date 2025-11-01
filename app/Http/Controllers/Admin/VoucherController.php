@@ -153,20 +153,22 @@ class VoucherController extends Controller
         return response()->json($branches);
     }
 
-public function get_document(Request $request)
-{
-    // WorkManagement records
-    $WorkManagement = WorkManagement::where('voucher_id', $request->store_id)->get();
+    public function get_document(Request $request)
+    {
+        // WorkManagement records
+        // $WorkManagement = WorkManagement::where('voucher_id', $request->store_id)->get();
+        $WorkManagement = WorkManagement::get();
 
-    // UsageTermManagement records
-    $UsageTermManagement = UsageTermManagement::where('voucher_id', $request->store_id)->get();
-//   dd($UsageTermManagement);
-    // Return both in JSON as array
-    return response()->json([
-        'work_management' => $WorkManagement,
-        'usage_term_management' => $UsageTermManagement
-    ]);
-}
+        // UsageTermManagement records
+        $UsageTermManagement = UsageTermManagement::get();
+        // $UsageTermManagement = UsageTermManagement::where('voucher_id', $request->store_id)->get();
+    //   dd($UsageTermManagement);
+        // Return both in JSON as array
+        return response()->json([
+            'work_management' => $WorkManagement,
+            'usage_term_management' => $UsageTermManagement
+        ]);
+    }
 
 
     public function store(Request $request)
