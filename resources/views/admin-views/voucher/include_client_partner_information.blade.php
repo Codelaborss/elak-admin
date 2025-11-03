@@ -48,7 +48,7 @@
                                 data-original-title="{{ translate('messages.Required.') }}"> *
                             </span>
                         </label>
-                        <select name="store_id" id="store_id" onchange="multiples_category_by_store_id()"
+                        <select name="store_id" id="store_id"
                             data-placeholder="{{ translate('messages.select_store') }}"
                             class="js-data-example-ajax form-control"
                             onchange="findBranch(this.value)">
@@ -58,20 +58,21 @@
                 <div class="col-sm-6 col-lg-4">
                     <div class="form-group mb-0">
                         <label class="input-label"
-                            for="category_id">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
+                            for="categories">{{ translate('messages.category') }}<span class="form-label-secondary text-danger"
                             data-toggle="tooltip" data-placement="right"
                             data-original-title="{{ translate('messages.Required.')}}"> *
                             </span></label>
-                        <select name="category_id[]" id="category_id" onchange="multiples_category()" data-placeholder="{{ translate('messages.select_category') }}"
-                            class="js-data-example-ajax form-control" multiple>
+                        <select name="categories[]" id="categories" onchange="multiples_category()" data-placeholder="{{ translate('messages.select_category') }}"
+                            class="js-data-example-ajax form-control js-select2-category" multiple>
                         </select>
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-lg-4">
                     <div class="form-group mb-0">
-                        <label class="input-label"  for="sub-categories_game">{{ translate('messages.sub_category') }}<span class="input-label-secondary"  title="{{ translate('messages.category_required_warning') }}"><img  src="{{ asset('/public/assets/admin/img/info-circle.svg') }}" alt="{{ translate('messages.category_required_warning') }}"></span> </label>
-                        <select name="sub-categories_game[]" onchange="multples_sub_category()" class="js-data-example-ajax form-control" data-placeholder="{{ translate('messages.select_sub_category') }}"
-                            id="sub-categories_game" multiple>
+                        <label class="input-label"  for="sub_categories_game">{{ translate('messages.sub_category') }}</label>
+                        <select name="sub_categories_game[]" onchange="multples_sub_category()" class=" form-control js-select2-sub_category" data-placeholder="{{ translate('messages.select_sub_category') }}"
+                            id="sub_categories_game" multiple>
                         </select>
                     </div>
                 </div>
@@ -82,6 +83,7 @@
                         </select>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -89,7 +91,7 @@
 
  <script>
     function multiples_category() {
-        var category_ids_all = $('#category_id').val();
+        var category_ids_all = $('#categories').val();
 
         console.log("Selected category IDs:", category_ids_all);
 
@@ -108,7 +110,7 @@
                 console.log("Subcategories Response:", response);
 
                 if (!Array.isArray(response) || response.length === 0) {
-                    $('#sub-categories_game').html('<option disabled>No subcategories found</option>');
+                    $('#sub_categories_game').html('<option disabled>No subcategories found</option>');
                     return;
                 }
 
@@ -121,10 +123,10 @@
                 });
 
                 // Put options in the select box
-                $('#sub-categories_game').html(options);
+                $('#sub_categories_game').html(options);
 
                 // Agar Select2 use ho raha hai to refresh karna zaroori hai
-                $('#sub-categories_game').trigger('change');
+                $('#sub_categories_game').trigger('change');
             },
             error: function(xhr, status, error) {
                 console.error("AJAX Error:", error);
@@ -152,7 +154,7 @@
                 console.log("Categoy Response:", response);
 
                 if (!Array.isArray(response) || response.length === 0) {
-                    $('#sub-categories_game').html('<option disabled>No Categoy found</option>');
+                    $('#sub_categories_game').html('<option disabled>No Categoy found</option>');
                     return;
                 }
 
@@ -165,10 +167,10 @@
                 });
 
                 // Put options in the select box
-                $('#sub-categories_game').html(options);
+                $('#sub_categories_game').html(options);
 
                 // Agar Select2 use ho raha hai to refresh karna zaroori hai
-                $('#sub-categories_game').trigger('change');
+                $('#sub_categories_game').trigger('change');
             },
             error: function(xhr, status, error) {
                 console.error("AJAX Error:", error);

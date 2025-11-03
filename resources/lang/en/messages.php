@@ -8309,4 +8309,6 @@ Smartly or Earn. ',
   'Gift Occasions' => 'Gift Occasions',
   'GiftOccasions Setup' => 'GiftOccasions Setup',
   'Gift Management' => 'Gift Management',
+  'The description.0 field is required.' => 'The description.0 field is required.',
+  'voucher_created_successfully' => 'Voucher created successfully',
 );

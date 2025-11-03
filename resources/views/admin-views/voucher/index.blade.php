@@ -31,14 +31,15 @@
      <div class="container-fluid px-4 py-3">
           @include("admin-views.voucher.include_heading")
         <div class="bg-white shadow rounded-lg p-4">
-            <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
-            <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
-            <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
+
 
             {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
              @include("admin-views.voucher.include_client_voucher_management")
 
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
+                 <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
+                <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
+                <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
                 @csrf
                 @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
                 @php($language = $language->value ?? null)
@@ -113,17 +114,6 @@
                                         <h4 class="mb-3"> Group Product Bundle</h4>
                                         <!-- Bundle Products -->
                                         <div class="row">
-
-                                            {{-- <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="select_pro">{{ translate('Bundle Products') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Bundle Products') }}"></span>
-                                                    </label>
-                                                    <select name="select_pro[]" id="select_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" >
-
-                                                    </select>
-                                                </div>
-                                            </div> --}}
                                             <div class="col-md-6 mt-3">
                                                 <label class="form-label">Bundle Discount Type</label>
                                                 <select class="form-control" name="bundle_discount_type" data-testid="select-bundle-discount-type">
@@ -153,16 +143,6 @@
                                     <div class="p-3 bg-white mb-4">
                                         <h4 class="mb-3"> BOGO Configuration</h4>
                                         <div class="row">
-                                            {{-- <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="select_bogo_product">{{ translate('BOGO Product') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('BOGO Product') }}"></span>
-                                                    </label>
-                                                    <select name="select_bogo_product[]" id="select_bogo_product" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-
-                                                    </select>
-                                                </div>
-                                            </div> --}}
                                             <div class="col-md-6 mt-3">
                                                 <div class="form-group">
                                                     <label class="input-label"
@@ -218,15 +198,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-sm-12 col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="input-label" for="select_available_pro">{{ translate('Available Products') }}
-                                                        <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Available Products') }}"></span>
-                                                    </label>
-                                                    <select name="select_available_pro[]" id="select_available_pro" required class="form-control js-select2-custom all_product_list" data-placeholder="{{ translate('Select Product') }}" multiple>
-                                                    </select>
-                                                </div>
-                                            </div> --}}
                                             <!-- 3-column grid -->
                                             <div class="col-md-4 mt-3">
                                                 <label class="form-label">Buy Quantity</label>
@@ -269,18 +240,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Valid Until -->
-                        {{-- <div class="col-12 mt-3">
-                            <label class="form-label" for="validUntilDate">Valid Until</label>
-                            <input
-                            type="date"
-                            class="form-control"
-                            id="validUntilDate"
-                            name="validUntilDate"
-                            placeholder="mm/dd/yyyy"
-                            data-testid="input-bundle-valid-until"
-                            >
-                        </div> --}}
+
                         {{-- tags --}}
                         <div class="col-12 mt-3">
                             <div class="form-group">
@@ -291,7 +251,7 @@
                     </div>
 
                    {{-- Bundle Products Configuration --}}
-                    <div class=" section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
+                    <div class="section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
                         <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
                         <div id="selectedProducts">
                             <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
@@ -1178,7 +1138,7 @@ $(document).ready(function() {
     }
 
     // ==================== BOGO EVENT LISTENERS ====================
-    $(document).on('change', '.bogo-variation-checkbox, .bogo-addon-checkbox, .bogo-product-quantity', function() {
+    $(document).on('change', '.bogo-addon-checkbox, .bogo-product-quantity', function() {
         updateBogoTotal();
     });
 
@@ -1974,6 +1934,12 @@ $(document).ready(function() {
             $('.js-select2-custom').each(function() {
                 let select2 = $.HSCore.components.HSSelect2.init($(this));
             });
+            $('.js-select2-sub_category').each(function() {
+                let select2 = $.HSCore.components.HSSelect2.init($(this));
+            });
+            $('.js-select2-category').each(function() {
+                let select2 = $.HSCore.components.HSSelect2.init($(this));
+            });
         });
 
         function add_new_row_button(data) {
@@ -2446,9 +2412,34 @@ $(document).ready(function() {
             });
         })
           //   findBranch
+        // function findBranch(storeId) {
+        //     if (!storeId) {
+        //         $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
+        //         return;
+        //     }
+
+        //     $.ajax({
+        //         url: "{{ route('admin.Voucher.get_branches') }}",
+        //         type: "GET",
+        //         data: { store_id: storeId },
+        //         success: function(response) {
+        //             $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
+        //             $.each(response, function(key, branch) {
+        //                 $('#sub-branch').append('<option value="'+ branch.id +'"> ' + branch.name + '  ('+ branch.type +')</option>');
+        //             });
+        //         },
+        //         error: function() {
+        //             toastr.error("{{ translate('messages.failed_to_load_branches') }}");
+        //         }
+        //     });
+
+
+        // }
+
         function findBranch(storeId) {
             if (!storeId) {
-                $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
+                $('#sub-branch').empty().append('<option value="">{{ translate("messages.select_branch") }}</option>');
+                $('#categories').empty().append('<option value="">{{ translate("messages.select_category") }}</option>');
                 return;
             }
 
@@ -2457,9 +2448,16 @@ $(document).ready(function() {
                 type: "GET",
                 data: { store_id: storeId },
                 success: function(response) {
-                    $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
-                    $.each(response, function(key, branch) {
-                        $('#sub-branch').append('<option value="'+ branch.id +'"> ' + branch.name + '  ('+ branch.type +')</option>');
+                    // 🟩 BRANCHES
+                    $('#sub-branch').empty().append('<option value="">{{ translate("messages.select_branch") }}</option>');
+                    $.each(response.branches, function(key, branch) {
+                        $('#sub-branch').append('<option value="'+ branch.id +'"> ' + branch.name + ' ('+ branch.type +')</option>');
+                    });
+
+                    // 🟩 CATEGORIES
+                    $('#categories').empty().append('<option value="">{{ translate("messages.select_category") }}</option>');
+                    $.each(response.categories, function(key, category) {
+                        $('#categories').append('<option value="'+ category.category_id +'">' + category.name + '</option>');
                     });
                 },
                 error: function() {
@@ -2467,6 +2465,7 @@ $(document).ready(function() {
                 }
             });
         }
+
     </script>
 
 @endpush
