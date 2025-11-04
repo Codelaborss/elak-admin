@@ -294,6 +294,11 @@
                                     <a class="btn action-btn btn--primary btn-outline-primary"
                                         href="{{route('admin.Voucher.edit',[$item['id']])}}" title="{{translate('messages.edit_item')}}"><i class="tio-edit"></i>
                                     </a>
+                                    <a class="ml-2 btn btn-sm btn--warning btn-outline-warning action-btn data-info-show"
+                                     href="{{route('admin.Voucher.view_voucher',[$item['id']])}}">
+                                        <i class="tio-invisible"></i>
+                                    </a>
+
                                     <a class="btn  action-btn btn--danger btn-outline-danger form-alert" href="javascript:"
                                         data-id="food-{{$item['id']}}" data-message="{{translate('messages.Want_to_delete_this_item')}}" title="{{translate('messages.delete_item')}}"><i class="tio-delete-outlined"></i>
                                     </a>

@@ -319,6 +319,16 @@ class VoucherController extends Controller
 
 
 
+    public function view_voucher($id)
+    {
+        $taxData = Helpers::getTaxSystemType();
+        $productWiseTax = $taxData['productWiseTax'];
+        $product = Item::withoutGlobalScope(StoreScope::class)->with($productWiseTax ? ['taxVats.tax'] : [])->where(['id' => $id])->firstOrFail();
+
+        $reviews = Review::where(['item_id' => $id])->latest()->paginate(config('default_pagination'));
+        return view('admin-views.voucher.view_voucher', compact('product', 'reviews', 'productWiseTax'));
+    }
+
     public function view($id)
     {
         $taxData = Helpers::getTaxSystemType();

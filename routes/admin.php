@@ -121,6 +121,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('variant-combination', 'VoucherController@variant_combination')->name('variant-combination');
             Route::post('store', 'VoucherController@store')->name('store');
             Route::get('edit/{id}', 'VoucherController@edit')->name('edit');
+            Route::get('view-voucher/{id}', 'VoucherController@view_voucher')->name('view_voucher');
+              Route::get('item-wise-reviews-export', 'VoucherController@item_wise_reviews_export')->name('item_wise_reviews_export');
             Route::post('update/{id}', 'VoucherController@update')->name('update');
             Route::get('list', 'VoucherController@list')->name('list');
             Route::delete('delete/{id}', 'VoucherController@delete')->name('delete');
