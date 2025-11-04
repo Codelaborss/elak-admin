@@ -236,6 +236,7 @@
                                     data-onerror-image="{{asset('public/assets/admin/img/160x160/img2.jpg')}}" alt="{{$item->name}} image">
                                     <div title="{{ $item['name'] }}" class="media-body">
                                         <h5 class="text-hover-primary mb-0">{{Str::limit($item['name'],20,'...')}}</h5>
+                                        <h5 class="text-hover-primary mb-0">{{Str::limit($item['name'],20,'...')}}</h5>
                                     </div>
                                 </a>
                             </td>

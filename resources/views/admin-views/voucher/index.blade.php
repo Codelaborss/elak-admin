@@ -783,34 +783,77 @@ $(document).ready(function() {
     });
 
     // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
+    // $('#select_pro1').on('change', function() {
+    //     let selected = $(this).find('option:selected');
+    //     let productId = selected.val();
+    //     let productName = selected.data('name');
+    //     let basePrice = parseFloat(selected.data('price')) || 0;
+    //     let variations = selected.data('variations') || [];
+    //     let addons = selected.data('addons') || [];
+
+    //     if (!productId) return;
+
+    //     // Check if product is already in Section A
+    //     if (bogoProductsA.includes(productId)) {
+    //         alert(`"${productName}" is already added to Product A section!`);
+    //         $('#select_pro1').val('').trigger('change');
+    //         return;
+    //     }
+
+    //     // Add to Product A array
+    //     bogoProductsA.push(productId);
+
+    //     // Create product card for Product A with unique counter
+    //     let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
+    //     $('#productDetails_section_a').append(html);
+
+    //     bogoCounterA++;
+    //     $('#select_pro1').val('').trigger('change');
+    //     // updateBogoTotal();
+    // });
+
+
     $('#select_pro1').on('change', function() {
-        let selected = $(this).find('option:selected');
-        let productId = selected.val();
-        let productName = selected.data('name');
-        let basePrice = parseFloat(selected.data('price')) || 0;
-        let variations = selected.data('variations') || [];
-        let addons = selected.data('addons') || [];
+    let selected = $(this).find('option:selected');
+    let productId = selected.val();
+    let productName = selected.data('name');
+    let basePrice = parseFloat(selected.data('price')) || 0;
+    let variations = selected.data('variations') || [];
+    let addons = selected.data('addons') || [];
 
-        if (!productId) return;
+    if (!productId) return;
 
-        // Check if product is already in Section A
-        if (bogoProductsA.includes(productId)) {
-            alert(`"${productName}" is already added to Product A section!`);
-            $('#select_pro1').val('').trigger('change');
-            return;
-        }
-
-        // Add to Product A array
-        bogoProductsA.push(productId);
-
-        // Create product card for Product A with unique counter
-        let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
-        $('#productDetails_section_a').append(html);
-
-        bogoCounterA++;
+    // Check if product is already in Section A
+    if (bogoProductsA.some(p => p.id === productId)) {
+        alert(`"${productName}" is already added to Product A section!`);
         $('#select_pro1').val('').trigger('change');
-        // updateBogoTotal();
-    });
+        return;
+    }
+
+    // ✅ Create Product Object (Store Full Data)
+    let productObj = {
+        id: productId,
+        name: productName,
+        base_price: basePrice,
+        variations: Array.isArray(variations) ? variations : [],
+        addons: Array.isArray(addons) ? addons : [],
+        selected_variations: [],
+        selected_addons: []
+    };
+
+    // Push full object into array
+    bogoProductsA.push(productObj);
+
+    // Create product card for Product A with unique counter
+    let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
+    $('#productDetails_section_a').append(html);
+
+    bogoCounterA++;
+    $('#select_pro1').val('').trigger('change');
+
+    console.log("✅ BOGO Section A Array:", bogoProductsA);
+});
+
 
     // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
     $('#select_pro2').on('change', function() {
@@ -843,37 +886,42 @@ $(document).ready(function() {
     });
 
     // ==================== CREATE PRODUCT CARD (REGULAR) ====================
+
+
     function createProductCard(productId, productName, basePrice, variations, addons, counter) {
         let html = `
-        <div class="card p-3 shadow-sm mb-3 col-12 col-md-6" data-product-temp-id="${counter}" data-product-id="${productId}">
-
+        <div class="card p-3 shadow-sm mb-3 col-12 col-md-6"
+            data-product-temp-id="${counter}"
+            data-product-id="${productId}">
 
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
 
                 <!-- Product Name -->
                 <div class="">
-                <h5 class="mb-0">${productName}</h5>
-                <!-- Variations -->
-                ${variations && variations.length > 0 ? `
-                    <div class="variations">
-                        <strong>Variations:</strong>
-                        ${variations.map(v => `
-                            <label class="ms-2 small">
-                                <input
-                                    type="checkbox"
-                                    name="variation_${counter}"
-                                    class="variation-checkbox"
-                                    value="${v.type || ''}"
-                                    data-price="${v.price || 0}"
-                                    data-type="${v.type || 'Option'}"
-                                >
-                                ${v.type || 'Option'} - $${v.price || 0}
-                                ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                            </label>
-                        `).join('')}
-                    </div>
-                ` : ''}
-               </div>
+                    <h5 class="mb-0">${productName}</h5>
+
+                    <!-- Variations -->
+                    ${variations && variations.length > 0 ? `
+                        <div class="variations mt-2">
+                            <strong>Variations:</strong>
+                            ${variations.map((v, index) => `
+                                <label class="ms-2 small d-block">
+                                    <input
+                                        type="checkbox"
+                                        name="products[${counter}][variations][]"
+                                        class="variation-checkbox"
+                                        value="${v.type || ''}"
+                                        data-price="${v.price || 0}"
+                                        data-type="${v.type || 'Option'}"
+                                    >
+                                    ${v.type || 'Option'} - $${v.price || 0}
+                                    ${v.stock ? ` (Stock: ${v.stock})` : ''}
+                                </label>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+
                 <!-- Product Total -->
                 <div class="p-2 text-nowrap">
                     <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
@@ -886,30 +934,87 @@ $(document).ready(function() {
                     type="button"
                     class="btn btn-danger btn-sm remove-product-btn"
                     data-temp-id="${counter}"
-                    data-product-id="${productId}"
-                >
+                    data-product-id="${productId}">
                     <i class="fa fa-trash"></i>
                 </button>
             </div>
 
-            <input type="hidden" class="product-id" value="${productId}">
-            <input type="hidden" class="product-name" value="${productName}">
-            <input type="hidden" class="product-base-price" value="${basePrice}">
+            <!-- Hidden Inputs -->
+            <input type="hidden" name="products[${counter}][product_id]" value="${productId}">
+            <input type="hidden" name="products[${counter}][product_name]" value="${productName}">
+            <input type="hidden" name="products[${counter}][base_price]" value="${basePrice}">
+        </div>
         `;
 
         return html;
     }
+
+
+    // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
+    // function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
+    //     const variationsHtml = (variations && variations.length)
+    //         ? `<div class="mt-2">
+    //                 <strong>Variations:</strong>
+    //                 ${variations.map((v, index) => `~
+    //                     <label class="d-block small mt-1">
+    //                         <input
+    //                             type="checkbox"
+    //                             name="bogo_variation_${section}_${counter}_${index}"
+    //                             class="bogo-variation-checkbox"
+    //                             value="${v.type || ''}"
+    //                             data-price="${v.price || 0}"
+    //                             data-type="${v.type || 'Option'}"
+    //                         >
+    //                         ${v.type || 'Option'} - $${(v.price || 0).toFixed(2)}
+    //                         ${v.stock ? ` (Stock: ${v.stock})` : ''}
+    //                     </label>
+    //                 `).join('')}
+    //         </div>`
+    //         : '';
+
+    //     const html = `
+    //     <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
+    //         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
+
+    //             <!-- Product Name + Info -->
+    //             <div class="me-3 flex-grow-1">
+    //                 <h5 class="mb-1">Product ${section}: ${productName}</h5>
+    //                 ${variationsHtml}
+    //             </div>
+
+    //             <!-- Product Total -->
+    //             <div class="p-2 text-nowrap">
+    //                 <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+    //                     $${basePrice.toFixed(2)}
+    //                 </span>
+    //             </div>
+
+    //             <!-- Delete Button -->
+    //             <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
+    //                 data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
+    //                 <i class="fa fa-trash"></i>
+    //             </button>
+    //         </div>
+
+    //         <input type="hidden" class="bogo-product-id" value="${productId}">
+    //         <input type="hidden" class="bogo-product-name" value="${productName}">
+    //         <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
+    //     </div>
+    //     `;
+
+    //     return html;
+    // }
 
     // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
     function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
         const variationsHtml = (variations && variations.length)
             ? `<div class="mt-2">
                     <strong>Variations:</strong>
-                    ${variations.map((v, index) => `~
+                    ${variations.map((v, index) => `
                         <label class="d-block small mt-1">
                             <input
                                 type="checkbox"
-                                name="bogo_variation_${section}_${counter}_${index}"
+                                name="bogo_products[${section}][${counter}][variations][]"
                                 class="bogo-variation-checkbox"
                                 value="${v.type || ''}"
                                 data-price="${v.price || 0}"
@@ -922,8 +1027,30 @@ $(document).ready(function() {
             </div>`
             : '';
 
+        // const addonsHtml = (addons && addons.length)
+        //     ? `<div class="mt-2">
+        //             <strong>Addons:</strong>
+        //             ${addons.map((a, index) => `
+        //                 <label class="d-block small mt-1">
+        //                     <input
+        //                         type="checkbox"
+        //                         name="bogo_products[${section}][${counter}][addons][]"
+        //                         class="bogo-addon-checkbox"
+        //                         value="${a.name || ''}"
+        //                         data-price="${a.price || 0}"
+        //                     >
+        //                     ${a.name || 'Addon'} - $${(a.price || 0).toFixed(2)}
+        //                 </label>
+        //             `).join('')}
+        //     </div>`
+        //     : '';
+
         const html = `
-        <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
+        <div class="card p-3 shadow-sm mb-3 col-12"
+            data-bogo-section="${section}"
+            data-bogo-counter="${counter}"
+            data-product-id="${productId}">
+
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
 
                 <!-- Product Name + Info -->
@@ -946,14 +1073,16 @@ $(document).ready(function() {
                 </button>
             </div>
 
-            <input type="hidden" class="bogo-product-id" value="${productId}">
-            <input type="hidden" class="bogo-product-name" value="${productName}">
-            <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
+            <!-- Hidden Inputs -->
+            <input type="hidden" name="bogo_products[${section}][${counter}][product_id]" value="${productId}">
+            <input type="hidden" name="bogo_products[${section}][${counter}][product_name]" value="${productName}">
+            <input type="hidden" name="bogo_products[${section}][${counter}][base_price]" value="${basePrice}">
         </div>
         `;
 
         return html;
     }
+
 
 
     // ==================== REMOVE BOGO PRODUCT ====================

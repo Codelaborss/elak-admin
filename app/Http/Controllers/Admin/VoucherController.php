@@ -293,8 +293,8 @@ class VoucherController extends Controller
         $item->branch_ids = json_encode(array_filter($request->sub_branch_id ?? []));
         $item->how_and_condition_ids = json_encode(array_filter($request->howto_work ?? []));
         $item->term_and_condition_ids = json_encode(array_filter($request->term_and_condition ?? []));
-        // $item->product = json_encode(array_filter($request->product ?? []));
-        // $item->product_b = json_encode(array_filter($request->product_b ?? []));
+        $item->product = json_encode(array_filter($request->products ?? []));
+        $item->product_b = json_encode(array_filter($request->bogo_products ?? []));
 
         // ✅ Optional fields
         // $item->voucher_ids = $request->hidden_values ?? null;
