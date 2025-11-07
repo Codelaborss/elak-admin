@@ -346,6 +346,7 @@
             </div>
             @if(count($items) !== 0)
                 <hr>
+
             @endif
             <div class="page-area">
                 <tfoot class="border-top">

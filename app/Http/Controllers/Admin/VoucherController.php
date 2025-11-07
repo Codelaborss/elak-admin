@@ -124,6 +124,8 @@ class VoucherController extends Controller
         // dd(session('current_module_type'));
         // dd(session('current_module_name'));
 
+
+
         $categories = Category::where(['position' => 0])->get();
 
         $taxData = Helpers::getTaxSystemType();
