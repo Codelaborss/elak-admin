@@ -114,7 +114,7 @@ class VoucherController extends Controller
     }
     public function index(Request $request)
     {
-        dd("dfjhvbhjf");
+        // dd("dfjhvbhjf");
         // dd(Session());
         // dd(config('module.current_module_id'));
         // dd(config('module.current_module_type'));
