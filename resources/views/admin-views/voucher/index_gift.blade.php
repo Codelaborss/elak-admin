@@ -101,14 +101,14 @@
   <link rel="stylesheet" href="{{asset('assets/admin/css/voucher.css')}}">
      <!-- Page Header -->
      <div class="container-fluid px-4 py-3">
-          @include("admin-views.voucher.include_heading")
+          @include("admin-views.voucher.store_include.include_heading")
         <div class="bg-white shadow rounded-lg p-4">
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
             <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
             <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
 
             {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
-             @include("admin-views.voucher.include_client_voucher_management")
+             @include("admin-views.voucher.store_include.include_client_voucher_management")
 
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
                 @csrf
@@ -116,7 +116,7 @@
                 @php($language = $language->value ?? null)
                 @php($defaultLang = str_replace('_', '-', app()->getLocale()))
                 {{-- Client Information and Partner Information --}}
-                 @include("admin-views.voucher.include_client_partner_information")
+                 @include("admin-views.voucher.store_include.include_client_partner_information")
 
 
 
@@ -623,7 +623,7 @@
         </div>
       </div>
 
-      @include("admin-views.voucher.include_model")
+      @include("admin-views.voucher.store_include.include_model")
 
 @endsection
 

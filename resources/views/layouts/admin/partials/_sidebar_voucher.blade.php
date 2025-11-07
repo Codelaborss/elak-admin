@@ -523,12 +523,12 @@
                                         <span class="text-truncate">{{ translate('Add Category') }}</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  @yield('sub_category') {{ request()->input('position') == 1 && Request::is('admin/category/add') ? 'active' : '' }}">
+                                {{-- <li class="nav-item  @yield('sub_category') {{ request()->input('position') == 1 && Request::is('admin/category/add') ? 'active' : '' }}">
                                     <a class="nav-link "  href="{{ route('admin.category.add',['position'=>1]) }}" title="{{ translate('messages.sub_category') }}">
                                         <span class="tio-circle nav-indicator-icon"></span>
                                         <span class="text-truncate">{{ translate('Category Setting') }}</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
                                 {{-- <li class="nav-item {{ Request::is('admin/category/bulk-import') ? 'active' : '' }}">
                                     <a class="nav-link " href="{{ route('admin.category.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
@@ -548,9 +548,9 @@
                       <!-- AddOn -->
                 @if (\App\CentralLogics\Helpers::module_permission_check('addon'))
                 <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/addon*') ? 'active' : '' }}">
-                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Product Addons') }}">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Food Addons') }}">
                         <i class="tio-add-circle-outlined nav-icon"></i>
-                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('Product Addons') }}</span>
+                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('Food Addons') }}</span>
                     </a>
                     <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/addon*') ? 'block' : 'none' }}">
                         <li class="nav-item {{ Request::is('admin/addon/addon-category') ? 'active' : '' }}">
@@ -723,9 +723,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item {{ Request::is('admin/Voucher/add-new') || (Request::is('admin/Voucher/edit/*') && strpos(request()->fullUrl(), 'product_gellary=1') !== false  )  ? 'active' : '' }}">
-                                    <a class="nav-link " href="{{ route('admin.Voucher.add-new') }}" title="{{ translate('messages.add_new') }}">
+                                    <a class="nav-link " href="{{ route('admin.Voucher.add-new') }}" title="{{ translate('Add New Voucher') }}">
                                         <span class="tio-circle nav-indicator-icon"></span>
-                                        <span class="text-truncate">{{ translate('messages.add_new') }}</span>
+                                        <span class="text-truncate">{{ translate('Add New Voucher') }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item {{ Request::is('admin/Voucher/list') || (Request::is('admin/Voucher/edit/*') && (strpos(request()->fullUrl(), 'temp_product=1') == false && strpos(request()->fullUrl(), 'product_gellary=1') == false  ) ) ? 'active' : '' }}">

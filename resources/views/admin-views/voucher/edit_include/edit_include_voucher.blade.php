@@ -22,13 +22,12 @@
 </div>
 
 {{--  Review & Submit --}}
-<div class="section-card rounded p-4 mb-4 section3 " id="review_submit_main">
+{{-- <div class="section-card rounded p-4 mb-4 section3 " id="review_submit_main">
     <h3 class="h5 fw-semibold mb-2"> {{ translate('Review & Submit') }}</h3>
     <p class="text-muted">Review your voucher before submitting</p>
 
     <div class="card border shadow-sm mt-3">
         <div class="card-body">
-        <!-- MAIN REVIEW CONTENT (always visible) -->
         <div class="row">
             <div class="col-md-6 mb-4">
             <h5 class="font-weight-bold mb-3"> Client Information</h5>
@@ -78,7 +77,6 @@
             <span class="badge badge-success"> Halal Certified</span>
         </div>
 
-        <!-- Variations -->
         <div class="border-top pt-4 mt-4">
             <h5 class="font-weight-bold mb-3"> Variations (1)</h5>
             <div class="row">
@@ -90,15 +88,6 @@
             </div>
             </div>
         </div>
-
-        <!-- TOGGLE BUTTON -->
-        {{-- <div class="text-center mt-4">
-            <button id="togglePreview" type="button" class="btn btn-secondary">
-            Show Preview 👁️
-            </button>
-        </div> --}}
-
-        <!-- PREVIEW BLOCK (hide/show only this) -->
         <div id="voucherPreview" class="card border-dashed mt-4 p-4" style="display: none;">
             <h5 class="font-weight-bold mb-3">Voucher Preview</h5>
             <div class="card bg-primary text-white p-4">
@@ -114,10 +103,9 @@
             </div>
             </div>
         </div>
-
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Action Buttons -->
 <div class="col-md-12">

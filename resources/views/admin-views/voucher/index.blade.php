@@ -29,12 +29,12 @@
   <link rel="stylesheet" href="{{asset('assets/admin/css/voucher.css')}}">
      <!-- Page Header -->
      <div class="container-fluid px-4 py-3">
-          @include("admin-views.voucher.include_heading")
+          @include("admin-views.voucher.store_include.include_heading")
         <div class="bg-white shadow rounded-lg p-4">
 
 
             {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
-             @include("admin-views.voucher.include_client_voucher_management")
+             @include("admin-views.voucher.store_include.include_client_voucher_management")
 
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
                  <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
@@ -45,7 +45,7 @@
                 @php($language = $language->value ?? null)
                 @php($defaultLang = str_replace('_', '-', app()->getLocale()))
                 {{-- Client Information and Partner Information --}}
-                 @include("admin-views.voucher.include_client_partner_information")
+                 @include("admin-views.voucher.store_include.include_client_partner_information")
 
                    <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
                     <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
@@ -64,7 +64,7 @@
                             {{-- images --}}
                         <div class="row g-3">
                             <div class="col-12" >
-                                @include("admin-views.voucher.include_images")
+                                @include("admin-views.voucher.store_include.include_images")
                             </div>
                         </div>
                         {{-- images  --}}
@@ -672,13 +672,13 @@
                         </div>
                     </div>
 
-                 @include("admin-views.voucher.include_voucher")
+                 @include("admin-views.voucher.store_include.include_voucher")
 
             </form>
         </div>
       </div>
 
-      @include("admin-views.voucher.include_model")
+      @include("admin-views.voucher.store_include.include_model")
 
 @endsection
 
@@ -2572,11 +2572,12 @@ $(document).ready(function() {
                 return;
             }
 
-            $.ajax({
+         $.ajax({
                 url: "{{ route('admin.Voucher.get_branches') }}",
                 type: "GET",
                 data: { store_id: storeId },
                 success: function(response) {
+
                     // 🟩 BRANCHES
                     $('#sub-branch').empty().append('<option value="">{{ translate("messages.select_branch") }}</option>');
                     $.each(response.branches, function(key, branch) {
@@ -2585,14 +2586,20 @@ $(document).ready(function() {
 
                     // 🟩 CATEGORIES
                     $('#categories').empty().append('<option value="">{{ translate("messages.select_category") }}</option>');
-                    $.each(response.categories, function(key, category) {
-                        $('#categories').append('<option value="'+ category.category_id +'">' + category.name + '</option>');
-                    });
+                    if (response.categories && response.categories.categories) {
+                        $.each(response.categories.categories, function(key, category) {
+                            $('#categories').append('<option value="'+ category.id +'">' + category.name + '</option>');
+                        });
+                    } else {
+                        console.warn("⚠️ No categories found in response");
+                    }
                 },
                 error: function() {
                     toastr.error("{{ translate('messages.failed_to_load_branches') }}");
                 }
             });
+
+
         }
 
     </script>

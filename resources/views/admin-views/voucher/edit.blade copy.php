@@ -44,13 +44,13 @@
         <form action="javascript:" method="post" id="product_form" enctype="multipart/form-data">
             @csrf
                 @if (request()->product_gellary  == 1)
-                    @php($route =route('admin.item.store',['product_gellary' => request()->product_gellary ]))
+                    @php($route =route('admin.Voucher.store',['product_gellary' => request()->product_gellary ]))
                     @php($product->price = 0)
                 @else
-                    @php($route =route('admin.item.update', [ isset($temp_product) && $temp_product == 1 ?   $product['item_id'] : $product['id']]))
+                    @php($route =route('admin.Voucher.update', [ isset($temp_product) && $temp_product == 1 ?   $product['item_id'] : $product['id']]))
                 @endif
 
-            <input type="hidden" class="route_url" value="{{ $route ?? route('admin.item.update', [ isset($temp_product) && $temp_product == 1 ?   $product['item_id'] : $product['id']]) }}" >
+            <input type="hidden" class="route_url" value="{{ $route ?? route('admin.Voucher.update', [ isset($temp_product) && $temp_product == 1 ?   $product['item_id'] : $product['id']]) }}" >
             <input type="hidden" value="{{$temp_product ?? 0 }}" name="temp_product" >
             <input type="hidden" value="{{$product['id'] ?? null }}" name="item_id" >
 
@@ -58,11 +58,6 @@
             @php($language = $language->value ?? null)
             @php($defaultLang = str_replace('_', '-', app()->getLocale()))
             <div class="row g-2">
-
-
-
-                {{-- @dd($product->images) --}}
-
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
@@ -157,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- @dd($taxVats) --}}
+
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body d-flex flex-wrap align-items-center">
@@ -182,7 +177,7 @@
                                                     class="spartan_remove_row function_remove_img"><i class="tio-add-to-trash"></i></a>
                                                     {{-- @if (request()->product_gellary  == 1)
                                                     @else
-                                                        <a href="{{ route('admin.item.remove-image', ['id' => $product['id'], 'name' => $photo['img'] ,'temp_product' => $temp_product]) }}"
+                                                        <a href="{{ route('admin.Voucher.remove-image', ['id' => $product['id'], 'name' => $photo['img'] ,'temp_product' => $temp_product]) }}"
                                                             class="spartan_remove_row"><i class="tio-add-to-trash"></i></a>
                                                     @endif --}}
                                             </div>
@@ -728,10 +723,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
             <div class="col-md-12">
                 <div class="btn--container justify-content-end">
                     <button type="reset" id="reset_btn"
@@ -1090,9 +1081,7 @@
         } else {
             $('#stock_input').hide();
         }
-        console.log(module_data)
         if (module_data.add_on) {
-
             $('#addon_input').show();
         } else {
             $('#addon_input').hide();
@@ -1353,7 +1342,7 @@
 
         $.ajax({
             type: "POST",
-            url: "{{ route('admin.item.variant-combination') }}",
+            url: "{{ route('admin.Voucher.variant-combination') }}",
             data: $('#product_form').serialize() + '&stock=' + stock,
             beforeSend: function() {
                 $('#loading').show();
@@ -1419,7 +1408,7 @@
                     });
                     setTimeout(function() {
                         location.href =
-                            '{{ route('admin.item.list') }}';
+                            '{{ route('admin.Voucher.list') }}';
                     }, 2000);
                 }
             }

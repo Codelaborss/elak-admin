@@ -213,8 +213,10 @@
                                     <td>{{ $key + $categories->firstItem() }}</td>
                                     <td>{{ $category->id }}</td>
                                     <td>
+                               {{-- @dd($category->name) --}}
+
                                         <span class="d-block font-size-sm text-body">
-                                            {{ Str::limit($category['name'], 20, '...') }}
+                                            {{ $category->name }}
                                         </span>
                                     </td>
                                     <td>

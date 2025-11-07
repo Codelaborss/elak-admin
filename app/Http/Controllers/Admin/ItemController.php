@@ -425,6 +425,7 @@ class ItemController extends Controller
 
     public function view($id)
     {
+        // dd("fjvbhjdf");
         $taxData = Helpers::getTaxSystemType();
         $productWiseTax = $taxData['productWiseTax'];
         $product = Item::withoutGlobalScope(StoreScope::class)->with($productWiseTax ? ['taxVats.tax'] : [])->where(['id' => $id])->firstOrFail();
@@ -435,10 +436,13 @@ class ItemController extends Controller
 
     public function edit(Request $request, $id)
     {
+        // dd($request->all());
+
         $temp_product = false;
         if ($request->temp_product) {
             $product = TempProduct::withoutGlobalScope(StoreScope::class)->withoutGlobalScope('translate')->with('store', 'category', 'module')->findOrFail($id);
             $temp_product = true;
+
         } else {
             $product = Item::withoutGlobalScope(StoreScope::class)->withoutGlobalScope('translate')->with('store', 'category', 'module')->findOrFail($id);
         }
@@ -459,6 +463,7 @@ class ItemController extends Controller
         $productWiseTax = $taxData['productWiseTax'];
         $taxVats = $taxData['taxVats'];
         $taxVatIds = $productWiseTax ? $product->taxVats()->pluck('tax_id')->toArray() : [];
+            dd($productWiseTax);
 
 
         return view('admin-views.product.edit', compact('product', 'sub_category', 'category', 'temp_product', 'productWiseTax', 'taxVats', 'taxVatIds'));

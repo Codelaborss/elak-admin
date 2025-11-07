@@ -14,7 +14,7 @@
                     <span class="page-header-icon">
                         <img src="{{ asset('public/assets/admin/img/items.png') }}" class="w--22" alt="">
                     </span>
-                    <span>{{ $product['name'] }}</span>
+                    <span>{{ $product['name'] }} fgfgfFF</span>
                 </h1>
                 <div>
                     @if (Config::get('module.current_module_type') != 'food')

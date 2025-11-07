@@ -513,9 +513,52 @@ class VendorController extends Controller
                     ->StoreOrder()
             ->Notpos()->paginate(10);
             return view('admin-views.vendor.view.order', compact('store','orders'));
-        }
-        else if($tab == 'item')
-        {
+        } else if($tab == 'voucher') {
+
+                if($sub_tab == 'pending-items' || $sub_tab == 'rejected-items' ){
+
+                    $foods = TempProduct::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)
+                    ->when(isset($key) , function($q) use($key){
+                        $q->where(function ($q) use ($key) {
+                            foreach ($key as $value) {
+                                $q->where('name', 'like', "%{$value}%");
+                            }
+                        });
+                    })
+                    ->when($sub_tab == 'pending-items' , function($q){
+                        $q->where('is_rejected' , 0);
+                    })
+                    ->when($sub_tab == 'rejected-items' , function($q){
+                        $q->where('is_rejected' , 1);
+                    })
+                    ->latest()->paginate(25);
+                }   else{
+
+                    // $foods = Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where("voucher_type","voucher")
+                    $foods = Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)->where("voucher_type","voucher")
+                        ->when(isset($key) , function($q) use($key){
+                            $q->where(function ($q) use ($key) {
+                                foreach ($key as $value) {
+                                    $q->where('name', 'like', "%{$value}%");
+                                }
+                            });
+                        })
+                        ->when($sub_tab == 'active-items' , function($q){
+                            $q->where('status' , 1);
+                        })
+                        ->when($sub_tab == 'inactive-items' , function($q){
+                            $q->where('status' , 0);
+                        })
+                        ->latest()->paginate(25);
+
+                        // dd($foods);
+                }
+                $taxData = Helpers::getTaxSystemType(getTaxVatList: false);
+                $productWiseTax = $taxData['productWiseTax'];
+
+            return view('admin-views.vendor.view.voucher', compact('store','foods','sub_tab','productWiseTax'));
+
+        } else if($tab == 'item') {
             if($sub_tab == 'pending-items' || $sub_tab == 'rejected-items' ){
 
                 $foods = TempProduct::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)
@@ -556,9 +599,8 @@ class VendorController extends Controller
         $productWiseTax = $taxData['productWiseTax'];
 
             return view('admin-views.vendor.view.product', compact('store','foods','sub_tab','productWiseTax'));
-        }
-        else if($tab == 'discount')
-        {
+        } else if($tab == 'discount') {
+
             return view('admin-views.vendor.view.discount', compact('store'));
         }
         else if($tab == 'transaction')

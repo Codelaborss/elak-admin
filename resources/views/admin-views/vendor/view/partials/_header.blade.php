@@ -57,6 +57,9 @@
                     <a class="nav-link {{request('tab')=='item'?'active':''}}" href="{{route('admin.store.view', ['store'=>$store->id, 'tab'=> 'item'])}}"  aria-disabled="true">{{translate('messages.items')}}</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{request('tab')=='voucher'?'active':''}}" href="{{route('admin.store.view', ['store'=>$store->id, 'tab'=> 'voucher'])}}"  aria-disabled="true">{{translate('messages.voucher')}}</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{request('tab')=='reviews'?'active':''}}" href="{{route('admin.store.view', ['store'=>$store->id, 'tab'=> 'reviews'])}}"  aria-disabled="true">{{translate('messages.reviews')}}</a>
                 </li>
                 <li class="nav-item">

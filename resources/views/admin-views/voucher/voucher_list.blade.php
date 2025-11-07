@@ -208,15 +208,22 @@
                         <th class="border-0">{{translate('sl')}}</th>
                         <th class="border-0">{{translate('messages.name')}}</th>
                         <th class="border-0">{{translate('messages.category')}}</th>
+                        {{-- @if (Config::get('module.current_module_type') != 'food')
+                        <th class="border-0">{{translate('messages.quantity')}}</th>
+                        @endif --}}
 
-                        <th class="border-0">{{ translate('Segment') }}</th>
-                        <th class="border-0">{{ translate('discount') }}</th>
-                        <th class="border-0">{{ translate('Discount Type') }}</th>
-                        <th class="border-0">{{ translate('Bundle Type') }}</th>
-                        <th class="border-0">{{ translate('Voucher Name') }}</th>
+                             <th class="border-0">{{ translate('Segment') }}</th>
+                            <th class="border-0">{{ translate('discount') }}</th>
+                            <th class="border-0">{{ translate('Discount Type') }}</th>
+                            <th class="border-0">{{ translate('Bundle Type') }}</th>
+                            <th class="border-0">{{ translate('Voucher Name') }}</th>
 
                         <th class="border-0">{{translate('messages.store')}}</th>
                         <th class="border-0 text-center">{{translate('messages.price')}}</th>
+
+                        {{-- @if ($productWiseTax)
+                        <th  class="border-0 ">{{ translate('messages.Vat/Tax') }}</th>
+                        @endif --}}
 
                         <th class="border-0 text-center">{{translate('messages.status')}}</th>
                         <th class="border-0 text-center">{{translate('messages.action')}}</th>
@@ -240,11 +247,10 @@
                                     </div>
                                 </a>
                             </td>
-
-                                {{-- <td title="{{ $item?->category?->name }}"> --}}
+                            {{-- <td title="{{ $item?->category?->name }}"> --}}
                             {{-- {{Str::limit($item->category?$item->category->name:translate('messages.category_deleted'),20,'...')}}
                             </td> --}}
-                             @php( $categories = \App\Models\Category::whereIn('id', json_decode($item->category_ids))->pluck('name')->toArray()  )
+                             {{-- @php( $categories = \App\Models\Category::whereIn('id', json_decode($item->category_ids))->pluck('name')->toArray()  )
 
                             <td>
                                 {!! implode('<br>,', $categories) !!}
@@ -266,8 +272,16 @@
                             @php( $voucher = \App\Models\VoucherType::find($item->voucher_ids))
                             <td>
                                 {{ $voucher?->name }}
-                            </td>
+                            </td> --}}
 
+                            @if (Config::get('module.current_module_type') != 'food')
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <h5 class="text-hover-primary fw-medium mb-0">{{$item->stock}}</h5>
+                                    <span data-toggle="modal"  data-id="{{ $item->id }}"  data-target="#update-quantity" class="text-primary tio-add-circle fs-22 cursor-pointer update-quantity"></span>
+                                </div>
+                            </td>
+                            @endif
                             <td>
                                 @if ($item->store)
                                 <a title="{{ $item?->store?->name }}" href="{{route('admin.store.view', $item->store->id)}}" class="table-rest-info" alt="view store"> {{  Str::limit($item->store->name, 20, '...') }}</a>

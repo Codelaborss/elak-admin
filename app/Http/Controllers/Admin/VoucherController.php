@@ -114,7 +114,7 @@ class VoucherController extends Controller
     }
     public function index(Request $request)
     {
-        // dd("dfjhvbhjf");
+        dd("dfjhvbhjf");
         // dd(Session());
         // dd(config('module.current_module_id'));
         // dd(config('module.current_module_type'));
@@ -142,11 +142,45 @@ class VoucherController extends Controller
             ->select('id', 'name', 'type')
             ->get();
 
-        $category = Store::where('parent_id', $request->store_id)
+        // $category = Store::where('parent_id', $request->store_id)
+        //     ->orWhere('id', $request->store_id)
+        //     ->orderBy('created_at')
+        //     ->select('id', 'name', 'type', 'category_id', 'voucher_id')
+        //     ->get();
+
+        // فرض کریں $store ایک single store record ہے
+// Step 1: Get stores list
+       $category = Store::where('parent_id', $request->store_id)
             ->orWhere('id', $request->store_id)
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'asc')
             ->select('id', 'name', 'type', 'category_id', 'voucher_id')
-            ->get();
+            ->first();
+
+        if ($category) {
+            $categoryIds = json_decode($category->category_id, true);
+
+            if (!is_array($categoryIds)) {
+                $categoryIds = [$category->category_id];
+            }
+
+            $categories = Category::whereIn('id', $categoryIds)
+                ->where("parent_id", "0")
+                ->select('id', 'name')
+                ->get();
+
+            $category->categories = $categories;
+        }
+
+        // dd($category);
+
+
+
+        // final result
+        // return response()->json($categoryData);
+
+
+
+            // dd($categoryData);
 
         return response()->json([
             'branches' => $branches,
@@ -309,6 +343,7 @@ class VoucherController extends Controller
         $item->bundle_type = $request->bundle_offer_type ?? null;
         $item->tags_ids = $request->tags ?? null;
         $item->images = $images;
+        $item->voucher_type = "voucher";
         $item->is_halal = $request->is_halal ?? 0;
 
         // ✅ Save
@@ -987,6 +1022,7 @@ class VoucherController extends Controller
 
     public function list(Request $request)
     {
+        // dd("fgfdg");
         $store_id = $request->query('store_id', 'all');
         $category_id = $request->query('category_id', 'all');
         $sub_category_id = $request->query('sub_category_id', 'all');
@@ -1036,6 +1072,7 @@ class VoucherController extends Controller
                 });
             })
             ->where('is_approved', 1)
+            ->where('voucher_type', "voucher")
             ->module(Config::get('module.current_module_id'))
             ->type($type)
             ->latest()->paginate(config('default_pagination'));
@@ -1048,6 +1085,7 @@ class VoucherController extends Controller
         $taxData = Helpers::getTaxSystemType(getTaxVatList: false);
         $productWiseTax = $taxData['productWiseTax'];
 
+        // dd($items);
         return view('admin-views.voucher.list', compact('items', 'store', 'category', 'type', 'sub_categories', 'condition','productWiseTax'));
     }
 
