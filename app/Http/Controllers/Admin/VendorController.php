@@ -534,6 +534,7 @@ class VendorController extends Controller
                     ->latest()->paginate(25);
                 }   else{
 
+
                     // $foods = Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where("voucher_type","voucher")
                     $foods = Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)->where("voucher_type","voucher")
                         ->when(isset($key) , function($q) use($key){
