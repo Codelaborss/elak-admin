@@ -40,6 +40,7 @@
                  <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
                 <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
                 <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
+                <input type="hidden" name="hidden_voucher_id" id="hidden_voucher_id" value=""/>
                 @csrf
                 @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
                 @php($language = $language->value ?? null)
@@ -1517,6 +1518,7 @@ $(document).ready(function() {
             const voucherCards = document.querySelectorAll('.voucher-card');
             const voucherCards2 = document.querySelectorAll('.voucher-card_2');
              const allimages = document.getElementById('allimages');
+             const hidden_voucher_id = document.getElementById('hidden_voucher_id');
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
 

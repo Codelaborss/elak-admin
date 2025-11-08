@@ -237,11 +237,14 @@
                                             <td> {{ $food->discount_type }}</td>
                                             <td> {{ $food->bundle_type }}</td>
 
-                                            @php( $voucher = \App\Models\VoucherType::find($food->voucher_ids))
+                                            {{-- @php( $voucher = \App\Models\VoucherType::find($food->voucher_ids))
                                             <td>
-                                                {{-- @dd($food->voucher_ids) --}}
                                                 {{ $voucher?->name }}
+                                            </td> --}}
+                                             <td>
+                                                {{ $item->voucher_ids }}
                                             </td>
+
                                             <td> {{ $food->price }}</td>
 
                                             <td>

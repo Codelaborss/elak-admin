@@ -341,7 +341,7 @@ class VoucherController extends Controller
         $item->client_id = json_encode($request->select_client ?? []);
         $item->segment_ids = json_encode($request->segment_type ?? []);
         $item->branch_ids = json_encode($request->sub_branch_id ?? []);
-        $item->voucher_ids = $request->hidden_value;
+        $item->voucher_ids = $request->hidden_name;
         $item->bundle_type = $request->bundle_offer_type ?? null;
         $item->tags_ids = $request->tags ?? null;
         $item->images = $images;

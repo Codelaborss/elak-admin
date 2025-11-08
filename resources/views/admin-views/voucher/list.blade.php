@@ -263,9 +263,9 @@
                             <td> {{ $item->discount_type }}</td>
                             <td> {{ $item->bundle_type }}</td>
 
-                            @php( $voucher = \App\Models\VoucherType::find($item->voucher_ids))
+                            {{-- @php( $voucher = \App\Models\VoucherType::find($item->voucher_ids)) --}}
                             <td>
-                                {{ $voucher?->name }}
+                                {{ $item->voucher_ids }}
                             </td>
 
                             <td>
@@ -282,7 +282,7 @@
                                 </div>
                             </td>
 
-                            @if ($productWiseTax)
+                            {{-- @if ($productWiseTax)
                                 <td>
                                     <span class="d-block font-size-sm text-body">
                                         @forelse ($item?->taxVats?->pluck('tax.name', 'tax.tax_rate')->toArray() as $key => $tax)
@@ -295,7 +295,7 @@
                                         @endforelse
                                     </span>
                                 </td>
-                                @endif
+                                @endif --}}
 
 
                             <td>
