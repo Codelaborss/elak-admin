@@ -8322,4 +8322,5 @@ Smartly or Earn. ',
   'remove_sub_categories_first' => 'Remove sub categories first',
   'Bundle Type' => 'Bundle Type',
   'Discunt' => 'Discunt',
+  'The voucher title must be a number.' => 'The voucher title must be a number.',
 );

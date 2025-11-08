@@ -233,16 +233,37 @@ class VoucherController extends Controller
         // ✅ Debug request if needed
         // dd($request->all());
 
-        // $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
 
-        //     'discount' => 'required|numeric|min:0',
-        //     'store_id' => 'required',
-        //     'description.*' => 'max:1000',
-        // ]);
+            'voucher_title' => 'required',
+            'valid_until' => 'required',
+            'description.*' => 'max:1000',
+            'bundle_offer_type' => 'required',
+            'bundle_fixed_price' => 'required',
+            'bundle_discount_type' => 'required',
+            'discount_account' => 'required',
+            'buy_quantity' => 'required',
+            'get_quantity' => 'required',
+            'total_item' => 'required',
+            'discount_amount' => 'required',
+            'max_user_per_customer' => 'required',
+            'tags' => 'required',
+            'products' => 'required',
+            'price' => 'required',
+            'price_hidden' => 'required',
+            'required_qty' => 'required',
+            'offer_type' => 'required',
+            'discount_type' => 'required',
+            'discount' => 'required',
+            'howto_work' => 'required',
+            'term_and_condition' => 'required',
+            'item_images' => 'required',
+            'image' => 'required',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json(['errors' => Helpers::error_processor($validator)], 422);
-        // }
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 422);
+        }
 
         $images = [];
         $newFileNamethumb = null;

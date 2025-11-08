@@ -54,11 +54,11 @@
                         <div class="row g-3 mb-3">
                             <div class="col-6">
                                 <label class="form-label fw-medium">Voucher Title</label>
-                                <input type="text" name="voucher_title" class="form-control" placeholder="Voucher Title">
+                                <input type="text" value="{{ $product->voucher_title }}" name="voucher_title" class="form-control" placeholder="Voucher Title">
                             </div>
                             <div class="col-6">
                                 <label class="form-label fw-medium">Valid Until</label>
-                                <input type="date" name="valid_until" class="form-control">
+                                <input type="date" name="valid_until" value="{{ $product->valid_until }}" class="form-control">
                             </div>
                         </div>
                             {{-- images --}}
@@ -71,7 +71,7 @@
                         <div class="row g-3">
                             <div class="mb-3 col-12 ">
                                 <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                                <textarea type="text" name="description" class="form-control min-h-90px ckeditor"></textarea>
+                                <textarea type="text" name="description" class="form-control min-h-90px ckeditor">{{ $product->description }}</textarea>
                             </div>
                         </div>
                         {{-- Bundle Type Selection --}}
@@ -80,16 +80,16 @@
                                 <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
                                 <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
                                     <option value="">Select Bundle Offer Type</option>
-                                    <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
+                                    <option value="simple" {{  $product->bundle_type == 'simple' ? 'selected' : '' }}>
                                         Simple
                                     </option>
-                                    <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
+                                    <option value="bundle" {{ $product->bundle_type == 'bundle' ? 'selected' : '' }}>
                                         Fixed Bundle - Specific products at set price
                                     </option>
-                                    <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                    <option value="bogo_free" {{ $product->bundle_type == 'bogo_free' ? 'selected' : '' }}>
                                     Buy X Get Y - Buy products get different product free
                                     </option>
-                                    <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
+                                    <option value="mix_match" {{ $product->bundle_type == 'mix_match' ? 'selected' : '' }}>
                                         Mix & Match - Customer chooses from categories
                                     </option>
                                 </select>
