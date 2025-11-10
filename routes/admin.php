@@ -63,6 +63,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         // item route
         Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
             Route::get('add-new', 'ItemController@index')->name('add-new');
+
             Route::post('get-data', 'ItemController@get_voucher_type')->name('item_voucherType.store');
             Route::post('variant-combination', 'ItemController@variant_combination')->name('variant-combination');
             Route::post('store', 'ItemController@store')->name('store');
@@ -114,7 +115,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
         Route::group(['prefix' => 'Voucher', 'as' => 'Voucher.', 'middleware' => ['module:Voucher']], function () {
             Route::get('add-new', 'VoucherController@index')->name('add-new');
-
+            Route::get('add-flat-discount', 'VoucherController@discount')->name('add-flat-discount');
 
               Route::get('add-gift', 'VoucherController@index_git')->name('add-gift');
             Route::post('get-data', 'VoucherController@get_voucher_type')->name('voucherType.store');

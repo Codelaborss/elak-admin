@@ -135,6 +135,18 @@ class VoucherController extends Controller
             return view('admin-views.voucher.index', compact('categories', 'productWiseTax', 'taxVats'));
 
     }
+    public function discount(Request $request)
+    {
+
+        $categories = Category::where(['position' => 0])->get();
+
+        $taxData = Helpers::getTaxSystemType();
+        $productWiseTax = $taxData['productWiseTax'];
+        $taxVats = $taxData['taxVats'];
+
+            return view('admin-views.voucher.index_flat_discount', compact('categories', 'productWiseTax', 'taxVats'));
+
+    }
 
     public function getBranches(Request $request)
     {
@@ -396,6 +408,7 @@ class VoucherController extends Controller
         $reviews = Review::where(['item_id' => $id])->latest()->paginate(config('default_pagination'));
         return view('admin-views.voucher.view', compact('product', 'reviews', 'productWiseTax'));
     }
+
 
     public function edit(Request $request, $id)
     {

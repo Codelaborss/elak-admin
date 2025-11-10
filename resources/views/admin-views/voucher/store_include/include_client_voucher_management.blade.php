@@ -24,7 +24,7 @@
                 <div class="voucher-card border rounded py-4 text-center h-70
                     {{-- {{ $i == 1 ? 'selected' : '' }}     --}}
                     {{ ($i == 1 && (Request::is('admin/Voucher/add-new') && $voucherType->name == 'Delivery/Pickup')) ? 'selected' : '' }}
-                    {{-- {{ ($i == 2 && (Request::is('admin/Voucher/add-new') && $voucherType->name == 'Flat discount')) ? 'selected' : '' }} --}}
+                    {{ ($i == 2 && (Request::is('admin/Voucher/add-flat-discount') && $voucherType->name == 'Flat discount')) ? 'selected' : '' }}
                     {{ ($i == 3 && (Request::is('admin/Voucher/add-gift') && $voucherType->name == 'Gift')) ? 'selected' : '' }}
                     {{ ($i == 4 && (Request::is('admin/Voucher/add-store') && $voucherType->name == 'In-Store')) ? 'selected' : '' }}
                     "

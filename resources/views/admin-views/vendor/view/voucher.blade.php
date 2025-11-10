@@ -242,7 +242,7 @@
                                                 {{ $voucher?->name }}
                                             </td> --}}
                                              <td>
-                                                {{ $item->voucher_ids }}
+                                                {{ $food->voucher_ids ?? "" }}
                                             </td>
 
                                             <td> {{ $food->price }}</td>

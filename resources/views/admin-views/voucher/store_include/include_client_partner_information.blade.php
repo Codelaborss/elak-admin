@@ -2,15 +2,7 @@
     <div class="section-card rounded p-4 mb-4  " id="basic_info_main">
         <h3 class="h5 fw-semibold mb-4"> Client Information</h3>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="input-label"
-                        for="default_name">{{ translate('Client App Name') }}
-                    </label>
-                    <input type="text" name="name" id="default_name"  class="form-control" placeholder="{{ translate('Client App Name') }}" >
-                </div>
-            </div>
-            <div class="col-md-6">
+              <div class="col-md-6">
                 <div class="form-group">
                     <label class="input-label" for="select_client">{{ translate('Client  Name') }}
                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Client  Name') }}"></span>
@@ -24,6 +16,15 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="input-label"
+                        for="default_name">{{ translate('Client App Name') }}
+                    </label>
+                    <input type="text" name="name" id="default_name"  class="form-control" placeholder="{{ translate('Client App Name') }}" >
+                </div>
+            </div>
+
         </div>
         <div class="form-group">
             <label class="input-label" for="segment_type">{{ translate('Segment') }}

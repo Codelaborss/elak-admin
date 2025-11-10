@@ -693,167 +693,167 @@
 
   <script>
 
-$(document).ready(function() {
-    // Initialize Select2 for all dropdowns
-    $('#select_pro, #select_pro1, #select_pro2').select2({
-        width: '100%',
-        placeholder: 'Select a Product'
-    });
+    $(document).ready(function() {
+        // Initialize Select2 for all dropdowns
+        $('#select_pro, #select_pro1, #select_pro2').select2({
+            width: '100%',
+            placeholder: 'Select a Product'
+        });
 
-    // Store selected products
-    let selectedProductsArray = [];
-    let productCounter = 0;
+        // Store selected products
+        let selectedProductsArray = [];
+        let productCounter = 0;
 
-    // BOGO specific storage - Arrays for multiple products
-    let bogoProductsA = [];
-    let bogoProductsB = [];
-    let bogoCounterA = 0;
-    let bogoCounterB = 0;
+        // BOGO specific storage - Arrays for multiple products
+        let bogoProductsA = [];
+        let bogoProductsB = [];
+        let bogoCounterA = 0;
+        let bogoCounterB = 0;
 
-    // On page load, check bundle type
-    let bundleType = $('#bundle_offer_type').val();
-    updateFieldsVisibility(bundleType);
+        // On page load, check bundle type
+        let bundleType = $('#bundle_offer_type').val();
+        updateFieldsVisibility(bundleType);
 
-    // When "Add Product to Bundle" button is clicked
-    $('#addProductBtn').on('click', function() {
-        const bundleOfferType = $('#bundle_offer_type').val();
-        const availableProducts = $('#availableProducts');
-        const availableProductsGetXBuyY = $('#availableProducts_get_x_buy_y');
+        // When "Add Product to Bundle" button is clicked
+        $('#addProductBtn').on('click', function() {
+            const bundleOfferType = $('#bundle_offer_type').val();
+            const availableProducts = $('#availableProducts');
+            const availableProductsGetXBuyY = $('#availableProducts_get_x_buy_y');
 
-        // Check if bundle offer type is selected
-        if (!bundleOfferType || bundleOfferType === "") {
-            alert("Please select a bundle offer type first!");
-            return;
-        }
-
-        if (bundleOfferType === "bogo_free") {
-            // Hide normal products section first
-            if (availableProducts.is(':visible')) {
-                availableProducts.slideUp();
+            // Check if bundle offer type is selected
+            if (!bundleOfferType || bundleOfferType === "") {
+                alert("Please select a bundle offer type first!");
+                return;
             }
-            // Then show/hide BOGO section
-            availableProductsGetXBuyY.slideToggle();
-        } else {
-            // Hide BOGO section first
-            if (availableProductsGetXBuyY.is(':visible')) {
-                availableProductsGetXBuyY.slideUp();
-            }
-            // Then show/hide normal products section
-            availableProducts.slideToggle();
-        }
-    });
 
-    // ==================== REGULAR BUNDLE LOGIC ====================
-    $('#select_pro').on('change', function() {
+            if (bundleOfferType === "bogo_free") {
+                // Hide normal products section first
+                if (availableProducts.is(':visible')) {
+                    availableProducts.slideUp();
+                }
+                // Then show/hide BOGO section
+                availableProductsGetXBuyY.slideToggle();
+            } else {
+                // Hide BOGO section first
+                if (availableProductsGetXBuyY.is(':visible')) {
+                    availableProductsGetXBuyY.slideUp();
+                }
+                // Then show/hide normal products section
+                availableProducts.slideToggle();
+            }
+        });
+
+        // ==================== REGULAR BUNDLE LOGIC ====================
+        $('#select_pro').on('change', function() {
+            let selected = $(this).find('option:selected');
+            let productId = selected.val();
+            let productName = selected.data('name');
+            let basePrice = parseFloat(selected.data('price')) || 0;
+            let variations = selected.data('variations') || [];
+            let addons = selected.data('addons') || [];
+            if (!productId) return;
+
+            let bundleOfferType = $('#bundle_offer_type').val();
+
+            // Handle different bundle types
+            if (bundleOfferType === 'simple') {
+                $('#productDetails .card').remove();
+                selectedProductsArray = [];
+                productCounter = 0;
+                $('#priceCalculator').hide();
+                $('#price').val('0.00');
+                $('#price_hidden').val('0.00');
+            } else if (bundleOfferType === 'bundle' || bundleOfferType === 'mix_match') {
+                if (selectedProductsArray.includes(productId)) {
+                    alert(`"${productName}" is already added to the bundle!`);
+                    $('#select_pro').val('').trigger('change');
+                    return;
+                }
+            }
+
+            selectedProductsArray.push(productId);
+            let html = createProductCard(productId, productName, basePrice, variations, addons, productCounter);
+            $('#productDetails').append(html);
+            productCounter++;
+            $('#select_pro').val('').trigger('change');
+            $('#selectedProducts p').hide();
+            if(bundleOfferType !="mix_match")  {
+
+                updateBundleTotal();
+            }
+        });
+
+        // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
+        // $('#select_pro1').on('change', function() {
+        //     let selected = $(this).find('option:selected');
+        //     let productId = selected.val();
+        //     let productName = selected.data('name');
+        //     let basePrice = parseFloat(selected.data('price')) || 0;
+        //     let variations = selected.data('variations') || [];
+        //     let addons = selected.data('addons') || [];
+
+        //     if (!productId) return;
+
+        //     // Check if product is already in Section A
+        //     if (bogoProductsA.includes(productId)) {
+        //         alert(`"${productName}" is already added to Product A section!`);
+        //         $('#select_pro1').val('').trigger('change');
+        //         return;
+        //     }
+
+        //     // Add to Product A array
+        //     bogoProductsA.push(productId);
+
+        //     // Create product card for Product A with unique counter
+        //     let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
+        //     $('#productDetails_section_a').append(html);
+
+        //     bogoCounterA++;
+        //     $('#select_pro1').val('').trigger('change');
+        //     // updateBogoTotal();
+        // });
+
+
+        $('#select_pro1').on('change', function() {
         let selected = $(this).find('option:selected');
         let productId = selected.val();
         let productName = selected.data('name');
         let basePrice = parseFloat(selected.data('price')) || 0;
         let variations = selected.data('variations') || [];
         let addons = selected.data('addons') || [];
+
         if (!productId) return;
 
-        let bundleOfferType = $('#bundle_offer_type').val();
-
-        // Handle different bundle types
-        if (bundleOfferType === 'simple') {
-            $('#productDetails .card').remove();
-            selectedProductsArray = [];
-            productCounter = 0;
-            $('#priceCalculator').hide();
-            $('#price').val('0.00');
-            $('#price_hidden').val('0.00');
-        } else if (bundleOfferType === 'bundle' || bundleOfferType === 'mix_match') {
-            if (selectedProductsArray.includes(productId)) {
-                alert(`"${productName}" is already added to the bundle!`);
-                $('#select_pro').val('').trigger('change');
-                return;
-            }
+        // Check if product is already in Section A
+        if (bogoProductsA.some(p => p.id === productId)) {
+            alert(`"${productName}" is already added to Product A section!`);
+            $('#select_pro1').val('').trigger('change');
+            return;
         }
 
-        selectedProductsArray.push(productId);
-        let html = createProductCard(productId, productName, basePrice, variations, addons, productCounter);
-        $('#productDetails').append(html);
-        productCounter++;
-        $('#select_pro').val('').trigger('change');
-        $('#selectedProducts p').hide();
-        if(bundleOfferType !="mix_match")  {
+        // ✅ Create Product Object (Store Full Data)
+        let productObj = {
+            id: productId,
+            name: productName,
+            base_price: basePrice,
+            variations: Array.isArray(variations) ? variations : [],
+            addons: Array.isArray(addons) ? addons : [],
+            selected_variations: [],
+            selected_addons: []
+        };
 
-            updateBundleTotal();
-        }
-    });
+        // Push full object into array
+        bogoProductsA.push(productObj);
 
-    // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
-    // $('#select_pro1').on('change', function() {
-    //     let selected = $(this).find('option:selected');
-    //     let productId = selected.val();
-    //     let productName = selected.data('name');
-    //     let basePrice = parseFloat(selected.data('price')) || 0;
-    //     let variations = selected.data('variations') || [];
-    //     let addons = selected.data('addons') || [];
+        // Create product card for Product A with unique counter
+        let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
+        $('#productDetails_section_a').append(html);
 
-    //     if (!productId) return;
-
-    //     // Check if product is already in Section A
-    //     if (bogoProductsA.includes(productId)) {
-    //         alert(`"${productName}" is already added to Product A section!`);
-    //         $('#select_pro1').val('').trigger('change');
-    //         return;
-    //     }
-
-    //     // Add to Product A array
-    //     bogoProductsA.push(productId);
-
-    //     // Create product card for Product A with unique counter
-    //     let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
-    //     $('#productDetails_section_a').append(html);
-
-    //     bogoCounterA++;
-    //     $('#select_pro1').val('').trigger('change');
-    //     // updateBogoTotal();
-    // });
-
-
-    $('#select_pro1').on('change', function() {
-    let selected = $(this).find('option:selected');
-    let productId = selected.val();
-    let productName = selected.data('name');
-    let basePrice = parseFloat(selected.data('price')) || 0;
-    let variations = selected.data('variations') || [];
-    let addons = selected.data('addons') || [];
-
-    if (!productId) return;
-
-    // Check if product is already in Section A
-    if (bogoProductsA.some(p => p.id === productId)) {
-        alert(`"${productName}" is already added to Product A section!`);
+        bogoCounterA++;
         $('#select_pro1').val('').trigger('change');
-        return;
-    }
 
-    // ✅ Create Product Object (Store Full Data)
-    let productObj = {
-        id: productId,
-        name: productName,
-        base_price: basePrice,
-        variations: Array.isArray(variations) ? variations : [],
-        addons: Array.isArray(addons) ? addons : [],
-        selected_variations: [],
-        selected_addons: []
-    };
-
-    // Push full object into array
-    bogoProductsA.push(productObj);
-
-    // Create product card for Product A with unique counter
-    let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
-    $('#productDetails_section_a').append(html);
-
-    bogoCounterA++;
-    $('#select_pro1').val('').trigger('change');
-
-    console.log("✅ BOGO Section A Array:", bogoProductsA);
-});
+        console.log("✅ BOGO Section A Array:", bogoProductsA);
+    });
 
 
     // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
@@ -1523,7 +1523,11 @@ $(document).ready(function() {
             function section_one(loopIndex, primaryId,name) {
 
 
-                if (loopIndex === "3" || name === "Gift") {
+                if (loopIndex === "1" || name === "Delivery/Pickup") {
+                    window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                } else if (loopIndex === "2" || name === "Flat discount") {
+                    window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
+                } else if (loopIndex === "3" || name === "Gift") {
                     window.location.href = "{{ url('admin/Voucher/add-gift') }}";
                 } else if (loopIndex === "4" || name === "In-Store") {
                     window.location.href = "{{ url('admin/Voucher/add-gift') }}";

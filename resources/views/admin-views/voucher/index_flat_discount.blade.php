@@ -119,23 +119,7 @@
                  @include("admin-views.voucher.store_include.include_client_partner_information")
 
 
-                    <!-- Occasions-->
                     {{-- <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4">Occasions</h3>
-                        <div class="col-12 mt-3">
-                            <p class="text-muted mb-3">Select occasions for this gift card</p>
-                            <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="select_category_all">{{ translate('Occasions') }}</label>
-                                        <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
-                                        @foreach (\App\Models\GiftOccasions::all() as $item)
-                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                        </div>
-                    </div> --}}
-                    <div class="section-card rounded p-4 mb-4">
                         <div class="col-12 mt-3">
                             <p class="text-muted mb-3">Select occasions for this gift card</p>
                             <div class="form-group mb-0">
@@ -157,370 +141,232 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <!-- Recipient Info Form Fields-->
-                    <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4">Recipient Info Form Fields</h3>
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <p class="text-muted mb-4">Select which fields will appear on the recipient info form</p>
 
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th width="40%">Field Name</th>
-                                                <th width="30%" class="text-center">Show Field</th>
-                                                <th width="30%" class="text-center">Mark as Required</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <strong>Sender Name</strong>
-                                                    <small class="d-block text-muted">Who is sending the gift card</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_sender_name" name="form_fields[]" value="sender_name" data-target="req_sender_name">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_sender_name" name="required_fields[]" value="sender_name" disabled>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                      <div class="section-card rounded p-4 mb-4">
 
-                                            <tr>
-                                                <td>
-                                                    <strong>Sender Email</strong>
-                                                    <small class="d-block text-muted">Sender's email address</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_sender_email" name="form_fields[]" value="sender_email" data-target="req_sender_email">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_sender_email" name="required_fields[]" value="sender_email" disabled>
-                                                    </div>
-                                                </td>
-                                            </tr>
 
-                                            <tr>
-                                                <td>
-                                                    <strong>Recipient Name</strong>
-                                                    <small class="d-block text-muted">Who will receive the gift card</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_name" name="form_fields[]" value="recipient_name" checked data-target="req_recipient_name">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_recipient_name" name="required_fields[]" value="recipient_name" checked>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <strong>Recipient Email</strong>
-                                                    <small class="d-block text-muted">Where to send the gift card</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_email" name="form_fields[]" value="recipient_email" checked data-target="req_recipient_email">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_recipient_email" name="required_fields[]" value="recipient_email" checked>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <strong>Recipient Phone</strong>
-                                                    <small class="d-block text-muted">Phone number for WhatsApp delivery</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_phone" name="form_fields[]" value="recipient_phone" data-target="req_recipient_phone">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_recipient_phone" name="required_fields[]" value="recipient_phone" disabled>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <strong>Personal Message</strong>
-                                                    <small class="d-block text-muted">Custom message from sender</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_message" name="form_fields[]" value="message" data-target="req_message">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_message" name="required_fields[]" value="message" disabled>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <strong>Scheduled Delivery Date</strong>
-                                                    <small class="d-block text-muted">When to send the gift card</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_delivery_date" name="form_fields[]" value="delivery_date" data-target="req_delivery_date">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_delivery_date" name="required_fields[]" value="delivery_date" disabled>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <strong>Recipient Address</strong>
-                                                    <small class="d-block text-muted">Physical address (for physical cards)</small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input field-toggle" type="checkbox" id="field_recipient_address" name="form_fields[]" value="recipient_address" data-target="req_recipient_address">
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch d-inline-block">
-                                                        <input class="form-check-input" type="checkbox" id="req_recipient_address" name="required_fields[]" value="recipient_address" disabled>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <!-- Basic Information -->
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Basic Information</h5>
                                 </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Voucher Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            id="name" name="name" value="{{ old('name') }}" required>
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
-                                    <i class="fas fa-info-circle"></i>
-                                    <strong>Note:</strong> Enable "Show Field" first, then you can mark it as required. Recipient Name and Email are enabled by default.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Message Template Style-->
-                    <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4">Message Template Style</h3>
-                        <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <p class="text-muted mb-3">Select one message template style for this gift card</p>
-                                <div class="row g-3">
-                                    @foreach (\App\Models\MessageTemplate::all() as $item)
-                                        @php(
-                                        $id = 'template_' . $item->id
-                                        )
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror"
+                                                id="description" name="description" rows="3">{{ old('description') }}</textarea>
+                                        @error('description')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label">Voucher Image</label>
+                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                            id="image" name="image" accept="image/*">
+                                        <small class="form-text text-muted">Upload an image for this voucher (JPG, PNG, GIF - Max 2MB)</small>
+                                        @error('image')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <div id="imagePreview" class="mt-2"></div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <!-- Usage Limits -->
+                                    <h6 class="mb-3">Usage Limits</h6>
+
+                                    <div class="row">
                                         <div class="col-md-6">
-                                        <input type="radio" class="btn-check template-radio" name="message_template_style" id="{{ $id }}" value="{{ $item->id }}">
-                                        <label class="template-card border rounded p-3 w-100 d-block" for="{{ $id }}">
-                                            <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
-                                            <strong class="ms-2">{{ $item->title }}</strong>
-                                            <small class="d-block text-muted mt-1">{{ $item->sub_title }}</small>
-                                        </label>
+                                            <div class="mb-3">
+                                                <label for="max_uses" class="form-label">Maximum Total Uses</label>
+                                                <input type="number" class="form-control @error('max_uses') is-invalid @enderror"
+                                                    id="max_uses" name="max_uses" value="{{ old('max_uses') }}" placeholder="Leave empty for unlimited">
+                                                @error('max_uses')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                                <small class="form-text text-muted">Leave empty for unlimited uses</small>
+                                            </div>
                                         </div>
-                                    @endforeach
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="max_uses_per_user" class="form-label">Maximum Uses Per User <span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control @error('max_uses_per_user') is-invalid @enderror"
+                                                    id="max_uses_per_user" name="max_uses_per_user" value="{{ old('max_uses_per_user', '1') }}" required>
+                                                @error('max_uses_per_user')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Delivery Options-->
-                    <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4">Delivery Options</h3>
-                        {{-- tags --}}
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <p class="text-muted mb-3">Select how gift cards will be delivered to recipients</p>
+                                    <hr class="my-4">
 
-                            <div class="row">
-                                @foreach (\App\Models\DeliveryOption::all() as $item)
-                                    @php(
-                                        $id = 'delivery_' . $item->id
-                                        )
-                                    <div class="col-md-6 mb-3">
-                                        <div class="card border-primary h-100">
-                                            <div class="card-body">
+                                    <!-- Validity Period -->
+                                    <h6 class="mb-3">Validity Period</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="valid_from" class="form-label">Valid From</label>
+                                                <input type="datetime-local" class="form-control @error('valid_from') is-invalid @enderror"
+                                                    id="valid_from" name="valid_from" value="{{ old('valid_from') }}">
+                                                @error('valid_from')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="valid_until" class="form-label">Valid Until</label>
+                                                <input type="datetime-local" class="form-control @error('valid_until') is-invalid @enderror"
+                                                    id="valid_until" name="valid_until" value="{{ old('valid_until') }}">
+                                                @error('valid_until')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <!-- Display Settings -->
+                                    <h6 class="mb-3">Display Settings</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
+                                                    <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Active</option>
+                                                    <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                                </select>
+                                                @error('status')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="priority" class="form-label">Priority <span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control @error('priority') is-invalid @enderror"
+                                                    id="priority" name="priority" value="{{ old('priority', '0') }}" required>
+                                                @error('priority')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                                <small class="form-text text-muted">Higher priority vouchers appear first</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="is_featured" class="form-label">Featured</label>
                                                 <div class="form-check form-switch">
-                                                    <input
-                                                        class="form-check-input delivery-option"
-                                                        type="checkbox"
-                                                        id="{{ $id }}"
-                                                        name="delivery_options[]"
-                                                        value="{{ $item->slug ?? $item->id }}"
-                                                        {{ $loop->first ? 'checked' : '' }}
-                                                    >
-                                                    <label class="form-check-label" for="{{ $id }}">
-                                                        <h6 class="mb-1">
-                                                        <img src="{{ asset($item->icon) }}" alt="" style="width: 25px; height: 25px;">
-                                                        {{ $item->title }}
-                                                        </h6>
-                                                        <small class="text-muted">{{ $item->sub_title }}</small>
+                                                    <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="is_featured">
+                                                        Display in featured section
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-save"></i> Create Flat Discount Voucher
+                                        </button>
+                                        <a href="" class="btn btn-secondary">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
-
-                            <div class=" mt-3 mb-0 p-2 " style="background:#005555;color:white">
-                                    <i class="fas fa-info-circle"></i>
-                                    <strong>Note:</strong> At least one delivery option must be selected. Email is enabled by default.
+                            <!-- Discount & Bonus Configuration -->
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0"><i class="fas fa-gift"></i> Discount & Bonus Configuration</h5>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Amount Configuration --}}
-                    <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4"> Amount Configuration</h3>
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label class="form-label">Amount Type <span class="text-danger">*</span></label>
-                                <div class="row g-2" id="amountTypeGroup">
-                                        <div class="col-md-4">
-                                            <input type="radio" class="btn-check" name="type" id="type_fixed" value="fixed" {{ old('type', 'fixed') == 'fixed' ? 'checked' : '' }}>
-                                            <label class="btn border type-option " for="type_fixed">
-                                                <i class="fas fa-list"></i> Fixed Amounts
+                                <div class="card-body">
+                                    <!-- Discount Type Selection -->
+                                    <h6 class="mb-3">Select Discount Type <span class="text-danger">*</span></h6>
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <input type="radio" class="btn-check" name="discount_type" id="discount_type_direct" value="direct_discount" checked>
+                                            <label class="btn btn-outline-primary w-100 text-start p-3" for="discount_type_direct">
+                                                <i class="fas fa-hand-holding-usd me-2"></i>
+                                                <strong>Direct Discount</strong>
+                                                <small class="d-block text-muted mt-1">Flat discount applied directly on entire bill</small>
                                             </label>
                                         </div>
-
-                                        <div class="col-md-4">
-                                            <input type="radio" class="btn-check" name="type" id="type_range" value="range" {{ old('type') == 'range' ? 'checked' : '' }}>
-                                            <label class="btn border type-option " for="type_range">
-                                                <i class="fas fa-arrows-alt-h"></i> Range
+                                        <div class="col-md-6">
+                                            <input type="radio" class="btn-check" name="discount_type" id="discount_type_cashback" value="cashback">
+                                            <label class="btn btn-outline-success w-100 text-start p-3" for="discount_type_cashback">
+                                                <i class="fas fa-wallet me-2"></i>
+                                                <strong>Cashback</strong>
+                                                <small class="d-block text-muted mt-1">Cashback credited to customer wallet</small>
                                             </label>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="mb-3">
-                                    <div class="form-check form-switch form-switch-lg">
-                                        <input class="form-check-input" type="checkbox" id="custom_enabled" name="custom_enabled" value="1" {{ old('custom_enabled') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="custom_enabled">
-                                            <strong>Enable Custom Amount</strong>
-                                            <small class="d-block text-muted">Allow customers to enter their own amount</small>
-                                        </label>
-                                    </div>
-                                </div>
+                                    <hr class="my-3">
 
-                                <!-- Fixed Amounts Section -->
-                                <div id="fixedAmountsSection" style="display: none;">
-                                    <label class="form-label">Fixed Amount Options <span class="text-danger">*</span></label>
-                                    <div id="fixedAmountsContainer">
-                                        <div class="input-group mb-2">
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" class="form-control" name="fixed_amounts[]" step="0.01" min="0" placeholder="25.00">
-                                            <button type="button" class="btn btn-danger remove-amount" style="display: none;">
-                                                <i class="fas fa-times"></i>
-                                            </button>
+                                    <!-- Configuration Tiers -->
+                                    <h6 class="mb-3">Discount Configuration <span class="text-danger">*</span></h6>
+                                    <p class="text-muted mb-3">Configure discount/cashback tiers based on amount ranges</p>
+
+                                    <input type="hidden" name="bonus_enabled" value="1">
+                                    <input type="hidden" name="bonus_type" value="percentage">
+
+                                    <div id="bonusTiersContainer">
+                                        <div class="bonus-tier-item border rounded p-3 mb-3">
+                                            <div class="row g-2">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Min Amount ($)</label>
+                                                    <input type="number" class="form-control" name="bonus_tiers[0][min_amount]" step="0.01" min="0" placeholder="0" value="0">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Max Amount ($)</label>
+                                                    <input type="number" class="form-control" name="bonus_tiers[0][max_amount]" step="0.01" min="0" placeholder="100">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Discount/Cashback (%)</label>
+                                                    <input type="number" class="form-control" name="bonus_tiers[0][bonus_percentage]" step="0.01" min="0" placeholder="5" required>
+                                                </div>
+                                                <div class="col-md-1 d-flex align-items-end">
+                                                    <button type="button" class="btn btn-danger remove-bonus-tier" style="display: none;">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary border" id="addAmountBtn">
-                                        <i class="fas fa-plus"></i> Add Another Amount
+
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addBonusTierBtn">
+                                        <i class="fas fa-plus"></i> Add Another Tier
                                     </button>
-                                </div>
 
-                                <!-- Range Amounts Section -->
-                                <div id="rangeAmountsSection" style="display: none;">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="min_amount" class="form-label">Minimum Amount <span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                <input type="number" class="form-control @error('min_amount') is-invalid @enderror"
-                                                    id="min_amount" name="min_amount" step="0.01" min="0" value="{{ old('min_amount') }}" placeholder="10.00">
-                                            </div>
-                                            @error('min_amount')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="max_amount" class="form-label">Maximum Amount <span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                <input type="number" class="form-control @error('max_amount') is-invalid @enderror"
-                                                    id="max_amount" name="max_amount" step="0.01" min="0" value="{{ old('max_amount') }}" placeholder="1000.00">
-                                            </div>
-                                            @error('max_amount')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
+                                    <div class="alert alert-info mt-3 mb-0">
+                                        <i class="fas fa-info-circle"></i>
+                                        <strong>Example:</strong> $0-$100 = 5% discount, $101-$500 = 10% discount, $501+ = 15% discount
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    {{-- Bonus Configuration --}}
-                    <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4"> Bonus Configuration</h3>
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <input type="hidden" name="bonus_enabled" value="1">
-                                <input type="hidden" name="bonus_type" value="percentage">
 
-                                <p class="text-muted mb-3">Set bonus percentage based on top-up amount ranges</p>
 
-                                <div id="bonusTiersContainer">
-                                    <div class="bonus-tier-item border rounded p-3 mb-3">
-                                        <div class="row g-2">
-                                            <div class="col-md-4">
-                                                <label class="form-label">Min Amount ($)</label>
-                                                <input type="number" class="form-control" name="bonus_tiers[0][min_amount]" step="0.01" min="0" placeholder="0" value="0">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Max Amount ($)</label>
-                                                <input type="number" class="form-control" name="bonus_tiers[0][max_amount]" step="0.01" min="0" placeholder="100">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label">Bonus (%)</label>
-                                                <input type="number" class="form-control" name="bonus_tiers[0][bonus_percentage]" step="0.01" min="0" placeholder="5">
-                                            </div>
-                                            <div class="col-md-1 d-flex align-items-end">
-                                                <button type="button" class="btn btn-danger remove-bonus-tier" style="display: none;">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                      </div>
 
-                                <button type="button" class="btn btn-sm btn-outline-secondary" id="addBonusTierBtn">
-                                    <i class="fas fa-plus"></i> Add Another Tier
-                                </button>
 
-                                <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
-                                    <i class="fas fa-info-circle"></i>
-                                    <strong>Example:</strong> $0-$100 = 5% bonus, $101-$500 = 10% bonus, $501+ = 15% bonus
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     {{-- Terms & Conditions --}}
                     <div class="section-card rounded p-4 mb-4">
                         <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
@@ -610,34 +456,13 @@
                             </div>
                         </div>
                     </div>
-                     {{-- Review & Summary --}}
-                    <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4"> Review & Summary</h3>
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <p class="text-muted mb-4">Review all information before saving</p>
-                                <div class="p-2 " style="background:#005555;color:white">
-                                    <h6  style="color:white"><i class="fas fa-info-circle"></i> Partner Summary</h6>
-                                    <div id="reviewSummary">
-                                        <p class="mb-1"><strong>Partner:</strong> <span id="reviewPartnerName">Not specified</span></p>
-                                        <p class="mb-1"><strong>Branches:</strong> <span id="reviewBranches">Not specified</span></p>
-                                    </div>
-                                </div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="confirm_review" name="confirm_review" value="1">
-                                    <label class="form-check-label" for="confirm_review">
-                                        <strong>I confirm all information is correct</strong>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
             </form>
+
+
         </div>
       </div>
 
-      @include("admin-views.voucher.store_include.include_model")
 
 @endsection
 
@@ -648,6 +473,314 @@
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
+
+
+
+<script>
+// Client Name, App Name and Segment Tag System
+    document.addEventListener('DOMContentLoaded', function() {
+        const clientNameData = [];
+        const clientAppData = [];
+        const clientSegmentData = [];
+
+        function createTag(value, container, dataArray, inputName) {
+            if (dataArray.includes(value)) return; // Prevent duplicates
+
+            dataArray.push(value);
+
+            const tag = document.createElement('span');
+            tag.className = 'badge bg-primary d-inline-flex align-items-center py-2 px-3';
+            tag.innerHTML = `
+                ${value}
+                <button type="button" class="btn-close btn-close-white ms-2" style="font-size: 0.7rem;"></button>
+                <input type="hidden" name="${inputName}[]" value="${value}">
+            `;
+
+            tag.querySelector('.btn-close').addEventListener('click', function() {
+                const index = dataArray.indexOf(value);
+                if (index > -1) dataArray.splice(index, 1);
+                tag.remove();
+            });
+
+            container.appendChild(tag);
+        }
+
+        function createSegmentTag(value, icon, color, container, dataArray, inputName) {
+            if (dataArray.includes(value)) return; // Prevent duplicates
+
+            dataArray.push(value);
+
+            const colorClasses = {
+                'warning': 'bg-warning text-dark',
+                'primary': 'bg-primary text-white',
+                'success': 'bg-success text-white'
+            };
+
+            const tag = document.createElement('span');
+            tag.className = `badge ${colorClasses[color]} d-inline-flex align-items-center py-2 px-3`;
+            tag.innerHTML = `
+                <i class="fas fa-${icon} me-2"></i>
+                ${value.charAt(0).toUpperCase() + value.slice(1)}
+                <button type="button" class="btn-close ${color === 'warning' ? '' : 'btn-close-white'} ms-2" style="font-size: 0.7rem;"></button>
+                <input type="hidden" name="${inputName}[]" value="${value}">
+            `;
+
+            tag.querySelector('.btn-close').addEventListener('click', function() {
+                const index = dataArray.indexOf(value);
+                if (index > -1) dataArray.splice(index, 1);
+                tag.remove();
+            });
+
+            container.appendChild(tag);
+        }
+
+        // Client Name
+        const clientNameSearch = document.getElementById('client_name_search');
+        const clientNameTags = document.getElementById('clientNameTags');
+        const clientNameDropdown = document.getElementById('clientNameDropdown');
+
+        clientNameSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = clientNameDropdown.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        clientNameDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const value = this.dataset.value;
+                createTag(value, clientNameTags, clientNameData, 'client_name');
+                clientNameSearch.value = '';
+                clientNameDropdown.querySelectorAll('.dropdown-item').forEach(i => i.style.display = 'block');
+            });
+        });
+
+        // Client App Name
+        const clientAppSearch = document.getElementById('client_app_name_search');
+        const clientAppTags = document.getElementById('clientAppTags');
+        const clientAppDropdown = document.getElementById('clientAppDropdown');
+
+        clientAppSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = clientAppDropdown.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        clientAppDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const value = this.dataset.value;
+                createTag(value, clientAppTags, clientAppData, 'client_app_name');
+                clientAppSearch.value = '';
+                clientAppDropdown.querySelectorAll('.dropdown-item').forEach(i => i.style.display = 'block');
+            });
+        });
+
+        // Client Segment
+        const clientSegmentSearch = document.getElementById('client_segment_search');
+        const clientSegmentTags = document.getElementById('clientSegmentTags');
+        const clientSegmentDropdown = document.getElementById('clientSegmentDropdown');
+
+        clientSegmentSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = clientSegmentDropdown.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        clientSegmentDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const value = this.dataset.value;
+                const icon = this.dataset.icon;
+                const color = this.dataset.color;
+                createSegmentTag(value, icon, color, clientSegmentTags, clientSegmentData, 'client_segment');
+                clientSegmentSearch.value = '';
+                clientSegmentDropdown.querySelectorAll('.dropdown-item').forEach(i => i.style.display = 'block');
+            });
+        });
+
+        // Partner Branches Tag System
+        const partnerBranchesData = [];
+        const partnerBranchesSearch = document.getElementById('partner_branches_search');
+        const partnerBranchesTags = document.getElementById('partnerBranchesTags');
+        const partnerBranchesDropdown = document.getElementById('partnerBranchesDropdown');
+
+        partnerBranchesSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = partnerBranchesDropdown.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        partnerBranchesDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const value = this.dataset.value;
+                createTag(value, partnerBranchesTags, partnerBranchesData, 'partner_branches');
+                partnerBranchesSearch.value = '';
+                partnerBranchesDropdown.querySelectorAll('.dropdown-item').forEach(i => i.style.display = 'block');
+            });
+        });
+
+        // Partner Logo Auto-Fetch
+        const partnerName = document.getElementById('partner_name');
+        const partnerLogoPreview = document.getElementById('partnerLogoPreview');
+        const partnerLogoUrl = document.getElementById('partner_logo_url');
+
+        const partnerLogos = {
+            'Restaurant A': 'https://ui-avatars.com/api/?name=Restaurant+A&size=150&background=FF6B6B&color=fff&bold=true',
+            'Restaurant B': 'https://ui-avatars.com/api/?name=Restaurant+B&size=150&background=4ECDC4&color=fff&bold=true',
+            'Cafe Chain': 'https://ui-avatars.com/api/?name=Cafe+Chain&size=150&background=95E1D3&color=fff&bold=true',
+            'Fast Food Co': 'https://ui-avatars.com/api/?name=Fast+Food+Co&size=150&background=F38181&color=fff&bold=true',
+            'Fine Dining': 'https://ui-avatars.com/api/?name=Fine+Dining&size=150&background=AA96DA&color=fff&bold=true',
+            'Pizza Place': 'https://ui-avatars.com/api/?name=Pizza+Place&size=150&background=FCBAD3&color=fff&bold=true'
+        };
+
+        partnerName.addEventListener('change', function() {
+            const selectedPartner = this.value;
+            if (selectedPartner && partnerLogos[selectedPartner]) {
+                const logoUrl = partnerLogos[selectedPartner];
+                partnerLogoUrl.value = logoUrl;
+                partnerLogoPreview.innerHTML = `
+                    <div class="border rounded p-2 bg-light text-center">
+                        <img src="${logoUrl}" alt="${selectedPartner} Logo" class="img-thumbnail" style="max-height: 150px;">
+                        <p class="mb-0 mt-2 small text-muted">Auto-fetched logo for ${selectedPartner}</p>
+                    </div>
+                `;
+            } else {
+                partnerLogoPreview.innerHTML = '';
+                partnerLogoUrl.value = '';
+            }
+        });
+
+        // Blackout Dates Tag System
+        const blackoutDatesData = [];
+        const blackoutDatesSearch = document.getElementById('blackout_dates_search');
+        const blackoutDatesTags = document.getElementById('blackoutDatesTags');
+        const blackoutDatesDropdown = document.getElementById('blackoutDatesDropdown');
+
+        function addBlackoutDateTag(value, displayText) {
+            if (!blackoutDatesData.includes(value)) {
+                blackoutDatesData.push(value);
+
+                const tag = document.createElement('span');
+                tag.className = 'badge bg-danger d-inline-flex align-items-center py-2 px-3';
+                tag.innerHTML = `
+                    ${displayText}
+                    <button type="button" class="btn-close btn-close-white ms-2" style="font-size: 0.7rem;"></button>
+                    <input type="hidden" name="blackout_dates[]" value="${value}">
+                `;
+
+                tag.querySelector('.btn-close').addEventListener('click', function() {
+                    const index = blackoutDatesData.indexOf(value);
+                    if (index > -1) blackoutDatesData.splice(index, 1);
+                    tag.remove();
+                });
+
+                blackoutDatesTags.appendChild(tag);
+            }
+        }
+
+        blackoutDatesSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = blackoutDatesDropdown.querySelectorAll('.dropdown-item');
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        blackoutDatesDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const value = this.dataset.value;
+                const displayText = this.dataset.display;
+                addBlackoutDateTag(value, displayText);
+                blackoutDatesSearch.value = '';
+                blackoutDatesDropdown.querySelectorAll('.dropdown-item').forEach(i => i.style.display = 'block');
+            });
+        });
+
+        // Add bonus tier functionality
+        const addBonusTierBtn = document.getElementById('addBonusTierBtn');
+        const bonusTiersContainer = document.getElementById('bonusTiersContainer');
+        let bonusTierIndex = 1;
+
+        addBonusTierBtn.addEventListener('click', function() {
+            const newTier = document.createElement('div');
+            newTier.className = 'bonus-tier-item border rounded p-3 mb-3';
+            newTier.innerHTML = `
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <label class="form-label">Min Amount ($)</label>
+                        <input type="number" class="form-control" name="bonus_tiers[${bonusTierIndex}][min_amount]" step="0.01" min="0" placeholder="0">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Max Amount ($)</label>
+                        <input type="number" class="form-control" name="bonus_tiers[${bonusTierIndex}][max_amount]" step="0.01" min="0" placeholder="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Discount/Cashback (%)</label>
+                        <input type="number" class="form-control" name="bonus_tiers[${bonusTierIndex}][bonus_percentage]" step="0.01" min="0" placeholder="5" required>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-bonus-tier">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            bonusTiersContainer.appendChild(newTier);
+            bonusTierIndex++;
+
+            newTier.querySelector('.remove-bonus-tier').addEventListener('click', function() {
+                newTier.remove();
+            });
+        });
+
+        // Image preview
+        document.getElementById('image').addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `
+                        <div class="card">
+                            <div class="card-body p-2">
+                                <img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">
+                            </div>
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
 
     <script>
         // Add bonus tier functionality
@@ -755,7 +888,7 @@
             });
             observer.observe(fixedContainer, { childList: true, subtree: false });
         });
-    // Form field toggle functionality
+        // Form field toggle functionality
         document.querySelectorAll('.field-toggle').forEach(toggle => {
             toggle.addEventListener('change', function() {
                 const targetId = this.getAttribute('data-target');
@@ -803,672 +936,646 @@
         });
     </script>
 
+    <script>
 
-  <script>
+        $(document).ready(function() {
+            // Initialize Select2 for all dropdowns
+            $('#select_pro, #select_pro1, #select_pro2').select2({
+                width: '100%',
+                placeholder: 'Select a Product'
+            });
 
-    $(document).ready(function() {
-        // Initialize Select2 for all dropdowns
-        $('#select_pro, #select_pro1, #select_pro2').select2({
-            width: '100%',
-            placeholder: 'Select a Product'
-        });
+            // Store selected products
+            let selectedProductsArray = [];
+            let productCounter = 0;
 
-        // Store selected products
-        let selectedProductsArray = [];
-        let productCounter = 0;
+            // BOGO specific storage - Arrays for multiple products
+            let bogoProductsA = [];
+            let bogoProductsB = [];
+            let bogoCounterA = 0;
+            let bogoCounterB = 0;
 
-        // BOGO specific storage - Arrays for multiple products
-        let bogoProductsA = [];
-        let bogoProductsB = [];
-        let bogoCounterA = 0;
-        let bogoCounterB = 0;
+            // On page load, check bundle type
+            let bundleType = $('#bundle_offer_type').val();
+            updateFieldsVisibility(bundleType);
 
-        // On page load, check bundle type
-        let bundleType = $('#bundle_offer_type').val();
-        updateFieldsVisibility(bundleType);
+            // When "Add Product to Bundle" button is clicked
+            $('#addProductBtn').on('click', function() {
+                const bundleOfferType = $('#bundle_offer_type').val();
+                const availableProducts = $('#availableProducts');
+                const availableProductsGetXBuyY = $('#availableProducts_get_x_buy_y');
 
-        // When "Add Product to Bundle" button is clicked
-        $('#addProductBtn').on('click', function() {
-            const bundleOfferType = $('#bundle_offer_type').val();
-            const availableProducts = $('#availableProducts');
-            const availableProductsGetXBuyY = $('#availableProducts_get_x_buy_y');
-
-            // Check if bundle offer type is selected
-            if (!bundleOfferType || bundleOfferType === "") {
-                alert("Please select a bundle offer type first!");
-                return;
-            }
-
-            if (bundleOfferType === "bogo_free") {
-                // Hide normal products section first
-                if (availableProducts.is(':visible')) {
-                    availableProducts.slideUp();
-                }
-                // Then show/hide BOGO section
-                availableProductsGetXBuyY.slideToggle();
-            } else {
-                // Hide BOGO section first
-                if (availableProductsGetXBuyY.is(':visible')) {
-                    availableProductsGetXBuyY.slideUp();
-                }
-                // Then show/hide normal products section
-                availableProducts.slideToggle();
-            }
-        });
-
-        // ==================== REGULAR BUNDLE LOGIC ====================
-        $('#select_pro').on('change', function() {
-            let selected = $(this).find('option:selected');
-            let productId = selected.val();
-            let productName = selected.data('name');
-            let basePrice = parseFloat(selected.data('price')) || 0;
-            let variations = selected.data('variations') || [];
-            let addons = selected.data('addons') || [];
-
-            if (!productId) return;
-
-            let bundleOfferType = $('#bundle_offer_type').val();
-
-            // Handle different bundle types
-            if (bundleOfferType === 'simple') {
-                $('#productDetails .card').remove();
-                selectedProductsArray = [];
-                productCounter = 0;
-                $('#priceCalculator').hide();
-                $('#price').val('0.00');
-                $('#price_hidden').val('0.00');
-            } else if (bundleOfferType === 'bundle' || bundleOfferType === 'mix_match') {
-                if (selectedProductsArray.includes(productId)) {
-                    alert(`"${productName}" is already added to the bundle!`);
-                    $('#select_pro').val('').trigger('change');
+                // Check if bundle offer type is selected
+                if (!bundleOfferType || bundleOfferType === "") {
+                    alert("Please select a bundle offer type first!");
                     return;
                 }
-            }
 
-            selectedProductsArray.push(productId);
-            let html = createProductCard(productId, productName, basePrice, variations, addons, productCounter);
-            $('#productDetails').append(html);
-            productCounter++;
-            $('#select_pro').val('').trigger('change');
-            $('#selectedProducts p').hide();
-            updateBundleTotal();
-        });
+                if (bundleOfferType === "bogo_free") {
+                    // Hide normal products section first
+                    if (availableProducts.is(':visible')) {
+                        availableProducts.slideUp();
+                    }
+                    // Then show/hide BOGO section
+                    availableProductsGetXBuyY.slideToggle();
+                } else {
+                    // Hide BOGO section first
+                    if (availableProductsGetXBuyY.is(':visible')) {
+                        availableProductsGetXBuyY.slideUp();
+                    }
+                    // Then show/hide normal products section
+                    availableProducts.slideToggle();
+                }
+            });
 
-        // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
-        $('#select_pro1').on('change', function() {
-            let selected = $(this).find('option:selected');
-            let productId = selected.val();
-            let productName = selected.data('name');
-            let basePrice = parseFloat(selected.data('price')) || 0;
-            let variations = selected.data('variations') || [];
-            let addons = selected.data('addons') || [];
+            // ==================== REGULAR BUNDLE LOGIC ====================
+            $('#select_pro').on('change', function() {
+                let selected = $(this).find('option:selected');
+                let productId = selected.val();
+                let productName = selected.data('name');
+                let basePrice = parseFloat(selected.data('price')) || 0;
+                let variations = selected.data('variations') || [];
+                let addons = selected.data('addons') || [];
 
-            if (!productId) return;
+                if (!productId) return;
 
-            // Check if product is already in Section A
-            if (bogoProductsA.includes(productId)) {
-                alert(`"${productName}" is already added to Product A section!`);
+                let bundleOfferType = $('#bundle_offer_type').val();
+
+                // Handle different bundle types
+                if (bundleOfferType === 'simple') {
+                    $('#productDetails .card').remove();
+                    selectedProductsArray = [];
+                    productCounter = 0;
+                    $('#priceCalculator').hide();
+                    $('#price').val('0.00');
+                    $('#price_hidden').val('0.00');
+                } else if (bundleOfferType === 'bundle' || bundleOfferType === 'mix_match') {
+                    if (selectedProductsArray.includes(productId)) {
+                        alert(`"${productName}" is already added to the bundle!`);
+                        $('#select_pro').val('').trigger('change');
+                        return;
+                    }
+                }
+
+                selectedProductsArray.push(productId);
+                let html = createProductCard(productId, productName, basePrice, variations, addons, productCounter);
+                $('#productDetails').append(html);
+                productCounter++;
+                $('#select_pro').val('').trigger('change');
+                $('#selectedProducts p').hide();
+                updateBundleTotal();
+            });
+
+            // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
+            $('#select_pro1').on('change', function() {
+                let selected = $(this).find('option:selected');
+                let productId = selected.val();
+                let productName = selected.data('name');
+                let basePrice = parseFloat(selected.data('price')) || 0;
+                let variations = selected.data('variations') || [];
+                let addons = selected.data('addons') || [];
+
+                if (!productId) return;
+
+                // Check if product is already in Section A
+                if (bogoProductsA.includes(productId)) {
+                    alert(`"${productName}" is already added to Product A section!`);
+                    $('#select_pro1').val('').trigger('change');
+                    return;
+                }
+
+                // Add to Product A array
+                bogoProductsA.push(productId);
+
+                // Create product card for Product A with unique counter
+                let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
+                $('#productDetails_section_a').append(html);
+
+                bogoCounterA++;
                 $('#select_pro1').val('').trigger('change');
-                return;
-            }
+                updateBogoTotal();
+            });
 
-            // Add to Product A array
-            bogoProductsA.push(productId);
+            // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
+            $('#select_pro2').on('change', function() {
+                let selected = $(this).find('option:selected');
+                let productId = selected.val();
+                let productName = selected.data('name');
+                let basePrice = parseFloat(selected.data('price')) || 0;
+                let variations = selected.data('variations') || [];
+                let addons = selected.data('addons') || [];
 
-            // Create product card for Product A with unique counter
-            let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
-            $('#productDetails_section_a').append(html);
+                if (!productId) return;
 
-            bogoCounterA++;
-            $('#select_pro1').val('').trigger('change');
-            updateBogoTotal();
-        });
+                // Check if product is already in Section B
+                if (bogoProductsB.includes(productId)) {
+                    alert(`"${productName}" is already added to Product B section!`);
+                    $('#select_pro2').val('').trigger('change');
+                    return;
+                }
 
-        // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
-        $('#select_pro2').on('change', function() {
-            let selected = $(this).find('option:selected');
-            let productId = selected.val();
-            let productName = selected.data('name');
-            let basePrice = parseFloat(selected.data('price')) || 0;
-            let variations = selected.data('variations') || [];
-            let addons = selected.data('addons') || [];
+                // Add to Product B array
+                bogoProductsB.push(productId);
 
-            if (!productId) return;
+                // Create product card for Product B with unique counter
+                let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'B', bogoCounterB);
+                $('#productDetails_section_b').append(html);
 
-            // Check if product is already in Section B
-            if (bogoProductsB.includes(productId)) {
-                alert(`"${productName}" is already added to Product B section!`);
+                bogoCounterB++;
                 $('#select_pro2').val('').trigger('change');
-                return;
+                updateBogoTotal();
+            });
+
+            // ==================== CREATE PRODUCT CARD (REGULAR) ====================
+            function createProductCard(productId, productName, basePrice, variations, addons, counter) {
+                let html = `
+                <div class="card p-3 shadow-sm mb-3 col-12 col-md-6" data-product-temp-id="${counter}" data-product-id="${productId}">
+
+
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
+
+                        <!-- Product Name -->
+                        <div class="">
+                        <h5 class="mb-0">${productName}</h5>
+                        <!-- Variations -->
+                        ${variations && variations.length > 0 ? `
+                            <div class="variations">
+                                <strong>Variations:</strong>
+                                ${variations.map(v => `
+                                    <label class="ms-2 small">
+                                        <input
+                                            type="checkbox"
+                                            name="variation_${counter}"
+                                            class="variation-checkbox"
+                                            value="${v.type || ''}"
+                                            data-price="${v.price || 0}"
+                                            data-type="${v.type || 'Option'}"
+                                        >
+                                        ${v.type || 'Option'} - $${v.price || 0}
+                                        ${v.stock ? ` (Stock: ${v.stock})` : ''}
+                                    </label>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                        <!-- Product Total -->
+                        <div class="p-2 text-nowrap">
+                            <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+                                $${basePrice.toFixed(2)}
+                            </span>
+                        </div>
+
+                        <!-- Delete Button -->
+                        <button
+                            type="button"
+                            class="btn btn-danger btn-sm remove-product-btn"
+                            data-temp-id="${counter}"
+                            data-product-id="${productId}"
+                        >
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <input type="hidden" class="product-id" value="${productId}">
+                    <input type="hidden" class="product-name" value="${productName}">
+                    <input type="hidden" class="product-base-price" value="${basePrice}">
+                `;
+
+                return html;
             }
 
-            // Add to Product B array
-            bogoProductsB.push(productId);
-
-            // Create product card for Product B with unique counter
-            let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'B', bogoCounterB);
-            $('#productDetails_section_b').append(html);
-
-            bogoCounterB++;
-            $('#select_pro2').val('').trigger('change');
-            updateBogoTotal();
-        });
-
-        // ==================== CREATE PRODUCT CARD (REGULAR) ====================
-        function createProductCard(productId, productName, basePrice, variations, addons, counter) {
-            let html = `
-            <div class="card p-3 shadow-sm mb-3 col-12 col-md-6" data-product-temp-id="${counter}" data-product-id="${productId}">
-
-
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
-
-                    <!-- Product Name -->
-                    <div class="">
-                    <h5 class="mb-0">${productName}</h5>
-                    <!-- Variations -->
-                    ${variations && variations.length > 0 ? `
-                        <div class="variations">
+            // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
+            function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
+                const variationsHtml = (variations && variations.length)
+                    ? `<div class="mt-2">
                             <strong>Variations:</strong>
-                            ${variations.map(v => `
-                                <label class="ms-2 small">
+                            ${variations.map((v, index) => `~
+                                <label class="d-block small mt-1">
                                     <input
                                         type="checkbox"
-                                        name="variation_${counter}"
-                                        class="variation-checkbox"
+                                        name="bogo_variation_${section}_${counter}_${index}"
+                                        class="bogo-variation-checkbox"
                                         value="${v.type || ''}"
                                         data-price="${v.price || 0}"
                                         data-type="${v.type || 'Option'}"
                                     >
-                                    ${v.type || 'Option'} - $${v.price || 0}
+                                    ${v.type || 'Option'} - $${(v.price || 0).toFixed(2)}
                                     ${v.stock ? ` (Stock: ${v.stock})` : ''}
                                 </label>
                             `).join('')}
+                    </div>`
+                    : '';
+
+                const html = `
+                <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
+
+                        <!-- Product Name + Info -->
+                        <div class="me-3 flex-grow-1">
+                            <h5 class="mb-1">Product ${section}: ${productName}</h5>
+                            ${variationsHtml}
                         </div>
-                    ` : ''}
-                </div>
-                    <!-- Product Total -->
-                    <div class="p-2 text-nowrap">
-                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-                            $${basePrice.toFixed(2)}
-                        </span>
+
+                        <!-- Product Total -->
+                        <div class="p-2 text-nowrap">
+                            <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+                                $${basePrice.toFixed(2)}
+                            </span>
+                        </div>
+
+                        <!-- Delete Button -->
+                        <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
+                            data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </div>
 
-                    <!-- Delete Button -->
-                    <button
-                        type="button"
-                        class="btn btn-danger btn-sm remove-product-btn"
-                        data-temp-id="${counter}"
-                        data-product-id="${productId}"
-                    >
-                        <i class="fa fa-trash"></i>
-                    </button>
+                    <input type="hidden" class="bogo-product-id" value="${productId}">
+                    <input type="hidden" class="bogo-product-name" value="${productName}">
+                    <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
                 </div>
+                `;
 
-                <input type="hidden" class="product-id" value="${productId}">
-                <input type="hidden" class="product-name" value="${productName}">
-                <input type="hidden" class="product-base-price" value="${basePrice}">
-            `;
-
-            return html;
-        }
-
-        // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
-        function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
-            const variationsHtml = (variations && variations.length)
-                ? `<div class="mt-2">
-                        <strong>Variations:</strong>
-                        ${variations.map((v, index) => `~
-                            <label class="d-block small mt-1">
-                                <input
-                                    type="checkbox"
-                                    name="bogo_variation_${section}_${counter}_${index}"
-                                    class="bogo-variation-checkbox"
-                                    value="${v.type || ''}"
-                                    data-price="${v.price || 0}"
-                                    data-type="${v.type || 'Option'}"
-                                >
-                                ${v.type || 'Option'} - $${(v.price || 0).toFixed(2)}
-                                ${v.stock ? ` (Stock: ${v.stock})` : ''}
-                            </label>
-                        `).join('')}
-                </div>`
-                : '';
-
-            const html = `
-            <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
-
-                    <!-- Product Name + Info -->
-                    <div class="me-3 flex-grow-1">
-                        <h5 class="mb-1">Product ${section}: ${productName}</h5>
-                        ${variationsHtml}
-                    </div>
-
-                    <!-- Product Total -->
-                    <div class="p-2 text-nowrap">
-                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-                            $${basePrice.toFixed(2)}
-                        </span>
-                    </div>
-
-                    <!-- Delete Button -->
-                    <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
-                        data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div>
-
-                <input type="hidden" class="bogo-product-id" value="${productId}">
-                <input type="hidden" class="bogo-product-name" value="${productName}">
-                <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
-            </div>
-            `;
-
-            return html;
-        }
-
-
-        // ==================== REMOVE BOGO PRODUCT ====================
-        $(document).on('click', '.remove-bogo-product-btn', function() {
-            let section = $(this).data('section');
-            let counter = $(this).data('counter');
-            let productId = $(this).data('product-id');
-
-            // Remove from respective array
-            if (section === 'A') {
-                bogoProductsA = bogoProductsA.filter(id => id !== productId);
-            } else if (section === 'B') {
-                bogoProductsB = bogoProductsB.filter(id => id !== productId);
+                return html;
             }
 
-            // Remove card with animation
-            $(`[data-bogo-section="${section}"][data-bogo-counter="${counter}"]`).fadeOut(300, function() {
-                $(this).remove();
+
+            // ==================== REMOVE BOGO PRODUCT ====================
+            $(document).on('click', '.remove-bogo-product-btn', function() {
+                let section = $(this).data('section');
+                let counter = $(this).data('counter');
+                let productId = $(this).data('product-id');
+
+                // Remove from respective array
+                if (section === 'A') {
+                    bogoProductsA = bogoProductsA.filter(id => id !== productId);
+                } else if (section === 'B') {
+                    bogoProductsB = bogoProductsB.filter(id => id !== productId);
+                }
+
+                // Remove card with animation
+                $(`[data-bogo-section="${section}"][data-bogo-counter="${counter}"]`).fadeOut(300, function() {
+                    $(this).remove();
+                    updateBogoTotal();
+                });
+            });
+
+            // ==================== UPDATE BOGO TOTAL (MULTIPLE PRODUCTS) ====================
+            function updateBogoTotal() {
+                let totalProductsA = 0;
+                let totalProductsB = 0;
+                let breakdownHTML = '<h5>BOGO Bundle Breakdown:</h5><ul class="list-group">';
+
+                let allProductPrices = [];
+
+                // Calculate all Product A totals
+                $('#productDetails_section_a .card').each(function() {
+                    let basePrice = parseFloat($(this).find('.bogo-product-base-price').val()) || 0;
+                    let productName = $(this).find('.bogo-product-name').val();
+                    let quantity = parseInt($(this).find('.bogo-product-quantity').val()) || 1;
+                    let productTotal = basePrice;
+
+                    // Add variation price
+                    let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
+                    let variationText = '';
+                    if (selectedVariation.length) {
+                        let varPrice = parseFloat(selectedVariation.data('price')) || 0;
+                        let varType = selectedVariation.data('type');
+                        productTotal += varPrice;
+                        variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${varPrice.toFixed(2)})</div>`;
+                    }
+
+                    // Add addon prices
+                    let addonsText = '';
+                    $(this).find('.bogo-addon-checkbox:checked').each(function() {
+                        let addonPrice = parseFloat($(this).data('price')) || 0;
+                        let addonName = $(this).data('name');
+                        productTotal += addonPrice;
+                        addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                    });
+
+                    // Multiply by quantity
+                    productTotal = productTotal * quantity;
+                    totalProductsA += productTotal;
+
+                    // Store individual price for BOGO calculation
+                    allProductPrices.push(productTotal);
+
+                    // Update display
+                    $(this).find('.bogo-product-total').text('$' + productTotal.toFixed(2));
+
+                    breakdownHTML += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <strong>Product A: ${productName}</strong> (x${quantity})
+                                    <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                    ${variationText}
+                                    ${addonsText}
+                                </div>
+                                <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                            </div>
+                        </li>`;
+                });
+
+                // Calculate all Product B totals
+                $('#productDetails_section_b .card').each(function() {
+                    let basePrice = parseFloat($(this).find('.bogo-product-base-price').val()) || 0;
+                    let productName = $(this).find('.bogo-product-name').val();
+                    let quantity = parseInt($(this).find('.bogo-product-quantity').val()) || 1;
+                    let productTotal = basePrice;
+
+                    // Add variation price
+                    let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
+                    let variationText = '';
+                    if (selectedVariation.length) {
+                        let varPrice = parseFloat(selectedVariation.data('price')) || 0;
+                        let varType = selectedVariation.data('type');
+                        productTotal += varPrice;
+                        variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${varPrice.toFixed(2)})</div>`;
+                    }
+
+                    // Add addon prices
+                    let addonsText = '';
+                    $(this).find('.bogo-addon-checkbox:checked').each(function() {
+                        let addonPrice = parseFloat($(this).data('price')) || 0;
+                        let addonName = $(this).data('name');
+                        productTotal += addonPrice;
+                        addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                    });
+
+                    // Multiply by quantity
+                    productTotal = productTotal * quantity;
+                    totalProductsB += productTotal;
+
+                    // Store individual price for BOGO calculation
+                    allProductPrices.push(productTotal);
+
+                    // Update display
+                    $(this).find('.bogo-product-total').text('$' + productTotal.toFixed(2));
+
+                    breakdownHTML += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <strong>Product B: ${productName}</strong> (x${quantity})
+                                    <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                    ${variationText}
+                                    ${addonsText}
+                                </div>
+                                <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                            </div>
+                        </li>`;
+                });
+
+                // Calculate BOGO discount
+                let subtotal = totalProductsA + totalProductsB;
+                let finalTotal = subtotal;
+                let discount = 0;
+
+                // BOGO Logic: Buy X Get Y Free (pay for higher priced items)
+                if (allProductPrices.length >= 2) {
+                    // Sort prices descending
+                    allProductPrices.sort((a, b) => b - a);
+
+                    // Calculate discount (every 2nd item is free, starting from cheapest)
+                    for (let i = 1; i < allProductPrices.length; i += 2) {
+                        discount += allProductPrices[i];
+                    }
+
+                    finalTotal = subtotal - discount;
+                }
+
+                breakdownHTML += `
+                    <li class="list-group-item">
+                        <strong>Subtotal: </strong><span class="text-primary">$${subtotal.toFixed(2)}</span>
+                    </li>`;
+
+                // if (discount > 0) {
+                //     breakdownHTML += `
+                //         <li class="list-group-item text-success">
+                //             <strong>BOGO Discount (Buy 1 Get 1 Free): </strong>
+                //             <span>-$${discount.toFixed(2)}</span>
+                //         </li>`;
+                // }
+
+                // breakdownHTML += `
+                //     <li class="list-group-item bg-success text-white">
+                //         <strong>Final Bundle Total: </strong>
+                //         <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
+                //     </li>
+                // </ul>`;
+
+                // Show price calculator if at least one product is selected
+                let hasProducts = $('#productDetails_section_a .card').length > 0 || $('#productDetails_section_b .card').length > 0;
+
+                if (hasProducts) {
+                    $('#priceCalculator').show();
+                    $('#priceBreakdown').html(breakdownHTML);
+                    $('#price').val(finalTotal.toFixed(2));
+                    $('#price_hidden').val(finalTotal.toFixed(2));
+                } else {
+                    $('#priceCalculator').hide();
+                    $('#price').val('0.00');
+                    $('#price_hidden').val('0.00');
+                }
+            }
+
+            // ==================== BOGO EVENT LISTENERS ====================
+            $(document).on('change', '.bogo-variation-checkbox, .bogo-addon-checkbox, .bogo-product-quantity', function() {
                 updateBogoTotal();
             });
-        });
 
-        // ==================== UPDATE BOGO TOTAL (MULTIPLE PRODUCTS) ====================
-        function updateBogoTotal() {
-            let totalProductsA = 0;
-            let totalProductsB = 0;
-            let breakdownHTML = '<h5>BOGO Bundle Breakdown:</h5><ul class="list-group">';
+            // ==================== REGULAR BUNDLE EVENT LISTENERS ====================
+            $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
+                let productCard = $(this).closest('.card');
+                let basePrice = parseFloat(productCard.find('.product-base-price').val()) || 0;
+                let quantity = parseInt(productCard.find('.product-quantity').val()) || 1;
+                let total = basePrice;
 
-            let allProductPrices = [];
-
-            // Calculate all Product A totals
-            $('#productDetails_section_a .card').each(function() {
-                let basePrice = parseFloat($(this).find('.bogo-product-base-price').val()) || 0;
-                let productName = $(this).find('.bogo-product-name').val();
-                let quantity = parseInt($(this).find('.bogo-product-quantity').val()) || 1;
-                let productTotal = basePrice;
-
-                // Add variation price
-                let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
-                let variationText = '';
+                let selectedVariation = productCard.find('.variation-checkbox:checked');
                 if (selectedVariation.length) {
-                    let varPrice = parseFloat(selectedVariation.data('price')) || 0;
-                    let varType = selectedVariation.data('type');
-                    productTotal += varPrice;
-                    variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${varPrice.toFixed(2)})</div>`;
+                    total += parseFloat(selectedVariation.data('price')) || 0;
                 }
 
-                // Add addon prices
-                let addonsText = '';
-                $(this).find('.bogo-addon-checkbox:checked').each(function() {
-                    let addonPrice = parseFloat($(this).data('price')) || 0;
-                    let addonName = $(this).data('name');
-                    productTotal += addonPrice;
-                    addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                productCard.find('.addon-checkbox:checked').each(function() {
+                    total += parseFloat($(this).data('price')) || 0;
                 });
 
-                // Multiply by quantity
-                productTotal = productTotal * quantity;
-                totalProductsA += productTotal;
-
-                // Store individual price for BOGO calculation
-                allProductPrices.push(productTotal);
-
-                // Update display
-                $(this).find('.bogo-product-total').text('$' + productTotal.toFixed(2));
-
-                breakdownHTML += `
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="flex-grow-1">
-                                <strong>Product A: ${productName}</strong> (x${quantity})
-                                <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
-                                ${variationText}
-                                ${addonsText}
-                            </div>
-                            <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
-                        </div>
-                    </li>`;
-            });
-
-            // Calculate all Product B totals
-            $('#productDetails_section_b .card').each(function() {
-                let basePrice = parseFloat($(this).find('.bogo-product-base-price').val()) || 0;
-                let productName = $(this).find('.bogo-product-name').val();
-                let quantity = parseInt($(this).find('.bogo-product-quantity').val()) || 1;
-                let productTotal = basePrice;
-
-                // Add variation price
-                let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
-                let variationText = '';
-                if (selectedVariation.length) {
-                    let varPrice = parseFloat(selectedVariation.data('price')) || 0;
-                    let varType = selectedVariation.data('type');
-                    productTotal += varPrice;
-                    variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${varPrice.toFixed(2)})</div>`;
-                }
-
-                // Add addon prices
-                let addonsText = '';
-                $(this).find('.bogo-addon-checkbox:checked').each(function() {
-                    let addonPrice = parseFloat($(this).data('price')) || 0;
-                    let addonName = $(this).data('name');
-                    productTotal += addonPrice;
-                    addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                total = total * quantity;
+                productCard.find('.product-total').fadeOut(200, function() {
+                    $(this).text('$' + total.toFixed(2)).fadeIn(200);
                 });
 
-                // Multiply by quantity
-                productTotal = productTotal * quantity;
-                totalProductsB += productTotal;
-
-                // Store individual price for BOGO calculation
-                allProductPrices.push(productTotal);
-
-                // Update display
-                $(this).find('.bogo-product-total').text('$' + productTotal.toFixed(2));
-
-                breakdownHTML += `
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="flex-grow-1">
-                                <strong>Product B: ${productName}</strong> (x${quantity})
-                                <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
-                                ${variationText}
-                                ${addonsText}
-                            </div>
-                            <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
-                        </div>
-                    </li>`;
-            });
-
-            // Calculate BOGO discount
-            let subtotal = totalProductsA + totalProductsB;
-            let finalTotal = subtotal;
-            let discount = 0;
-
-            // BOGO Logic: Buy X Get Y Free (pay for higher priced items)
-            if (allProductPrices.length >= 2) {
-                // Sort prices descending
-                allProductPrices.sort((a, b) => b - a);
-
-                // Calculate discount (every 2nd item is free, starting from cheapest)
-                for (let i = 1; i < allProductPrices.length; i += 2) {
-                    discount += allProductPrices[i];
-                }
-
-                finalTotal = subtotal - discount;
-            }
-
-            breakdownHTML += `
-                <li class="list-group-item">
-                    <strong>Subtotal: </strong><span class="text-primary">$${subtotal.toFixed(2)}</span>
-                </li>`;
-
-            // if (discount > 0) {
-            //     breakdownHTML += `
-            //         <li class="list-group-item text-success">
-            //             <strong>BOGO Discount (Buy 1 Get 1 Free): </strong>
-            //             <span>-$${discount.toFixed(2)}</span>
-            //         </li>`;
-            // }
-
-            // breakdownHTML += `
-            //     <li class="list-group-item bg-success text-white">
-            //         <strong>Final Bundle Total: </strong>
-            //         <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
-            //     </li>
-            // </ul>`;
-
-            // Show price calculator if at least one product is selected
-            let hasProducts = $('#productDetails_section_a .card').length > 0 || $('#productDetails_section_b .card').length > 0;
-
-            if (hasProducts) {
-                $('#priceCalculator').show();
-                $('#priceBreakdown').html(breakdownHTML);
-                $('#price').val(finalTotal.toFixed(2));
-                $('#price_hidden').val(finalTotal.toFixed(2));
-            } else {
-                $('#priceCalculator').hide();
-                $('#price').val('0.00');
-                $('#price_hidden').val('0.00');
-            }
-        }
-
-        // ==================== BOGO EVENT LISTENERS ====================
-        $(document).on('change', '.bogo-variation-checkbox, .bogo-addon-checkbox, .bogo-product-quantity', function() {
-            updateBogoTotal();
-        });
-
-        // ==================== REGULAR BUNDLE EVENT LISTENERS ====================
-        $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
-            let productCard = $(this).closest('.card');
-            let basePrice = parseFloat(productCard.find('.product-base-price').val()) || 0;
-            let quantity = parseInt(productCard.find('.product-quantity').val()) || 1;
-            let total = basePrice;
-
-            let selectedVariation = productCard.find('.variation-checkbox:checked');
-            if (selectedVariation.length) {
-                total += parseFloat(selectedVariation.data('price')) || 0;
-            }
-
-            productCard.find('.addon-checkbox:checked').each(function() {
-                total += parseFloat($(this).data('price')) || 0;
-            });
-
-            total = total * quantity;
-            productCard.find('.product-total').fadeOut(200, function() {
-                $(this).text('$' + total.toFixed(2)).fadeIn(200);
-            });
-
-            updateBundleTotal();
-        });
-
-        $(document).on('click', '.remove-product-btn', function() {
-            let tempId = $(this).data('temp-id');
-            let productId = $(this).data('product-id');
-
-            selectedProductsArray = selectedProductsArray.filter(id => id !== productId);
-
-            $(`[data-product-temp-id="${tempId}"]`).fadeOut(300, function() {
-                $(this).remove();
                 updateBundleTotal();
+            });
 
-                if ($('#productDetails .card').length === 0) {
+            $(document).on('click', '.remove-product-btn', function() {
+                let tempId = $(this).data('temp-id');
+                let productId = $(this).data('product-id');
+
+                selectedProductsArray = selectedProductsArray.filter(id => id !== productId);
+
+                $(`[data-product-temp-id="${tempId}"]`).fadeOut(300, function() {
+                    $(this).remove();
+                    updateBundleTotal();
+
+                    if ($('#productDetails .card').length === 0) {
+                        $('#selectedProducts p').show();
+                    }
+                });
+            });
+
+            // ==================== UPDATE BUNDLE TOTAL (REGULAR) ====================
+            function updateBundleTotal() {
+                let bundleTotal = 0;
+                let productCount = 0;
+                let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
+
+                $('#productDetails .card').each(function() {
+                    let productName = $(this).find('.product-name').val();
+                    let basePrice = parseFloat($(this).find('.product-base-price').val()) || 0;
+                    let productTotal = parseFloat($(this).find('.product-total').text().replace('$', '')) || 0;
+                    let quantity = parseInt($(this).find('.product-quantity').val()) || 1;
+
+                    bundleTotal += productTotal;
+                    productCount++;
+
+                    let selectedVariation = $(this).find('.variation-checkbox:checked');
+                    let variationText = '';
+                    if (selectedVariation.length) {
+                        let varType = selectedVariation.data('type');
+                        let variationPrice = parseFloat(selectedVariation.data('price')) || 0;
+                        variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${variationPrice.toFixed(2)})</div>`;
+                    }
+
+                    let addonsText = '';
+                    $(this).find('.addon-checkbox:checked').each(function() {
+                        let addonName = $(this).data('name');
+                        let addonPrice = parseFloat($(this).data('price')) || 0;
+                        addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                    });
+
+                    let perItemPrice = productTotal / quantity;
+
+                    breakdownHTML += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <strong>${productName}</strong> (x${quantity})
+                                    <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                    ${variationText}
+                                    ${addonsText}
+                                    ${quantity > 1 ? `<div class="small text-info mt-1">Per item: $${perItemPrice.toFixed(2)}</div>` : ''}
+                                </div>
+                                <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                            </div>
+                        </li>`;
+                });
+
+                let discount = parseFloat($('#discount').val()) || 0;
+                let discountType = $('#discount_type').val();
+                let discountAmount = 0;
+
+                if (discountType === 'percent') {
+                    discountAmount = (bundleTotal * discount) / 100;
+                } else {
+                    discountAmount = discount;
+                }
+
+                let finalTotal = Math.max(bundleTotal - discountAmount, 0);
+
+                breakdownHTML += `
+                    <li class="list-group-item">
+                        <strong>Subtotal: </strong><span class="text-primary">$${bundleTotal.toFixed(2)}</span>
+                    </li>`;
+
+                if (discountAmount > 0) {
+                    breakdownHTML += `
+                        <li class="list-group-item text-danger">
+                            <strong>Discount (${discountType === 'percent' ? discount + '%' : '$' + discount}): </strong>
+                            -$${discountAmount.toFixed(2)}
+                        </li>`;
+                }
+
+                breakdownHTML += `
+                    <li class="list-group-item bg-success text-white">
+                        <strong>Final Bundle Total: </strong>
+                        <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
+                    </li>
+                </ul>`;
+
+                if (productCount > 0) {
+                    $('#priceCalculator').show();
+                    $('#priceBreakdown').html(breakdownHTML);
+                    $('#selectedProducts p').hide();
+                } else {
+                    $('#priceCalculator').hide();
                     $('#selectedProducts p').show();
                 }
-            });
-        });
 
-        // ==================== UPDATE BUNDLE TOTAL (REGULAR) ====================
-        function updateBundleTotal() {
-            let bundleTotal = 0;
-            let productCount = 0;
-            let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
+                let bundleType = $('#bundle_offer_type').val();
+                if (bundleType === 'bogo_free' || bundleType === 'mix_match') {
+                    $('#price').val(finalTotal.toFixed(2));
+                    $('#price_hidden').val(finalTotal.toFixed(2));
+                } else {
+                    $('#price').val(finalTotal.toFixed(2));
+                    $('#price_hidden').val(bundleTotal.toFixed(2));
+                }
+            }
 
-            $('#productDetails .card').each(function() {
-                let productName = $(this).find('.product-name').val();
-                let basePrice = parseFloat($(this).find('.product-base-price').val()) || 0;
-                let productTotal = parseFloat($(this).find('.product-total').text().replace('$', '')) || 0;
-                let quantity = parseInt($(this).find('.product-quantity').val()) || 1;
+            $('#discount, #discount_type').on('change input', function() {
+                let discount = parseFloat($('#discount').val()) || 0;
+                let discountType = $('#discount_type').val();
+                let bundleTotal = parseFloat($('#price_hidden').val()) || 0;
 
-                bundleTotal += productTotal;
-                productCount++;
-
-                let selectedVariation = $(this).find('.variation-checkbox:checked');
-                let variationText = '';
-                if (selectedVariation.length) {
-                    let varType = selectedVariation.data('type');
-                    let variationPrice = parseFloat(selectedVariation.data('price')) || 0;
-                    variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${variationPrice.toFixed(2)})</div>`;
+                if (discountType === 'percent' && discount > 100) {
+                    alert('Discount percentage cannot exceed 100%');
+                    $('#discount').val(0);
+                    return;
                 }
 
-                let addonsText = '';
-                $(this).find('.addon-checkbox:checked').each(function() {
-                    let addonName = $(this).data('name');
-                    let addonPrice = parseFloat($(this).data('price')) || 0;
-                    addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
-                });
+                if (discountType !== 'percent' && discount > bundleTotal) {
+                    alert(`Discount amount ($${discount}) cannot exceed bundle total ($${bundleTotal})`);
+                    $('#discount').val(0);
+                    return;
+                }
 
-                let perItemPrice = productTotal / quantity;
-
-                breakdownHTML += `
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="flex-grow-1">
-                                <strong>${productName}</strong> (x${quantity})
-                                <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
-                                ${variationText}
-                                ${addonsText}
-                                ${quantity > 1 ? `<div class="small text-info mt-1">Per item: $${perItemPrice.toFixed(2)}</div>` : ''}
-                            </div>
-                            <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
-                        </div>
-                    </li>`;
+                updateBundleTotal();
             });
 
-            let discount = parseFloat($('#discount').val()) || 0;
-            let discountType = $('#discount_type').val();
-            let discountAmount = 0;
-
-            if (discountType === 'percent') {
-                discountAmount = (bundleTotal * discount) / 100;
-            } else {
-                discountAmount = discount;
+            function updateFieldsVisibility(bundleType) {
+                if (bundleType === 'mix_match') {
+                    $('#price_input_hide').addClass('d-none');
+                    $('#discount_input_hide').removeClass('d-none');
+                    $('#required_qty').removeClass('d-none');
+                    $('#discount_value_input_hide').removeClass('d-none');
+                } else if (bundleType === 'bogo_free') {
+                    $('#price_input_hide').addClass('d-none');
+                    $('#discount_input_hide').addClass('d-none');
+                    $('#required_qty').addClass('d-none');
+                    $('#discount_value_input_hide').addClass('d-none');
+                } else if (bundleType === 'simple' || bundleType === 'bundle') {
+                    $('#price_input_hide').removeClass('d-none');
+                    $('#required_qty').addClass('d-none');
+                    $('#discount_input_hide').removeClass('d-none');
+                    $('#discount_value_input_hide').removeClass('d-none');
+                } else {
+                    $('#price_input_hide').removeClass('d-none');
+                    $('#required_qty').addClass('d-none');
+                    $('#discount_input_hide').removeClass('d-none');
+                    $('#discount_value_input_hide').removeClass('d-none');
+                }
             }
 
-            let finalTotal = Math.max(bundleTotal - discountAmount, 0);
+            $('#bundle_offer_type').on('change', function() {
+                let bundleType = $(this).val();
+                updateFieldsVisibility(bundleType);
 
-            breakdownHTML += `
-                <li class="list-group-item">
-                    <strong>Subtotal: </strong><span class="text-primary">$${bundleTotal.toFixed(2)}</span>
-                </li>`;
+                $('#availableProducts').hide();
+                $('#availableProducts_get_x_buy_y').hide();
 
-            if (discountAmount > 0) {
-                breakdownHTML += `
-                    <li class="list-group-item text-danger">
-                        <strong>Discount (${discountType === 'percent' ? discount + '%' : '$' + discount}): </strong>
-                        -$${discountAmount.toFixed(2)}
-                    </li>`;
-            }
-
-            breakdownHTML += `
-                <li class="list-group-item bg-success text-white">
-                    <strong>Final Bundle Total: </strong>
-                    <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
-                </li>
-            </ul>`;
-
-            if (productCount > 0) {
-                $('#priceCalculator').show();
-                $('#priceBreakdown').html(breakdownHTML);
-                $('#selectedProducts p').hide();
-            } else {
-                $('#priceCalculator').hide();
-                $('#selectedProducts p').show();
-            }
-
-            let bundleType = $('#bundle_offer_type').val();
-            if (bundleType === 'bogo_free' || bundleType === 'mix_match') {
-                $('#price').val(finalTotal.toFixed(2));
-                $('#price_hidden').val(finalTotal.toFixed(2));
-            } else {
-                $('#price').val(finalTotal.toFixed(2));
-                $('#price_hidden').val(bundleTotal.toFixed(2));
-            }
-        }
-
-        $('#discount, #discount_type').on('change input', function() {
-            let discount = parseFloat($('#discount').val()) || 0;
-            let discountType = $('#discount_type').val();
-            let bundleTotal = parseFloat($('#price_hidden').val()) || 0;
-
-            if (discountType === 'percent' && discount > 100) {
-                alert('Discount percentage cannot exceed 100%');
-                $('#discount').val(0);
-                return;
-            }
-
-            if (discountType !== 'percent' && discount > bundleTotal) {
-                alert(`Discount amount ($${discount}) cannot exceed bundle total ($${bundleTotal})`);
-                $('#discount').val(0);
-                return;
-            }
-
-            updateBundleTotal();
-        });
-
-        function updateFieldsVisibility(bundleType) {
-            if (bundleType === 'mix_match') {
-                $('#price_input_hide').addClass('d-none');
-                $('#discount_input_hide').removeClass('d-none');
-                $('#required_qty').removeClass('d-none');
-                $('#discount_value_input_hide').removeClass('d-none');
-            } else if (bundleType === 'bogo_free') {
-                $('#price_input_hide').addClass('d-none');
-                $('#discount_input_hide').addClass('d-none');
-                $('#required_qty').addClass('d-none');
-                $('#discount_value_input_hide').addClass('d-none');
-            } else if (bundleType === 'simple' || bundleType === 'bundle') {
-                $('#price_input_hide').removeClass('d-none');
-                $('#required_qty').addClass('d-none');
-                $('#discount_input_hide').removeClass('d-none');
-                $('#discount_value_input_hide').removeClass('d-none');
-            } else {
-                $('#price_input_hide').removeClass('d-none');
-                $('#required_qty').addClass('d-none');
-                $('#discount_input_hide').removeClass('d-none');
-                $('#discount_value_input_hide').removeClass('d-none');
-            }
-        }
-
-        $('#bundle_offer_type').on('change', function() {
-            let bundleType = $(this).val();
-            updateFieldsVisibility(bundleType);
-
-            $('#availableProducts').hide();
-            $('#availableProducts_get_x_buy_y').hide();
-
-            // Clear regular products
-            $('#productDetails .card').fadeOut(300, function() {
-                $(this).remove();
-                $('#selectedProducts p').show();
-            });
-            selectedProductsArray = [];
-            productCounter = 0;
-
-            // Clear BOGO products
-            $('#productDetails_section_a').empty();
-            $('#productDetails_section_b').empty();
-            bogoProductsA = [];
-            bogoProductsB = [];
-            bogoCounterA = 0;
-            bogoCounterB = 0;
-
-            $('#priceCalculator').hide();
-            $('#price').val('0.00');
-            $('#price_hidden').val('0.00');
-            $('#discount').val('0');
-        });
-
-        $('#price_type, input[name="price_type"]').on('change', function() {
-            let priceType = $(this).val() || $('input[name="price_type"]:checked').val();
-
-            if (priceType === 'fixed') {
+                // Clear regular products
                 $('#productDetails .card').fadeOut(300, function() {
                     $(this).remove();
                     $('#selectedProducts p').show();
@@ -1476,6 +1583,7 @@
                 selectedProductsArray = [];
                 productCounter = 0;
 
+                // Clear BOGO products
                 $('#productDetails_section_a').empty();
                 $('#productDetails_section_b').empty();
                 bogoProductsA = [];
@@ -1486,13 +1594,36 @@
                 $('#priceCalculator').hide();
                 $('#price').val('0.00');
                 $('#price_hidden').val('0.00');
+                $('#discount').val('0');
+            });
 
-                alert('Fixed price selected. All product selections have been reset.');
-            }
+            $('#price_type, input[name="price_type"]').on('change', function() {
+                let priceType = $(this).val() || $('input[name="price_type"]:checked').val();
+
+                if (priceType === 'fixed') {
+                    $('#productDetails .card').fadeOut(300, function() {
+                        $(this).remove();
+                        $('#selectedProducts p').show();
+                    });
+                    selectedProductsArray = [];
+                    productCounter = 0;
+
+                    $('#productDetails_section_a').empty();
+                    $('#productDetails_section_b').empty();
+                    bogoProductsA = [];
+                    bogoProductsB = [];
+                    bogoCounterA = 0;
+                    bogoCounterB = 0;
+
+                    $('#priceCalculator').hide();
+                    $('#price').val('0.00');
+                    $('#price_hidden').val('0.00');
+
+                    alert('Fixed price selected. All product selections have been reset.');
+                }
+            });
         });
-    });
-
-   </script>
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -2496,7 +2627,7 @@
         }
     </script>
 
- <script>
+    <script>
         function multiples_category() {
             var category_ids_all = $('#category_id').val();
 
@@ -2542,11 +2673,19 @@
         }
 
         function multples_sub_category(){
-
             // alert("multples_sub_category");
         }
 
-        </script>
+   </script>
+
+
+
+
+
+
+
+
+
 
 
 @endpush
