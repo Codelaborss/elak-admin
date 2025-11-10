@@ -144,158 +144,90 @@
                     </div> --}}
 
 
-                      <div class="section-card rounded p-4 mb-4">
 
-
-                            <!-- Basic Information -->
-                            <div class="card shadow-sm mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Basic Information</h5>
+                         <!--  Basic Information-->
+                        <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                            <h3 class="h5 fw-semibold mb-4"> Basic Information</h3>
+                            {{-- Voucher Title --}}
+                            <div class="row g-3 mb-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-medium">Voucher Title</label>
+                                    <input type="text" name="voucher_title" class="form-control" placeholder="Voucher Title">
                                 </div>
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Voucher Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ old('name') }}" required>
-                                        @error('name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror"
-                                                id="description" name="description" rows="3">{{ old('description') }}</textarea>
-                                        @error('description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="image" class="form-label">Voucher Image</label>
-                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                            id="image" name="image" accept="image/*">
-                                        <small class="form-text text-muted">Upload an image for this voucher (JPG, PNG, GIF - Max 2MB)</small>
-                                        @error('image')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                        <div id="imagePreview" class="mt-2"></div>
-                                    </div>
-
-                                    <hr class="my-4">
-
-                                    <!-- Usage Limits -->
-                                    <h6 class="mb-3">Usage Limits</h6>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="max_uses" class="form-label">Maximum Total Uses</label>
-                                                <input type="number" class="form-control @error('max_uses') is-invalid @enderror"
-                                                    id="max_uses" name="max_uses" value="{{ old('max_uses') }}" placeholder="Leave empty for unlimited">
-                                                @error('max_uses')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                                <small class="form-text text-muted">Leave empty for unlimited uses</small>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="max_uses_per_user" class="form-label">Maximum Uses Per User <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control @error('max_uses_per_user') is-invalid @enderror"
-                                                    id="max_uses_per_user" name="max_uses_per_user" value="{{ old('max_uses_per_user', '1') }}" required>
-                                                @error('max_uses_per_user')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr class="my-4">
-
-                                    <!-- Validity Period -->
-                                    <h6 class="mb-3">Validity Period</h6>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="valid_from" class="form-label">Valid From</label>
-                                                <input type="datetime-local" class="form-control @error('valid_from') is-invalid @enderror"
-                                                    id="valid_from" name="valid_from" value="{{ old('valid_from') }}">
-                                                @error('valid_from')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="valid_until" class="form-label">Valid Until</label>
-                                                <input type="datetime-local" class="form-control @error('valid_until') is-invalid @enderror"
-                                                    id="valid_until" name="valid_until" value="{{ old('valid_until') }}">
-                                                @error('valid_until')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr class="my-4">
-
-                                    <!-- Display Settings -->
-                                    <h6 class="mb-3">Display Settings</h6>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                                    <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Active</option>
-                                                    <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                                </select>
-                                                @error('status')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label for="priority" class="form-label">Priority <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control @error('priority') is-invalid @enderror"
-                                                    id="priority" name="priority" value="{{ old('priority', '0') }}" required>
-                                                @error('priority')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                                <small class="form-text text-muted">Higher priority vouchers appear first</small>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label for="is_featured" class="form-label">Featured</label>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="is_featured">
-                                                        Display in featured section
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">
-                                            <i class="fas fa-save"></i> Create Flat Discount Voucher
-                                        </button>
-                                        <a href="" class="btn btn-secondary">
-                                            <i class="fas fa-times"></i> Cancel
-                                        </a>
-                                    </div>
+                                 <div class="mb-3 col-12 ">
+                                    <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                                    <textarea type="text" name="description" class="form-control min-h-90px ckeditor"></textarea>
+                                </div>
+                                <div class="col-12" >
+                                    @include("admin-views.voucher.store_include.include_images")
                                 </div>
                             </div>
+                             <div class="row g-3 mb-3">
+                                 <div class="col-12 mt-3">
+                                     <div class="form-group">
+                                         <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                                         <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                                     </div>
+                                 </div>
+                             </div>
+                              {{-- tags --}}
+
+                            {{-- <div class="row g-3 mb-3">
+                                   <h3 class="h5 fw-semibold mb-4 col-12">Validity Period</h3>
+                                <div class="col-6">
+                                    <label class="form-label fw-medium">Valid From</label>
+                                    <input type="date" name="valid_until" class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label fw-medium">Valid Until</label>
+                                    <input type="date" name="valid_until" class="form-control">
+                                </div>
+                            </div> --}}
+                               {{-- <div class="row g-3 mb-3">
+                                   <h3 class="h5 fw-semibold mb-4 col-12">Display Settings</h3>
+                                      <div class="col-md-4">
+                                         <div class="mb-3">
+                                            <label for="status" class="form-label">
+                                                Status <span class="text-danger">*</span>
+                                            </label>
+                                              <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
+                                                 <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Active</option>
+                                                <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                             </select>
+
+                                            </div>
+
+                                        </div>
+                                     <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="priority" class="form-label">Priority <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control @error('priority') is-invalid @enderror"
+                                                id="priority" name="priority" value="{{ old('priority', '0') }}" required>
+                                            <small class="form-text text-muted">Higher priority vouchers appear first</small>
+                                        </div>
+                                    </div>
+                                  <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="is_featured" class="form-label">Featured</label>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="is_featured">
+                                                    Display in featured section
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            {{-- images  --}}
+
+                        </div>
+
+                      <div class="section-card rounded p-4 mb-4">
 
                             <!-- Discount & Bonus Configuration -->
                             <div class="card shadow-sm mb-4">
-                                <div class="card-header bg-warning text-dark">
-                                    <h5 class="mb-0"><i class="fas fa-gift"></i> Discount & Bonus Configuration</h5>
+                              <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
+                                    <h5 class="mb-0" style="color: white"><i class="fas fa-gift"></i> Discount Configuration</h5>
                                 </div>
                                 <div class="card-body">
                                     <!-- Discount Type Selection -->
@@ -356,13 +288,12 @@
                                         <i class="fas fa-plus"></i> Add Another Tier
                                     </button>
 
-                                    <div class="alert alert-info mt-3 mb-0">
+                                   <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
                                         <i class="fas fa-info-circle"></i>
                                         <strong>Example:</strong> $0-$100 = 5% discount, $101-$500 = 10% discount, $501+ = 15% discount
                                     </div>
                                 </div>
                             </div>
-
 
                       </div>
 
@@ -376,7 +307,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card shadow-sm mb-4">
+                        {{-- <div class="card shadow-sm mb-4">
                             <div class="card-body">
                                 <p class="text-muted mb-4">Define usage terms and restrictions</p>
 
@@ -435,7 +366,7 @@
                                     <small class="text-muted">Select premade dates or events when gift cards cannot be redeemed</small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                       <!-- How It Works-->
                     <div class="section-card rounded p-4 mb-4">
@@ -443,16 +374,6 @@
                         {{-- tags --}}
                         <div class="card ">
                             <div class="card-body" id="workList">
-                            </div>
-                        </div>
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <p class="text-muted mb-4">Explain redemption process</p>
-                                <div class="mb-3">
-                                    <label for="redemption_process" class="form-label">Redemption Process</label>
-                                    <textarea class="form-control" id="redemption_process" name="redemption_process" rows="6"
-                                            placeholder="Step by step instructions on how to redeem this voucher...">{{ old('redemption_process') }}</textarea>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1866,6 +1787,8 @@
                                         `).join('')}
                                     </ul>
                                 </div>
+
+
                             </div>
                         `;
                     });

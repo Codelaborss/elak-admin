@@ -118,23 +118,6 @@
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.store_include.include_client_partner_information")
 
-
-                    <!-- Occasions-->
-                    {{-- <div class="section-card rounded p-4 mb-4">
-                        <h3 class="h5 fw-semibold mb-4">Occasions</h3>
-                        <div class="col-12 mt-3">
-                            <p class="text-muted mb-3">Select occasions for this gift card</p>
-                            <div class="form-group mb-0">
-                                    <label class="input-label"
-                                        for="select_category_all">{{ translate('Occasions') }}</label>
-                                        <select name="select_category_all" id="select_category_all" class="form-control js-select2-custom" multiple>
-                                        @foreach (\App\Models\GiftOccasions::all() as $item)
-                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                        </div>
-                    </div> --}}
                     <div class="section-card rounded p-4 mb-4">
                         <div class="col-12 mt-3">
                             <p class="text-muted mb-3">Select occasions for this gift card</p>
@@ -804,7 +787,7 @@
     </script>
 
 
-  <script>
+  {{-- <script>
 
     $(document).ready(function() {
         // Initialize Select2 for all dropdowns
@@ -1492,7 +1475,7 @@
         });
     });
 
-   </script>
+   </script> --}}
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -1503,11 +1486,25 @@
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
 
-                  if (loopIndex === "1" || name === "Delivery/Pickup") {
+                     if (loopIndex === "1" || name === "Delivery/Pickup") {
                     window.location.href = "{{ url('admin/Voucher/add-new') }}";
-                } else if (loopIndex === "2" || name === "Flat discount") {
+                } else
+
+                if (loopIndex === "2" || name === "Flat discount") {
+                    window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
+                } else if (loopIndex === "3" || name === "Gift") {
+                    window.location.href = "{{ url('admin/Voucher/add-gift') }}";
+                }
+                 else if (loopIndex === "4" || name === "In-Store") {
                     window.location.href = "{{ url('admin/Voucher/add-new') }}";
                 }
+
+
+                //   if (loopIndex === "1" || name === "Delivery/Pickup") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                // } else if (loopIndex === "2" || name === "Flat discount") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                // }
 
 
                 getDataFromServer(primaryId);

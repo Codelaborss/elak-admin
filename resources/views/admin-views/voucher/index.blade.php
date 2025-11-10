@@ -1522,17 +1522,18 @@
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
 
+                // if (loopIndex === "1" || name === "Delivery/Pickup") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                // } else
 
-                if (loopIndex === "1" || name === "Delivery/Pickup") {
-                    window.location.href = "{{ url('admin/Voucher/add-new') }}";
-                } else if (loopIndex === "2" || name === "Flat discount") {
+                if (loopIndex === "2" || name === "Flat discount") {
                     window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
                 } else if (loopIndex === "3" || name === "Gift") {
                     window.location.href = "{{ url('admin/Voucher/add-gift') }}";
-                } else if (loopIndex === "4" || name === "In-Store") {
-                    window.location.href = "{{ url('admin/Voucher/add-gift') }}";
                 }
-
+                //  else if (loopIndex === "4" || name === "In-Store") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                // }
 
                 getDataFromServer(primaryId);
                   get_product();
