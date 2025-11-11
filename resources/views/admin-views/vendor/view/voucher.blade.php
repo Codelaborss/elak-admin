@@ -11,7 +11,58 @@
     <div class="content container-fluid">
         @include('admin-views.vendor.view.partials._header', ['store' => $store])
         <!-- Page Heading -->
+          <form class="search-form">
+              <input type="hidden" name="store_id" value="{{ $store->id }}">
+        <div class="row my-4">
+            <div class="col-sm-6 col-md-3">
+                <div class="select-item">
+                    <select name="voucher_ids" class="form-control js-select2-custom set-filter"
+                            data-url="{{url()->full()}}" data-filter="voucher_ids">
+                        <option value="" {{!request('voucher_ids')?'selected':''}}>{{ translate('All Voucher Types') }}</option>
+                        @foreach(\App\Models\VoucherType::orderBy('name')->get(['id','name']) as $voucher)
+                            <option
+                                value="{{$voucher['name']}}" {{request()?->voucher_ids == $voucher['id']?'selected':''}}>
+                                {{$voucher['name']}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="select-item">
+                    @php(
+                        // Custom static array of voucher types
+                        $voucherTypes = [
+                            'simple' => 'Simple',
+                            'simple x' => 'Simple X',
+                            'bundle' => 'Fixed Bundle - Specific products at set price',
+                            'bogo_free' => 'Buy X Get Y - Buy products get different product free',
+                            'mix_match' => 'Mix & Match - Customer chooses from categories',
+                        ]
+                    )
 
+                    <select name="bundle_type" class="form-control js-select2-custom set-filter"
+                            data-url="{{ url()->full() }}" data-filter="bundle_type">
+                        <option value="" {{ !request('bundle_type') ? 'selected' : '' }}>
+                            {{ translate('Bundle Name') }}
+                        </option>
+
+                        @foreach($voucherTypes as $value => $label)
+                            <option value="{{ $value }}" {{ old('bundle_type') == $value ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="btn--container justify-content-end">
+                    <button type="reset" id="reset_btn" class="btn btn--reset">Reset</button>
+                    <button type="submit" class="btn btn--primary">Filter</button>
+                </div>
+            </div>
+        </div>
+          </form>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="product">
 
@@ -100,6 +151,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <?php
                 $item = match ($sub_tab) {

@@ -8325,4 +8325,6 @@ Smartly or Earn. ',
   'The voucher title must be a number.' => 'The voucher title must be a number.',
   'Client Name' => 'Client Name',
   'Actual Price' => 'Actual Price',
+  'All Voucher Types' => 'All Voucher Types',
+  'Bundle Name' => 'Bundle Name',
 );

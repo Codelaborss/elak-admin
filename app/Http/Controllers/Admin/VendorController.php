@@ -515,6 +515,8 @@ class VendorController extends Controller
             return view('admin-views.vendor.view.order', compact('store','orders'));
         } else if($tab == 'voucher') {
 
+            // dd($request->all());
+
                 if($sub_tab == 'pending-items' || $sub_tab == 'rejected-items' ){
 
                     $foods = TempProduct::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)
@@ -532,16 +534,15 @@ class VendorController extends Controller
                         $q->where('is_rejected' , 1);
                     })
                     ->latest()->paginate(25);
-                }   else{
-
-
-
+                }else{
 
                     // $foods = Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where("voucher_type","voucher")
                     $foods = Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)->where("voucher_type","voucher")
                         ->when(isset($key) , function($q) use($key){
                             $q->where(function ($q) use ($key) {
                                 foreach ($key as $value) {
+                                    // $q->where('bundle_type', 'like', "%{$value}%");
+                                    // $q->where('voucher_ids', 'like', "%{$value}%");
                                     $q->where('name', 'like', "%{$value}%");
                                 }
                             });
@@ -558,6 +559,8 @@ class VendorController extends Controller
                 }
                 $taxData = Helpers::getTaxSystemType(getTaxVatList: false);
                 $productWiseTax = $taxData['productWiseTax'];
+
+                // dd($foods);
 
             return view('admin-views.vendor.view.voucher', compact('store','foods','sub_tab','productWiseTax'));
 
