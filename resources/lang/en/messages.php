@@ -8324,4 +8324,5 @@ Smartly or Earn. ',
   'Discunt' => 'Discunt',
   'The voucher title must be a number.' => 'The voucher title must be a number.',
   'Client Name' => 'Client Name',
+  'Actual Price' => 'Actual Price',
 );

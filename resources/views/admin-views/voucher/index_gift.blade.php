@@ -105,7 +105,7 @@
         <div class="bg-white shadow rounded-lg p-4">
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
             <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
-            <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
+            <input type="hidden" name="hidden_name" id="hidden_name" value="Gift"/>
 
             {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
              @include("admin-views.voucher.store_include.include_client_voucher_management")
@@ -131,6 +131,7 @@
                                                 type="checkbox"
                                                 name="occasions[]"
                                                 value="{{ $item->id }}"
+                                                checked
                                                 id="occasion_{{ $item->id }}">
                                             <label class="form-check-label" for="occasion_{{ $item->id }}">
                                                 {{ $item->title }}
@@ -1486,18 +1487,18 @@
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
 
-                     if (loopIndex === "1" || name === "Delivery/Pickup") {
+                 if (loopIndex === "1" || name === "Delivery/Pickup") {
                     window.location.href = "{{ url('admin/Voucher/add-new') }}";
                 } else
 
-                if (loopIndex === "2" || name === "Flat discount") {
+                if (loopIndex === "2" || name === "In-Store") {
+                    window.location.href = "{{ url('admin/Voucher/add-new-store') }}";
+                } else if (loopIndex === "3" || name === "Flat discount") {
                     window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
-                } else if (loopIndex === "3" || name === "Gift") {
-                    window.location.href = "{{ url('admin/Voucher/add-gift') }}";
                 }
-                 else if (loopIndex === "4" || name === "In-Store") {
-                    window.location.href = "{{ url('admin/Voucher/add-new') }}";
-                }
+                //  else if (loopIndex === "4" || name === "Gift") {
+                //     window.location.href = "{{ url('admin/Voucher/add-gift') }}";
+                // }
 
 
                 //   if (loopIndex === "1" || name === "Delivery/Pickup") {
@@ -1641,102 +1642,23 @@
                 // 🟢 WorkManagement (show all details)
                 // resources/views/admin-views/voucher/index.blade.php
 
-                   let workHtml = "";
+                    let workHtml = "";
 
-                    $.each(response.work_management, function(index, item) {
-                        workHtml += `
-                            <div class="work-item mb-4 rounded-lg border p-4">
-                                <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
-
-                                <div class="mb-3">
-                                    <strong>Purchase Process:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.purchase_process.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="purchase_process"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
+                        $.each(response.work_management, function(index, item) {
+                            workHtml += `
+                                <div class="work-item mb-4 rounded-lg border p-4 flex items-center gap-3">
+                                    <input type="checkbox" class="record-checkbox"
+                                        id="record_${item.id}"
+                                        data-item-id="${item.id}"
+                                        name="work_record[]">
+                                    <label for="record_${item.id}" class="font-bold text-lg cursor-pointer">
+                                        ${item.guid_title}
+                                    </label>
                                 </div>
+                            `;
+                        });
 
-                                <div class="mb-3">
-                                    <strong>Payment Confirm:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.payment_confirm.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="payment_confirm"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Voucher Deliver:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.voucher_deliver.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="voucher_deliver"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Redemption Process:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.redemption_process.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="redemption_process"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Account Management:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.account_management.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="account_management"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    $("#workList").html(workHtml);
+                        $("#workList").html(workHtml);
 
 
                 // 🟢 UsageTermManagement (checkboxes)

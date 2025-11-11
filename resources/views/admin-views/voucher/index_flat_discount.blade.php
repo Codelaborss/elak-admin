@@ -9,6 +9,13 @@
 @endpush
 
 <style>
+.selected {
+    background-color: #d1e7ff; /* Highlight color */
+    border: 2px solid #0d6efd; /* Optional border highlight */
+    border-radius: 0.25rem; /* match your card rounding */
+}
+
+
 #selectedItemsSection .badge {
     font-size: 0.9rem;
     padding: 0.4rem 0.8rem;
@@ -105,7 +112,7 @@
         <div class="bg-white shadow rounded-lg p-4">
             <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
             <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
-            <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
+            <input type="hidden" name="hidden_name" id="hidden_name" value="Flat discount"/>
 
             {{-- Step 1: Select Voucher Type and Step 2: Select Management Type  --}}
              @include("admin-views.voucher.store_include.include_client_voucher_management")
@@ -117,125 +124,96 @@
                 @php($defaultLang = str_replace('_', '-', app()->getLocale()))
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.store_include.include_client_partner_information")
-
-
-                    {{-- <div class="section-card rounded p-4 mb-4">
-                        <div class="col-12 mt-3">
-                            <p class="text-muted mb-3">Select occasions for this gift card</p>
-                            <div class="form-group mb-0">
-                                <label class="input-label">{{ translate('Occasions') }}</label>
-                                <div class="d-flex flex-wrap">
-                                    @foreach (\App\Models\GiftOccasions::all() as $item)
-                                        <div class="form-check me-3 mb-2">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                name="occasions[]"
-                                                value="{{ $item->id }}"
-                                                id="occasion_{{ $item->id }}">
-                                            <label class="form-check-label" for="occasion_{{ $item->id }}">
-                                                {{ $item->title }}
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
+                        <!--  Basic Information-->
+                    <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
+                        <h3 class="h5 fw-semibold mb-4"> Basic Information</h3>
+                        {{-- Voucher Title --}}
+                        <div class="row g-3 mb-3">
+                            <div class="col-12">
+                                <label class="form-label fw-medium">Voucher Title</label>
+                                <input type="text" name="voucher_title" class="form-control" placeholder="Voucher Title">
+                            </div>
+                                <div class="mb-3 col-12 ">
+                                <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
+                                <textarea type="text" name="description" class="form-control min-h-90px ckeditor"></textarea>
+                            </div>
+                            <div class="col-12" >
+                                @include("admin-views.voucher.store_include.include_images")
                             </div>
                         </div>
-                    </div> --}}
-
-
-
-                         <!--  Basic Information-->
-                        <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
-                            <h3 class="h5 fw-semibold mb-4"> Basic Information</h3>
-                            {{-- Voucher Title --}}
                             <div class="row g-3 mb-3">
-                                <div class="col-12">
-                                    <label class="form-label fw-medium">Voucher Title</label>
-                                    <input type="text" name="voucher_title" class="form-control" placeholder="Voucher Title">
-                                </div>
-                                 <div class="mb-3 col-12 ">
-                                    <label class="form-label fw-medium">Short Description (Default) <span class="text-danger">*</span></label>
-                                    <textarea type="text" name="description" class="form-control min-h-90px ckeditor"></textarea>
-                                </div>
-                                <div class="col-12" >
-                                    @include("admin-views.voucher.store_include.include_images")
+                                <div class="col-12 mt-3">
+                                    <div class="form-group">
+                                        <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
+                                        <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
+                                    </div>
                                 </div>
                             </div>
-                             <div class="row g-3 mb-3">
-                                 <div class="col-12 mt-3">
-                                     <div class="form-group">
-                                         <h3 class="h5 fw-semibold "> {{ translate('tags') }}</h3>
-                                         <input type="text" class="form-control" name="tags" placeholder="{{translate('messages.search_tags')}}" data-role="tagsinput">
-                                     </div>
-                                 </div>
-                             </div>
-                              {{-- tags --}}
+                            {{-- tags --}}
 
+                        {{-- <div class="row g-3 mb-3">
+                                <h3 class="h5 fw-semibold mb-4 col-12">Validity Period</h3>
+                            <div class="col-6">
+                                <label class="form-label fw-medium">Valid From</label>
+                                <input type="date" name="valid_until" class="form-control">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label fw-medium">Valid Until</label>
+                                <input type="date" name="valid_until" class="form-control">
+                            </div>
+                        </div> --}}
                             {{-- <div class="row g-3 mb-3">
-                                   <h3 class="h5 fw-semibold mb-4 col-12">Validity Period</h3>
-                                <div class="col-6">
-                                    <label class="form-label fw-medium">Valid From</label>
-                                    <input type="date" name="valid_until" class="form-control">
+                                <h3 class="h5 fw-semibold mb-4 col-12">Display Settings</h3>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                        <label for="status" class="form-label">
+                                            Status <span class="text-danger">*</span>
+                                        </label>
+                                            <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
+                                                <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Active</option>
+                                            <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="priority" class="form-label">Priority <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control @error('priority') is-invalid @enderror"
+                                            id="priority" name="priority" value="{{ old('priority', '0') }}" required>
+                                        <small class="form-text text-muted">Higher priority vouchers appear first</small>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <label class="form-label fw-medium">Valid Until</label>
-                                    <input type="date" name="valid_until" class="form-control">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="is_featured" class="form-label">Featured</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="is_featured">
+                                                Display in featured section
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div> --}}
-                               {{-- <div class="row g-3 mb-3">
-                                   <h3 class="h5 fw-semibold mb-4 col-12">Display Settings</h3>
-                                      <div class="col-md-4">
-                                         <div class="mb-3">
-                                            <label for="status" class="form-label">
-                                                Status <span class="text-danger">*</span>
-                                            </label>
-                                              <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
-                                                 <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Active</option>
-                                                <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                             </select>
+                        {{-- images  --}}
 
-                                            </div>
-
-                                        </div>
-                                     <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="priority" class="form-label">Priority <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control @error('priority') is-invalid @enderror"
-                                                id="priority" name="priority" value="{{ old('priority', '0') }}" required>
-                                            <small class="form-text text-muted">Higher priority vouchers appear first</small>
-                                        </div>
-                                    </div>
-                                  <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="is_featured" class="form-label">Featured</label>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="is_featured">
-                                                    Display in featured section
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            {{-- images  --}}
-
-                        </div>
-
-                      <div class="section-card rounded p-4 mb-4">
+                    </div>
+                    <div class="section-card rounded p-4 mb-4">
 
                             <!-- Discount & Bonus Configuration -->
                             <div class="card shadow-sm mb-4">
-                              <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
+                            <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
                                     <h5 class="mb-0" style="color: white"><i class="fas fa-gift"></i> Discount Configuration</h5>
                                 </div>
                                 <div class="card-body">
                                     <!-- Discount Type Selection -->
                                     <h6 class="mb-3">Select Discount Type <span class="text-danger">*</span></h6>
                                     <div class="row mb-4">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 selected">
                                             <input type="radio" class="btn-check" name="discount_type" id="discount_type_direct" value="direct_discount" checked>
-                                            <label class="btn btn-outline-primary w-100 text-start p-3" for="discount_type_direct">
+                                            <label class="btn  w-100  p-3" for="discount_type_direct">
                                                 <i class="fas fa-hand-holding-usd me-2"></i>
                                                 <strong>Direct Discount</strong>
                                                 <small class="d-block text-muted mt-1">Flat discount applied directly on entire bill</small>
@@ -243,7 +221,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <input type="radio" class="btn-check" name="discount_type" id="discount_type_cashback" value="cashback">
-                                            <label class="btn btn-outline-success w-100 text-start p-3" for="discount_type_cashback">
+                                            <label class="btn  w-100  p-3" for="discount_type_cashback">
                                                 <i class="fas fa-wallet me-2"></i>
                                                 <strong>Cashback</strong>
                                                 <small class="d-block text-muted mt-1">Cashback credited to customer wallet</small>
@@ -288,16 +266,14 @@
                                         <i class="fas fa-plus"></i> Add Another Tier
                                     </button>
 
-                                   <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
+                                <div class=" mt-3 mb-0 p-2"  style="background:#005555;color:white">
                                         <i class="fas fa-info-circle"></i>
                                         <strong>Example:</strong> $0-$100 = 5% discount, $101-$500 = 10% discount, $501+ = 15% discount
                                     </div>
                                 </div>
                             </div>
 
-                      </div>
-
-
+                    </div>
                     {{-- Terms & Conditions --}}
                     <div class="section-card rounded p-4 mb-4">
                         <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
@@ -307,68 +283,8 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <p class="text-muted mb-4">Define usage terms and restrictions</p>
-
-                                <div class="mb-3">
-                                    <label for="validity_days" class="form-label">Validity Period (Days) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control @error('validity_days') is-invalid @enderror"
-                                        id="validity_days" name="validity_days" value="{{ old('validity_days', 365) }}" required min="1" placeholder="365">
-                                    <small class="text-muted">Number of days the gift card will be valid from purchase date</small>
-                                    @error('validity_days')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="usage_restrictions" class="form-label">Usage Restrictions</label>
-                                    <textarea class="form-control" id="usage_restrictions" name="usage_restrictions" rows="3"
-                                            placeholder="e.g., Valid only on weekdays, Not valid with other offers...">{{ old('usage_restrictions') }}</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="blackout_dates_search" class="form-label">Blackout Dates</label>
-                                    <div class="input-group mb-2">
-                                        <input type="text" class="form-control form-control-lg" id="blackout_dates_search"
-                                            placeholder="Search and add blackout dates..." autocomplete="off">
-                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                            <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end w-100" id="blackoutDatesDropdown">
-                                            <li><a class="dropdown-item" href="#" data-value="Dec 25" data-display="December 25 (Christmas)">
-                                                <i class="fas fa-tree text-success me-2"></i> December 25 (Christmas)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Jan 1" data-display="January 1 (New Year)">
-                                                <i class="fas fa-champagne-glasses text-warning me-2"></i> January 1 (New Year)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Dec 31" data-display="December 31 (New Year's Eve)">
-                                                <i class="fas fa-glass-cheers text-info me-2"></i> December 31 (New Year's Eve)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Feb 14" data-display="February 14 (Valentine's Day)">
-                                                <i class="fas fa-heart text-danger me-2"></i> February 14 (Valentine's Day)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Jul 4" data-display="July 4 (Independence Day)">
-                                                <i class="fas fa-flag-usa text-primary me-2"></i> July 4 (Independence Day)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Oct 31" data-display="October 31 (Halloween)">
-                                                <i class="fas fa-ghost text-warning me-2"></i> October 31 (Halloween)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Nov 25" data-display="November 25 (Thanksgiving)">
-                                                <i class="fas fa-turkey text-warning me-2"></i> November 25 (Thanksgiving)
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="#" data-value="Dec 24" data-display="December 24 (Christmas Eve)">
-                                                <i class="fas fa-gifts text-danger me-2"></i> December 24 (Christmas Eve)
-                                            </a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="blackoutDatesTags" class="d-flex flex-wrap gap-2 mb-2"></div>
-                                    <small class="text-muted">Select premade dates or events when gift cards cannot be redeemed</small>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
-                      <!-- How It Works-->
+                    <!-- How It Works-->
                     <div class="section-card rounded p-4 mb-4">
                         <h3 class="h5 fw-semibold mb-4">How It Works</h3>
                         {{-- tags --}}
@@ -377,10 +293,7 @@
                             </div>
                         </div>
                     </div>
-
             </form>
-
-
         </div>
       </div>
 
@@ -395,7 +308,29 @@
     <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
 
+<script>
 
+// Select all card divs
+const cards = document.querySelectorAll('.col-md-6');
+
+cards.forEach(card => {
+    card.addEventListener('click', function() {
+        // Remove 'selected' class from all cards
+        cards.forEach(c => c.classList.remove('selected'));
+
+        // Add 'selected' class to clicked card
+        this.classList.add('selected');
+
+        // Check the radio input inside the clicked card
+        const radio = this.querySelector('input[type="radio"]');
+        if (radio) {
+            radio.checked = true;
+        }
+    });
+});
+
+
+</script>
 
 <script>
 // Client Name, App Name and Segment Tag System
@@ -1555,11 +1490,26 @@
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
 
-                  if (loopIndex === "1" || name === "Delivery/Pickup") {
+                if (loopIndex === "1" || name === "Delivery/Pickup") {
                     window.location.href = "{{ url('admin/Voucher/add-new') }}";
-                } else if (loopIndex === "2" || name === "Flat discount") {
-                    window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                } else
+
+                if (loopIndex === "2" || name === "In-Store") {
+                    window.location.href = "{{ url('admin/Voucher/add-new-store') }}";
                 }
+                //  else if (loopIndex === "3" || name === "Flat discount") {
+                //     window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
+                // }
+                 else if (loopIndex === "4" || name === "Gift") {
+                    window.location.href = "{{ url('admin/Voucher/add-gift') }}";
+                }
+
+
+                //   if (loopIndex === "1" || name === "Delivery/Pickup") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                //     } else if (loopIndex === "2" || name === "Flat discount") {
+                //         window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                //     }
 
 
                 getDataFromServer(primaryId);
@@ -1695,105 +1645,24 @@
 
                 // 🟢 WorkManagement (show all details)
                 // resources/views/admin-views/voucher/index.blade.php
+                let workHtml = "";
 
-                   let workHtml = "";
+                $.each(response.work_management, function(index, item) {
+                    workHtml += `
+                        <div class="work-item mb-4 rounded-lg border p-4 flex items-center gap-3">
+                            <input type="checkbox" class="record-checkbox"
+                                id="record_${item.id}"
+                                data-item-id="${item.id}"
+                                name="work_record[]">
+                            <label for="record_${item.id}" class="font-bold text-lg cursor-pointer">
+                                ${item.guid_title}
+                            </label>
+                        </div>
+                    `;
+                });
 
-                    $.each(response.work_management, function(index, item) {
-                        workHtml += `
-                            <div class="work-item mb-4 rounded-lg border p-4">
-                                <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
+                $("#workList").html(workHtml);
 
-                                <div class="mb-3">
-                                    <strong>Purchase Process:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.purchase_process.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="purchase_process"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Payment Confirm:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.payment_confirm.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="payment_confirm"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Voucher Deliver:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.voucher_deliver.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="voucher_deliver"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Redemption Process:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.redemption_process.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="redemption_process"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-                                <div class="mb-3">
-                                    <strong>Account Management:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.account_management.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="account_management"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-
-
-                            </div>
-                        `;
-                    });
-
-                    $("#workList").html(workHtml);
 
 
                 // 🟢 UsageTermManagement (checkboxes)

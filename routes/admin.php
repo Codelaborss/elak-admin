@@ -12,6 +12,10 @@ Route::get('/clear-cache', function () {
     return '✅ All cache cleared successfully!';
 });
 
+Route::get('/testing-calculator', function () {
+    return view('testing-calculator');
+});
+
 Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
     Route::group(['middleware' => ['admin', 'current-module', 'actch:admin_panel' ]], function () {
@@ -115,6 +119,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
         Route::group(['prefix' => 'Voucher', 'as' => 'Voucher.', 'middleware' => ['module:Voucher']], function () {
             Route::get('add-new', 'VoucherController@index')->name('add-new');
+            Route::get('add-new-store', 'VoucherController@index')->name('add-new');
             Route::get('add-flat-discount', 'VoucherController@discount')->name('add-flat-discount');
 
               Route::get('add-gift', 'VoucherController@index_git')->name('add-gift');

@@ -26,7 +26,7 @@ class VoucherTypeController extends Controller
                     $q->where('name', 'like', "%{$search}%")
                     ->orWhere('desc', 'like', "%{$search}%");
                 })
-                ->orderBy('name', 'asc')
+                // ->orderBy('name', 'asc')
                 ->paginate(config('default_pagination'));
                 // dd($clients);
             return view('admin-views.voucher_type.index', compact('Vouchers'));

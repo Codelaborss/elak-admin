@@ -348,7 +348,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-6" id="addon_input">
+<div class="col-md-12" id="addon_input">
     <div class="card shadow--card-2 border-0">
         <div class="card-header">
             <h5 class="card-title">
@@ -371,7 +371,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-6" id="time_input">
+{{-- <div class="col-md-6" id="time_input">
     <div class="card shadow--card-2 border-0">
         <div class="card-header">
             <h5 class="card-title">
@@ -401,7 +401,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <div class="col-md-12">
     <div class="card shadow--card-2 border-0">
         <div class="card-header">
@@ -413,7 +413,7 @@
         <div class="card-body">
             <div class="row g-2">
                 <div
-                    class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6">
+                    class="col-md-4 col-12">
                     <div class="form-group mb-0">
                         <label class="input-label"
                             for="exampleFormControlInput1">{{ translate('messages.price') }} <span
@@ -426,7 +426,7 @@
                             placeholder="{{ translate('messages.Ex:') }} 100" required>
                     </div>
                 </div>
-                <div class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6"
+                {{-- <div class="col-sm-{{ in_array(Config::get('module.current_module_type'), ['food', 'voucher']) ? '4' : '3' }} col-6"
                     id="stock_input">
                     <div class="form-group mb-0">
                         <label class="input-label"
@@ -471,7 +471,7 @@
                             name="discount" class="form-control"
                             placeholder="{{ translate('messages.Ex:') }} 100">
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

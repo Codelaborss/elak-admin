@@ -473,7 +473,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" id="time_input">
+                {{-- <div class="col-md-6" id="time_input">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
                             <h5 class="card-title">
@@ -504,7 +504,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-md-12">
                     <div class="card shadow--card-2 border-0">
                         <div class="card-header">
@@ -527,7 +527,7 @@
                                             placeholder="{{ translate('messages.Ex:') }} 100" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-3" id="stock_input">
+                                {{-- <div class="col-sm-6 col-lg-3" id="stock_input">
                                     <div class="form-group mb-0">
                                         <label class="input-label"
                                             for="total_stock">{{ translate('messages.total_stock') }}</label>
@@ -572,7 +572,7 @@
                                             max="999999999" name="discount" class="form-control"
                                             placeholder="{{ translate('messages.Ex:') }} 100">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

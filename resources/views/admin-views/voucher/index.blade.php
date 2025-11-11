@@ -39,7 +39,16 @@
             <form action="javascript:" method="post" id="item_form" enctype="multipart/form-data">
                  <input type="hidden" name="hidden_value" id="hidden_value" value="1"/>
                 <input type="hidden" name="hidden_bundel" id="hidden_bundel" value="simple"/>
-                <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup"/>
+
+                @if (Request::is('admin/Voucher/add-new'))
+                    <input type="hidden" name="hidden_name" id="hidden_name" value="Delivery/Pickup">
+                @elseif (Request::is('admin/Voucher/add-new-store'))
+                    <input type="hidden" name="hidden_name" id="hidden_name" value="In-Store">
+                @else
+                    <input type="hidden" name="hidden_name" id="hidden_name" value="">
+                @endif
+
+
                 <input type="hidden" name="hidden_voucher_id" id="hidden_voucher_id" value=""/>
                 @csrf
                 @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
@@ -75,27 +84,7 @@
                                 <textarea type="text" name="description" class="form-control min-h-90px ckeditor"></textarea>
                             </div>
                         </div>
-                        {{-- Bundle Type Selection --}}
-                        <div class="col-12 col-md-12">
-                            <div class="form-group mb-0">
-                                <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
-                                <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
-                                    <option value="">Select Bundle Offer Type</option>
-                                    <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
-                                        Simple
-                                    </option>
-                                    <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
-                                        Fixed Bundle - Specific products at set price
-                                    </option>
-                                    <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
-                                    Buy X Get Y - Buy products get different product free
-                                    </option>
-                                    <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
-                                        Mix & Match - Customer chooses from categories
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
+
                         {{-- panel1 --}}
                         <div class="col-12 mt-5" id="panel1">
                             <div class="row g-3 bundle_div" style="display:none;">
@@ -252,8 +241,36 @@
                     </div>
 
                    {{-- Bundle Products Configuration --}}
+                    <div class="section-card rounded p-4 mb-4"  >
+                        {{-- Bundle Type Selection --}}
+                     <div class="col-12 col-md-12">
+                         <div class="form-group mb-0">
+                             <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Type Selection') }}</h3>
+                             <select name="bundle_offer_type" id="bundle_offer_type" class="form-control" >
+                                 <option value="">Select Bundle Offer Type</option>
+                                 <option value="simple" {{ old('simple') == 'simple' ? 'selected' : '' }}>
+                                     Simple
+                                 </option>
+                                 <option value="simple x" {{ old('simple x') == 'simple x' ? 'selected' : '' }}>
+                                     Simple X
+                                 </option>
+                                 <option value="bundle" {{ old('bundle_offer_type') == 'bundle' ? 'selected' : '' }}>
+                                     Fixed Bundle - Specific products at set price
+                                 </option>
+                                 <option value="bogo_free" {{ old('bundle_offer_type') == 'bogo_free' ? 'selected' : '' }}>
+                                 Buy X Get Y - Buy products get different product free
+                                 </option>
+                                 <option value="mix_match" {{ old('bundle_offer_type') == 'mix_match' ? 'selected' : '' }}>
+                                     Mix & Match - Customer chooses from categories
+                                 </option>
+                             </select>
+                         </div>
+                     </div>
+                    </div>
                     <div class="section-card rounded p-4 mb-4"  id="Bundle_products_configuration">
                         <h3 class="h5 fw-semibold mb-2"> {{ translate('Bundle Products Configuration') }}</h3>
+
+
                         <div id="selectedProducts">
                             <p style="text-align: center; color: #666; padding: 20px;">No products added yet. Click "Add Product to Bundle" to start.</p>
                         </div>
@@ -439,6 +456,13 @@
                         <h3 class="h5 fw-semibold mb-4"> {{ translate('Price Information') }}</h3>
                         {{-- Price Information --}}
                         <div class="row g-2">
+                            <div class="col-6 col-md-3 d-none" id="actual_price_input_hide">
+                                <div class="form-group mb-0">
+                                    <label class="input-label"  for="exampleFormControlInput1">{{ translate('Actual Price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
+                                    <input type="number" min="0" id="price" max="999999999999.99" step="0.01" value="1" name="actual_price_input_hide" class="form-control"placeholder="{{ translate('messages.Ex:') }} 100" required>
+                                    <input type="hidden"  id="actual_price_input_hide"name="actual_price_input_hide" >
+                                </div>
+                            </div>
                             <div class="col-6 col-md-3" id="price_input_hide">
                                 <div class="form-group mb-0">
                                     <label class="input-label"  for="exampleFormControlInput1">{{ translate('messages.price') }} <span class="form-label-secondary text-danger"  data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('messages.Required.')}}"> *  </span> </label>
@@ -1436,21 +1460,38 @@
             $('#discount_input_hide').removeClass('d-none');
             $('#required_qty').removeClass('d-none');
             $('#discount_value_input_hide').removeClass('d-none');
+            $('#actual_price_input_hide').addClass('d-none');
+             $('#Bundle_products_configuration').removeClass('d-none');
         } else if (bundleType === 'bogo_free') {
             $('#price_input_hide').addClass('d-none');
             $('#discount_input_hide').addClass('d-none');
              $('#required_qty').addClass('d-none');
             $('#discount_value_input_hide').addClass('d-none');
+            $('#actual_price_input_hide').addClass('d-none');
+             $('#Bundle_products_configuration').removeClass('d-none');
         } else if (bundleType === 'simple' || bundleType === 'bundle') {
             $('#price_input_hide').removeClass('d-none');
                $('#required_qty').addClass('d-none');
             $('#discount_input_hide').removeClass('d-none');
             $('#discount_value_input_hide').removeClass('d-none');
-        } else {
+            $('#actual_price_input_hide').addClass('d-none');
+             $('#Bundle_products_configuration').removeClass('d-none');
+        } else if(bundleType === 'simple x'){
+
+              $('#price_input_hide').removeClass('d-none');
+               $('#required_qty').addClass('d-none');
+            $('#discount_input_hide').removeClass('d-none');
+            $('#discount_value_input_hide').removeClass('d-none');
+            $('#actual_price_input_hide').removeClass('d-none');
+            $('#Bundle_products_configuration').addClass('d-none');
+
+        }else {
             $('#price_input_hide').removeClass('d-none');
                $('#required_qty').addClass('d-none');
             $('#discount_input_hide').removeClass('d-none');
             $('#discount_value_input_hide').removeClass('d-none');
+            $('#actual_price_input_hide').addClass('d-none');
+          $('#Bundle_products_configuration').removeClass('d-none');
         }
     }
 
@@ -1522,18 +1563,21 @@
             // Move these functions OUTSIDE of DOMContentLoaded to make them globally accessible
             function section_one(loopIndex, primaryId,name) {
 
+
                 // if (loopIndex === "1" || name === "Delivery/Pickup") {
                 //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
                 // } else
 
-                if (loopIndex === "2" || name === "Flat discount") {
-                    window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
-                } else if (loopIndex === "3" || name === "Gift") {
-                    window.location.href = "{{ url('admin/Voucher/add-gift') }}";
-                }
-                //  else if (loopIndex === "4" || name === "In-Store") {
+                // if (loopIndex === "2" || name === "In-Store") {
                 //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
                 // }
+                //  else
+                 if (loopIndex === "3" || name === "Flat discount") {
+                    window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
+                }
+                 else if (loopIndex === "4" || name === "Gift") {
+                    window.location.href = "{{ url('admin/Voucher/add-gift') }}";
+                }
 
                 getDataFromServer(primaryId);
                   get_product();
@@ -1667,102 +1711,27 @@
                 // $("#workList").html(workHtml);
 
                 // 🟢 WorkManagement (show all details)
-                    let workHtml = "";
 
-                    $.each(response.work_management, function(index, item) {
-                        workHtml += `
-                            <div class="work-item mb-4 rounded-lg border p-4">
-                                <h3 class="font-bold text-lg mb-2">${item.guid_title}</h3>
 
-                                <div class="mb-3">
-                                    <strong>Purchase Process:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.purchase_process.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="purchase_process"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
+                let workHtml = "";
 
-                                <div class="mb-3">
-                                    <strong>Payment Confirm:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.payment_confirm.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="payment_confirm"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
+                $.each(response.work_management, function(index, item) {
+                    workHtml += `
+                        <div class="work-item mb-4 rounded-lg border p-4 flex items-center gap-3">
+                            <input type="checkbox" class="record-checkbox"
+                                id="record_${item.id}"
+                                data-item-id="${item.id}"
+                                name="work_record[]">
+                            <label for="record_${item.id}" class="font-bold text-lg cursor-pointer">
+                                ${item.guid_title}
+                            </label>
+                        </div>
+                    `;
+                });
 
-                                <div class="mb-3">
-                                    <strong>Voucher Deliver:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.voucher_deliver.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="voucher_deliver"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
+                $("#workList").html(workHtml);
 
-                                <div class="mb-3">
-                                    <strong>Redemption Process:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.redemption_process.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="redemption_process"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
 
-                                <div class="mb-3">
-                                    <strong>Account Management:</strong>
-                                    <ul class="list-disc list-inside text-gray-700">
-                                        ${item.account_management.map((step, i) => `
-                                            <li>
-                                                <label class="flex items-center gap-2 cursor-pointer">
-                                                    <input type="checkbox" class="step-checkbox" name="howto_work[]"
-                                                        data-item-id="${item.id}"
-                                                        data-section="account_management"
-                                                        value="${i}">
-                                                    <span>${step}</span>
-                                                </label>
-                                            </li>
-                                        `).join('')}
-                                    </ul>
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    $("#workList").html(workHtml);
 
 
                 let usageHtml = "";
