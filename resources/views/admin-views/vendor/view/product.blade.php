@@ -14,22 +14,20 @@
 
           <div class="row my-4">
             <div class="col-sm-6 col-md-3">
-                @if(!isset(auth('admin')->user()->zone_id))
                 <div class="select-item">
-                    <select name="zone_id" class="form-control js-select2-custom set-filter"
-                            data-url="{{url()->full()}}" data-filter="zone_id">
-                        <option value="" {{!request('zone_id')?'selected':''}}>{{ translate('All Voucher Types') }}</option>
-                        @foreach(\App\Models\VoucherType::orderBy('name')->get(['id','name']) as $z)
+                    <select name="category" class="form-control js-select2-custom set-filter"
+                            data-url="{{url()->full()}}" data-filter="category">
+                        <option value="" {{!request('category')?'selected':''}}>{{ translate('All Category') }}</option>
+                        @foreach(\App\Models\Category::where("parent_id" ,"0")->orderBy('name')->get(['id','name']) as $z)
                             <option
-                                value="{{$z['id']}}" {{request()?->zone_id == $z['id']?'selected':''}}>
+                                value="{{$z['id']}}" {{request()?->category == $z['id']?'selected':''}}>
                                 {{$z['name']}}
                             </option>
                         @endforeach
                     </select>
                 </div>
-                @endif
             </div>
-            <div class="col-sm-6 col-md-3">
+            {{-- <div class="col-sm-6 col-md-3">
                 <div class="select-item">
                     @php(
                         // Custom static array of voucher types
@@ -55,13 +53,8 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="btn--container justify-content-end">
-                    <button type="reset" id="reset_btn" class="btn btn--reset">Reset</button>
-                    <button type="submit" class="btn btn--primary">Filter</button>
-                </div>
-            </div>
+            </div> --}}
+
         </div>
 
         <div class="tab-content">
@@ -267,9 +260,16 @@
                                                     </div>
                                                 </a>
                                             </td>
+
+                                             @php( $categories = \App\Models\Category::where('id', $food->category_id)->first()  )
+
                                             <td>
-                                                {{ Str::limit($food->category ? $food->category->name : translate('messages.category_deleted'), 20, '...') }}
+                                               {{$categories->name}}
                                             </td>
+
+                                            {{-- <td>
+                                                {{ Str::limit($food->category ? $food->category->name : translate('messages.category_deleted'), 20, '...') }}
+                                            </td> --}}
 
                                             <td>
                                                 <div class="mw--85px">
@@ -365,9 +365,16 @@
                                                     </div>
                                                 </a>
                                             </td>
+                                            {{-- @dd($food->category_id) --}}
+                                               @php( $categories = \App\Models\Category::find($food->category_id)  )
+
+                                            <td>
+                                               {{$categories->name ?? "Delete Category"}}
+                                            </td>
+{{--
                                             <td>
                                                 {{ Str::limit($food->category ? $food->category->name : translate('messages.category_deleted'), 20, '...') }}
-                                            </td>
+                                            </td> --}}
                                             @if (Config::get('module.current_module_type') != 'food')
                                                 <td>
                                                     <div class="d-flex align-items-center gap-2">

@@ -21,7 +21,7 @@
                         <option value="" {{!request('voucher_ids')?'selected':''}}>{{ translate('All Voucher Types') }}</option>
                         @foreach(\App\Models\VoucherType::orderBy('name')->get(['id','name']) as $voucher)
                             <option
-                                value="{{$voucher['name']}}" {{request()?->voucher_ids == $voucher['id']?'selected':''}}>
+                                value="{{$voucher['name']}}" {{request()?->voucher_ids == $voucher['name']?'selected':''}}>
                                 {{$voucher['name']}}
                             </option>
                         @endforeach
@@ -48,17 +48,11 @@
                         </option>
 
                         @foreach($voucherTypes as $value => $label)
-                            <option value="{{ $value }}" {{ old('bundle_type') == $value ? 'selected' : '' }}>
+                            <option value="{{ $value }}" {{ request()?->bundle_type == $value ? 'selected' : '' }}>
                                 {{ $label }}
                             </option>
                         @endforeach
                     </select>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="btn--container justify-content-end">
-                    <button type="reset" id="reset_btn" class="btn btn--reset">Reset</button>
-                    <button type="submit" class="btn btn--primary">Filter</button>
                 </div>
             </div>
         </div>
