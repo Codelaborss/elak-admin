@@ -1,8 +1,9 @@
- <!-- Client Information one-->
+
+    <!-- Client Information one-->
     <div class="section-card rounded p-4 mb-4  " id="basic_info_main">
         <h3 class="h5 fw-semibold mb-4"> Client Information</h3>
         <div class="row">
-              <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label class="input-label" for="select_client">{{ translate('Client  Name') }}
                         <span class="form-label-secondary" data-toggle="tooltip" data-placement="right" data-original-title="{{ translate('Client  Name') }}"></span>
@@ -64,7 +65,7 @@
                             data-original-title="{{ translate('messages.Required.')}}"> *
                             </span></label>
                         <select name="categories[]" id="categories" onchange="multiples_category()" data-placeholder="{{ translate('messages.select_category') }}"
-                            class="js-data-example-ajax form-control js-select2-category" multiple>
+                            class="js-data-example-ajax  js-select2-custom form-control js-select2-category" multiple>
                         </select>
                     </div>
                 </div>
@@ -72,7 +73,7 @@
                 <div class="col-sm-6 col-lg-4">
                     <div class="form-group mb-0">
                         <label class="input-label"  for="sub_categories_game">{{ translate('messages.sub_category') }}</label>
-                        <select name="sub_categories_game[]" onchange="multples_sub_category()" class=" form-control js-select2-sub_category" data-placeholder="{{ translate('messages.select_sub_category') }}"
+                        <select name="sub_categories_game[]" onchange="multples_sub_category()" class=" form-control js-select2-custom js-select2-sub_category" data-placeholder="{{ translate('messages.select_sub_category') }}"
                             id="sub_categories_game" multiple>
                         </select>
                     </div>
@@ -88,7 +89,6 @@
             </div>
         </div>
     </div>
-
 
  <script>
     function multiples_category() {

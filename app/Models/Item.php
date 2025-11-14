@@ -62,6 +62,28 @@ class Item extends Model
         'product' => 'array',
         'product_b' => 'array',
         'required_quantity' => 'string',
+
+
+        'discount_configuration' => 'string',
+
+        'occasions_id' => 'string',//add
+        'recipient_info_form_fields' => 'string',//add
+        'message_template_style' => 'string',//add
+        'delivery_options' => 'string',//add//add
+        'amount_configuration' => 'string',
+        'amount_type' => 'string',//add
+        'enable_custom_amount' => 'string',//add
+        'fixed_amount_options' => 'string', //add
+        'min_max_amount' => 'string', //add
+        'bonus_configuration' => 'string', //add
+
+        'redemption_process' => 'string',
+
+        'validity_period' => 'string',
+        'usage_restrictions' => 'string',
+        'blackout_dates' => 'string',
+
+
     ];
 
 

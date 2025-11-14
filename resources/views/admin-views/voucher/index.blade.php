@@ -57,6 +57,9 @@
                 {{-- Client Information and Partner Information --}}
                  @include("admin-views.voucher.store_include.include_client_partner_information")
 
+
+
+
                    <!-- Voucher Details  Bundle Delivery/Pickup  == Food and Product Bundle-->
                     <div class="section-card rounded p-4 mb-4" id="bundel_food_voucher_fields_1_3_1_4">
                         <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
@@ -878,8 +881,6 @@
 
         console.log("✅ BOGO Section A Array:", bogoProductsA);
     });
-
-
     // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
     $('#select_pro2').on('change', function() {
         let selected = $(this).find('option:selected');
@@ -911,8 +912,6 @@
     });
 
     // ==================== CREATE PRODUCT CARD (REGULAR) ====================
-
-
     function createProductCard(productId, productName, basePrice, variations, addons, counter) {
         let html = `
         <div class="card p-3 shadow-sm mb-3 col-12 col-md-6"
@@ -973,63 +972,6 @@
 
         return html;
     }
-
-
-    // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
-    // function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
-    //     const variationsHtml = (variations && variations.length)
-    //         ? `<div class="mt-2">
-    //                 <strong>Variations:</strong>
-    //                 ${variations.map((v, index) => `~
-    //                     <label class="d-block small mt-1">
-    //                         <input
-    //                             type="checkbox"
-    //                             name="bogo_variation_${section}_${counter}_${index}"
-    //                             class="bogo-variation-checkbox"
-    //                             value="${v.type || ''}"
-    //                             data-price="${v.price || 0}"
-    //                             data-type="${v.type || 'Option'}"
-    //                         >
-    //                         ${v.type || 'Option'} - $${(v.price || 0).toFixed(2)}
-    //                         ${v.stock ? ` (Stock: ${v.stock})` : ''}
-    //                     </label>
-    //                 `).join('')}
-    //         </div>`
-    //         : '';
-
-    //     const html = `
-    //     <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
-    //         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
-
-    //             <!-- Product Name + Info -->
-    //             <div class="me-3 flex-grow-1">
-    //                 <h5 class="mb-1">Product ${section}: ${productName}</h5>
-    //                 ${variationsHtml}
-    //             </div>
-
-    //             <!-- Product Total -->
-    //             <div class="p-2 text-nowrap">
-    //                 <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
-    //                     $${basePrice.toFixed(2)}
-    //                 </span>
-    //             </div>
-
-    //             <!-- Delete Button -->
-    //             <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
-    //                 data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
-    //                 <i class="fa fa-trash"></i>
-    //             </button>
-    //         </div>
-
-    //         <input type="hidden" class="bogo-product-id" value="${productId}">
-    //         <input type="hidden" class="bogo-product-name" value="${productName}">
-    //         <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
-    //     </div>
-    //     `;
-
-    //     return html;
-    // }
-
     // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
     function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
         const variationsHtml = (variations && variations.length)
@@ -1107,9 +1049,6 @@
 
         return html;
     }
-
-
-
     // ==================== REMOVE BOGO PRODUCT ====================
     $(document).on('click', '.remove-bogo-product-btn', function() {
         let section = $(this).data('section');
@@ -1129,7 +1068,6 @@
             updateBogoTotal();
         });
     });
-
     // ==================== UPDATE BOGO TOTAL (MULTIPLE PRODUCTS) ====================
     function updateBogoTotal() {
         let totalProductsA = 0;
@@ -1290,12 +1228,10 @@
             $('#price_hidden').val('0.00');
         }
     }
-
     // ==================== BOGO EVENT LISTENERS ====================
     $(document).on('change', '.bogo-addon-checkbox, .bogo-product-quantity', function() {
         updateBogoTotal();
     });
-
     // ==================== REGULAR BUNDLE EVENT LISTENERS ====================
     $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
         let productCard = $(this).closest('.card');
@@ -1335,7 +1271,6 @@
             }
         });
     });
-
     // ==================== UPDATE BUNDLE TOTAL (REGULAR) ====================
     function updateBundleTotal() {
         let bundleTotal = 0;
@@ -1549,7 +1484,7 @@
             alert('Fixed price selected. All product selections have been reset.');
         }
     });
-});
+    });
 
 </script>
 
@@ -1564,14 +1499,6 @@
             function section_one(loopIndex, primaryId,name) {
 
 
-                // if (loopIndex === "1" || name === "Delivery/Pickup") {
-                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
-                // } else
-
-                // if (loopIndex === "2" || name === "In-Store") {
-                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
-                // }
-                //  else
                  if (loopIndex === "3" || name === "Flat discount") {
                     window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
                 }
@@ -1721,7 +1648,7 @@
                             <input type="checkbox" class="record-checkbox"
                                 id="record_${item.id}"
                                 data-item-id="${item.id}"
-                                name="work_record[]">
+                                name="howto_work[]">
                             <label for="record_${item.id}" class="font-bold text-lg cursor-pointer">
                                 ${item.guid_title}
                             </label>
@@ -2386,50 +2313,6 @@
             });
         });
 
-
-        // $('#item_form').on('submit', function(e) {
-        //     $('#submitButton').attr('disabled', true);
-        //     e.preventDefault();
-        //    // let formData = new FormData(this);
-        //      let formData = new FormData(this);
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.post({
-        //         url: '{{ route('admin.Voucher.store') }}',
-        //         data: $('#item_form').serialize(),
-        //         data: formData,
-        //         cache: false,
-        //         contentType: false,
-        //         processData: false,
-        //         beforeSend: function() {
-        //             $('#loading').show();
-        //         },
-        //         success: function(data) {
-        //             $('#loading').hide();
-        //             if (data.errors) {
-        //                 for (let i = 0; i < data.errors.length; i++) {
-        //                     toastr.error(data.errors[i].message, {
-        //                         CloseButton: true,
-        //                         ProgressBar: true
-        //                     });
-        //                 }
-        //             } else {
-        //                 toastr.success("{{ translate('messages.product_added_successfully') }}", {
-        //                     CloseButton: true,
-        //                     ProgressBar: true
-        //                 });
-        //                 setTimeout(function() {
-        //                     location.href =
-        //                         "{{ route('admin.Voucher.list') }}";
-        //                 }, 1000);
-        //             }
-        //         }
-        //     });
-        // });
-
         $(function() {
             $("#coba").spartanMultiImagePicker({
                 fieldName: 'item_images[]',
@@ -2516,30 +2399,6 @@
                 }
             });
         })
-          //   findBranch
-        // function findBranch(storeId) {
-        //     if (!storeId) {
-        //         $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
-        //         return;
-        //     }
-
-        //     $.ajax({
-        //         url: "{{ route('admin.Voucher.get_branches') }}",
-        //         type: "GET",
-        //         data: { store_id: storeId },
-        //         success: function(response) {
-        //             $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
-        //             $.each(response, function(key, branch) {
-        //                 $('#sub-branch').append('<option value="'+ branch.id +'"> ' + branch.name + '  ('+ branch.type +')</option>');
-        //             });
-        //         },
-        //         error: function() {
-        //             toastr.error("{{ translate('messages.failed_to_load_branches') }}");
-        //         }
-        //     });
-
-
-        // }
 
         function findBranch(storeId) {
             if (!storeId) {

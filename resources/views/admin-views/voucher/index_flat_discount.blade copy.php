@@ -744,8 +744,6 @@
         });
     </script>
 
-
-
     <script>
 
         $(document).ready(function() {
@@ -2390,6 +2388,57 @@
 
 
 
+
+    {{-- <script>
+        function multiples_category() {
+            var category_ids_all = $('#category_id').val();
+
+            console.log("Selected category IDs:", category_ids_all);
+
+            if (!category_ids_all || category_ids_all.length === 0) {
+                alert("Please select at least one category!");
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('admin.Voucher.getSubcategories') }}",
+                type: "GET",
+                data: { category_ids_all: category_ids_all },
+                traditional: false, // ✅ array bhejne ke liye sahi setting
+                dataType: "json",
+                success: function(response) {
+                    console.log("Subcategories Response:", response);
+
+                    if (!Array.isArray(response) || response.length === 0) {
+                        $('#sub-categories_game').html('<option disabled>No subcategories found</option>');
+                        return;
+                    }
+
+                    // Build option list dynamically
+                    let options = '';
+                    response.forEach(function(item) {
+                        options += `<option value="${item.id}">
+                                        ${item.name}
+                                    </option>`;
+                    });
+
+                    // Put options in the select box
+                    $('#sub-categories_game').html(options);
+
+                    // Agar Select2 use ho raha hai to refresh karna zaroori hai
+                    $('#sub-categories_game').trigger('change');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+        }
+
+        function multples_sub_category(){
+            // alert("multples_sub_category");
+        }
+
+   </script> --}}
 
 
 

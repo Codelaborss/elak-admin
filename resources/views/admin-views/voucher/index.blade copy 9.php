@@ -1499,6 +1499,14 @@
             function section_one(loopIndex, primaryId,name) {
 
 
+                // if (loopIndex === "1" || name === "Delivery/Pickup") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                // } else
+
+                // if (loopIndex === "2" || name === "In-Store") {
+                //     window.location.href = "{{ url('admin/Voucher/add-new') }}";
+                // }
+                //  else
                  if (loopIndex === "3" || name === "Flat discount") {
                     window.location.href = "{{ url('admin/Voucher/add-flat-discount') }}";
                 }
@@ -2313,6 +2321,50 @@
             });
         });
 
+
+        // $('#item_form').on('submit', function(e) {
+        //     $('#submitButton').attr('disabled', true);
+        //     e.preventDefault();
+        //    // let formData = new FormData(this);
+        //      let formData = new FormData(this);
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.post({
+        //         url: '{{ route('admin.Voucher.store') }}',
+        //         data: $('#item_form').serialize(),
+        //         data: formData,
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //         beforeSend: function() {
+        //             $('#loading').show();
+        //         },
+        //         success: function(data) {
+        //             $('#loading').hide();
+        //             if (data.errors) {
+        //                 for (let i = 0; i < data.errors.length; i++) {
+        //                     toastr.error(data.errors[i].message, {
+        //                         CloseButton: true,
+        //                         ProgressBar: true
+        //                     });
+        //                 }
+        //             } else {
+        //                 toastr.success("{{ translate('messages.product_added_successfully') }}", {
+        //                     CloseButton: true,
+        //                     ProgressBar: true
+        //                 });
+        //                 setTimeout(function() {
+        //                     location.href =
+        //                         "{{ route('admin.Voucher.list') }}";
+        //                 }, 1000);
+        //             }
+        //         }
+        //     });
+        // });
+
         $(function() {
             $("#coba").spartanMultiImagePicker({
                 fieldName: 'item_images[]',
@@ -2399,6 +2451,30 @@
                 }
             });
         })
+          //   findBranch
+        // function findBranch(storeId) {
+        //     if (!storeId) {
+        //         $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
+        //         return;
+        //     }
+
+        //     $.ajax({
+        //         url: "{{ route('admin.Voucher.get_branches') }}",
+        //         type: "GET",
+        //         data: { store_id: storeId },
+        //         success: function(response) {
+        //             $('#sub-branch').empty().append('<option value="">{{ translate('messages.select_branch') }}</option>');
+        //             $.each(response, function(key, branch) {
+        //                 $('#sub-branch').append('<option value="'+ branch.id +'"> ' + branch.name + '  ('+ branch.type +')</option>');
+        //             });
+        //         },
+        //         error: function() {
+        //             toastr.error("{{ translate('messages.failed_to_load_branches') }}");
+        //         }
+        //     });
+
+
+        // }
 
         function findBranch(storeId) {
             if (!storeId) {

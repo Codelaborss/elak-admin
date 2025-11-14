@@ -30,6 +30,23 @@ class AddSlugToItemsTable extends Migration
             $table->string('product')->nullable();
             $table->string('product_b')->nullable();
             $table->string('required_quantity')->nullable();
+
+            $table->string('discount_configuration')->nullable();
+            $table->string('occasions_id')->nullable();
+            $table->string('recipient_info_form_fields')->nullable();
+            $table->string('message_template_style')->nullable();
+            $table->string('delivery_options')->nullable();
+            $table->string('amount_configuration')->nullable();
+            $table->string('amount_type')->nullable();
+            $table->string('enable_custom_amount')->nullable();
+            $table->string('fixed_amount_options')->nullable();
+            $table->string('min_max_amount')->nullable();
+            $table->string('bonus_configuration')->nullable();
+            $table->string('redemption_process')->nullable();
+            $table->string('validity_period')->nullable();
+            $table->string('usage_restrictions')->nullable();
+            $table->string('blackout_dates')->nullable();
+
         });
     }
 

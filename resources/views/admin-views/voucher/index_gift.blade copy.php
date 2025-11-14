@@ -72,6 +72,9 @@
   box-shadow: 0 0 5px rgba(13,110,253,0.3);
 }
 
+
+</style>
+<style>
 /* Normal button look */
 .type-option {
     border: 2px solid #007bff;
@@ -140,6 +143,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Recipient Info Form Fields-->
                     <div class="section-card rounded p-4 mb-4">
                         <h3 class="h5 fw-semibold mb-4">Recipient Info Form Fields</h3>
@@ -502,13 +506,143 @@
                             </div>
                         </div>
                     </div>
-                     @include("admin-views.voucher.store_include.include_voucher")
 
+
+                          {{-- 'occasions_id' => 'required',//add
+                        'recipient_info_form_fields' => 'required',//add
+                        'message_template_style' => 'required',//add
+                        'delivery_options' => 'required',//add//add
+                        'amount_configuration' => 'required',
+                        'amount_type' => 'required',//add
+                        'enable_custom_amount' => 'required',//add
+                        'fixed_amount_options' => 'required', //add
+                        'min_max_amount' => 'required', //add
+                        'bonus_configuration' => 'required', //add
+
+                        'redemption_process' => 'required',
+
+                        'validity_period' => 'required',
+                        'usage_restrictions' => 'required',
+                        'blackout_dates' => 'required',
+
+                         --}}
+                     @include("admin-views.voucher.store_include.include_voucher")
+                    {{-- Terms & Conditions --}}
+                    {{-- <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4"> Terms & Conditions</h3>
+                        <div class="card border shadow-sm mt-3">
+                            <div class="card-body">
+                                <div id="usageTerms" class="row">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Define usage terms and restrictions</p>
+
+                                <div class="mb-3">
+                                    <label for="validity_days" class="form-label">Validity Period (Days) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control @error('validity_days') is-invalid @enderror"
+                                        id="validity_days" name="validity_days" value="{{ old('validity_days', 365) }}" required min="1" placeholder="365">
+                                    <small class="text-muted">Number of days the gift card will be valid from purchase date</small>
+                                    @error('validity_days')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="usage_restrictions" class="form-label">Usage Restrictions</label>
+                                    <textarea class="form-control" id="usage_restrictions" name="usage_restrictions" rows="3"
+                                            placeholder="e.g., Valid only on weekdays, Not valid with other offers...">{{ old('usage_restrictions') }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="blackout_dates_search" class="form-label">Blackout Dates</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control form-control-lg" id="blackout_dates_search"
+                                            placeholder="Search and add blackout dates..." autocomplete="off">
+                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end w-100" id="blackoutDatesDropdown">
+                                            <li><a class="dropdown-item" href="#" data-value="Dec 25" data-display="December 25 (Christmas)">
+                                                <i class="fas fa-tree text-success me-2"></i> December 25 (Christmas)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Jan 1" data-display="January 1 (New Year)">
+                                                <i class="fas fa-champagne-glasses text-warning me-2"></i> January 1 (New Year)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Dec 31" data-display="December 31 (New Year's Eve)">
+                                                <i class="fas fa-glass-cheers text-info me-2"></i> December 31 (New Year's Eve)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Feb 14" data-display="February 14 (Valentine's Day)">
+                                                <i class="fas fa-heart text-danger me-2"></i> February 14 (Valentine's Day)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Jul 4" data-display="July 4 (Independence Day)">
+                                                <i class="fas fa-flag-usa text-primary me-2"></i> July 4 (Independence Day)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Oct 31" data-display="October 31 (Halloween)">
+                                                <i class="fas fa-ghost text-warning me-2"></i> October 31 (Halloween)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Nov 25" data-display="November 25 (Thanksgiving)">
+                                                <i class="fas fa-turkey text-warning me-2"></i> November 25 (Thanksgiving)
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="#" data-value="Dec 24" data-display="December 24 (Christmas Eve)">
+                                                <i class="fas fa-gifts text-danger me-2"></i> December 24 (Christmas Eve)
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="blackoutDatesTags" class="d-flex flex-wrap gap-2 mb-2"></div>
+                                    <small class="text-muted">Select premade dates or events when gift cards cannot be redeemed</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                      <!-- How It Works-->
+                    {{-- <div class="section-card rounded p-4 mb-4">ss
+                        <h3 class="h5 fw-semibold mb-4">How It Works</h3>
+                        <div class="card ">
+                            <div class="card-body" id="workList">
+                            </div>
+                        </div>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Explain redemption process</p>
+                                <div class="mb-3">
+                                    <label for="redemption_process" class="form-label">Redemption Process</label>
+                                    <textarea class="form-control" id="redemption_process" name="redemption_process" rows="6"
+                                            placeholder="Step by step instructions on how to redeem this voucher...">{{ old('redemption_process') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                     {{-- Review & Summary --}}
+                    {{-- <div class="section-card rounded p-4 mb-4">
+                        <h3 class="h5 fw-semibold mb-4"> Review & Summary</h3>
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="text-muted mb-4">Review all information before saving</p>
+                                <div class="p-2 " style="background:#005555;color:white">
+                                    <h6  style="color:white"><i class="fas fa-info-circle"></i> Partner Summary</h6>
+                                    <div id="reviewSummary">
+                                        <p class="mb-1"><strong>Partner:</strong> <span id="reviewPartnerName">Not specified</span></p>
+                                        <p class="mb-1"><strong>Branches:</strong> <span id="reviewBranches">Not specified</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="confirm_review" name="confirm_review" value="1">
+                                    <label class="form-check-label" for="confirm_review">
+                                        <strong>I confirm all information is correct</strong>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
             </form>
         </div>
       </div>
 
-                    @include("admin-views.voucher.store_include.include_model")
+      @include("admin-views.voucher.store_include.include_model")
 
 @endsection
 
@@ -673,6 +807,697 @@
             });
         });
     </script>
+
+
+  {{-- <script>
+
+    $(document).ready(function() {
+        // Initialize Select2 for all dropdowns
+        $('#select_pro, #select_pro1, #select_pro2').select2({
+            width: '100%',
+            placeholder: 'Select a Product'
+        });
+
+        // Store selected products
+        let selectedProductsArray = [];
+        let productCounter = 0;
+
+        // BOGO specific storage - Arrays for multiple products
+        let bogoProductsA = [];
+        let bogoProductsB = [];
+        let bogoCounterA = 0;
+        let bogoCounterB = 0;
+
+        // On page load, check bundle type
+        let bundleType = $('#bundle_offer_type').val();
+        updateFieldsVisibility(bundleType);
+
+        // When "Add Product to Bundle" button is clicked
+        $('#addProductBtn').on('click', function() {
+            const bundleOfferType = $('#bundle_offer_type').val();
+            const availableProducts = $('#availableProducts');
+            const availableProductsGetXBuyY = $('#availableProducts_get_x_buy_y');
+
+            // Check if bundle offer type is selected
+            if (!bundleOfferType || bundleOfferType === "") {
+                alert("Please select a bundle offer type first!");
+                return;
+            }
+
+            if (bundleOfferType === "bogo_free") {
+                // Hide normal products section first
+                if (availableProducts.is(':visible')) {
+                    availableProducts.slideUp();
+                }
+                // Then show/hide BOGO section
+                availableProductsGetXBuyY.slideToggle();
+            } else {
+                // Hide BOGO section first
+                if (availableProductsGetXBuyY.is(':visible')) {
+                    availableProductsGetXBuyY.slideUp();
+                }
+                // Then show/hide normal products section
+                availableProducts.slideToggle();
+            }
+        });
+
+        // ==================== REGULAR BUNDLE LOGIC ====================
+        $('#select_pro').on('change', function() {
+            let selected = $(this).find('option:selected');
+            let productId = selected.val();
+            let productName = selected.data('name');
+            let basePrice = parseFloat(selected.data('price')) || 0;
+            let variations = selected.data('variations') || [];
+            let addons = selected.data('addons') || [];
+
+            if (!productId) return;
+
+            let bundleOfferType = $('#bundle_offer_type').val();
+
+            // Handle different bundle types
+            if (bundleOfferType === 'simple') {
+                $('#productDetails .card').remove();
+                selectedProductsArray = [];
+                productCounter = 0;
+                $('#priceCalculator').hide();
+                $('#price').val('0.00');
+                $('#price_hidden').val('0.00');
+            } else if (bundleOfferType === 'bundle' || bundleOfferType === 'mix_match') {
+                if (selectedProductsArray.includes(productId)) {
+                    alert(`"${productName}" is already added to the bundle!`);
+                    $('#select_pro').val('').trigger('change');
+                    return;
+                }
+            }
+
+            selectedProductsArray.push(productId);
+            let html = createProductCard(productId, productName, basePrice, variations, addons, productCounter);
+            $('#productDetails').append(html);
+            productCounter++;
+            $('#select_pro').val('').trigger('change');
+            $('#selectedProducts p').hide();
+            updateBundleTotal();
+        });
+
+        // ==================== BOGO PRODUCT A LOGIC (MULTIPLE) ====================
+        $('#select_pro1').on('change', function() {
+            let selected = $(this).find('option:selected');
+            let productId = selected.val();
+            let productName = selected.data('name');
+            let basePrice = parseFloat(selected.data('price')) || 0;
+            let variations = selected.data('variations') || [];
+            let addons = selected.data('addons') || [];
+
+            if (!productId) return;
+
+            // Check if product is already in Section A
+            if (bogoProductsA.includes(productId)) {
+                alert(`"${productName}" is already added to Product A section!`);
+                $('#select_pro1').val('').trigger('change');
+                return;
+            }
+
+            // Add to Product A array
+            bogoProductsA.push(productId);
+
+            // Create product card for Product A with unique counter
+            let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'A', bogoCounterA);
+            $('#productDetails_section_a').append(html);
+
+            bogoCounterA++;
+            $('#select_pro1').val('').trigger('change');
+            updateBogoTotal();
+        });
+
+        // ==================== BOGO PRODUCT B LOGIC (MULTIPLE) ====================
+        $('#select_pro2').on('change', function() {
+            let selected = $(this).find('option:selected');
+            let productId = selected.val();
+            let productName = selected.data('name');
+            let basePrice = parseFloat(selected.data('price')) || 0;
+            let variations = selected.data('variations') || [];
+            let addons = selected.data('addons') || [];
+
+            if (!productId) return;
+
+            // Check if product is already in Section B
+            if (bogoProductsB.includes(productId)) {
+                alert(`"${productName}" is already added to Product B section!`);
+                $('#select_pro2').val('').trigger('change');
+                return;
+            }
+
+            // Add to Product B array
+            bogoProductsB.push(productId);
+
+            // Create product card for Product B with unique counter
+            let html = createBogoProductCard(productId, productName, basePrice, variations, addons, 'B', bogoCounterB);
+            $('#productDetails_section_b').append(html);
+
+            bogoCounterB++;
+            $('#select_pro2').val('').trigger('change');
+            updateBogoTotal();
+        });
+
+        // ==================== CREATE PRODUCT CARD (REGULAR) ====================
+        function createProductCard(productId, productName, basePrice, variations, addons, counter) {
+            let html = `
+            <div class="card p-3 shadow-sm mb-3 col-12 col-md-6" data-product-temp-id="${counter}" data-product-id="${productId}">
+
+
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
+
+                    <!-- Product Name -->
+                    <div class="">
+                    <h5 class="mb-0">${productName}</h5>
+                    <!-- Variations -->
+                    ${variations && variations.length > 0 ? `
+                        <div class="variations">
+                            <strong>Variations:</strong>
+                            ${variations.map(v => `
+                                <label class="ms-2 small">
+                                    <input
+                                        type="checkbox"
+                                        name="variation_${counter}"
+                                        class="variation-checkbox"
+                                        value="${v.type || ''}"
+                                        data-price="${v.price || 0}"
+                                        data-type="${v.type || 'Option'}"
+                                    >
+                                    ${v.type || 'Option'} - $${v.price || 0}
+                                    ${v.stock ? ` (Stock: ${v.stock})` : ''}
+                                </label>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+                    <!-- Product Total -->
+                    <div class="p-2 text-nowrap">
+                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+                            $${basePrice.toFixed(2)}
+                        </span>
+                    </div>
+
+                    <!-- Delete Button -->
+                    <button
+                        type="button"
+                        class="btn btn-danger btn-sm remove-product-btn"
+                        data-temp-id="${counter}"
+                        data-product-id="${productId}"
+                    >
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+
+                <input type="hidden" class="product-id" value="${productId}">
+                <input type="hidden" class="product-name" value="${productName}">
+                <input type="hidden" class="product-base-price" value="${basePrice}">
+            `;
+
+            return html;
+        }
+
+        // ==================== CREATE BOGO PRODUCT CARD (MULTIPLE) ====================
+        function createBogoProductCard(productId, productName, basePrice, variations, addons, section, counter) {
+            const variationsHtml = (variations && variations.length)
+                ? `<div class="mt-2">
+                        <strong>Variations:</strong>
+                        ${variations.map((v, index) => `~
+                            <label class="d-block small mt-1">
+                                <input
+                                    type="checkbox"
+                                    name="bogo_variation_${section}_${counter}_${index}"
+                                    class="bogo-variation-checkbox"
+                                    value="${v.type || ''}"
+                                    data-price="${v.price || 0}"
+                                    data-type="${v.type || 'Option'}"
+                                >
+                                ${v.type || 'Option'} - $${(v.price || 0).toFixed(2)}
+                                ${v.stock ? ` (Stock: ${v.stock})` : ''}
+                            </label>
+                        `).join('')}
+                </div>`
+                : '';
+
+            const html = `
+            <div class="card p-3 shadow-sm mb-3 col-12" data-bogo-section="${section}" data-bogo-counter="${counter}" data-product-id="${productId}">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 border rounded p-2">
+
+                    <!-- Product Name + Info -->
+                    <div class="me-3 flex-grow-1">
+                        <h5 class="mb-1">Product ${section}: ${productName}</h5>
+                        ${variationsHtml}
+                    </div>
+
+                    <!-- Product Total -->
+                    <div class="p-2 text-nowrap">
+                        <span class="product-total text-success fw-bold" style="font-size: 1.2em;">
+                            $${basePrice.toFixed(2)}
+                        </span>
+                    </div>
+
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-danger btn-sm remove-bogo-product-btn"
+                        data-section="${section}" data-counter="${counter}" data-product-id="${productId}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+
+                <input type="hidden" class="bogo-product-id" value="${productId}">
+                <input type="hidden" class="bogo-product-name" value="${productName}">
+                <input type="hidden" class="bogo-product-base-price" value="${basePrice}">
+            </div>
+            `;
+
+            return html;
+        }
+
+
+        // ==================== REMOVE BOGO PRODUCT ====================
+        $(document).on('click', '.remove-bogo-product-btn', function() {
+            let section = $(this).data('section');
+            let counter = $(this).data('counter');
+            let productId = $(this).data('product-id');
+
+            // Remove from respective array
+            if (section === 'A') {
+                bogoProductsA = bogoProductsA.filter(id => id !== productId);
+            } else if (section === 'B') {
+                bogoProductsB = bogoProductsB.filter(id => id !== productId);
+            }
+
+            // Remove card with animation
+            $(`[data-bogo-section="${section}"][data-bogo-counter="${counter}"]`).fadeOut(300, function() {
+                $(this).remove();
+                updateBogoTotal();
+            });
+        });
+
+        // ==================== UPDATE BOGO TOTAL (MULTIPLE PRODUCTS) ====================
+        function updateBogoTotal() {
+            let totalProductsA = 0;
+            let totalProductsB = 0;
+            let breakdownHTML = '<h5>BOGO Bundle Breakdown:</h5><ul class="list-group">';
+
+            let allProductPrices = [];
+
+            // Calculate all Product A totals
+            $('#productDetails_section_a .card').each(function() {
+                let basePrice = parseFloat($(this).find('.bogo-product-base-price').val()) || 0;
+                let productName = $(this).find('.bogo-product-name').val();
+                let quantity = parseInt($(this).find('.bogo-product-quantity').val()) || 1;
+                let productTotal = basePrice;
+
+                // Add variation price
+                let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
+                let variationText = '';
+                if (selectedVariation.length) {
+                    let varPrice = parseFloat(selectedVariation.data('price')) || 0;
+                    let varType = selectedVariation.data('type');
+                    productTotal += varPrice;
+                    variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${varPrice.toFixed(2)})</div>`;
+                }
+
+                // Add addon prices
+                let addonsText = '';
+                $(this).find('.bogo-addon-checkbox:checked').each(function() {
+                    let addonPrice = parseFloat($(this).data('price')) || 0;
+                    let addonName = $(this).data('name');
+                    productTotal += addonPrice;
+                    addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                });
+
+                // Multiply by quantity
+                productTotal = productTotal * quantity;
+                totalProductsA += productTotal;
+
+                // Store individual price for BOGO calculation
+                allProductPrices.push(productTotal);
+
+                // Update display
+                $(this).find('.bogo-product-total').text('$' + productTotal.toFixed(2));
+
+                breakdownHTML += `
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <strong>Product A: ${productName}</strong> (x${quantity})
+                                <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                ${variationText}
+                                ${addonsText}
+                            </div>
+                            <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                        </div>
+                    </li>`;
+            });
+
+            // Calculate all Product B totals
+            $('#productDetails_section_b .card').each(function() {
+                let basePrice = parseFloat($(this).find('.bogo-product-base-price').val()) || 0;
+                let productName = $(this).find('.bogo-product-name').val();
+                let quantity = parseInt($(this).find('.bogo-product-quantity').val()) || 1;
+                let productTotal = basePrice;
+
+                // Add variation price
+                let selectedVariation = $(this).find('.bogo-variation-checkbox:checked');
+                let variationText = '';
+                if (selectedVariation.length) {
+                    let varPrice = parseFloat(selectedVariation.data('price')) || 0;
+                    let varType = selectedVariation.data('type');
+                    productTotal += varPrice;
+                    variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${varPrice.toFixed(2)})</div>`;
+                }
+
+                // Add addon prices
+                let addonsText = '';
+                $(this).find('.bogo-addon-checkbox:checked').each(function() {
+                    let addonPrice = parseFloat($(this).data('price')) || 0;
+                    let addonName = $(this).data('name');
+                    productTotal += addonPrice;
+                    addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                });
+
+                // Multiply by quantity
+                productTotal = productTotal * quantity;
+                totalProductsB += productTotal;
+
+                // Store individual price for BOGO calculation
+                allProductPrices.push(productTotal);
+
+                // Update display
+                $(this).find('.bogo-product-total').text('$' + productTotal.toFixed(2));
+
+                breakdownHTML += `
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <strong>Product B: ${productName}</strong> (x${quantity})
+                                <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                ${variationText}
+                                ${addonsText}
+                            </div>
+                            <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                        </div>
+                    </li>`;
+            });
+
+            // Calculate BOGO discount
+            let subtotal = totalProductsA + totalProductsB;
+            let finalTotal = subtotal;
+            let discount = 0;
+
+            // BOGO Logic: Buy X Get Y Free (pay for higher priced items)
+            if (allProductPrices.length >= 2) {
+                // Sort prices descending
+                allProductPrices.sort((a, b) => b - a);
+
+                // Calculate discount (every 2nd item is free, starting from cheapest)
+                for (let i = 1; i < allProductPrices.length; i += 2) {
+                    discount += allProductPrices[i];
+                }
+
+                finalTotal = subtotal - discount;
+            }
+
+            breakdownHTML += `
+                <li class="list-group-item">
+                    <strong>Subtotal: </strong><span class="text-primary">$${subtotal.toFixed(2)}</span>
+                </li>`;
+
+            // if (discount > 0) {
+            //     breakdownHTML += `
+            //         <li class="list-group-item text-success">
+            //             <strong>BOGO Discount (Buy 1 Get 1 Free): </strong>
+            //             <span>-$${discount.toFixed(2)}</span>
+            //         </li>`;
+            // }
+
+            // breakdownHTML += `
+            //     <li class="list-group-item bg-success text-white">
+            //         <strong>Final Bundle Total: </strong>
+            //         <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
+            //     </li>
+            // </ul>`;
+
+            // Show price calculator if at least one product is selected
+            let hasProducts = $('#productDetails_section_a .card').length > 0 || $('#productDetails_section_b .card').length > 0;
+
+            if (hasProducts) {
+                $('#priceCalculator').show();
+                $('#priceBreakdown').html(breakdownHTML);
+                $('#price').val(finalTotal.toFixed(2));
+                $('#price_hidden').val(finalTotal.toFixed(2));
+            } else {
+                $('#priceCalculator').hide();
+                $('#price').val('0.00');
+                $('#price_hidden').val('0.00');
+            }
+        }
+
+        // ==================== BOGO EVENT LISTENERS ====================
+        $(document).on('change', '.bogo-variation-checkbox, .bogo-addon-checkbox, .bogo-product-quantity', function() {
+            updateBogoTotal();
+        });
+
+        // ==================== REGULAR BUNDLE EVENT LISTENERS ====================
+        $(document).on('change', '.variation-checkbox, .addon-checkbox, .product-quantity', function() {
+            let productCard = $(this).closest('.card');
+            let basePrice = parseFloat(productCard.find('.product-base-price').val()) || 0;
+            let quantity = parseInt(productCard.find('.product-quantity').val()) || 1;
+            let total = basePrice;
+
+            let selectedVariation = productCard.find('.variation-checkbox:checked');
+            if (selectedVariation.length) {
+                total += parseFloat(selectedVariation.data('price')) || 0;
+            }
+
+            productCard.find('.addon-checkbox:checked').each(function() {
+                total += parseFloat($(this).data('price')) || 0;
+            });
+
+            total = total * quantity;
+            productCard.find('.product-total').fadeOut(200, function() {
+                $(this).text('$' + total.toFixed(2)).fadeIn(200);
+            });
+
+            updateBundleTotal();
+        });
+
+        $(document).on('click', '.remove-product-btn', function() {
+            let tempId = $(this).data('temp-id');
+            let productId = $(this).data('product-id');
+
+            selectedProductsArray = selectedProductsArray.filter(id => id !== productId);
+
+            $(`[data-product-temp-id="${tempId}"]`).fadeOut(300, function() {
+                $(this).remove();
+                updateBundleTotal();
+
+                if ($('#productDetails .card').length === 0) {
+                    $('#selectedProducts p').show();
+                }
+            });
+        });
+
+        // ==================== UPDATE BUNDLE TOTAL (REGULAR) ====================
+        function updateBundleTotal() {
+            let bundleTotal = 0;
+            let productCount = 0;
+            let breakdownHTML = '<h5>Bundle Price Breakdown:</h5><ul class="list-group">';
+
+            $('#productDetails .card').each(function() {
+                let productName = $(this).find('.product-name').val();
+                let basePrice = parseFloat($(this).find('.product-base-price').val()) || 0;
+                let productTotal = parseFloat($(this).find('.product-total').text().replace('$', '')) || 0;
+                let quantity = parseInt($(this).find('.product-quantity').val()) || 1;
+
+                bundleTotal += productTotal;
+                productCount++;
+
+                let selectedVariation = $(this).find('.variation-checkbox:checked');
+                let variationText = '';
+                if (selectedVariation.length) {
+                    let varType = selectedVariation.data('type');
+                    let variationPrice = parseFloat(selectedVariation.data('price')) || 0;
+                    variationText = `<div class="small text-muted ml-3">└ ${varType} (+$${variationPrice.toFixed(2)})</div>`;
+                }
+
+                let addonsText = '';
+                $(this).find('.addon-checkbox:checked').each(function() {
+                    let addonName = $(this).data('name');
+                    let addonPrice = parseFloat($(this).data('price')) || 0;
+                    addonsText += `<div class="small text-muted ml-3">└ ${addonName} (+$${addonPrice.toFixed(2)})</div>`;
+                });
+
+                let perItemPrice = productTotal / quantity;
+
+                breakdownHTML += `
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <strong>${productName}</strong> (x${quantity})
+                                <div class="small text-muted">Base: $${basePrice.toFixed(2)}</div>
+                                ${variationText}
+                                ${addonsText}
+                                ${quantity > 1 ? `<div class="small text-info mt-1">Per item: $${perItemPrice.toFixed(2)}</div>` : ''}
+                            </div>
+                            <strong class="text-success ml-3">$${productTotal.toFixed(2)}</strong>
+                        </div>
+                    </li>`;
+            });
+
+            let discount = parseFloat($('#discount').val()) || 0;
+            let discountType = $('#discount_type').val();
+            let discountAmount = 0;
+
+            if (discountType === 'percent') {
+                discountAmount = (bundleTotal * discount) / 100;
+            } else {
+                discountAmount = discount;
+            }
+
+            let finalTotal = Math.max(bundleTotal - discountAmount, 0);
+
+            breakdownHTML += `
+                <li class="list-group-item">
+                    <strong>Subtotal: </strong><span class="text-primary">$${bundleTotal.toFixed(2)}</span>
+                </li>`;
+
+            if (discountAmount > 0) {
+                breakdownHTML += `
+                    <li class="list-group-item text-danger">
+                        <strong>Discount (${discountType === 'percent' ? discount + '%' : '$' + discount}): </strong>
+                        -$${discountAmount.toFixed(2)}
+                    </li>`;
+            }
+
+            breakdownHTML += `
+                <li class="list-group-item bg-success text-white">
+                    <strong>Final Bundle Total: </strong>
+                    <strong style="font-size: 1.3em;">$${finalTotal.toFixed(2)}</strong>
+                </li>
+            </ul>`;
+
+            if (productCount > 0) {
+                $('#priceCalculator').show();
+                $('#priceBreakdown').html(breakdownHTML);
+                $('#selectedProducts p').hide();
+            } else {
+                $('#priceCalculator').hide();
+                $('#selectedProducts p').show();
+            }
+
+            let bundleType = $('#bundle_offer_type').val();
+            if (bundleType === 'bogo_free' || bundleType === 'mix_match') {
+                $('#price').val(finalTotal.toFixed(2));
+                $('#price_hidden').val(finalTotal.toFixed(2));
+            } else {
+                $('#price').val(finalTotal.toFixed(2));
+                $('#price_hidden').val(bundleTotal.toFixed(2));
+            }
+        }
+
+        $('#discount, #discount_type').on('change input', function() {
+            let discount = parseFloat($('#discount').val()) || 0;
+            let discountType = $('#discount_type').val();
+            let bundleTotal = parseFloat($('#price_hidden').val()) || 0;
+
+            if (discountType === 'percent' && discount > 100) {
+                alert('Discount percentage cannot exceed 100%');
+                $('#discount').val(0);
+                return;
+            }
+
+            if (discountType !== 'percent' && discount > bundleTotal) {
+                alert(`Discount amount ($${discount}) cannot exceed bundle total ($${bundleTotal})`);
+                $('#discount').val(0);
+                return;
+            }
+
+            updateBundleTotal();
+        });
+
+        function updateFieldsVisibility(bundleType) {
+            if (bundleType === 'mix_match') {
+                $('#price_input_hide').addClass('d-none');
+                $('#discount_input_hide').removeClass('d-none');
+                $('#required_qty').removeClass('d-none');
+                $('#discount_value_input_hide').removeClass('d-none');
+            } else if (bundleType === 'bogo_free') {
+                $('#price_input_hide').addClass('d-none');
+                $('#discount_input_hide').addClass('d-none');
+                $('#required_qty').addClass('d-none');
+                $('#discount_value_input_hide').addClass('d-none');
+            } else if (bundleType === 'simple' || bundleType === 'bundle') {
+                $('#price_input_hide').removeClass('d-none');
+                $('#required_qty').addClass('d-none');
+                $('#discount_input_hide').removeClass('d-none');
+                $('#discount_value_input_hide').removeClass('d-none');
+            } else {
+                $('#price_input_hide').removeClass('d-none');
+                $('#required_qty').addClass('d-none');
+                $('#discount_input_hide').removeClass('d-none');
+                $('#discount_value_input_hide').removeClass('d-none');
+            }
+        }
+
+        $('#bundle_offer_type').on('change', function() {
+            let bundleType = $(this).val();
+            updateFieldsVisibility(bundleType);
+
+            $('#availableProducts').hide();
+            $('#availableProducts_get_x_buy_y').hide();
+
+            // Clear regular products
+            $('#productDetails .card').fadeOut(300, function() {
+                $(this).remove();
+                $('#selectedProducts p').show();
+            });
+            selectedProductsArray = [];
+            productCounter = 0;
+
+            // Clear BOGO products
+            $('#productDetails_section_a').empty();
+            $('#productDetails_section_b').empty();
+            bogoProductsA = [];
+            bogoProductsB = [];
+            bogoCounterA = 0;
+            bogoCounterB = 0;
+
+            $('#priceCalculator').hide();
+            $('#price').val('0.00');
+            $('#price_hidden').val('0.00');
+            $('#discount').val('0');
+        });
+
+        $('#price_type, input[name="price_type"]').on('change', function() {
+            let priceType = $(this).val() || $('input[name="price_type"]:checked').val();
+
+            if (priceType === 'fixed') {
+                $('#productDetails .card').fadeOut(300, function() {
+                    $(this).remove();
+                    $('#selectedProducts p').show();
+                });
+                selectedProductsArray = [];
+                productCounter = 0;
+
+                $('#productDetails_section_a').empty();
+                $('#productDetails_section_b').empty();
+                bogoProductsA = [];
+                bogoProductsB = [];
+                bogoCounterA = 0;
+                bogoCounterB = 0;
+
+                $('#priceCalculator').hide();
+                $('#price').val('0.00');
+                $('#price_hidden').val('0.00');
+
+                alert('Fixed price selected. All product selections have been reset.');
+            }
+        });
+    });
+
+   </script> --}}
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -1637,5 +2462,58 @@
 
         }
     </script>
+
+ <script>
+        function multiples_category() {
+            var category_ids_all = $('#category_id').val();
+
+            console.log("Selected category IDs:", category_ids_all);
+
+            if (!category_ids_all || category_ids_all.length === 0) {
+                alert("Please select at least one category!");
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('admin.Voucher.getSubcategories') }}",
+                type: "GET",
+                data: { category_ids_all: category_ids_all },
+                traditional: false, // ✅ array bhejne ke liye sahi setting
+                dataType: "json",
+                success: function(response) {
+                    console.log("Subcategories Response:", response);
+
+                    if (!Array.isArray(response) || response.length === 0) {
+                        $('#sub-categories_game').html('<option disabled>No subcategories found</option>');
+                        return;
+                    }
+
+                    // Build option list dynamically
+                    let options = '';
+                    response.forEach(function(item) {
+                        options += `<option value="${item.id}">
+                                        ${item.name}
+                                    </option>`;
+                    });
+
+                    // Put options in the select box
+                    $('#sub-categories_game').html(options);
+
+                    // Agar Select2 use ho raha hai to refresh karna zaroori hai
+                    $('#sub-categories_game').trigger('change');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+        }
+
+        function multples_sub_category(){
+
+            // alert("multples_sub_category");
+        }
+
+        </script>
+
 
 @endpush
