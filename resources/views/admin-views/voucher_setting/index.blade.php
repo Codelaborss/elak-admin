@@ -180,366 +180,335 @@
             <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-    <form action="{{route('admin.HolidayandOccasion.store')}}" method="post" id="conditionsForm">
-        @csrf
-        <div class="row">
-            <!-- LEFT SIDE - FORM -->
-            <div class="col-lg-7">
+                    <form action="{{route('admin.HolidayandOccasion.store')}}" method="post" id="conditionsForm">
+                        @csrf
+                        <div class="row">
+                            <!-- LEFT SIDE - FORM -->
+                            <div class="col-lg-7">
 
-                <!-- TIME CONDITIONS -->
-                <div class="condition-card">
-                    <div class="condition-header" data-bs-toggle="collapse" data-bs-target="#timeConditions">
-                        <div class="condition-title">
-                            <i class="tio-time" style="font-size: 20px;"></i>
-                            <span>Time Conditions</span>
-                            <span class="active-badge" id="timeActiveCount">0 Active</span>
-                        </div>
-                        <i class="tio-chevron-down"></i>
-                    </div>
-                    <div class="collapse show condition-body" id="timeConditions">
+                                <!-- TIME CONDITIONS -->
+                                <div class="condition-card">
+                                    <div class="condition-header" data-bs-toggle="collapse" data-bs-target="#timeConditions">
+                                        <div class="condition-title">
+                                            <i class="tio-time" style="font-size: 20px;"></i>
+                                            <span>Time Conditions</span>
+                                            <span class="active-badge" id="timeActiveCount">0 Active</span>
+                                        </div>
+                                        <i class="tio-chevron-down"></i>
+                                    </div>
+                                    <div class="collapse show condition-body" id="timeConditions">
 
-                        <!-- Validity Period -->
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="validityPeriod" name="validity_period">
-                                <label class="custom-control-label" for="validityPeriod">Validity Period</label>
-                            </div>
-                        </div>
+                                        <!-- Validity Period -->
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="validityPeriod" name="validity_period">
+                                                <label class="custom-control-label" for="validityPeriod">Validity Period</label>
+                                            </div>
+                                        </div>
 
-                        <div class="row validity-dates" style="display:none;">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Start Date</label>
-                                    <input type="date" class="form-control" name="start_date" id="startDate">
+                                        <div class="row validity-dates" style="display:none;">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Start Date</label>
+                                                    <input type="date" class="form-control" name="start_date" id="startDate">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>End Date</label>
+                                                    <input type="date" class="form-control" name="end_date" id="endDate">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Specific Days -->
+                                        <div class="form-group mt-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="specificDays" name="specific_days">
+                                                <label class="custom-control-label" for="specificDays">Specific Days of Week</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="day-time-table" id="dayTimeTable" style="display:none;">
+                                            <table class="table table-bordered">
+                                                <thead style="background: #f8f9fa;">
+                                                    <tr>
+                                                        <th style="width: 15%;">DAY</th>
+                                                        <th style="width: 35%;">START TIME</th>
+                                                        <th style="width: 35%;">END TIME</th>
+                                                        <th style="width: 15%;">ACTION</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr data-day="Monday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Monday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="monday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="monday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr data-day="Tuesday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Tuesday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="tuesday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="tuesday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr data-day="Wednesday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Wednesday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="wednesday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="wednesday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr data-day="Thursday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Thursday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="thursday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="thursday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr data-day="Friday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Friday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="friday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="friday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr data-day="Saturday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Saturday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="saturday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="saturday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr data-day="Sunday">
+                                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Sunday</td>
+                                                        <td>
+                                                            <input type="time" class="form-control start-time" name="sunday_start" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="form-control end-time" name="sunday_end" placeholder="--:-- --">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- Holidays & Occasions -->
+                                        <div class="form-group mt-4">
+                                            <label style="font-weight: 600;">🎄 Holidays & Occasions</label>
+                                            <p style="font-size: 13px; color: #666;">Holiday Restrictions</p>
+
+                                            @foreach ($HolidayandOccasion as $item)
+                                                <div class="holiday-checkbox">
+                                                    <input type="checkbox" id="excludeNational_{{ $item->id}}" name="exclude_national[]" value="{{ $item->id}}">
+                                                    <label for="excludeNational_{{ $item->id}}">  {{ $item->name}}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- GENERAL RESTRICTIONS -->
+                                <div class="condition-card">
+                                    <div class="condition-header" data-bs-toggle="collapse" data-bs-target="#generalRestrictions">
+                                        <div class="condition-title">
+                                            <i class="tio-shield-outlined" style="font-size: 20px;"></i>
+                                            <span>General Restrictions</span>
+                                            <span class="active-badge" id="restrictionActiveCount">0 Active</span>
+                                        </div>
+                                        <i class="tio-chevron-down"></i>
+                                    </div>
+                                    <div class="collapse show condition-body" id="generalRestrictions">
+
+                                        <!-- Age Restriction -->
+                                        <div class="form-group">
+                                            <label>Age Restriction</label>
+                                            <select class="form-control" name="age_restriction" id="ageRestriction">
+                                                <option value="">No Age Restriction</option>
+                                                <option value="18+">18+ Only</option>
+                                                <option value="21+">21+ Only</option>
+                                                <option value="under_18">Under 18 Only</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Group Size -->
+                                        <div class="form-group">
+                                            <label>Group Size Requirement</label>
+                                            <select class="form-control" name="group_size" id="groupSize">
+                                                <option value="">No requirement</option>
+                                                <option value="min_2">Minimum 2 people</option>
+                                                <option value="min_4">Minimum 4 people</option>
+                                                <option value="min_6">Minimum 6 people</option>
+                                                <option value="max_4">Maximum 4 people</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Usage Limit per User -->
+                                        <div class="form-group">
+                                            <label>Usage Limit per User</label>
+                                            <div class="usage-row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" name="user_limit" id="userLimit" placeholder="Number of times" min="1">
+                                                </div>
+                                                <span class="times-label">times</span>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="user_period" id="userPeriod">
+                                                        <option value="">Select period</option>
+                                                        <option value="per_day">Per Day</option>
+                                                        <option value="per_week">Per Week</option>
+                                                        <option value="per_month">Per Month</option>
+                                                        <option value="total">Total</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Usage Limit per Store -->
+                                        <div class="form-group">
+                                            <label>Usage Limit per Store</label>
+                                            <div class="usage-row">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" name="store_limit" id="storeLimit" placeholder="Number of times" min="1">
+                                                </div>
+                                                <span class="times-label">times</span>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="store_period" id="storePeriod">
+                                                        <option value="">Select period</option>
+                                                        <option value="per_day">Per Day</option>
+                                                        <option value="per_week">Per Week</option>
+                                                        <option value="per_month">Per Month</option>
+                                                        <option value="total">Total</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Offer Validity -->
+                                        <div class="form-group">
+                                            <label>Offer Validity After Purchase</label>
+                                            <select class="form-control" name="validity_after" id="validityAfter">
+                                                <option value="">No time limit</option>
+                                                <option value="1_month">1 Month</option>
+                                                <option value="3_months">3 Months</option>
+                                                <option value="6_months">6 Months</option>
+                                                <option value="1_year">1 Year</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- General Restrictions Checkboxes -->
+                                        <div class="form-group">
+                                            <label style="font-weight: 600;">General Restrictions</label>
+
+                                            @foreach ($GeneralRestriction as $item)
+                                                <div class="holiday-checkbox">
+                                                    <input type="checkbox" id="noOtherOffers_{{ $item->id}}" name="no_other_offers" value="{{ $item->id}}">
+                                                    <label for="noOtherOffers_{{ $item->id}}">  {{ $item->name}}</label>
+                                                </div>
+                                            @endforeach
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>End Date</label>
-                                    <input type="date" class="form-control" name="end_date" id="endDate">
+
+                            <!-- RIGHT SIDE - PREVIEW -->
+                            <div class="col-lg-5">
+                                <div class="preview-panel">
+                                    <div class="preview-header">Active Conditions Preview</div>
+
+                                    <!-- Available On -->
+                                    <div class="preview-section" id="previewDays" style="display:none;">
+                                        <div class="preview-label">Available on:</div>
+                                        <div class="preview-value" id="previewDaysText">-</div>
+                                    </div>
+
+                                    <!-- Validity Period -->
+                                    <div class="preview-section" id="previewValidityPeriod" style="display:none;">
+                                        <div class="preview-label">Validity period:</div>
+                                        <div class="preview-value" id="previewValidityPeriodText">-</div>
+                                    </div>
+
+                                    <!-- Holiday Restrictions -->
+                                    <div class="preview-section" id="previewHolidays" style="display:none;">
+                                        <div class="preview-label">Holiday restrictions:</div>
+                                        <div class="preview-value" id="previewHolidaysText">-</div>
+                                    </div>
+
+                                    <!-- Age Restriction -->
+                                    <div class="preview-section" id="previewAge" style="display:none;">
+                                        <div class="preview-label">Age restriction:</div>
+                                        <div class="preview-value" id="previewAgeText">-</div>
+                                    </div>
+
+                                    <!-- Group Size -->
+                                    <div class="preview-section" id="previewGroup" style="display:none;">
+                                        <div class="preview-label">Group size required:</div>
+                                        <div class="preview-value" id="previewGroupText">-</div>
+                                    </div>
+
+                                    <!-- Validity -->
+                                    <div class="preview-section" id="previewValidity" style="display:none;">
+                                        <div class="preview-label">Validity after purchase:</div>
+                                        <div class="preview-value" id="previewValidityText">-</div>
+                                    </div>
+
+                                    <!-- Limit per User -->
+                                    <div class="preview-section" id="previewUserLimit" style="display:none;">
+                                        <div class="preview-label">Limit per user:</div>
+                                        <div class="preview-value" id="previewUserLimitText">-</div>
+                                    </div>
+
+                                    <!-- Limit per Store -->
+                                    <div class="preview-section" id="previewStoreLimit" style="display:none;">
+                                        <div class="preview-label">Limit per store:</div>
+                                        <div class="preview-value" id="previewStoreLimitText">-</div>
+                                    </div>
+
+                                    <!-- General Restrictions -->
+                                    <div class="preview-section" id="previewRestrictions" style="display:none;">
+                                        <div class="preview-label">General restrictions:</div>
+                                        <div class="preview-value" id="previewRestrictionsText">-</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Specific Days -->
-                        <div class="form-group mt-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="specificDays" name="specific_days">
-                                <label class="custom-control-label" for="specificDays">Specific Days of Week</label>
-                            </div>
-                        </div>
-
-                        <div class="day-time-table" id="dayTimeTable" style="display:none;">
-                            <table class="table table-bordered">
-                                <thead style="background: #f8f9fa;">
-                                    <tr>
-                                        <th style="width: 15%;">DAY</th>
-                                        <th style="width: 35%;">START TIME</th>
-                                        <th style="width: 35%;">END TIME</th>
-                                        <th style="width: 15%;">ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr data-day="Monday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Monday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="monday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="monday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-day="Tuesday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Tuesday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="tuesday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="tuesday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-day="Wednesday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Wednesday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="wednesday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="wednesday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-day="Thursday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Thursday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="thursday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="thursday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-day="Friday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Friday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="friday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="friday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-day="Saturday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Saturday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="saturday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="saturday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-day="Sunday">
-                                        <td style="vertical-align: middle; color: #666; font-weight: 500;">Sunday</td>
-                                        <td>
-                                            <input type="time" class="form-control start-time" name="sunday_start" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <input type="time" class="form-control end-time" name="sunday_end" placeholder="--:-- --">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm reset-day" style="width: 100%;">Reset</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Holidays & Occasions -->
-                        <div class="form-group mt-4">
-                            <label style="font-weight: 600;">🎄 Holidays & Occasions</label>
-                            <p style="font-size: 13px; color: #666;">Holiday Restrictions</p>
-
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="excludeNational" name="exclude_national" value="1">
-                                <label for="excludeNational">Exclude National Holidays</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="excludeReligious" name="exclude_religious" value="1">
-                                <label for="excludeReligious">Exclude Religious Holidays</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="excludeRamadan" name="exclude_ramadan" value="1">
-                                <label for="excludeRamadan">Exclude Ramadan</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="excludeChristmas" name="exclude_christmas" value="1">
-                                <label for="excludeChristmas">Exclude Christmas Period</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="excludeNewYear" name="exclude_newyear" value="1">
-                                <label for="excludeNewYear">Exclude New Year</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="excludeEid" name="exclude_eid" value="1">
-                                <label for="excludeEid">Exclude Eid Holidays</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GENERAL RESTRICTIONS -->
-                <div class="condition-card">
-                    <div class="condition-header" data-bs-toggle="collapse" data-bs-target="#generalRestrictions">
-                        <div class="condition-title">
-                            <i class="tio-shield-outlined" style="font-size: 20px;"></i>
-                            <span>General Restrictions</span>
-                            <span class="active-badge" id="restrictionActiveCount">0 Active</span>
-                        </div>
-                        <i class="tio-chevron-down"></i>
-                    </div>
-                    <div class="collapse show condition-body" id="generalRestrictions">
-
-                        <!-- Age Restriction -->
-                        <div class="form-group">
-                            <label>Age Restriction</label>
-                            <select class="form-control" name="age_restriction" id="ageRestriction">
-                                <option value="">No Age Restriction</option>
-                                <option value="18+">18+ Only</option>
-                                <option value="21+">21+ Only</option>
-                                <option value="under_18">Under 18 Only</option>
-                            </select>
-                        </div>
-
-                        <!-- Group Size -->
-                        <div class="form-group">
-                            <label>Group Size Requirement</label>
-                            <select class="form-control" name="group_size" id="groupSize">
-                                <option value="">No requirement</option>
-                                <option value="min_2">Minimum 2 people</option>
-                                <option value="min_4">Minimum 4 people</option>
-                                <option value="min_6">Minimum 6 people</option>
-                                <option value="max_4">Maximum 4 people</option>
-                            </select>
-                        </div>
-
-                        <!-- Usage Limit per User -->
-                        <div class="form-group">
-                            <label>Usage Limit per User</label>
-                            <div class="usage-row">
-                                <div class="form-group">
-                                    <input type="number" class="form-control" name="user_limit" id="userLimit" placeholder="Number of times" min="1">
-                                </div>
-                                <span class="times-label">times</span>
-                                <div class="form-group">
-                                    <select class="form-control" name="user_period" id="userPeriod">
-                                        <option value="">Select period</option>
-                                        <option value="per_day">Per Day</option>
-                                        <option value="per_week">Per Week</option>
-                                        <option value="per_month">Per Month</option>
-                                        <option value="total">Total</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Usage Limit per Store -->
-                        <div class="form-group">
-                            <label>Usage Limit per Store</label>
-                            <div class="usage-row">
-                                <div class="form-group">
-                                    <input type="number" class="form-control" name="store_limit" id="storeLimit" placeholder="Number of times" min="1">
-                                </div>
-                                <span class="times-label">times</span>
-                                <div class="form-group">
-                                    <select class="form-control" name="store_period" id="storePeriod">
-                                        <option value="">Select period</option>
-                                        <option value="per_day">Per Day</option>
-                                        <option value="per_week">Per Week</option>
-                                        <option value="per_month">Per Month</option>
-                                        <option value="total">Total</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Offer Validity -->
-                        <div class="form-group">
-                            <label>Offer Validity After Purchase</label>
-                            <select class="form-control" name="validity_after" id="validityAfter">
-                                <option value="">No time limit</option>
-                                <option value="1_month">1 Month</option>
-                                <option value="3_months">3 Months</option>
-                                <option value="6_months">6 Months</option>
-                                <option value="1_year">1 Year</option>
-                            </select>
-                        </div>
-
-                        <!-- General Restrictions Checkboxes -->
-                        <div class="form-group">
-                            <label style="font-weight: 600;">General Restrictions</label>
-
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="noOtherOffers" name="no_other_offers" value="1">
-                                <label for="noOtherOffers">Cannot be combined with other offers</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="noDiscountCodes" name="no_discount_codes" value="1">
-                                <label for="noDiscountCodes">Cannot be combined with other discount codes</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="noCashback" name="no_cashback" value="1">
-                                <label for="noCashback">Does not apply to cashback</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="noLoyalty" name="no_loyalty" value="1">
-                                <label for="noLoyalty">Does not apply to loyalty points</label>
-                            </div>
-                            <div class="holiday-checkbox">
-                                <input type="checkbox" id="requiresAccount" name="requires_account" value="1">
-                                <label for="requiresAccount">Requires registered account</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT SIDE - PREVIEW -->
-            <div class="col-lg-5">
-                <div class="preview-panel">
-                    <div class="preview-header">Active Conditions Preview</div>
-
-                    <!-- Available On -->
-                    <div class="preview-section" id="previewDays" style="display:none;">
-                        <div class="preview-label">Available on:</div>
-                        <div class="preview-value" id="previewDaysText">-</div>
-                    </div>
-
-                    <!-- Validity Period -->
-                    <div class="preview-section" id="previewValidityPeriod" style="display:none;">
-                        <div class="preview-label">Validity period:</div>
-                        <div class="preview-value" id="previewValidityPeriodText">-</div>
-                    </div>
-
-                    <!-- Holiday Restrictions -->
-                    <div class="preview-section" id="previewHolidays" style="display:none;">
-                        <div class="preview-label">Holiday restrictions:</div>
-                        <div class="preview-value" id="previewHolidaysText">-</div>
-                    </div>
-
-                    <!-- Age Restriction -->
-                    <div class="preview-section" id="previewAge" style="display:none;">
-                        <div class="preview-label">Age restriction:</div>
-                        <div class="preview-value" id="previewAgeText">-</div>
-                    </div>
-
-                    <!-- Group Size -->
-                    <div class="preview-section" id="previewGroup" style="display:none;">
-                        <div class="preview-label">Group size required:</div>
-                        <div class="preview-value" id="previewGroupText">-</div>
-                    </div>
-
-                    <!-- Validity -->
-                    <div class="preview-section" id="previewValidity" style="display:none;">
-                        <div class="preview-label">Validity after purchase:</div>
-                        <div class="preview-value" id="previewValidityText">-</div>
-                    </div>
-
-                    <!-- Limit per User -->
-                    <div class="preview-section" id="previewUserLimit" style="display:none;">
-                        <div class="preview-label">Limit per user:</div>
-                        <div class="preview-value" id="previewUserLimitText">-</div>
-                    </div>
-
-                    <!-- Limit per Store -->
-                    <div class="preview-section" id="previewStoreLimit" style="display:none;">
-                        <div class="preview-label">Limit per store:</div>
-                        <div class="preview-value" id="previewStoreLimitText">-</div>
-                    </div>
-
-                    <!-- General Restrictions -->
-                    <div class="preview-section" id="previewRestrictions" style="display:none;">
-                        <div class="preview-label">General restrictions:</div>
-                        <div class="preview-value" id="previewRestrictionsText">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+                    </form>
+                  </div>
 
 
                     <div class="btn--container justify-content-end mt-5">

@@ -817,7 +817,7 @@
                                 </li>
 
                                 <li class="nav-item {{ Request::is('admin/GeneralResteiction/list') ? 'active' : '' }}">
-                                    <a class="nav-link " href="{{ route('admin.GeneralResteiction.add-new') }}" title="{{ translate('list General Restriction') }}">
+                                    <a class="nav-link " href="{{ route('admin.GeneralResteiction.list') }}" title="{{ translate('list General Restriction') }}">
                                         <span class="tio-circle nav-indicator-icon"></span>
                                         <span class="text-truncate text-capitalize">{{ translate('list General Restriction') }}</span>
                                     </a>

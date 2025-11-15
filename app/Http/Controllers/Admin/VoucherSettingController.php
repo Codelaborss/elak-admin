@@ -13,6 +13,7 @@ use App\CentralLogics\Helpers;
 use App\Models\ManagementType;
 use App\Models\WorkManagement;
 use App\Http\Controllers\Controller;
+use App\Models\GeneralRestriction;
 use App\Models\HolidayOccasion;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Config;
@@ -24,6 +25,9 @@ class VoucherSettingController extends Controller
         {
             $search = $request->input('search');
 
+             $HolidayandOccasion = HolidayOccasion::get();
+             $GeneralRestriction = GeneralRestriction::get();
+
             $HolidayOccasion = HolidayOccasion::query()
                 ->when($search, function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
@@ -31,7 +35,7 @@ class VoucherSettingController extends Controller
                 ->orderBy('name', 'asc')
                 ->paginate(config('default_pagination'));
 
-            return view('admin-views.voucher_setting.index', compact('HolidayOccasion'));
+            return view('admin-views.voucher_setting.index', compact('HolidayOccasion' ,'HolidayandOccasion','GeneralRestriction'));
         }
 
 
