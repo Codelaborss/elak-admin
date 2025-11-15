@@ -293,7 +293,7 @@
                                     </div>
 
                                     <div class="form-row">
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="occasionCategory">Business Category</label>
                                             <select id="occasionCategory" class="form-control" name="business_category" required>
                                                 <option value="">Select Category</option>
@@ -302,8 +302,21 @@
                                                 @endforeach
 
                                             </select>
+                                        </div> --}}
+                                        <div class="select-item">
+                                             <label for="occasionPriority">Display Priority</label>
+                                            <select name="display_priority" class="form-control  set-filter"
+                                                     data-filter="occasionPriority">
+                                                 <option value="">Select Priority</option>
+                                                <option value="1">1 - Highest Priority</option>
+                                                <option value="2">2 - High Priority</option>
+                                                <option value="3">3 - Medium Priority</option>
+                                                <option value="4">4 - Low Priority</option>
+                                                <option value="5">5 - Lowest Priority</option>
+                                            </select>
                                         </div>
-                                        <div class="form-group">
+
+                                        {{-- <div class="form-group">
                                             <label for="occasionPriority">Display Priority</label>
                                             <select id="occasionPriority" name="display_priority" required>
                                                 <option value="">Select Priority</option>
@@ -313,7 +326,7 @@
                                                 <option value="4">4 - Low Priority</option>
                                                 <option value="5">5 - Lowest Priority</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 
@@ -357,10 +370,22 @@
 @endsection
 
 @push('script_2')
-    <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
+    {{-- <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
     <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script> --}}
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
+    <script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
+    <script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
+
+    <script>
+    $(document).on('click', '.js-select2-custom', function () {
+            $('.js-select2-custom').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+</script>
     <script>
         let selectedFiles = [];
         let fileCounter = 0;

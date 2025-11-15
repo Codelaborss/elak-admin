@@ -476,7 +476,7 @@ input:checked + .toggle-slider:before {
                                 <div class="form-section">
                                     <div class="section-title">Filter Occasions</div>
                                 <div class="form-row">
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="filterCategory">Filter by Category</label>
                                         <select id="filterCategory" name="category_id" onchange="filterOccasions()">
                                              <option value="">Select Category</option>
@@ -484,7 +484,7 @@ input:checked + .toggle-slider:before {
                                                 <option value="{{ $item->id}}">{{ $item->name }}</option>
                                              @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="searchOccasions"  >Search Occasions</label>
                                         <input type="text" id="searchOccasions" name="search_occasion" placeholder="Search by occasion name..." oninput="filterOccasions()">
@@ -512,7 +512,7 @@ input:checked + .toggle-slider:before {
 
                                             </div>
                                             <div class="card-body">
-                                            <p class="mb-1"><strong>Category:</strong> {{ $UsageTerm->category_name }}</p>
+                                            {{-- <p class="mb-1"><strong>Category:</strong> {{ $UsageTerm->category_name }}</p> --}}
                                             <p class="mb-1"><strong>Priority:</strong> {{ $UsageTerm->occasion_name }}</p>
                                             <p class="mb-1"><strong>Gallery:</strong> {{ count(json_decode($UsageTerm->occasion_gallery, true)) }} images</p>
                                             <p class="mb-0"><strong>Created:</strong> {{ $UsageTerm->created_at }}</p>

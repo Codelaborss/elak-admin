@@ -5,53 +5,6 @@
 @section('content')
 
 <style>
-    .search-container {
-        padding: 15px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .search-box {
-        width: 100%;
-        padding: 10px 12px;
-        border: none;
-        border-radius: 6px;
-        background: rgba(255,255,255,0.1);
-        color: white;
-        font-size: 14px;
-        outline: none;
-    }
-
-    .menu-item {
-        display: block;
-        padding: 12px 20px;
-        color: white;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: all 0.3s ease;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-    .menu-item:hover, .menu-item.active {
-        background: rgba(255,255,255,0.1);
-        padding-left: 25px;
-    }
-
-    .section-header {
-        padding: 15px 20px 8px;
-        font-size: 11px;
-        font-weight: 600;
-        color: rgba(255,255,255,0.6);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .icon {
-        margin-right: 10px;
-        width: 16px;
-        display: inline-block;
-    }
-
     .main-content {
         flex: 1;
         padding: 20px;
@@ -69,6 +22,16 @@
         border-bottom: 2px solid #2c5f5f;
     }
 
+    .content-header h1 {
+        margin: 0 0 10px 0;
+        font-size: 24px;
+    }
+
+    .content-header p {
+        margin: 0;
+        color: #666;
+    }
+
     .form-group {
         margin-bottom: 20px;
     }
@@ -80,7 +43,8 @@
         color: #333;
     }
 
-    .form-group select, .form-group input {
+    .form-group select,
+    .form-group input {
         width: 100%;
         padding: 12px;
         border: 2px solid #ddd;
@@ -89,7 +53,8 @@
         transition: border-color 0.3s;
     }
 
-    .form-group select:focus, .form-group input:focus {
+    .form-group select:focus,
+    .form-group input:focus {
         outline: none;
         border-color: #2c5f5f;
     }
@@ -99,17 +64,23 @@
         border-radius: 8px;
         padding: 20px;
         margin-bottom: 20px;
+        border: 2px solid #e9ecef;
     }
 
-    .section-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #2c5f5f;
-        margin-bottom: 15px;
-        padding: 10px;
-        background: white;
+    .section-header-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
         border-radius: 6px;
-        border-left: 4px solid #2c5f5f;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        background: white;
+    }
+
+    .section-header-input:focus {
+        outline: none;
+        border-color: #2c5f5f;
     }
 
     .step-container {
@@ -119,6 +90,7 @@
     .step-item {
         display: flex;
         align-items: center;
+        gap: 10px;
         margin-bottom: 10px;
         background: white;
         padding: 10px;
@@ -129,33 +101,43 @@
     .step-number {
         background: #2c5f5f;
         color: white;
-        width: 25px;
-        height: 25px;
+        min-width: 30px;
+        height: 30px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: bold;
-        margin-right: 10px;
         flex-shrink: 0;
     }
 
     .step-input {
         flex: 1;
-        padding: 8px;
+        padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
-        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .step-input:focus {
+        outline: none;
+        border-color: #2c5f5f;
     }
 
     .btn {
-        padding: 8px 16px;
+        padding: 10px 20px;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
         font-size: 14px;
+        font-weight: 500;
         transition: all 0.3s;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
 
     .btn-primary {
@@ -176,18 +158,13 @@
         background: #c82333;
     }
 
-    .btn-success {
-        background: #28a745;
-        color: white;
-    }
-
-    .btn-success:hover {
-        background: #218838;
-    }
-
     .btn-secondary {
         background: #6c757d;
         color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
     }
 
     .btn-add-step {
@@ -201,28 +178,76 @@
         background: #138496;
     }
 
-    .actions-bar {
-        position: sticky;
-        bottom: 0;
-        background: white;
-        padding: 20px 0;
-        border-top: 2px solid #eee;
+    .btn--container {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
         margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #eee;
+    }
+
+    .btn--reset {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn--primary {
+        background: #007bff;
+        color: white;
     }
 
     .hidden {
         display: none;
     }
 
-    .preview-container {
-        background: #f8f9fa;
+    .preview-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-modal-content {
+        width: 90%;
+        max-width: 800px;
+        max-height: 80vh;
+        background: white;
         border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .preview-modal-header {
         padding: 20px;
-        margin-top: 20px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+    }
+
+    .preview-modal-header h2 {
+        margin: 0;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .preview-modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
     }
 
     .preview-section {
-        background: white;
+        background: #f8f9fa;
         padding: 15px;
         border-radius: 6px;
         margin-bottom: 15px;
@@ -231,17 +256,29 @@
 
     .preview-section h4 {
         color: #2c5f5f;
-        margin-bottom: 10px;
+        margin: 0 0 10px 0;
         font-size: 16px;
     }
 
     .preview-section ol {
-        margin-left: 20px;
+        margin: 0;
+        padding-left: 20px;
     }
 
     .preview-section li {
         margin-bottom: 5px;
-        line-height: 1.5;
+        line-height: 1.6;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+    }
+
+    .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
     }
 
     .error {
@@ -265,128 +302,136 @@
             <span>Create How It Works Guide</span>
         </h1>
     </div>
+
     @php($language=\App\Models\BusinessSetting::where('key','language')->first())
     @php($language = $language->value ?? null)
-    @php($defaultLang = str_replace('_', '-', app()->getLocale()))
 
-    <!-- End Page Header -->
+    <!-- Main Form -->
     <div class="row g-3">
         <div class="col-12">
-            <form id="guide-form" action="{{route('admin.workmanagement.store')}}" method="post" enctype="multipart/form-data">
+            <form id="guide-form"
+                  action="{{route('admin.workmanagement.store')}}"
+                  method="post"
+                  enctype="multipart/form-data"
+                  x-data="guideForm()"
+                  @submit="handleSubmit">
                 @csrf
+
                 @if ($language)
                 <div class="main-content">
                     <div class="content-header">
                         <h1>Create How It Works Guide</h1>
                         <p>Create step-by-step instructions for your voucher types</p>
                     </div>
+
+                    <!-- Voucher Type Selection -->
                     <div class="form-group">
                         <label for="voucher_type">Select Voucher Type *</label>
-                        <select id="" name="voucher_type" required>
+                        <select id="voucher_type"
+                                name="voucher_type"
+                                required
+                                x-model="voucherType"
+                                @change="updateGuideTitle">
                             <option value="">-- Select Voucher Type --</option>
                             @foreach ($vouchers as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" data-name="{{ $item->name }}">
+                                    {{ $item->name }}
+                                </option>
                             @endforeach
                         </select>
+                        <div class="error-message" x-show="errors.voucherType" x-text="errors.voucherType"></div>
                     </div>
 
+                    <!-- Guide Title -->
                     <div class="form-group">
                         <label for="guide_title">Guide Title *</label>
-                        <input type="text" id="guide_title" name="guide_title" required placeholder="Guide title will auto-generate based on voucher type">
-                        <div class="error-message" id="guide_title_error"></div>
+                        <input type="text"
+                               id="guide_title"
+                               name="guide_title"
+                               required
+                               placeholder="Guide title will auto-generate based on voucher type"
+                               x-model="guideTitle">
+                        <div class="error-message" x-show="errors.guideTitle" x-text="errors.guideTitle"></div>
                     </div>
 
-                    <!-- Purchase Process Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Purchase Process</div>
-                        <div id="purchase-steps" class="step-container" data-section="purchase_process">
-                            <div class="step-item">
-                                <span class="step-number">1</span>
-                                <input type="text" class="step-input" name="purchase_process[]" placeholder="Enter step description..." value="Browse and select your desired voucher">
-                                <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
+                    <!-- Sections Builder -->
+                    <div>
+                        <!-- Existing Sections -->
+                        <template x-for="(section, sIndex) in sections" :key="sIndex">
+                            <div class="section-builder">
+                                <!-- Section Title -->
+                                <input type="text"
+                                       class="section-header-input"
+                                       placeholder="Enter Section Title..."
+                                       x-model="section.title"
+                                       :name="'sections[' + sIndex + '][title]'">
+
+                                <button class="btn btn-danger mb-3"
+                                        type="button"
+                                        @click="removeSection(sIndex)"
+                                        :disabled="sections.length === 1">
+                                    <span x-show="sections.length === 1">⚠️ Last Section</span>
+                                    <span x-show="sections.length > 1">🗑️ Remove Section</span>
+                                </button>
+
+                                <!-- Steps Container -->
+                                <div class="step-container">
+                                    <template x-for="(step, stIndex) in section.steps" :key="stIndex">
+                                        <div class="step-item">
+                                            <span class="step-number" x-text="stIndex + 1"></span>
+
+                                            <input type="text"
+                                                   class="step-input"
+                                                   placeholder="Enter step description..."
+                                                   x-model="section.steps[stIndex]"
+                                                   :name="'sections[' + sIndex + '][steps][' + stIndex + ']'">
+
+                                            <button class="btn btn-danger"
+                                                    type="button"
+                                                    @click="removeStep(sIndex, stIndex)"
+                                                    :disabled="section.steps.length === 1">
+                                                ✕
+                                            </button>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <button type="button"
+                                        class="btn btn-add-step"
+                                        @click="addStep(sIndex)">
+                                    ➕ Add Step
+                                </button>
                             </div>
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('purchase-steps', 'purchase_process[]')">+ Add Step</button>
+                        </template>
+
+                        <!-- Add Section Button -->
+                        <button type="button"
+                                class="btn btn-primary"
+                                style="width: 100%; margin-top: 20px;"
+                                @click="addSection()">
+                            ➕ Add New Section
+                        </button>
                     </div>
 
-                    <!-- Payment & Confirmation Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Payment & Confirmation</div>
-                        <div id="payment-steps" class="step-container" data-section="payment_confirmation">
-                            <div class="step-item">
-                                <span class="step-number">1</span>
-                                <input type="text" class="step-input" name="payment_confirmation[]" placeholder="Enter step description..." value="Complete payment using your preferred method">
-                                <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('payment-steps', 'payment_confirmation[]')">+ Add Step</button>
+                    <!-- Action Buttons -->
+                    <div class="btn--container">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                @click="showPreview = true">
+                            👁️ Preview Guide
+                        </button>
+                        <button type="reset" class="btn btn--reset" @click="resetForm">
+                            {{translate('messages.reset')}}
+                        </button>
+                        <button type="submit" class="btn btn--primary">
+                            {{translate('messages.submit')}}
+                        </button>
                     </div>
-
-                    <!-- Voucher Delivery Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Voucher Delivery</div>
-                        <div id="delivery-steps" class="step-container" data-section="voucher_delivery">
-                            <div class="step-item">
-                                <span class="step-number">1</span>
-                                <input type="text" class="step-input" name="voucher_delivery[]" placeholder="Enter step description..." value="Check your email inbox for voucher delivery">
-                                <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('delivery-steps', 'voucher_delivery[]')">+ Add Step</button>
-                    </div>
-
-                    <!-- Redemption Process Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Redemption Process</div>
-                        <div id="redemption-steps" class="step-container" data-section="redemption_process">
-                            <div class="step-item">
-                                <span class="step-number">1</span>
-                                <input type="text" class="step-input" name="redemption_process[]" placeholder="Enter step description..." value="Present voucher at participating location">
-                                <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('redemption-steps', 'redemption_process[]')">+ Add Step</button>
-                    </div>
-
-                    <!-- Account Management Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Account Management</div>
-                        <div id="account-steps" class="step-container" data-section="account_management">
-                            <div class="step-item">
-                                <span class="step-number">1</span>
-                                <input type="text" class="step-input" name="account_management[]" placeholder="Enter step description..." value="View all vouchers in your app account">
-                                <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('account-steps', 'account_management[]')">+ Add Step</button>
-                    </div>
-
-                    <div class="actions-bar">
-                        {{-- <button type="button" class="btn btn-secondary" onclick="previewGuide()">Preview Guide</button> --}}
-                        {{-- <button type="button" class="btn btn-primary" onclick="saveAsDraft()">Save as Draft</button> --}}
-                        {{-- <button type="button" class="btn btn-success" onclick="publishGuide()">Publish Guide</button> --}}
-                    </div>
-                      <div class="btn--container justify-content-end mt-5">
-                        <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
-                        <button type="submit" class="btn btn--primary">{{translate('messages.submit')}}</button>
-                    </div>
-
                 </div>
                 @endif
-            </form>
-        </div>
-    </div>
 
-    <!-- PREVIEW MODAL -->
-    <div id="preview-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: relative; width: 80%; height: 80%; margin: 5% auto; background: white; border-radius: 8px; overflow-y: auto;">
-            <div style="padding: 20px; border-bottom: 2px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Preview: How It Works Guide</h2>
-                <button type="button" class="btn btn-secondary" onclick="closePreview()">Close</button>
-            </div>
-            <div id="preview-content" style="padding: 20px;">
-                <!-- Preview content will be generated here -->
-            </div>
+
+            </form>
         </div>
     </div>
 </div>
@@ -394,164 +439,132 @@
 @endsection
 
 @push('script_2')
-<script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
-<script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 <script>
-$(document).ready(function() {
-    // Initialize Select2 if needed
-    $('#voucher_type').select2({
-        theme: 'bootstrap4',
-        width: '100%',
-        placeholder: 'Select Voucher Type',
-        allowClear: true
-    });
+document.addEventListener('alpine:init', () => {
+    Alpine.data('guideForm', () => ({
+        voucherType: '',
+        guideTitle: '',
+        sections: [
+            { title: '', steps: [''] }
+        ],
+        showPreview: false,
+        errors: {
+            voucherType: '',
+            guideTitle: ''
+        },
+
+        // Initialize
+        init() {
+            console.log('Guide form initialized');
+        },
+
+        // Update guide title when voucher type changes
+        updateGuideTitle() {
+            if (this.voucherType) {
+                const select = document.getElementById('voucher_type');
+                const selectedOption = select.options[select.selectedIndex];
+                const voucherName = selectedOption.getAttribute('data-name');
+                this.guideTitle = `How to Use ${voucherName} Voucher`;
+            } else {
+                this.guideTitle = '';
+            }
+            this.errors.voucherType = '';
+        },
+
+        // Add new section
+        addSection() {
+            this.sections.push({ title: '', steps: [''] });
+        },
+
+        // Remove section
+        removeSection(sIndex) {
+            if (this.sections.length > 1) {
+                this.sections.splice(sIndex, 1);
+            } else {
+                alert('At least one section is required.');
+            }
+        },
+
+        // Add step to section
+        addStep(sIndex) {
+            if (!Array.isArray(this.sections[sIndex].steps)) {
+                this.sections[sIndex].steps = [];
+            }
+            this.sections[sIndex].steps.push('');
+        },
+
+        // Remove step from section
+        removeStep(sIndex, stIndex) {
+            if (this.sections[sIndex].steps.length > 1) {
+                this.sections[sIndex].steps.splice(stIndex, 1);
+            } else {
+                alert('At least one step is required in each section.');
+            }
+        },
+
+        // Validate form
+        validateForm() {
+            this.errors = {
+                voucherType: '',
+                guideTitle: ''
+            };
+
+            let isValid = true;
+
+            if (!this.voucherType) {
+                this.errors.voucherType = 'Please select a voucher type';
+                isValid = false;
+            }
+
+            if (!this.guideTitle.trim()) {
+                this.errors.guideTitle = 'Please enter a guide title';
+                isValid = false;
+            }
+
+            return isValid;
+        },
+
+        // Handle form submit
+        handleSubmit(event) {
+            if (!this.validateForm()) {
+                event.preventDefault();
+                alert('Please fix the errors before submitting');
+                return false;
+            }
+        },
+
+        // Reset form
+        resetForm() {
+            this.voucherType = '';
+            this.guideTitle = '';
+            this.sections = [{ title: '', steps: [''] }];
+            this.errors = {
+                voucherType: '',
+                guideTitle: ''
+            };
+        }
+    }));
 });
 
-// Update guide title based on voucher type
-function updateGuideTitle() {
-    const voucherType = document.getElementById('voucher_type').value;
-    const titleInput = document.getElementById('guide_title');
-
-    clearError('voucher_type');
-
-    const titles = {
-        'in-store': 'How In-Store Vouchers Work',
-        'online': 'How Online Vouchers Work',
-        'service': 'How Service Vouchers Work',
-        'gift': 'How Gift Vouchers Work'
-    };
-
-    titleInput.value = titles[voucherType] || '';
-    clearError('guide_title');
-}
-
-// Add new step to a section
-function addStep(containerId, fieldName) {
-    const container = document.getElementById(containerId);
-    const stepCount = container.children.length + 1;
-
-    const stepHtml = `
-        <div class="step-item">
-            <span class="step-number">${stepCount}</span>
-            <input type="text" class="step-input" name="${fieldName}" placeholder="Enter step description...">
-            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-        </div>
-    `;
-
-    container.insertAdjacentHTML('beforeend', stepHtml);
-}
-
-// Remove step from section
-function removeStep(button) {
-    const stepItem = button.parentNode;
-    const container = stepItem.parentNode;
-
-    // Don't remove if it's the last step
-    if (container.children.length <= 1) {
-        alert('At least one step is required in each section.');
-        return;
-    }
-
-    stepItem.remove();
-
-    // Renumber remaining steps
-    const steps = container.children;
-    for (let i = 0; i < steps.length; i++) {
-        steps[i].querySelector('.step-number').textContent = i + 1;
-    }
-}
-
-// Validate form
-function validateForm() {
-    let isValid = true;
-
-    // Clear previous errors
-    clearAllErrors();
-
-    // Validate voucher type
-    const voucherType = document.getElementById('voucher_type').value;
-    if (!voucherType) {
-        showError('voucher_type', 'Please select a voucher type');
-        isValid = false;
-    }
-
-    // Validate guide title
-    const guideTitle = document.getElementById('guide_title').value.trim();
-    if (!guideTitle) {
-        showError('guide_title', 'Please enter a guide title');
-        isValid = false;
-    }
-
-    // Validate that each section has at least one non-empty step
-    const sections = ['purchase-steps', 'payment-steps', 'delivery-steps', 'redemption-steps', 'account-steps'];
-
-    sections.forEach(sectionId => {
-        const container = document.getElementById(sectionId);
-        const steps = container.querySelectorAll('.step-input');
-        let hasContent = false;
-
-        steps.forEach(step => {
-            if (step.value.trim()) {
-                hasContent = true;
-            }
-        });
-
-        if (!hasContent) {
-            alert(`Please add at least one step in the ${container.parentElement.querySelector('.section-title').textContent} section`);
-            isValid = false;
-        }
-    });
-
-    return isValid;
-}
-
-// Show error message
-function showError(fieldId, message) {
-    const field = document.getElementById(fieldId);
-    const errorDiv = document.getElementById(fieldId + '_error');
-
-    field.classList.add('error');
-    if (errorDiv) {
-        errorDiv.textContent = message;
-    }
-}
-
-// Clear error message
-function clearError(fieldId) {
-    const field = document.getElementById(fieldId);
-    const errorDiv = document.getElementById(fieldId + '_error');
-
-    field.classList.remove('error');
-    if (errorDiv) {
-        errorDiv.textContent = '';
-    }
-}
-
-// Clear all errors
-function clearAllErrors() {
-    const errorFields = document.querySelectorAll('.error');
-    const errorMessages = document.querySelectorAll('.error-message');
-
-    errorFields.forEach(field => field.classList.remove('error'));
-    errorMessages.forEach(msg => msg.textContent = '');
-}
-
-
-
-
-// Prevent form submission on Enter key in input fields
-document.addEventListener('DOMContentLoaded', function() {
+// Prevent Enter key form submission
+document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('guide-form');
 
-    form.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-        }
-    });
-
+    if (form) {
+        form.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.type !== 'submit' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+            }
+        });
+    }
 });
 </script>
+
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>
 @endpush

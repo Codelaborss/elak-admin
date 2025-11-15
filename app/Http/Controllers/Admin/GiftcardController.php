@@ -61,7 +61,7 @@ class GiftcardController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             "occasion_name" => "required",
-            "business_category" => "required",
+            // "business_category" => "required",
             "display_priority" => "required",
             "occasion_gallery" => "nullable|array",
         ]);
@@ -80,7 +80,7 @@ class GiftcardController extends Controller
         // Save JSON array of relative paths in DB
         $occasion = new GiftCard();
         $occasion->occasion_name = $request->occasion_name;
-        $occasion->business_category = $request->business_category;
+        // $occasion->business_category = $request->business_category;
         $occasion->display_priority = $request->display_priority;
         $occasion->occasion_gallery = json_encode($imagePaths);
         $occasion->save();
@@ -105,7 +105,7 @@ class GiftcardController extends Controller
     {
         $validated = $request->validate([
             "occasion_name" => "required",
-            "business_category" => "required",
+            // "business_category" => "required",
             "display_priority" => "required",
             "occasion_gallery" => "nullable|array",
         ]);
@@ -147,7 +147,7 @@ class GiftcardController extends Controller
 
         // 4️⃣ Update record
         $record->occasion_name = $request->occasion_name;
-        $record->business_category = $request->business_category;
+        // $record->business_category = $request->business_category;
         $record->display_priority = $request->display_priority;
         $record->occasion_gallery = json_encode(array_values($finalGallery));
         $record->save();

@@ -774,7 +774,7 @@
 
 
 
-                       <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/GiftOccasions*') ? 'active' : '' }}">
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/GiftOccasions*') ? 'active' : '' }}">
                             <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Gift Management') }}">
                                 <i class="tio-premium-outlined nav-icon"></i>
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('GiftOccasions Setup') }}</span>
@@ -797,6 +797,35 @@
                                     <a class="nav-link " href="{{ route('admin.DeliveryOption.add-new') }}" title="{{ translate('Delivery Option') }}">
                                         <span class="tio-circle nav-indicator-icon"></span>
                                         <span class="text-truncate text-capitalize">{{ translate('Delivery Option') }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/GeneralResteiction*') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('Gift Management') }}">
+                                <i class="tio-premium-outlined nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">{{ translate('General Restriction Setup') }}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display:{{ Request::is('admin/HolidayandOccasion*') ? 'block' : 'none' }}">
+
+                                <li class="nav-item {{ Request::is('admin/HolidayandOccasion/list') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.HolidayandOccasion.list') }}" title="{{ translate('List Holyday and Occassion') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ translate('List Holyday and Occassion') }}</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item {{ Request::is('admin/GeneralResteiction/list') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.GeneralResteiction.add-new') }}" title="{{ translate('list General Restriction') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('list General Restriction') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/VoucherSetting/list') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.VoucherSetting.list') }}" title="{{ translate('list Voucher Setting') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('list Voucher Setting') }}</span>
                                     </a>
                                 </li>
 

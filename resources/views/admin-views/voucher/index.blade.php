@@ -65,14 +65,14 @@
                         <h3 class="h5 fw-semibold mb-4">Voucher Details</h3>
                         {{-- Voucher Title --}}
                         <div class="row g-3 mb-3">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <label class="form-label fw-medium">Voucher Title</label>
                                 <input type="text" name="voucher_title" class="form-control" placeholder="Voucher Title">
                             </div>
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <label class="form-label fw-medium">Valid Until</label>
                                 <input type="date" name="valid_until" class="form-control">
-                            </div>
+                            </div> --}}
                         </div>
                             {{-- images --}}
                         <div class="row g-3">

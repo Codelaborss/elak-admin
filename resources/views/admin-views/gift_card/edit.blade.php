@@ -293,7 +293,7 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="occasionCategory">Business Category</label>
                             <select id="occasionCategory" class="form-control" name="business_category" required>
                                 <option value="">Select Category</option>
@@ -301,18 +301,21 @@
                                 <option value="{{ $item->id}}" {{ $ManagementType->business_category == $item->id ? "selected":"" }}>{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="occasionPriority">Display Priority</label>
-                            <select id="occasionPriority" name="display_priority" required>
-                                <option value="">Select Priority</option>
-                                <option value="1" {{ $ManagementType->display_priority == "1" ? "selected":"" }}>1 - Highest Priority</option>
+                        </div> --}}
+
+                        <div class="select-item">
+                                    <label for="occasionPriority">Display Priority</label>
+                                <select name="display_priority" class="form-control  set-filter"
+                                            data-filter="occasionPriority">
+                                        <option value="">Select Priority</option>
+                                   <option value="1" {{ $ManagementType->display_priority == "1" ? "selected":"" }}>1 - Highest Priority</option>
                                 <option value="2" {{ $ManagementType->display_priority == "2" ? "selected":"" }}>2 - High Priority</option>
                                 <option value="3" {{ $ManagementType->display_priority == "3" ? "selected":"" }}>3 - Medium Priority</option>
                                 <option value="4" {{ $ManagementType->display_priority == "4" ? "selected":"" }}>4 - Low Priority</option>
                                 <option value="5" {{ $ManagementType->display_priority == "5" ? "selected":"" }}>5 - Lowest Priority</option>
-                            </select>
-                        </div>
+                                </select>
+                            </div>
+
                     </div>
                 </div>
 
@@ -363,7 +366,6 @@
 @push('script_2')
 <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
 <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
 
 <script>

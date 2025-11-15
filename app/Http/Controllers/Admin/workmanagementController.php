@@ -55,24 +55,17 @@ class workmanagementController extends Controller
     public function store(Request $request)
     {
         // Validation
+        // dd($request->all());
         $request->validate([
             'voucher_type'          => 'required|max:100',
             'guide_title'          => 'required',
-            'purchase_process'    => 'required|array',
-            'payment_confirmation'     => 'required|array',
-            'voucher_delivery'     => 'required|array',
-            'redemption_process'  => 'required|array',
-            'account_management'  => 'required|array',
+            'sections'    => 'required|array',
         ]);
 
         $ManagementType = new WorkManagement();
         $ManagementType->voucher_id         = $request->voucher_type;
         $ManagementType->guid_title         = $request->guide_title;
-        $ManagementType->purchase_process   = json_encode($request->purchase_process);
-        $ManagementType->payment_confirm    = json_encode($request->payment_confirmation);
-        $ManagementType->voucher_deliver    = json_encode($request->voucher_delivery);
-        $ManagementType->redemption_process = json_encode($request->redemption_process);
-        $ManagementType->account_management = json_encode($request->account_management);
+        $ManagementType->sections   = json_encode($request->sections);
         $ManagementType->save();
 
         Toastr::success('Works Guide added successfully');
@@ -84,8 +77,23 @@ class workmanagementController extends Controller
     {
            $vouchers = VoucherType::get();
         $ManagementType = WorkManagement::where('id', $id)->first();
-        // dd($ManagementType);
-        return view('admin-views.work_management.edit', compact('ManagementType','vouchers'));
+
+        $sections = [];
+
+        if (!empty($ManagementType->sections)) {
+            $json = json_decode($ManagementType->sections, true);
+
+            foreach ($json as $title => $steps) {
+                $sections[] = [
+                    'title' => $title,
+                    'steps' => $steps
+                ];
+            }
+        }
+
+
+        // dd($sections);
+        return view('admin-views.work_management.edit', compact('ManagementType','vouchers','sections'));
     }
 
     public function update(Request $request, $id)
@@ -96,22 +104,14 @@ class workmanagementController extends Controller
             $request->validate([
             'voucher_type'          => 'required|max:100',
             'guide_title'          => 'required',
-            'purchase_process'    => 'required|array',
-            'payment_confirmation'     => 'required|array',
-            'voucher_delivery'     => 'required|array',
-            'redemption_process'  => 'required|array',
-            'account_management'  => 'required|array',
+            'sections'    => 'required|array',
         ]);
 
             //  Record find and update
             $ManagementType = WorkManagement::findOrFail($id);
             $ManagementType->voucher_id         = $request->voucher_type;
             $ManagementType->guid_title         = $request->guide_title;
-            $ManagementType->purchase_process   = json_encode($request->purchase_process);
-            $ManagementType->payment_confirm    = json_encode($request->payment_confirmation);
-            $ManagementType->voucher_deliver    = json_encode($request->voucher_delivery);
-            $ManagementType->redemption_process = json_encode($request->redemption_process);
-            $ManagementType->account_management = json_encode($request->account_management);
+            $ManagementType->sections   = json_encode($request->sections);
             $ManagementType->save();
 
             Toastr::success('Work Management updated successfully');

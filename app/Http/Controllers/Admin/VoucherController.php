@@ -261,7 +261,7 @@ class VoucherController extends Controller
             'sub_categories_game' => 'required',
             'sub_branch_id' => 'required',
             'voucher_title' => 'required',
-            'valid_until' => 'required',
+            // 'valid_until' => 'required',
             'item_images' => 'required',
             'image' => 'required',
             'description' => 'required',
@@ -352,7 +352,7 @@ class VoucherController extends Controller
             $item->discount = $request->discount;
             $item->store_id = $request->store_id;
             $item->voucher_title = $request->voucher_title;
-            $item->valid_until = $request->valid_until;
+            // $item->valid_until = $request->valid_until;
             $item->description = $request->description;
             $item->module_id = Config::get('module.current_module_id');
 
@@ -491,7 +491,7 @@ class VoucherController extends Controller
             // $item->discount = $request->discount;
             $item->store_id = $request->store_id;
             $item->voucher_title = $request->voucher_title;
-            $item->valid_until = $request->valid_until;
+            // $item->valid_until = $request->valid_until;
             $item->description = $request->description;
             $item->module_id = Config::get('module.current_module_id');
 

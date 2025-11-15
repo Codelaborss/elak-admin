@@ -99,20 +99,37 @@
         border-radius: 8px;
         padding: 20px;
         margin-bottom: 20px;
+        border: 2px solid #e0e0e0;
     }
 
-    .section-title {
-        font-size: 18px;
-        font-weight: 600;
+    .section-number {
+        font-size: 24px;
+        font-weight: 700;
         color: #2c5f5f;
         margin-bottom: 15px;
-        padding: 10px;
+        display: inline-block;
         background: white;
+        padding: 5px 15px;
         border-radius: 6px;
-        border-left: 4px solid #2c5f5f;
+    }
+
+    .section-title-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .section-title-input:focus {
+        outline: none;
+        border-color: #2c5f5f;
     }
 
     .step-container {
+        margin-top: 20px;
         margin-bottom: 15px;
     }
 
@@ -129,24 +146,30 @@
     .step-number {
         background: #2c5f5f;
         color: white;
-        width: 25px;
-        height: 25px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: bold;
-        margin-right: 10px;
+        margin-right: 12px;
         flex-shrink: 0;
     }
 
     .step-input {
         flex: 1;
-        padding: 8px;
+        padding: 10px 12px;
         border: 1px solid #ddd;
         border-radius: 4px;
         margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .step-input:focus {
+        outline: none;
+        border-color: #2c5f5f;
     }
 
     .btn {
@@ -156,6 +179,7 @@
         cursor: pointer;
         font-size: 14px;
         transition: all 0.3s;
+        font-weight: 500;
     }
 
     .btn-primary {
@@ -165,15 +189,25 @@
 
     .btn-primary:hover {
         background: #1a4040;
+        transform: translateY(-1px);
     }
 
     .btn-danger {
         background: #dc3545;
         color: white;
+        padding: 6px 12px;
+        font-size: 13px;
     }
 
     .btn-danger:hover {
         background: #c82333;
+    }
+
+    .remove-section-btn {
+        background: #dc3545;
+        color: white;
+        padding: 8px 16px;
+        margin-bottom: 15px;
     }
 
     .btn-success {
@@ -195,6 +229,7 @@
         margin-top: 10px;
         background: #17a2b8;
         color: white;
+        padding: 10px;
     }
 
     .btn-add-step:hover {
@@ -267,12 +302,24 @@
         border-radius: 5px;
     }
 
+    .btn--reset:hover {
+        background: #5a6268;
+    }
+
     .btn--primary {
         background: #007bff;
         color: white;
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
+    }
+
+    .btn--primary:hover {
+        background: #0056b3;
+    }
+
+    #sections-container {
+        margin-top: 20px;
     }
 </style>
 
@@ -286,6 +333,7 @@
             <span>{{ isset($ManagementType) ? 'Edit How It Works Guide' : 'Create How It Works Guide' }}</span>
         </h1>
     </div>
+
     @php($language=\App\Models\BusinessSetting::where('key','language')->first())
     @php($language = $language->value ?? null)
     @php($defaultLang = str_replace('_', '-', app()->getLocale()))
@@ -293,8 +341,7 @@
     <!-- End Page Header -->
     <div class="row g-3">
         <div class="col-12">
-              <form action="{{route('admin.workmanagement.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
-
+            <form action="{{route('admin.workmanagement.update',[$ManagementType['id']])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @if(isset($ManagementType))
                     @method('post')
@@ -312,12 +359,12 @@
                         <select id="voucher_type" name="voucher_type" required>
                             <option value="">-- Select Voucher Type --</option>
                             @foreach ($vouchers as $item)
-                                <option value="{{ $item->id }}" {{ (isset($ManagementType) && $ManagementType->voucher_id == $item->id) ? "selected" : "" }}>
+                                <option value="{{ $item->id }}"
+                                    {{ isset($ManagementType) && $ManagementType->voucher_type == $item->id ? 'selected' : '' }}>
                                     {{ $item->name }}
                                 </option>
                             @endforeach
                         </select>
-                        <div class="error-message" id="voucher_type_error"></div>
                     </div>
 
                     <div class="form-group">
@@ -328,205 +375,25 @@
                         <div class="error-message" id="guide_title_error"></div>
                     </div>
 
-                    <!-- Purchase Process Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Purchase Process</div>
-                        <div id="purchase-steps" class="step-container" data-section="purchase_process">
-                            @if(isset($ManagementType) && $ManagementType->purchase_process)
-                                @php($purchaseSteps = json_decode($ManagementType->purchase_process, true) ?: [])
-                                @if(count($purchaseSteps) > 0)
-                                    @foreach ($purchaseSteps as $index => $item)
-                                        <div class="step-item">
-                                            <span class="step-number">{{ $index + 1 }}</span>
-                                            <input type="text" class="step-input" name="purchase_process[]"
-                                                   value="{{ $item }}" placeholder="Enter step description...">
-                                            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="step-item">
-                                        <span class="step-number">1</span>
-                                        <input type="text" class="step-input" name="purchase_process[]"
-                                               placeholder="Enter step description..." value="Browse and select your desired voucher">
-                                        <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                    </div>
-                                @endif
-                            @else
-                                <div class="step-item">
-                                    <span class="step-number">1</span>
-                                    <input type="text" class="step-input" name="purchase_process[]"
-                                           placeholder="Enter step description..." value="Browse and select your desired voucher">
-                                    <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                </div>
-                            @endif
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('purchase-steps', 'purchase_process[]')">+ Add Step</button>
+                    <!-- Sections Container -->
+                    <div id="sections-container">
+                        <!-- Sections will be dynamically added here -->
                     </div>
 
-                    <!-- Payment & Confirmation Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Payment & Confirmation</div>
-                        <div id="payment-steps" class="step-container" data-section="payment_confirmation">
-                            @if(isset($ManagementType) && $ManagementType->payment_confirm)
-                                @php($paymentSteps = json_decode($ManagementType->payment_confirm, true) ?: [])
-                                @if(count($paymentSteps) > 0)
-                                    @foreach ($paymentSteps as $index => $item)
-                                        <div class="step-item">
-                                            <span class="step-number">{{ $index + 1 }}</span>
-                                            <input type="text" class="step-input" name="payment_confirmation[]"
-                                                   value="{{ $item }}" placeholder="Enter step description...">
-                                            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="step-item">
-                                        <span class="step-number">1</span>
-                                        <input type="text" class="step-input" name="payment_confirmation[]"
-                                               placeholder="Enter step description..." value="Complete payment using your preferred method">
-                                        <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                    </div>
-                                @endif
-                            @else
-                                <div class="step-item">
-                                    <span class="step-number">1</span>
-                                    <input type="text" class="step-input" name="payment_confirmation[]"
-                                           placeholder="Enter step description..." value="Complete payment using your preferred method">
-                                    <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                </div>
-                            @endif
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('payment-steps', 'payment_confirmation[]')">+ Add Step</button>
-                    </div>
-
-                    <!-- Voucher Delivery Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Voucher Delivery</div>
-                        <div id="delivery-steps" class="step-container" data-section="voucher_delivery">
-                            @if(isset($ManagementType) && $ManagementType->voucher_deliver)
-                                @php($deliverySteps = json_decode($ManagementType->voucher_deliver, true) ?: [])
-                                @if(count($deliverySteps) > 0)
-                                    @foreach ($deliverySteps as $index => $item)
-                                        <div class="step-item">
-                                            <span class="step-number">{{ $index + 1 }}</span>
-                                            <input type="text" class="step-input" name="voucher_delivery[]"
-                                                   value="{{ $item }}" placeholder="Enter step description...">
-                                            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="step-item">
-                                        <span class="step-number">1</span>
-                                        <input type="text" class="step-input" name="voucher_delivery[]"
-                                               placeholder="Enter step description..." value="Check your email inbox for voucher delivery">
-                                        <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                    </div>
-                                @endif
-                            @else
-                                <div class="step-item">
-                                    <span class="step-number">1</span>
-                                    <input type="text" class="step-input" name="voucher_delivery[]"
-                                           placeholder="Enter step description..." value="Check your email inbox for voucher delivery">
-                                    <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                </div>
-                            @endif
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('delivery-steps', 'voucher_delivery[]')">+ Add Step</button>
-                    </div>
-
-                    <!-- Redemption Process Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Redemption Process</div>
-                        <div id="redemption-steps" class="step-container" data-section="redemption_process">
-                            @if(isset($ManagementType) && $ManagementType->redemption_process)
-                                @php($redemptionSteps = json_decode($ManagementType->redemption_process, true) ?: [])
-                                @if(count($redemptionSteps) > 0)
-                                    @foreach ($redemptionSteps as $index => $item)
-                                        <div class="step-item">
-                                            <span class="step-number">{{ $index + 1 }}</span>
-                                            <input type="text" class="step-input" name="redemption_process[]"
-                                                   value="{{ $item }}" placeholder="Enter step description...">
-                                            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="step-item">
-                                        <span class="step-number">1</span>
-                                        <input type="text" class="step-input" name="redemption_process[]"
-                                               placeholder="Enter step description..." value="Present voucher at participating location">
-                                        <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                    </div>
-                                @endif
-                            @else
-                                <div class="step-item">
-                                    <span class="step-number">1</span>
-                                    <input type="text" class="step-input" name="redemption_process[]"
-                                           placeholder="Enter step description..." value="Present voucher at participating location">
-                                    <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                </div>
-                            @endif
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('redemption-steps', 'redemption_process[]')">+ Add Step</button>
-                    </div>
-
-                    <!-- Account Management Section -->
-                    <div class="section-builder">
-                        <div class="section-title">Account Management</div>
-                        <div id="account-steps" class="step-container" data-section="account_management">
-                            @if(isset($ManagementType) && $ManagementType->account_management)
-                                @php($accountSteps = json_decode($ManagementType->account_management, true) ?: [])
-                                @if(count($accountSteps) > 0)
-                                    @foreach ($accountSteps as $index => $item)
-                                        <div class="step-item">
-                                            <span class="step-number">{{ $index + 1 }}</span>
-                                            <input type="text" class="step-input" name="account_management[]"
-                                                   value="{{ $item }}" placeholder="Enter step description...">
-                                            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="step-item">
-                                        <span class="step-number">1</span>
-                                        <input type="text" class="step-input" name="account_management[]"
-                                               placeholder="Enter step description..." value="View all vouchers in your app account">
-                                        <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                    </div>
-                                @endif
-                            @else
-                                <div class="step-item">
-                                    <span class="step-number">1</span>
-                                    <input type="text" class="step-input" name="account_management[]"
-                                           placeholder="Enter step description..." value="View all vouchers in your app account">
-                                    <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-                                </div>
-                            @endif
-                        </div>
-                        <button type="button" class="btn btn-add-step" onclick="addStep('account-steps', 'account_management[]')">+ Add Step</button>
-                    </div>
+                    <!-- Add Section Button -->
+                    <button type="button" class="btn btn-primary mt-4" id="add-section-btn">
+                        + Add More Section
+                    </button>
 
                     <div class="btn--container justify-content-end mt-5">
-                        <button type="button" class="btn btn-secondary" onclick="previewGuide()" style="margin-right: 10px;">{{translate('Preview Guide')}}</button>
                         <button type="reset" class="btn btn--reset">{{translate('messages.reset')}}</button>
                         <button type="submit" class="btn btn--primary">
                             {{ isset($ManagementType) ? translate('messages.update') : translate('messages.submit') }}
                         </button>
                     </div>
-
                 </div>
                 @endif
             </form>
-        </div>
-    </div>
-
-    <!-- PREVIEW MODAL -->
-    <div id="preview-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: relative; width: 80%; height: 80%; margin: 5% auto; background: white; border-radius: 8px; overflow-y: auto;">
-            <div style="padding: 20px; border-bottom: 2px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Preview: How It Works Guide</h2>
-                <button type="button" class="btn btn-secondary" onclick="closePreview()">Close</button>
-            </div>
-            <div id="preview-content" style="padding: 20px;">
-                <!-- Preview content will be generated here -->
-            </div>
         </div>
     </div>
 </div>
@@ -534,173 +401,194 @@
 @endsection
 
 @push('script_2')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
+<script src="{{ asset('public/assets/admin/js/spartan-multi-image-picker.js') }}"></script>
+<script src="{{asset('public/assets/admin')}}/js/view-pages/product-index.js"></script>
 <script src="{{asset('public/assets/admin')}}/js/view-pages/segments-index.js"></script>
 <script src="{{asset('public/assets/admin')}}/js/view-pages/client-side-index.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
 
 <script>
 $(document).ready(function() {
-    // Initialize Select2
-    $('#voucher_type').select2({
-        theme: 'bootstrap4',
-        width: '100%',
-        placeholder: 'Select Voucher Type',
-        allowClear: true
-    });
+    let sectionIndex = 0;
 
-    // Clear errors when user interacts with fields
-    $('#voucher_type').on('change', function() {
-        clearError('voucher_type');
-    });
+    // Existing sections data from backend (for edit mode)
+    let existingSections = @json($sections ?? []);
 
-    $('#guide_title').on('input', function() {
-        clearError('guide_title');
-    });
-});
-
-// Add new step to a section
-function addStep(containerId, fieldName) {
-    const container = document.getElementById(containerId);
-    const stepCount = container.children.length + 1;
-
-    const stepHtml = `
-        <div class="step-item">
-            <span class="step-number">${stepCount}</span>
-            <input type="text" class="step-input" name="${fieldName}" placeholder="Enter step description...">
-            <button type="button" class="btn btn-danger" onclick="removeStep(this)">✕</button>
-        </div>
-    `;
-
-    container.insertAdjacentHTML('beforeend', stepHtml);
-}
-
-// Remove step from section
-function removeStep(button) {
-    const stepItem = button.parentNode;
-    const container = stepItem.parentNode;
-
-    // Don't remove if it's the last step
-    if (container.children.length <= 1) {
-        alert('At least one step is required in each section.');
-        return;
+    // Parse if it's a string (double encoded JSON)
+    if (typeof existingSections === 'string') {
+        try {
+            existingSections = JSON.parse(existingSections);
+        } catch (e) {
+            console.error('Error parsing sections:', e);
+            existingSections = [];
+        }
     }
 
-    stepItem.remove();
+    console.log('Loaded sections:', existingSections); // Debug
 
-    // Renumber remaining steps
-    const steps = container.children;
-    for (let i = 0; i < steps.length; i++) {
-        steps[i].querySelector('.step-number').textContent = i + 1;
-    }
-}
-
-// Preview guide
-function previewGuide() {
-    const guideTitle = document.getElementById('guide_title').value;
-
-    if (!guideTitle.trim()) {
-        alert('Please enter a guide title first');
-        return;
+    // Initialize: Load existing sections or add one empty section
+    if (existingSections && Array.isArray(existingSections) && existingSections.length > 0) {
+        existingSections.forEach(function(section, index) {
+            addSection(section.title || '', section.steps || [''], index + 1);
+        });
+    } else {
+        addSection('', [''], 1);
     }
 
-    let previewHtml = `<h1>${guideTitle}</h1>`;
+    // Add Section Function
+    function addSection(title = '', steps = [''], displayNumber = null) {
+        // If displayNumber not provided, calculate it
+        if (displayNumber === null) {
+            displayNumber = $('.section-builder').length + 1;
+        }
 
-    const sections = [
-        { id: 'purchase-steps', title: 'Purchase Process' },
-        { id: 'payment-steps', title: 'Payment & Confirmation' },
-        { id: 'delivery-steps', title: 'Voucher Delivery' },
-        { id: 'redemption-steps', title: 'Redemption Process' },
-        { id: 'account-steps', title: 'Account Management' }
-    ];
+        // Escape HTML to prevent XSS and handle special characters
+        let escapedTitle = $('<div>').text(title).html();
 
-    sections.forEach(section => {
-        const steps = document.getElementById(section.id).querySelectorAll('.step-input');
-        if (steps.length > 0) {
-            previewHtml += `<div class="preview-section">`;
-            previewHtml += `<h4>${section.title}</h4>`;
-            previewHtml += `<ol>`;
+        let sectionHtml = `
+            <div class="section-builder" data-section-index="${sectionIndex}">
+                <!-- Section Number Display -->
+                <span class="section-number">${displayNumber}</span>
 
-            steps.forEach(step => {
-                const stepText = step.value.trim();
-                if (stepText) {
-                    previewHtml += `<li>${stepText}</li>`;
-                }
+                <!-- Section Title Input -->
+                <input type="text"
+                       class="section-title-input"
+                       placeholder="Enter Section Title..."
+                       name="sections[${sectionIndex}][title]"
+                       value="${escapedTitle}">
+
+                <button class="btn btn-danger remove-section-btn" type="button">
+                    Remove Section
+                </button>
+
+                <!-- Steps Container -->
+                <div class="step-container" data-section-index="${sectionIndex}">
+                    <!-- Steps will be added here -->
+                </div>
+
+                <button type="button" class="btn btn-add-step" data-section-index="${sectionIndex}">
+                    + Add Step
+                </button>
+            </div>
+        `;
+
+        $('#sections-container').append(sectionHtml);
+
+        // Add steps for this section
+        if (Array.isArray(steps) && steps.length > 0) {
+            steps.forEach(function(stepText) {
+                addStep(sectionIndex, stepText || '');
             });
+        } else {
+            addStep(sectionIndex, '');
+        }
 
-            previewHtml += `</ol></div>`;
+        sectionIndex++;
+        updateSectionNumbers();
+    }
+
+    // Add Step Function
+    function addStep(secIndex, stepText = '') {
+        let stepContainer = $(`.step-container[data-section-index="${secIndex}"]`);
+        let stepCount = stepContainer.find('.step-item').length;
+
+        // Escape HTML to prevent XSS and handle special characters
+        let escapedStepText = $('<div>').text(stepText).html();
+
+        let stepHtml = `
+            <div class="step-item">
+                <span class="step-number">${stepCount + 1}</span>
+                <input type="text"
+                       class="step-input"
+                       placeholder="Enter step description..."
+                       name="sections[${secIndex}][steps][${stepCount}]"
+                       value="${escapedStepText}">
+                <button class="btn btn-danger remove-step-btn" type="button">
+                    ✕
+                </button>
+            </div>
+        `;
+
+        stepContainer.append(stepHtml);
+    }
+
+    // Update section numbers display
+    function updateSectionNumbers() {
+        $('.section-builder').each(function(index) {
+            $(this).find('.section-number').text(index + 1);
+        });
+    }
+
+    // Update step numbers after removal
+    function updateStepNumbers(secIndex) {
+        let stepContainer = $(`.step-container[data-section-index="${secIndex}"]`);
+        stepContainer.find('.step-item').each(function(index) {
+            $(this).find('.step-number').text(index + 1);
+            $(this).find('.step-input').attr('name', `sections[${secIndex}][steps][${index}]`);
+        });
+    }
+
+    // Event: Add Section
+    $('#add-section-btn').on('click', function() {
+        let nextNumber = $('.section-builder').length + 1;
+        addSection('', [''], nextNumber);
+    });
+
+    // Event: Add Step
+    $(document).on('click', '.btn-add-step', function() {
+        let secIndex = $(this).data('section-index');
+        addStep(secIndex, '');
+    });
+
+    // Event: Remove Section
+    $(document).on('click', '.remove-section-btn', function() {
+        if ($('.section-builder').length > 1) {
+            $(this).closest('.section-builder').remove();
+            updateSectionNumbers();
+        } else {
+            alert('At least one section is required!');
         }
     });
 
-    document.getElementById('preview-content').innerHTML = previewHtml;
-    document.getElementById('preview-modal').classList.remove('hidden');
-}
+    // Event: Remove Step
+    $(document).on('click', '.remove-step-btn', function() {
+        let stepItem = $(this).closest('.step-item');
+        let section = stepItem.closest('.section-builder');
+        let secIndex = section.data('section-index');
 
-// Close preview
-function closePreview() {
-    document.getElementById('preview-modal').classList.add('hidden');
-}
-
-// Show error message
-function showError(fieldId, message) {
-    const field = document.getElementById(fieldId);
-    const errorDiv = document.getElementById(fieldId + '_error');
-
-    if (field) field.classList.add('error');
-    if (errorDiv) errorDiv.textContent = message;
-}
-
-// Clear error message
-function clearError(fieldId) {
-    const field = document.getElementById(fieldId);
-    const errorDiv = document.getElementById(fieldId + '_error');
-
-    if (field) field.classList.remove('error');
-    if (errorDiv) errorDiv.textContent = '';
-}
-
-// Clear all errors
-function clearAllErrors() {
-    const errorFields = document.querySelectorAll('.error');
-    const errorMessages = document.querySelectorAll('.error-message');
-
-    errorFields.forEach(field => field.classList.remove('error'));
-    errorMessages.forEach(msg => msg.textContent = '');
-}
-
-// Form validation before submission
-document.getElementById('guide-form').addEventListener('submit', function(e) {
-    let isValid = true;
-    clearAllErrors();
-
-    // Validate voucher type
-    const voucherType = document.getElementById('voucher_type').value;
-    if (!voucherType) {
-        showError('voucher_type', 'Please select a voucher type');
-        isValid = false;
-    }
-
-    // Validate guide title
-    const guideTitle = document.getElementById('guide_title').value.trim();
-    if (!guideTitle) {
-        showError('guide_title', 'Please enter a guide title');
-        isValid = false;
-    }
-
-    if (!isValid) {
-        e.preventDefault();
-    }
-});
-
-// Prevent form submission on Enter key in input fields
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('guide-form');
-
-    form.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.type !== 'submit') {
-            e.preventDefault();
+        if (section.find('.step-item').length > 1) {
+            stepItem.remove();
+            updateStepNumbers(secIndex);
+        } else {
+            alert('At least one step is required per section!');
         }
+    });
+
+    // Form Reset Handler
+    $('form').on('reset', function() {
+        setTimeout(function() {
+            $('#sections-container').empty();
+            sectionIndex = 0;
+
+            if (existingSections && Array.isArray(existingSections) && existingSections.length > 0) {
+                existingSections.forEach(function(section, index) {
+                    addSection(section.title || '', section.steps || [''], index + 1);
+                });
+            } else {
+                addSection('', [''], 1);
+            }
+        }, 10);
+    });
+
+    // Voucher card selection (if needed)
+    $(document).on('click', '.voucher-card_2, .js-select2-custom', function() {
+        $('.voucher-card_2').removeClass('selected');
+        $(this).addClass('selected');
     });
 });
 </script>
+
 @endpush

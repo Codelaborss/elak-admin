@@ -389,6 +389,41 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         });
        // Management Types
 
+              // Management Types
+        Route::group(['prefix' => 'GeneralResteiction', 'as' => 'GeneralResteiction.'], function () {
+            Route::get('add-new', 'GeneralResteictionController@index')->name('add-new');
+            Route::get('list', 'GeneralResteictionController@list')->name('list');
+            Route::post('store', 'GeneralResteictionController@store')->name('store');
+            Route::get('edit/{id}', 'GeneralResteictionController@edit')->name('edit');
+            Route::post('update/{id}', 'GeneralResteictionController@update')->name('update');
+            Route::delete('delete/{id}', 'GeneralResteictionController@delete')->name('delete');
+            Route::post('status/{id}', 'GeneralResteictionController@status')->name('status');
+        });
+       // Management Types
+
+              // Management Types
+        Route::group(['prefix' => 'HolidayandOccasion', 'as' => 'HolidayandOccasion.'], function () {
+            Route::get('add-new', 'HolidayandOccasionController@index')->name('add-new');
+            Route::get('list', 'HolidayandOccasionController@list')->name('list');
+            Route::post('store', 'HolidayandOccasionController@store')->name('store');
+            Route::get('edit/{id}', 'HolidayandOccasionController@edit')->name('edit');
+            Route::post('update/{id}', 'HolidayandOccasionController@update')->name('update');
+            Route::delete('delete/{id}', 'HolidayandOccasionController@delete')->name('delete');
+            Route::post('status/{id}', 'HolidayandOccasionController@status')->name('status');
+        });
+       // Management Types
+              // Management Types
+        Route::group(['prefix' => 'VoucherSetting', 'as' => 'VoucherSetting.'], function () {
+            Route::get('add-new', 'VoucherSettingController@index')->name('add-new');
+            Route::get('list', 'VoucherSettingController@list')->name('list');
+            Route::post('store', 'VoucherSettingController@store')->name('store');
+            Route::get('edit/{id}', 'VoucherSettingController@edit')->name('edit');
+            Route::post('update/{id}', 'VoucherSettingController@update')->name('update');
+            Route::delete('delete/{id}', 'VoucherSettingController@delete')->name('delete');
+            Route::post('status/{id}', 'VoucherSettingController@status')->name('status');
+        });
+       // Management Types
+
 
 
           // App Mobile
